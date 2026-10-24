@@ -1,0 +1,306 @@
+# 皇女的远征军：脚本效果
+# 作用域说明见每个效果前的注释。
+
+# 国家作用域：记下远征军身份，并把起源切换为原版合成繁衍
+atb_swap_origin = {
+	if = {
+		limit = {
+			NOT = { has_country_flag = atb_princess_expedition }
+		}
+		set_country_flag = atb_princess_expedition
+		add_modifier = {
+			modifier = atb_expedition_banner
+			days = -1
+		}
+	}
+	if = {
+		limit = { has_origin = origin_atb_princess_expedition }
+		set_origin = origin_synthetic_fertility
+	}
+}
+
+# 创建一位皇女（国家作用域）
+# ID = filiruoya / yugudora / youfeilina / antaixiya
+# CLASS = commander / scientist / official
+# TRAIT = 个人命定特质
+atb_create_princess = {
+	create_leader = {
+		class = $CLASS$
+		species = owner_main_species
+		name = atb_leader_name_$ID$
+		custom_description = atb_leader_desc_$ID$
+		gender = female
+		skill = 1
+		immortal = yes
+		hide_age = yes
+		randomize_traits = no
+		skip_background_generation = yes
+		traits = {
+			0 = leader_trait_atb_hyperdimensional
+			1 = $TRAIT$
+		}
+		effect = {
+			atb_setup_princess_flags = { ID = $ID$ }
+			save_global_event_target_as = atb_princess_$ID$
+		}
+	}
+}
+
+# 领袖作用域：高维化改造对应的领袖标记
+atb_setup_princess_flags = {
+	set_leader_flag = atb_princess
+	set_leader_flag = atb_princess_$ID$
+	set_leader_flag = leader_death_events_blocked
+	set_leader_flag = immune_to_negative_traits
+	set_leader_flag = should_not_have_upkeep
+	set_immortal = yes
+	change_leader_portrait = atb_ark_$ID$
+}
+
+# 国家作用域：开局时用四位皇女替换统治者和三个议会职位
+atb_install_princesses = {
+	# 记下原来的统治者和议员，替换后移除（原版开局为议会职位临时生成的人）
+	if = {
+		limit = { exists = ruler }
+		ruler = { set_leader_flag = atb_replaced_at_start }
+	}
+	every_owned_leader = {
+		limit = {
+			OR = {
+				is_councilor_type = councilor_defense
+				is_councilor_type = councilor_research
+				is_councilor_type = councilor_state
+			}
+		}
+		set_leader_flag = atb_replaced_at_start
+	}
+
+	atb_create_princess = { ID = filiruoya CLASS = commander TRAIT = leader_trait_atb_transcendent_life }
+	atb_create_princess = { ID = yugudora CLASS = commander TRAIT = leader_trait_atb_elemental_sovereign }
+	atb_create_princess = { ID = youfeilina CLASS = scientist TRAIT = leader_trait_atb_grand_ascendant }
+	atb_create_princess = { ID = antaixiya CLASS = official TRAIT = leader_trait_atb_silent_apostle }
+
+	atb_assign_princess_positions = yes
+
+	every_owned_leader = {
+		limit = {
+			has_leader_flag = atb_replaced_at_start
+			NOT = { has_leader_flag = atb_princess }
+			is_ruler = no
+			is_councilor = no
+		}
+		kill_leader = { show_notification = no }
+	}
+}
+
+# 国家作用域：确保四位皇女都在自己的职位上
+atb_assign_princess_positions = {
+	if = {
+		limit = {
+			exists = event_target:atb_princess_filiruoya
+			event_target:atb_princess_filiruoya = { is_ruler = no }
+		}
+		set_leader = event_target:atb_princess_filiruoya
+	}
+	if = {
+		limit = {
+			exists = event_target:atb_princess_yugudora
+			event_target:atb_princess_yugudora = { NOT = { is_councilor_type = councilor_defense } }
+		}
+		event_target:atb_princess_yugudora = { set_council_position = councilor_defense }
+	}
+	if = {
+		limit = {
+			exists = event_target:atb_princess_youfeilina
+			event_target:atb_princess_youfeilina = { NOT = { is_councilor_type = councilor_research } }
+		}
+		event_target:atb_princess_youfeilina = { set_council_position = councilor_research }
+	}
+	if = {
+		limit = {
+			exists = event_target:atb_princess_antaixiya
+			event_target:atb_princess_antaixiya = { NOT = { is_councilor_type = councilor_state } }
+		}
+		event_target:atb_princess_antaixiya = { set_council_position = councilor_state }
+	}
+}
+
+# 国家作用域：每月维护——锁肖像、锁职位、记录等级
+atb_princess_maintenance = {
+	every_owned_leader = {
+		limit = { has_leader_flag = atb_princess }
+		if = {
+			limit = { has_leader_flag = atb_princess_filiruoya }
+			change_leader_portrait = atb_ark_filiruoya
+			set_variable = { which = atb_tmp_level value = trigger:has_base_skill }
+			owner = { set_variable = { which = atb_level_filiruoya value = prev.atb_tmp_level } }
+			# 记下光耀者的统治声望，复活时恢复
+			if = {
+				limit = { is_variable_set = paragon_origin_story_ruling }
+				owner = { set_variable = { which = atb_luminary_story value = prev.paragon_origin_story_ruling } }
+			}
+		}
+		else_if = {
+			limit = { has_leader_flag = atb_princess_yugudora }
+			change_leader_portrait = atb_ark_yugudora
+			set_variable = { which = atb_tmp_level value = trigger:has_base_skill }
+			owner = { set_variable = { which = atb_level_yugudora value = prev.atb_tmp_level } }
+		}
+		else_if = {
+			limit = { has_leader_flag = atb_princess_youfeilina }
+			change_leader_portrait = atb_ark_youfeilina
+			set_variable = { which = atb_tmp_level value = trigger:has_base_skill }
+			owner = { set_variable = { which = atb_level_youfeilina value = prev.atb_tmp_level } }
+		}
+		else_if = {
+			limit = { has_leader_flag = atb_princess_antaixiya }
+			change_leader_portrait = atb_ark_antaixiya
+			set_variable = { which = atb_tmp_level value = trigger:has_base_skill }
+			owner = { set_variable = { which = atb_level_antaixiya value = prev.atb_tmp_level } }
+		}
+	}
+	atb_assign_princess_positions = yes
+}
+
+# 国家作用域：复活保底——某位皇女不存在时，按原样重建并恢复等级与职位
+atb_revive_princesses = {
+	atb_revive_one_princess = { ID = filiruoya CLASS = commander TRAIT = leader_trait_atb_transcendent_life }
+	atb_revive_one_princess = { ID = yugudora CLASS = commander TRAIT = leader_trait_atb_elemental_sovereign }
+	atb_revive_one_princess = { ID = youfeilina CLASS = scientist TRAIT = leader_trait_atb_grand_ascendant }
+	atb_revive_one_princess = { ID = antaixiya CLASS = official TRAIT = leader_trait_atb_silent_apostle }
+	atb_assign_princess_positions = yes
+	atb_ensure_luminary = yes
+}
+
+atb_revive_one_princess = {
+	if = {
+		limit = {
+			NOT = { exists = event_target:atb_princess_$ID$ }
+		}
+		atb_create_princess = { ID = $ID$ CLASS = $CLASS$ TRAIT = $TRAIT$ }
+		if = {
+			limit = {
+				is_variable_set = atb_level_$ID$
+				check_variable = { which = atb_level_$ID$ value > 1 }
+			}
+			event_target:atb_princess_$ID$ = {
+				set_variable = { which = atb_restore_level value = owner.atb_level_$ID$ }
+				set_skill = atb_restore_level
+				clear_variable = atb_restore_level
+			}
+		}
+		set_country_flag = atb_princess_revived_$ID$
+		country_event = { id = atb.30 }
+	}
+}
+
+#############################################
+# 光耀者：第一皇女菲莉若雅
+# 原版光耀者事件链只认「统治者带 paragon_origin_legendary_leader 标记」，
+# 所以把这个标记、光耀者特质和故事变量交给菲莉若雅，她就会走原版的第一幕、第二幕。
+# 第三幕（衰落与死亡）用国家标记 paragon_origin_purges 挡住：原版第三幕的入口 paragon.5061 要求没有这个标记。
+#############################################
+
+# 领袖作用域：把这位皇女设为光耀者（与原版 paragon.5000 对统治者做的事相同）
+atb_setup_luminary = {
+	add_trait = {
+		trait = leader_trait_legendary_leader
+		show_message = no
+	}
+	set_leader_flag = paragon_origin_legendary_leader
+	set_leader_flag = leader_death_events_blocked
+	set_leader_flag = immune_to_negative_traits
+	if = {
+		limit = {
+			owner = { is_variable_set = atb_luminary_story }
+		}
+		set_variable = { which = paragon_origin_story_ruling value = owner.atb_luminary_story }
+	}
+	else = {
+		set_variable = { which = paragon_origin_story_ruling value = 2 }
+	}
+	set_variable = { which = paragon_origin_delusion_tier value = 1 }
+}
+
+# 国家作用域：开局时开启光耀者事件链
+atb_start_luminary = {
+	if = {
+		limit = {
+			exists = event_target:atb_princess_filiruoya
+			NOT = { has_country_flag = atb_luminary }
+		}
+		set_country_flag = atb_luminary
+		# 皇女不朽，没有第三幕
+		set_country_flag = paragon_origin_purges
+		event_target:atb_princess_filiruoya = {
+			atb_setup_luminary = yes
+			paragon_origin_legendary_leader_trait_giver = yes
+		}
+		country_event = { id = paragon.5004 days = 180 random = 360 }
+	}
+}
+
+# 国家作用域：第一皇女复活后补回光耀者身份（复活保底调用）
+atb_ensure_luminary = {
+	if = {
+		limit = {
+			has_country_flag = atb_luminary
+			exists = event_target:atb_princess_filiruoya
+			event_target:atb_princess_filiruoya = {
+				NOT = { has_leader_flag = paragon_origin_legendary_leader }
+			}
+		}
+		event_target:atb_princess_filiruoya = {
+			atb_setup_luminary = yes
+		}
+	}
+}
+
+#############################################
+# 远征军体制
+#############################################
+
+# 国家作用域：采用远征军体制
+# synth_physical 与独裁流型相同，用来解锁高级机器人特质等合成实体路线的内容
+atb_adopt_expedition_regime = {
+	set_country_flag = atb_expedition_regime
+	set_country_flag = synth_physical
+}
+
+#############################################
+# 先驱者文明的秘密
+#############################################
+
+# 国家作用域：随机给一项还没有的先驱者科技
+atb_grant_precursor_secret = {
+	random_list = {
+		10 = {
+			modifier = { factor = 0 has_technology = tech_secrets_cybrex }
+			give_technology = { tech = tech_secrets_cybrex message = yes }
+		}
+		10 = {
+			modifier = { factor = 0 has_technology = tech_secrets_league }
+			give_technology = { tech = tech_secrets_league message = yes }
+		}
+		10 = {
+			modifier = { factor = 0 has_technology = tech_secrets_irassian }
+			give_technology = { tech = tech_secrets_irassian message = yes }
+		}
+		10 = {
+			modifier = { factor = 0 has_technology = tech_secrets_vultaum }
+			give_technology = { tech = tech_secrets_vultaum message = yes }
+		}
+		10 = {
+			modifier = { factor = 0 has_technology = tech_secrets_yuht }
+			give_technology = { tech = tech_secrets_yuht message = yes }
+		}
+		10 = {
+			modifier = { factor = 0 has_technology = tech_secrets_baol }
+			give_technology = { tech = tech_secrets_baol message = yes }
+		}
+		10 = {
+			modifier = { factor = 0 has_technology = tech_secrets_zroni }
+			give_technology = { tech = tech_secrets_zroni message = yes }
+		}
+	}
+}

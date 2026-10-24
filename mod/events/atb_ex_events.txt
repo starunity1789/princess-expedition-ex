@@ -1,0 +1,74 @@
+namespace = atb_ex
+
+# 全局开局（on_game_start，排在原版 ancrel.12050 随机生成天选民之后）
+event = {
+	id = atb_ex.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		atb_ex_apply_galaxy_rules = yes
+
+		# 远征军整体搬到银河边缘外的星团（首都是起源要塞的国家，每个银河最多一个）
+		random_playable_country = {
+			limit = {
+				exists = capital_scope
+				capital_scope = { has_planet_flag = atb_origin_fortress }
+			}
+			atb_ex_relocate_expedition = yes
+		}
+
+		# 每局必定生成天选民：原版只有 1/4 概率，没刷出来就补一次（原版同一个生成事件）
+		if = {
+			limit = {
+				has_first_contact_dlc = yes
+				NOT = { any_system = { has_star_flag = chosen_system } }
+			}
+			random_rim_system = {
+				limit = { is_mindwardens_story_system = no }
+				system_event = { id = fircon.3500 }
+			}
+		}
+
+		# 每局必定生成传奇领袖凯德斯（瓦格罗之子嗣）的坠毁点：原版银河生成时约 1/4 概率出现。
+		# 有远征军时，放在星团出口「大传承者」往银河里 3~5 跳（离起源要塞 4~6 跳）；
+		# 坠毁点自己的初始化器会照原版生成后续三处遗迹
+		if = {
+			limit = {
+				has_paragon_dlc = yes
+				NOT = { any_system = { has_star_flag = legendary_leader_spawn_system } }
+			}
+			if = {
+				limit = { exists = event_target:atb_rl_sys_gateway }
+				event_target:atb_rl_sys_gateway = {
+					closest_system = {
+						min_steps = 3
+						max_steps = 5
+						limit = {
+							has_owner = no
+							NOT = { has_star_flag = atbgp_cluster }
+						}
+						atb_ex_spawn_legendary_leader_site = yes
+					}
+				}
+			}
+			else = {
+				random_system = {
+					limit = { has_owner = no }
+					atb_ex_spawn_legendary_leader_site = yes
+				}
+			}
+		}
+	}
+}
+
+# 每月：新出现的国家也套上银河规则
+event = {
+	id = atb_ex.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		atb_ex_apply_galaxy_rules = yes
+	}
+}

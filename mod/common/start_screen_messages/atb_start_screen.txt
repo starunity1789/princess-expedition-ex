@@ -1,0 +1,9 @@
+# 皇女的远征军：开局画面文字（接在原版合成繁衍的开局文字之后）
+part = {
+	location = 1
+	localization = "START_SCREEN_ATB_PRINCESS_EXPEDITION"
+
+	trigger = {
+		has_country_flag = atb_princess_expedition
+	}
+}

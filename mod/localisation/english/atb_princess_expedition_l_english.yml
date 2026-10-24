@@ -1,0 +1,150 @@
+﻿l_english:
+ # Origin
+ origin_atb_princess_expedition:0 "The Princesses' Expedition"
+ origin_atb_princess_expedition_desc:0 "§RWARNING: All Ascension Paths besides ['concept_synthetic_ascension'] are disabled.§!\n\nOn a rich world, a rich nation unlocked advanced technology on its own - yet its homeworld remained divided, with unification nowhere in sight. Rather than wait, this enlightened autocracy chose to go first: the Emperor stayed behind to guard the homeworld, while his four daughters took the mobile fortress §YOrigin Fortress§! to a distant system they named §YOrigin's Reach§!, to lay new foundations for the Empire among the stars.\n\nBut the colonists who came with them could not adapt to their new home. An incurable illness spread through the fortress, and they can no longer bear children. To keep the expedition alive, the princesses decided that their people would carry on in synthetic bodies."
+ origin_tooltip_atb_princess_expedition_effects:0 "- $INITIAL_POPS$ §G+900§!$NEW_LINE$- $SPECIES_TRAITS$ ['concept_pathogenic_genes']\n- Homeworld: §YOrigin Fortress§! (giant mobile habitat)$TABBED_NEW_LINE$- Size: £planetsize£ 25$TABBED_NEW_LINE$- Habitability: §G100%§!$TABBED_NEW_LINE$- District caps: Housing, Generator, Mining and Agriculture §G15§! each$TABBED_NEW_LINE$- ['concept_abandoned_cities', £blocker£ $concept_abandoned_cities$]: +2$TABBED_NEW_LINE$- ['concept_identity_repository',£building£ $concept_identity_repository$]$TABBED_NEW_LINE$- ['concept_abandoned_gene_clinic',£building£ $concept_abandoned_gene_clinic$]$TABBED_NEW_LINE$- Features: §Y$d_atb_fortress_core$§!, §Y$d_atb_star_sea_monument$§!, §Y$d_atb_sensor_array$§!$NEW_LINE$- Home system: §YOrigin's Reach§!, with an §YL-Gate§! system nearby (§Y$atb_system_lgate$§!)$NEW_LINE$- Situation: ['concept_identity_rescue']$NEW_LINE$- $ADDITIONAL_TECHNOLOGIES_STRING$ ['concept_synth_ai']$NEW_LINE$- $GUARANTEED_RESEARCH_OPTION_STRING$ ['concept_robotic_workers', £engineering_research£ $tech_robotic_workers$]$NEW_LINE$- §YThe four Princesses§! serve as Ruler, Minister of Defense, Head of Research and Minister of State: immortal, cannot be dismissed, no upkeep$NEW_LINE$- The §YFirst Princess§! is the Empire's §YLuminary§!: she lives through the Luminary's first and second acts, but she never ages, so there is no third act$NEW_LINE$- Relic: §Y$r_atb_princess_seal$§!$NEW_LINE$- After §YSynthetic Dawn§!, the Empire can establish the §Y$auth_atb_expedition$§!$NEW_LINE$- After researching the Archaeology Lab, the capital decision §Y$decision_atb_precursor_secrets$§! becomes available$NEW_LINE$- §YGray§! can always be found in the L-Cluster"
+ origin_tooltip_atb_princess_expedition_negative_effects:0 "- £pop£ §HPops§!: Dying out$NEW_LINE$- The L-Cluster always holds the §RGray Tempest§!$NEW_LINE$- Dictatorial authority only"
+
+ # System and planet
+ atb_system_origin:0 "Origin's Reach"
+ atb_system_lgate:0 "Silent Gate"
+ atb_planet_fortress:0 "Origin Fortress"
+ pc_atb_fortress:0 "Mobile Fortress"
+ pc_atb_fortress_plural:0 "Mobile Fortresses"
+ pc_atb_fortress_desc:0 "A giant mobile habitat built with the full might of the Empire. It carried the princesses and their colonists across the stars and now makes its home in Origin's Reach. Its decks hold complete housing, power, mining and agricultural sectors, comfortable for any species."
+ pc_atb_fortress_adj:0 "Fortress"
+ pc_atb_fortress_tile:0 "Fortress Decks"
+ pc_atb_fortress_tile_desc:0 "Layer upon layer of artificial decks, with the fortress engines and reactors below."
+
+ # The four princesses
+ atb_leader_name_filiruoya:0 "First Princess Filiruoya"
+ atb_leader_name_yugudora:0 "Second Princess Yugudora"
+ atb_leader_name_youfeilina:0 "Third Princess Youfeilina"
+ atb_leader_name_antaixiya:0 "Fourth Princess Antaixiya"
+ atb_leader_desc_filiruoya:0 "Commander of the expedition and eldest daughter of the Emperor. The crystal flowers and white feathers in her hair are her emblem, also carved on the seal of the Princess Guard. The Emperor placed that seal in her hands himself before she left."
+ atb_leader_desc_yugudora:0 "The second princess, always in crimson. Legend says the goldfish swimming around her are elemental spirits made flesh. She commands the expedition's fleets, and their engines and guns answer to her will."
+ atb_leader_desc_youfeilina:0 "The quiet third princess, wreathed in drifting shadowy mist. The Empire's finest scholar, she leads the effort to digitize her people's minds, and was the first to see the path to ascension."
+ atb_leader_desc_antaixiya:0 "The youngest princess, gentle of smile and sparing of words. The expedition's envoys and spies all report directly to her, and no one knows how many secrets she truly holds."
+
+ # Traits
+ leader_trait_atb_hyperdimensional:0 "Hyperdimensional Augmentation"
+ leader_trait_atb_hyperdimensional_desc:0 "This princess has undergone the hyperdimensional augmentation reserved for the imperial family. Her existence has partly slipped free of three-dimensional space-time."
+ leader_trait_atb_hyperdimensional_tt:0 "- §GImmortal§!\n- §GImmune to all negative traits§!\n- §GImmune to every kind of death or removal event§! (if she is ever removed, she re-forms unchanged the next day)\n- §GNo upkeep§!\n- §GCannot be dismissed§!\n- Portrait does not change with species ascension"
+ leader_trait_atb_transcendent_life:0 "Transcendent Life"
+ leader_trait_atb_transcendent_life_desc:0 "Filiruoya's form of life has transcended the mortal. Under her will, the Empire can bear a size far beyond reason."
+ leader_trait_atb_elemental_sovereign:0 "Elemental Sovereign"
+ leader_trait_atb_elemental_sovereign_desc:0 "Yugudora drives her fleets' engines and guns with elemental power; the fleets the expedition can sustain are all but limitless."
+ leader_trait_atb_grand_ascendant:0 "Grand Ascendant"
+ leader_trait_atb_grand_ascendant_desc:0 "Youfeilina has glimpsed the far shore of ascension. Her learning opens more paths for the Empire's research and its leaders' growth."
+ leader_trait_atb_silent_apostle:0 "Silent Apostle"
+ leader_trait_atb_silent_apostle_desc:0 "Antaixiya rarely speaks, but her silence is itself a web spanning the galaxy."
+ atb_princess_no_dismiss_tt:0 "$TRIGGER_FAIL$The §YPrincesses§! are the pillars of the expedition and cannot be dismissed."
+
+ # Relic
+ r_atb_princess_seal:0 "Seal of the Princess Guard"
+ r_atb_princess_seal_desc:0 "A seal cast from obsidian metal and blue crystal, bearing the First Princess's white-feather emblem. The Emperor gave it to his daughters before the expedition set out - with it, they can awaken the guardian war machines sleeping deep inside the fortress."
+ r_atb_princess_seal_active_tt:0 "Summons §G5§! §Y$atb_princess_guard_warform$§! at the capital (no upkeep, permanent)."
+ r_atb_princess_seal_cooldown_tt:0 "\n$atb_princess_seal_cooldown$: £time£ §Y10 years§!"
+ r_atb_princess_seal_on_cooldown:0 "$TRIGGER_FAIL$The §Y$r_atb_princess_seal$§! is on cooldown."
+
+ # Army
+ atb_princess_guard_warform:0 "Princess Guard Cybrex Warform"
+ atb_princess_guard_warform_plural:0 "Princess Guard Cybrex Warforms"
+ atb_princess_guard_warform_desc:0 "A giant war machine that slept deep inside the Origin Fortress, answering only to the Seal of the Princess Guard. It requires no upkeep."
+ atb_army_princess_guard:0 "Princess Guard"
+
+ # Modifiers
+ atb_princess_seal_cooldown:0 "Seal Cooldown"
+ atb_princess_seal_cooldown_desc:0 "The Seal of the Princess Guard needs time to gather its power again."
+ atb_expedition_banner:0 "The Princesses' Expedition"
+ atb_expedition_banner_desc:0 "We are the expedition led by the four princesses, the Empire's vanguard among the stars. On the homeworld, the Emperor awaits good news from us."
+
+ # Anomaly
+ atb_disco_gray_cat:0 "A Signal in the Storm's Wake"
+ mod_country_base_minor_artifacts_produces_add:0 "£minor_artifacts£ Monthly Minor Artifacts"
+ atb_disco_gray_cat_desc:0 "Among the wreckage left by the Gray Tempest, our sensors pick up a faint, broken signal. It seems to be... calling to us."
+
+ # Start screen
+ START_SCREEN_ATB_PRINCESS_EXPEDITION:0 "\n\nThe four princesses of the expedition have taken their places: First Princess Filiruoya rules the Empire, Second Princess Yugudora commands the fleets, Third Princess Youfeilina leads research, and Fourth Princess Antaixiya handles diplomacy and intelligence. On the homeworld, the Emperor awaits good news from us."
+
+ # Events
+ atb.10.name:0 "The Expedition Begins"
+ atb.10.desc:0 "The jump engines of the Origin Fortress have finally cooled. Outside the viewports burns a strange, gentle star - we have named this place §YOrigin's Reach§!.\n\nOur homeworld is rich and beautiful, and our nation was the first to unlock advanced technology. Yet the nations of the homeworld still quarrel, and unification is nowhere in sight. Rather than stay confined, His Majesty the Emperor decided the Empire would reach for the stars first. He remained behind to guard our home, while his four daughters set out with the fortress and the bravest of our colonists.\n\nBut the new world did not welcome us. One colonist after another fell ill, and the physicians finally confirmed it: the illness is incurable, and our people will never again bear children.\n\nIn the great hall of the fortress, First Princess Filiruoya announced her decision: the expedition will not end here. Third Princess Youfeilina will lead the digitization of our minds, so that our people may live on in synthetic bodies. Second Princess Yugudora will command the fleet, and Fourth Princess Antaixiya will deal with the other civilizations among the stars.\n\n"Father is waiting for good news," Filiruoya said. "We will not disappoint him.""
+ atb.10.a:0 "For the future of the Empire."
+ atb.10.a.tt:0 "§YThe four Princesses§! have taken office as Ruler and Councilors.\nGained the relic §Y$r_atb_princess_seal$§!."
+ atb.30.name:0 "Hyperdimensional Echo"
+ atb.30.desc.filiruoya:0 "The air in the heart of the fortress suddenly ripples. Countless motes of light gather and weave together - and a moment later, §YFirst Princess Filiruoya§! stands before us once more, as if nothing had happened.\n\nHer augmentation means her existence no longer depends entirely on her body. As long as she endures in the higher dimensions, she will return."
+ atb.30.desc.yugudora:0 "On the bridge, the goldfish all turn at once toward the same spot. Motes of light gather and weave together there - and a moment later, §YSecond Princess Yugudora§! stands before us once more, as if nothing had happened.\n\nHer augmentation means her existence no longer depends entirely on her body. As long as she endures in the higher dimensions, she will return."
+ atb.30.desc.youfeilina:0 "The shadowy mist in the laboratory stirs without a breeze and slowly takes on a familiar shape - §YThird Princess Youfeilina§! stands before us once more, as if nothing had happened.\n\nHer augmentation means her existence no longer depends entirely on her body. As long as she endures in the higher dimensions, she will return."
+ atb.30.desc.antaixiya:0 "There is no warning and no sound. When we come to our senses, §YFourth Princess Antaixiya§! is already standing quietly among us, with a faint smile, as if nothing had happened.\n\nHer augmentation means her existence no longer depends entirely on her body. As long as she endures in the higher dimensions, she will return."
+ atb.30.a:0 "Welcome back, Your Highness."
+
+ # Origin Fortress features
+ d_atb_fortress_core:0 "Fortress Energy Core"
+ d_atb_fortress_core_desc:0 "The heart of the Origin Fortress: a reactor that never once went dark through the entire jump. The Empire's engineers gave it a design life longer than the Empire's own history. Today its waste heat warms the farms, its spare power drives the mines, and the lights that burn all night in the research halls all come from its steady pulse."
+ d_atb_star_sea_monument:0 "Imperial Star-Sea Monument"
+ d_atb_star_sea_monument_desc:0 "A monument stands in the fortress atrium. It bears no statue, only a star chart: a line of light leaves the homeworld, crosses countless systems, and stops at Origin's Reach. Beyond its end lies a long stretch of blank space - and everyone who passes silently draws it one step further."
+ d_atb_sensor_array:0 "Origin Fortress Star-Sea Sensor Array"
+ d_atb_sensor_array_desc:0 "A vast sensor array unfolded along the fortress hull, first built to guide the fortress through its jump. At Origin's Reach it looks much further - so far that even the Fourth Princess admits her spies do not see as clearly."
+
+ # Dreadnought
+ atb_dreadnought:0 "Dreadnought"
+ atb_dreadnought_plural:0 "Dreadnoughts"
+ atb_dreadnought_cap:0 "$atb_dreadnought$"
+ tech_atb_dreadnought:0 "Dreadnoughts"
+ tech_atb_dreadnought_desc:0 "Fit a titan's main gun into a battleship hull. A tighter keel and a titan-class reactor let a single battleship carry a titanic weapon capable of tearing open an entire fleet formation."
+ TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_TITLE:0 "§H$UNLOCKS_SHIP_TYPE$: §!Dreadnought"
+ TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_DESC:0 "§HDreadnought§!\nA battleship-class hull whose bow can mount one §YTitanic (T)§! weapon, powered by a titan reactor."
+ ATB_DREADNOUGHT_BOW_L1M1S2:0 "$BATTLESHIP_BOW_L1M1S2$"
+ ATB_DREADNOUGHT_BOW_L2:0 "$BATTLESHIP_BOW_L2$"
+ ATB_DREADNOUGHT_BOW_M1S2SHB:0 "$BATTLESHIP_BOW_M1S2SHB$"
+ ATB_DREADNOUGHT_BOW_T1:0 "Verdict Bow"
+ ATB_DREADNOUGHT_MID_L2M2:0 "$BATTLESHIP_MID_L2M2$"
+ ATB_DREADNOUGHT_MID_L3:0 "$BATTLESHIP_MID_L3$"
+ ATB_DREADNOUGHT_MID_M4SHB:0 "$BATTLESHIP_MID_M4SHB$"
+ ATB_DREADNOUGHT_MID_S4LHB:0 "$BATTLESHIP_MID_S4LHB$"
+ ATB_DREADNOUGHT_STERN_L1:0 "$BATTLESHIP_STERN_L1$"
+ ATB_DREADNOUGHT_STERN_M2:0 "$BATTLESHIP_STERN_M2$"
+
+ # Expedition authority
+ auth_atb_expedition:0 "Expeditionary Order"
+ auth_atb_expedition_desc:0 "Once the last of our people had been digitized, the expedition was no longer a vanguard waiting to be called home. The princesses rebuilt the Empire's order in synthetic form: power still rests with the First Princess, but every synthetic citizen is promised the same abundant life - the promise the princesses made before their father on the day the expedition set out."
+ auth_atb_expedition_tt:0 "§Y$living_standard_utopian$§! living standard: does not require Egalitarian ethics\nCan unlock §YAdvanced Robotic Traits§!"
+ atb_regime_requires_dictatorial:0 "$TRIGGER_FAIL$Requires §Y$auth_dictatorial$§! authority."
+
+ atb.40.name:0 "A New Order for the Expedition"
+ atb.40.desc:0 "Some days have passed since the Synthetic Dawn. No one coughs in the fortress corridors anymore. The medical bays have become storerooms, and the nurseries have been repainted to await the first newly made synthetic citizens.\n\nToday the four princesses have called the whole council to the great hall. §YFirst Princess Filiruoya§! lays a thin document on the table.\n\n“When we set out, we were an expedition waiting to go home. But we can never go back - not because the road is too long, but because we have become a different people.” She pauses. “So let this place become what the Empire truly is.”\n\nThe document lays out a new order: power remains concentrated, but every citizen - whoever they once were - will share the same abundant life. §YThird Princess Youfeilina§! adds that every technique for reshaping machine bodies will be opened as well.\n\nThe hall is silent. At last, §YFourth Princess Antaixiya§! gives a small nod."
+ atb.40.a:0 "Establish the Expeditionary Order."
+ atb.40.a.tt:0 "Authority becomes the §Y$auth_atb_expedition$§!:\n- Same effects as the §Y$auth_synth_dictatorial_physical$§!, including unlocking §YAdvanced Robotic Traits§!\n- Can use the §Y$living_standard_utopian$§! living standard\n- Empire Size from pops and districts: §G-12%§!"
+ atb.40.b:0 "Not yet."
+ atb.40.b.tt:0 "It can be established later through the capital decision §Y$decision_atb_adopt_expedition_regime$§!."
+
+ # Luminary: First Princess Filiruoya
+ atb.51.name:0 "A Letter from Father"
+ atb.51.desc:0 "The thirty-year plan has run its course. Today a faster-than-light letter from the homeworld reached the Origin Fortress - the first the Emperor has sent since the expedition set out.\n\nIt is short. The Emperor does not ask how many systems the expedition has taken, or what the factories produce. He only asks whether his four daughters are well, whether the winters in the fortress are cold, and ends: “Everyone on the homeworld is talking about you. Filiruoya, you are no longer only my daughter.”\n\n§YFirst Princess Filiruoya§! read the letter twice, then, before the whole council, placed it in the seal case. She did not repeat a single word of it.\n\nA councilor suggested that the time had come to crown the First Princess. She shook her head. “There is only one Emperor among these stars, and he is on the homeworld. We are his expedition.”"
+ atb.51.a:0 "The expedition has only just begun."
+ atb.51.b:0 "This glory belongs to Father."
+ atb.51.b.tt:0 "§YFirst Princess Filiruoya§!'s standing as ruler increases."
+
+ atb.52.name:0 "The Star-Sea Oath"
+ atb.52.desc:0 "At the celebration of the expedition's founding day, §YFirst Princess Filiruoya§! stepped onto the fortress observation deck to speak to the whole Empire.\n\nShe had no script. She spoke of that first cold winter, of the colonists falling ill one after another, of the nights Youfeilina spent in her laboratory; of the first triumphant return of Yugudora's fleet, and of the report Antaixiya brought back that changed everything.\n\n“People ask me when we are going home,” she said. “My answer is this: every world beneath our feet is home.”\n\nThat day her image filled every screen in the Empire. Years later, people were still repeating her words in the streets."
+ atb.52.a:0 "The stars are our home."
+ atb.52.b:0 "Let the oath spread across the Empire."
+ atb.52.b.tt:0 "Gain the §Y$atb_star_sea_oath$§! modifier for §Y10 years§!."
+
+ atb.53.name:0 "The Unfading Star"
+ atb.53.desc:0 "As the old saying goes, every Luminary's story must end: even the greatest leader grows old, even the firmest grip loosens, and one day the people must learn to live in a world without them.\n\nBut Filiruoya has not grown old.\n\nHer hyperdimensional augmentation stopped her time on the day she left the homeworld. The colonists who followed her have long since taken synthetic bodies, and the citizens made after them have seen the same face at every celebration for as long as they can remember. To them the First Princess is not one ruler among many, but something like the star of Origin's Reach - simply, always there.\n\nTonight Filiruoya stands alone before the Star-Sea Monument, looking at the long blank stretch at the end of the chart. She stands there a long time. At last she reaches out, and draws the line of light one step further."
+ atb.53.a:0 "She will always be there."
+ atb.53.a.tt:0 "§YFirst Princess Filiruoya§!'s standing as ruler greatly increases.\nGain the permanent modifier §Y$atb_unfading_star$§!."
+
+ atb_star_sea_oath:0 "The Star-Sea Oath"
+ atb_star_sea_oath_desc:0 "“Every world beneath our feet is home.” The First Princess's words are still repeated in the streets of the Empire."
+ atb_unfading_star:0 "The Unfading Star"
+ atb_unfading_star_desc:0 "First Princess Filiruoya will neither age nor leave. To the people of the expedition, she is as constant as the star of Origin's Reach."
+
+ # Capital decisions
+ decision_atb_precursor_secrets:0 "Explore the Secrets of the Precursors"
+ decision_atb_precursor_secrets_desc:0 "The researchers of the archaeology lab have pieced together a list: seven long-vanished precursor civilizations, seven buried legacies. Given enough artifacts to follow the trail, we can recover them one by one."
+ decision_atb_precursor_secrets_tt:0 "Gain a random §YPrecursor technology§! not yet known ($tech_secrets_cybrex$, $tech_secrets_league$, $tech_secrets_irassian$, $tech_secrets_vultaum$, $tech_secrets_yuht$, $tech_secrets_baol$, $tech_secrets_zroni$), until all seven are known."
+ decision_atb_adopt_expedition_regime:0 "Establish the Expeditionary Order"
+ decision_atb_adopt_expedition_regime_desc:0 "Since the Synthetic Dawn, the new order the princesses drafted for the Empire has lain on the council table, waiting to be signed."

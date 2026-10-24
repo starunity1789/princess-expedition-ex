@@ -1,0 +1,7 @@
+# 由 _tools/gen_great_powers.py 生成，请勿手改
+
+# 大君主同盟领地选择星海天罚后
+atbgp_btc_bonus = {
+	country_naval_cap_add = 1000
+	shipclass_military_build_speed_mult = 1.0
+}

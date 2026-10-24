@@ -1,0 +1,1281 @@
+# 由 _tools/gen_great_powers.py 生成，请勿手改
+
+# 燃烧白鹿军团 母星：俳句
+atbgp_home_1 = {
+	name = "atbgp_sys_1_0"
+	class = "sc_g"
+	flags = { atbgp_cluster atbgp_cluster_1 empire_home_system }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_1_0
+		generate_home_system_resources = yes
+		create_starbase = {
+			owner = event_target:atbgp_country_1
+			size = "starbase_starport"
+			module = shipyard
+			building = crew_quarters
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+
+	planet = {
+		count = { min = 1 max = 2 }
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 40 max = 100 }
+	}
+
+	planet = {
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		name = "atbgp_planet_1_home"
+		class = "pc_gaia"
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			save_global_event_target_as = atbgp_home_1
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			create_species = {
+				name = atbgp_species_1
+				plural = atbgp_species_1_plural
+				adjective = atbgp_species_1_adj
+				class = MACHINE
+				portrait = random
+				traits = random
+				homeworld = this
+				effect = { save_global_event_target_as = atbgp_species_1 }
+			}
+			create_country = {
+				name = "atbgp_country_1"
+				adjective = "atbgp_country_1_adj"
+				authority = auth_machine_intelligence
+				civics = { civic = civic_machine_replication civic = civic_machine_ota_updates }
+				ethos = { ethic = ethic_gestalt_consciousness }
+				species = event_target:atbgp_species_1
+				origin = "origin_default"
+				flag = random
+				ignore_initial_colony_error = yes
+				effect = {
+					save_global_event_target_as = atbgp_country_1
+					set_country_flag = atbgp_great_power
+					set_country_flag = atbgp_power_1
+					advanced_empire_base_init_effect = yes
+				}
+			}
+			set_owner = event_target:atbgp_country_1
+			set_controller = event_target:atbgp_country_1
+			set_capital = yes
+			while = {
+				count = 52
+				create_pop_group = { species = event_target:atbgp_species_1 }
+			}
+			colony = { generate_start_buildings_and_districts = yes }
+			add_deposit = atbgp_d_income_1
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		orbit_distance = 25
+		class = pc_gas_giant
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 燃烧白鹿军团：民谣
+atbgp_sys_1_1 = {
+	name = "atbgp_sys_1_1"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_1 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_1_1
+		create_starbase = {
+			owner = event_target:atbgp_country_1
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 40
+
+	planet = {
+		name = "atbgp_planet_1_1"
+		class = "pc_continental"
+		orbit_distance = 0
+		orbit_angle = { min = 90 max = 270 }
+		size = 18
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+		init_effect = {
+			prevent_anomaly = yes
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 燃烧白鹿军团：十四行诗
+atbgp_sys_1_2 = {
+	name = "atbgp_sys_1_2"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_1 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_1_2
+		create_starbase = {
+			owner = event_target:atbgp_country_1
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 40
+
+	planet = {
+		name = "atbgp_planet_1_2"
+		class = "pc_relic"
+		orbit_distance = 0
+		orbit_angle = { min = 90 max = 270 }
+		size = 18
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+		init_effect = {
+			prevent_anomaly = yes
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 燃烧白鹿军团：巨著
+atbgp_sys_1_3 = {
+	name = "atbgp_sys_1_3"
+	class = "sc_black_hole"
+	flags = { atbgp_cluster atbgp_cluster_1 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_1_3
+		create_starbase = {
+			owner = event_target:atbgp_country_1
+			size = "starbase_outpost"
+		}
+		every_system_planet = {
+			limit = { has_planet_flag = atbgp_research_station }
+			create_research_station = { owner = event_target:atbgp_country_1 }
+		}
+	}
+
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = atbgp_d_dark_matter_20
+			set_planet_flag = atbgp_research_station
+		}
+	}
+
+	change_orbit = 60
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 燃烧白鹿军团：寓言
+atbgp_sys_1_4 = {
+	name = "atbgp_sys_1_4"
+	class = "sc_neutron_star"
+	flags = { atbgp_cluster atbgp_cluster_1 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_1_4
+		create_starbase = {
+			owner = event_target:atbgp_country_1
+			size = "starbase_outpost"
+		}
+		every_system_planet = {
+			limit = { has_planet_flag = atbgp_research_station }
+			create_research_station = { owner = event_target:atbgp_country_1 }
+		}
+	}
+
+	planet = {
+		class = "pc_neutron_star"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = atbgp_d_unity_22
+			set_planet_flag = atbgp_research_station
+		}
+	}
+
+	change_orbit = 50
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 燃烧白鹿军团：神话
+atbgp_sys_1_5 = {
+	name = "atbgp_sys_1_5"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_1 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_1_5
+		create_starbase = {
+			owner = event_target:atbgp_country_1
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 40
+
+	planet = {
+		name = "atbgp_planet_1_5"
+		class = "pc_machine"
+		orbit_distance = 0
+		orbit_angle = { min = 90 max = 270 }
+		size = 18
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+		init_effect = {
+			prevent_anomaly = yes
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 燃烧白鹿军团：史诗
+atbgp_sys_1_6 = {
+	name = "atbgp_sys_1_6"
+	class = "sc_g"
+	flags = { atbgp_cluster atbgp_cluster_1 ring_world_built }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_1_6
+		create_starbase = {
+			owner = event_target:atbgp_country_1
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = -30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+}
+
+# 远星同盟组织 母星：救赎
+atbgp_home_2 = {
+	name = "atbgp_sys_2_0"
+	class = "sc_f"
+	flags = { atbgp_cluster atbgp_cluster_2 empire_home_system }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_2_0
+		generate_home_system_resources = yes
+		create_starbase = {
+			owner = event_target:atbgp_country_2
+			size = "starbase_starport"
+			module = shipyard
+			building = crew_quarters
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+
+	planet = {
+		count = { min = 1 max = 2 }
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 40 max = 100 }
+	}
+
+	planet = {
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		name = "atbgp_planet_2_home"
+		class = "pc_relic"
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			save_global_event_target_as = atbgp_home_2
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			create_species = {
+				name = atbgp_species_2
+				plural = atbgp_species_2_plural
+				adjective = atbgp_species_2_adj
+				class = HUM
+				portrait = random
+				traits = { ideal_planet_class = "pc_continental" trait = "trait_intelligent" trait = "trait_thrifty" }
+				homeworld = this
+				effect = { save_global_event_target_as = atbgp_species_2 }
+			}
+			create_country = {
+				name = "atbgp_country_2"
+				adjective = "atbgp_country_2_adj"
+				authority = auth_corporate
+				civics = { civic = civic_worker_coop civic = civic_corporate_dark_consortium }
+				ethos = { ethic = ethic_egalitarian ethic = ethic_materialist ethic = ethic_militarist }
+				species = event_target:atbgp_species_2
+				origin = "origin_default"
+				flag = random
+				ignore_initial_colony_error = yes
+				effect = {
+					save_global_event_target_as = atbgp_country_2
+					set_country_flag = atbgp_great_power
+					set_country_flag = atbgp_power_2
+					advanced_empire_base_init_effect = yes
+				}
+			}
+			set_owner = event_target:atbgp_country_2
+			set_controller = event_target:atbgp_country_2
+			set_capital = yes
+			while = {
+				count = 48
+				create_pop_group = { species = event_target:atbgp_species_2 }
+			}
+			colony = { generate_start_buildings_and_districts = yes }
+			add_deposit = atbgp_d_income_2
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		orbit_distance = 25
+		class = pc_gas_giant
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 远星同盟组织：逆鳞
+atbgp_sys_2_1 = {
+	name = "atbgp_sys_2_1"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_2 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_2_1
+		create_starbase = {
+			owner = event_target:atbgp_country_2
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 40
+
+	planet = {
+		name = "atbgp_planet_2_1"
+		class = "pc_gaia"
+		orbit_distance = 0
+		orbit_angle = { min = 90 max = 270 }
+		size = 25
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+		init_effect = {
+			prevent_anomaly = yes
+			add_deposit = d_valley_of_zanaam
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 远星同盟组织：异端
+atbgp_sys_2_2 = {
+	name = "atbgp_sys_2_2"
+	class = "sc_black_hole"
+	flags = { atbgp_cluster atbgp_cluster_2 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_2_2
+		create_starbase = {
+			owner = event_target:atbgp_country_2
+			size = "starbase_outpost"
+		}
+		every_system_planet = {
+			limit = { has_planet_flag = atbgp_research_station }
+			create_research_station = { owner = event_target:atbgp_country_2 }
+		}
+	}
+
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = atbgp_d_dark_matter_20
+			set_planet_flag = atbgp_research_station
+		}
+	}
+
+	change_orbit = 60
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 远星同盟组织：圣痕
+atbgp_sys_2_3 = {
+	name = "atbgp_sys_2_3"
+	class = "sc_neutron_star"
+	flags = { atbgp_cluster atbgp_cluster_2 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_2_3
+		create_starbase = {
+			owner = event_target:atbgp_country_2
+			size = "starbase_outpost"
+		}
+		every_system_planet = {
+			limit = { has_planet_flag = atbgp_research_station }
+			create_research_station = { owner = event_target:atbgp_country_2 }
+		}
+	}
+
+	planet = {
+		class = "pc_neutron_star"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = atbgp_d_unity_22
+			set_planet_flag = atbgp_research_station
+		}
+	}
+
+	change_orbit = 50
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 远星同盟组织：预言
+atbgp_sys_2_4 = {
+	name = "atbgp_sys_2_4"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_2 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_2_4
+		create_starbase = {
+			owner = event_target:atbgp_country_2
+			size = "starbase_outpost"
+		}
+		every_system_planet = {
+			limit = { has_planet_flag = atbgp_research_station }
+			create_research_station = { owner = event_target:atbgp_country_2 }
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 40
+
+	planet = {
+		name = "atbgp_planet_2_4"
+		class = "pc_shattered"
+		orbit_distance = 0
+		orbit_angle = { min = 90 max = 270 }
+		size = 12
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = atbgp_d_nanites_10
+			set_planet_flag = atbgp_research_station
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 远星同盟组织：原罪
+atbgp_sys_2_5 = {
+	name = "atbgp_sys_2_5"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_2 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_2_5
+		create_starbase = {
+			owner = event_target:atbgp_country_2
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 40
+
+	planet = {
+		name = "atbgp_planet_2_5"
+		class = "pc_city"
+		orbit_distance = 0
+		orbit_angle = { min = 90 max = 270 }
+		size = 18
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+		init_effect = {
+			prevent_anomaly = yes
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 远星同盟组织：宽恕
+atbgp_sys_2_6 = {
+	name = "atbgp_sys_2_6"
+	class = "sc_g"
+	flags = { atbgp_cluster atbgp_cluster_2 ring_world_built }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_2_6
+		create_starbase = {
+			owner = event_target:atbgp_country_2
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = -30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+}
+
+# 大君主同盟领地 母星：天选者
+atbgp_home_3 = {
+	name = "atbgp_sys_3_0"
+	class = "sc_g"
+	flags = { atbgp_cluster atbgp_cluster_3 empire_home_system }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_3_0
+		generate_home_system_resources = yes
+		create_starbase = {
+			owner = event_target:atbgp_country_3
+			size = "starbase_starport"
+			module = shipyard
+			building = crew_quarters
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+
+	planet = {
+		count = { min = 1 max = 2 }
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 40 max = 100 }
+	}
+
+	planet = {
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		name = "atbgp_planet_3_home"
+		class = "pc_gaia"
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			save_global_event_target_as = atbgp_home_3
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			create_species = {
+				name = atbgp_species_3
+				plural = atbgp_species_3_plural
+				adjective = atbgp_species_3_adj
+				class = NECROID
+				portrait = random
+				traits = random
+				homeworld = this
+				effect = { save_global_event_target_as = atbgp_species_3 }
+			}
+			create_country = {
+				name = "atbgp_country_3"
+				adjective = "atbgp_country_3_adj"
+				authority = auth_imperial
+				civics = { civic = civic_philosopher_king civic = civic_feudal_realm }
+				ethos = { ethic = ethic_fanatic_authoritarian ethic = ethic_xenophobe }
+				species = event_target:atbgp_species_3
+				origin = "origin_default"
+				flag = random
+				ignore_initial_colony_error = yes
+				effect = {
+					save_global_event_target_as = atbgp_country_3
+					set_country_flag = atbgp_great_power
+					set_country_flag = atbgp_power_3
+					advanced_empire_base_init_effect = yes
+				}
+			}
+			set_owner = event_target:atbgp_country_3
+			set_controller = event_target:atbgp_country_3
+			set_capital = yes
+			while = {
+				count = 48
+				create_pop_group = { species = event_target:atbgp_species_3 }
+			}
+			colony = { generate_start_buildings_and_districts = yes }
+			add_deposit = atbgp_d_income_3
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		orbit_distance = 25
+		class = pc_gas_giant
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 大君主同盟领地：无法回头的命运
+atbgp_sys_3_1 = {
+	name = "atbgp_sys_3_1"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_3 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_3_1
+		create_starbase = {
+			owner = event_target:atbgp_country_3
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 35
+
+	planet = {
+		class = "pc_nuked"
+		orbit_distance = 0
+		orbit_angle = { min = 60 max = 300 }
+		size = { min = 14 max = 18 }
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_nuked"
+		orbit_distance = 22
+		orbit_angle = { min = 60 max = 300 }
+		size = { min = 14 max = 18 }
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_nuked"
+		orbit_distance = 22
+		orbit_angle = { min = 60 max = 300 }
+		size = { min = 14 max = 18 }
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+	}
+}
+
+# 大君主同盟领地：无法反抗的抉择
+atbgp_sys_3_2 = {
+	name = "atbgp_sys_3_2"
+	class = "rl_standard_stars"
+	flags = { atbgp_cluster atbgp_cluster_3 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_3_2
+		create_starbase = {
+			owner = event_target:atbgp_country_3
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 35
+
+	planet = {
+		class = "pc_nuked"
+		orbit_distance = 0
+		orbit_angle = { min = 60 max = 300 }
+		size = { min = 14 max = 18 }
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_nuked"
+		orbit_distance = 22
+		orbit_angle = { min = 60 max = 300 }
+		size = { min = 14 max = 18 }
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_nuked"
+		orbit_distance = 22
+		orbit_angle = { min = 60 max = 300 }
+		size = { min = 14 max = 18 }
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+	}
+}
+
+# 大君主同盟领地：无法遗忘之痛苦
+atbgp_sys_3_3 = {
+	name = "atbgp_sys_3_3"
+	class = "sc_black_hole"
+	flags = { atbgp_cluster atbgp_cluster_3 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_3_3
+		create_starbase = {
+			owner = event_target:atbgp_country_3
+			size = "starbase_outpost"
+		}
+		every_system_planet = {
+			limit = { has_planet_flag = atbgp_research_station }
+			create_research_station = { owner = event_target:atbgp_country_3 }
+		}
+	}
+
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = atbgp_d_dark_matter_22
+			set_planet_flag = atbgp_research_station
+		}
+	}
+
+	change_orbit = 60
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 大君主同盟领地：无法毁坏之历史
+atbgp_sys_3_4 = {
+	name = "atbgp_sys_3_4"
+	class = "sc_black_hole"
+	flags = { atbgp_cluster atbgp_cluster_3 }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_3_4
+		create_starbase = {
+			owner = event_target:atbgp_country_3
+			size = "starbase_outpost"
+		}
+		every_system_planet = {
+			limit = { has_planet_flag = atbgp_research_station }
+			create_research_station = { owner = event_target:atbgp_country_3 }
+		}
+	}
+
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = atbgp_d_dark_matter_22
+			set_planet_flag = atbgp_research_station
+		}
+	}
+
+	change_orbit = 60
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 大君主同盟领地：无法修正之原则
+atbgp_sys_3_5 = {
+	name = "atbgp_sys_3_5"
+	class = "sc_g"
+	flags = { atbgp_cluster atbgp_cluster_3 ring_world_built }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_3_5
+		create_starbase = {
+			owner = event_target:atbgp_country_3
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = -30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+}

@@ -1,0 +1,343 @@
+# 由 _tools/gen_great_powers.py 生成，请勿手改
+
+# 给星团母星接一条通往银河的航道：由近到远找还没连上的星系
+atbgp_link_to_galaxy = {
+	if = {
+		limit = {
+			any_system = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 80
+					type = euclidean
+				}
+			}
+		}
+		random_system = {
+			limit = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 80
+					type = euclidean
+				}
+			}
+			add_hyperlane = { from = this to = event_target:$SYSTEM$ }
+		}
+	}
+	else_if = {
+		limit = {
+			any_system = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 130
+					type = euclidean
+				}
+			}
+		}
+		random_system = {
+			limit = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 130
+					type = euclidean
+				}
+			}
+			add_hyperlane = { from = this to = event_target:$SYSTEM$ }
+		}
+	}
+	else_if = {
+		limit = {
+			any_system = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 200
+					type = euclidean
+				}
+			}
+		}
+		random_system = {
+			limit = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 200
+					type = euclidean
+				}
+			}
+			add_hyperlane = { from = this to = event_target:$SYSTEM$ }
+		}
+	}
+	else_if = {
+		limit = {
+			any_system = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 320
+					type = euclidean
+				}
+			}
+		}
+		random_system = {
+			limit = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 320
+					type = euclidean
+				}
+			}
+			add_hyperlane = { from = this to = event_target:$SYSTEM$ }
+		}
+	}
+	else_if = {
+		limit = {
+			any_system = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 600
+					type = euclidean
+				}
+			}
+		}
+		random_system = {
+			limit = {
+				atbgp_link_candidate = yes
+				NOT = { has_hyperlane_to = event_target:$SYSTEM$ }
+				distance = {
+					source = event_target:$SYSTEM$
+					max_distance <= 600
+					type = euclidean
+				}
+			}
+			add_hyperlane = { from = this to = event_target:$SYSTEM$ }
+		}
+	}
+}
+
+# 国家作用域：普通开局的初始舰船（建造舰、科研舰带科学家、3 艘护卫舰）
+atbgp_spawn_start_fleets = {
+	create_fleet = {
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = random
+				random_existing_design = constructor
+			}
+			set_location = root.capital_star
+		}
+	}
+	create_fleet = {
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = random
+				random_existing_design = science
+			}
+			set_location = root.capital_star
+			save_event_target_as = atbgp_science_ship
+		}
+	}
+	create_leader = {
+		name = random
+		species = root.species
+		class = scientist
+		skill = 1
+	}
+	event_target:atbgp_science_ship = { assign_leader = last_created_leader }
+	create_fleet = {
+		effect = {
+			set_owner = root
+			while = {
+				count = 3
+				create_ship = {
+					name = random
+					random_existing_design = corvette
+				}
+			}
+			set_location = root.capital_star
+		}
+	}
+}
+
+# 国家作用域：用专属立绘的元首替换开局元首（时间永驻，10 级）
+# 元首是单独的物种，原版改造/飞升换肖像不会作用到她身上
+atbgp_install_named_ruler = {
+	if = {
+		limit = { exists = ruler }
+		ruler = { set_leader_flag = atbgp_replaced_ruler }
+	}
+	create_species = {
+		name = atbgp_ruler_species_$ID$
+		plural = atbgp_ruler_species_$ID$
+		adjective = atbgp_ruler_species_$ID$
+		class = $CLASS$
+		portrait = atbgp_$ID$
+		traits = random
+		allow_negative_traits = no
+		effect = { save_event_target_as = atbgp_ruler_species_tmp }
+	}
+	create_leader = {
+		class = official
+		species = event_target:atbgp_ruler_species_tmp
+		name = atbgp_leader_$ID$
+		gender = female
+		skill = 10
+		immortal = yes
+		hide_age = yes
+		randomize_traits = no
+		skip_background_generation = yes
+		effect = {
+			set_leader_flag = atbgp_named_ruler
+			set_leader_flag = leader_death_events_blocked
+			set_immortal = yes
+			# 开局后统治者不能获得非议会特质，先给 1 天豁免标记再加
+			set_timed_leader_flag = {
+				flag = ignore_autocracy_ruler_trait_restriction
+				days = 1
+			}
+			add_trait = {
+				trait = leader_trait_intemporal
+				show_message = no
+			}
+			change_leader_portrait = atbgp_$ID$
+			save_event_target_as = atbgp_new_ruler
+		}
+	}
+	set_leader = event_target:atbgp_new_ruler
+	atbgp_remove_replaced_ruler = yes
+}
+
+# 国家作用域：随机名字的 10 级元首（大君主同盟领地）
+atbgp_install_random_ruler = {
+	if = {
+		limit = { exists = ruler }
+		ruler = { set_leader_flag = atbgp_replaced_ruler }
+	}
+	create_leader = {
+		class = official
+		species = root.species
+		name = random
+		skill = 10
+		effect = { save_event_target_as = atbgp_new_ruler }
+	}
+	set_leader = event_target:atbgp_new_ruler
+	atbgp_remove_replaced_ruler = yes
+}
+
+atbgp_remove_replaced_ruler = {
+	every_owned_leader = {
+		limit = {
+			has_leader_flag = atbgp_replaced_ruler
+			is_ruler = no
+		}
+		kill_leader = { show_notification = no }
+	}
+}
+
+# 国家作用域：补给特征始终在首都上；危机后再加一份战时补给
+atbgp_maintain_income = {
+	if = {
+		limit = { capital_scope = { NOT = { has_deposit = atbgp_d_income_$N$ } } }
+		every_galaxy_planet = {
+			limit = { has_deposit = atbgp_d_income_$N$ }
+			remove_deposit = atbgp_d_income_$N$
+		}
+		capital_scope = { add_deposit = atbgp_d_income_$N$ }
+	}
+	if = {
+		limit = {
+			has_country_flag = atbgp_crisis_mode
+			capital_scope = { NOT = { has_deposit = atbgp_d_income_crisis_$N$ } }
+		}
+		every_galaxy_planet = {
+			limit = { has_deposit = atbgp_d_income_crisis_$N$ }
+			remove_deposit = atbgp_d_income_crisis_$N$
+		}
+		capital_scope = { add_deposit = atbgp_d_income_crisis_$N$ }
+	}
+}
+
+# 星球作用域：补给特征不在对应列强的首都上就移除
+atbgp_clear_foreign_income = {
+	if = {
+		limit = {
+			OR = {
+				has_deposit = atbgp_d_income_1
+				has_deposit = atbgp_d_income_crisis_1
+			}
+			NAND = {
+				exists = owner
+				owner = { has_country_flag = atbgp_power_1 }
+				is_capital = yes
+			}
+		}
+		remove_deposit = atbgp_d_income_1
+		remove_deposit = atbgp_d_income_crisis_1
+	}
+	if = {
+		limit = {
+			OR = {
+				has_deposit = atbgp_d_income_2
+				has_deposit = atbgp_d_income_crisis_2
+			}
+			NAND = {
+				exists = owner
+				owner = { has_country_flag = atbgp_power_2 }
+				is_capital = yes
+			}
+		}
+		remove_deposit = atbgp_d_income_2
+		remove_deposit = atbgp_d_income_crisis_2
+	}
+	if = {
+		limit = {
+			OR = {
+				has_deposit = atbgp_d_income_3
+				has_deposit = atbgp_d_income_crisis_3
+			}
+			NAND = {
+				exists = owner
+				owner = { has_country_flag = atbgp_power_3 }
+				is_capital = yes
+			}
+		}
+		remove_deposit = atbgp_d_income_3
+		remove_deposit = atbgp_d_income_crisis_3
+	}
+}
+
+# 国家作用域：已选 11 个飞升时直接补上星海天罚；拥有星海天罚就加舰队加成
+atbgp_check_become_the_crisis = {
+	if = {
+		limit = {
+			num_ascension_perks >= 11
+			NOT = { has_ascension_perk = ap_become_the_crisis }
+		}
+		add_ascension_perk = ap_become_the_crisis
+	}
+	if = {
+		limit = {
+			has_ascension_perk = ap_become_the_crisis
+			NOT = { has_modifier = atbgp_btc_bonus }
+		}
+		add_modifier = {
+			modifier = atbgp_btc_bonus
+			days = -1
+		}
+	}
+}

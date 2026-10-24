@@ -1,0 +1,327 @@
+# 皇女的远征军EX：银河边缘外的远征军星团（开局由 atb_ex_relocate_expedition 生成，再把远征军整体搬过来）
+# 星团内部自成一体，只有「大传承者」一条航道通往银河。
+# 所有星系带 atbgp_cluster 标记：保底列强接入银河时不会连到这里。
+
+@atb_rl_moon = 10
+
+# 起源之地：新的起源要塞（搬家后的首都）
+atb_rl_home = {
+	name = "atb_system_origin"
+	class = "sc_g"
+	flags = { atb_rl_cluster atbgp_cluster empire_home_system atb_origin_system }
+
+	init_effect = {
+		save_global_event_target_as = atb_rl_sys_home
+		generate_home_system_resources = yes
+		create_starbase = {
+			owner = event_target:atb_rl_country
+			size = "starbase_starport"
+			module = shipyard
+			building = crew_quarters
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 0
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 30
+
+	planet = {
+		class = pc_molten
+		orbit_distance = 15
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 12 }
+	}
+
+	# 起源要塞（搬家后由事件接管为首都）
+	planet = {
+		name = "atb_planet_fortress"
+		class = pc_atb_fortress
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = 25
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+		init_effect = {
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			clear_deposits = yes
+			save_global_event_target_as = atb_rl_new_capital
+		}
+	}
+
+	planet = {
+		class = pc_barren
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 10 max = 16 }
+	}
+
+	planet = {
+		class = pc_gas_giant
+		orbit_distance = 30
+		orbit_angle = { min = 90 max = 270 }
+		satellite_naming_policy = lower_case_latin_letters
+		change_orbit = @atb_rl_moon
+		moon = {
+			count = { min = 1 max = 2 }
+			class = random_non_colonizable
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		class = pc_frozen
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 10 max = 16 }
+	}
+}
+
+# 星海萤火：L 星门（需要远星 DLC，且游戏设置启用了 L 星门；否则只是普通黑洞星系）
+atb_rl_lgate = {
+	name = "atb_system_rl_lgate"
+	class = "sc_black_hole"
+	flags = { atb_rl_cluster atbgp_cluster atb_lgate_system }
+
+	init_effect = {
+		save_global_event_target_as = atb_rl_sys_lgate
+		if = {
+			limit = {
+				has_distar = yes
+				lgate_enabled = yes
+			}
+			set_star_flag = lgate
+			spawn_megastructure = {
+				type = lgate_base
+				orbit_angle = 225
+				orbit_distance = 30
+			}
+		}
+	}
+
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+	}
+
+	change_orbit = 60
+
+	planet = {
+		count = { min = 0 max = 1 }
+		class = "pc_broken"
+		size = { min = 10 max = 15 }
+		init_effect = { prevent_anomaly = yes }
+	}
+
+	change_orbit = 30
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 无形链接：随机前超光速土著（原版 pre_ftl_init_01 的写法）
+atb_rl_preftl = {
+	name = "atb_system_rl_preftl"
+	class = "rl_standard_stars"
+	flags = { atb_rl_cluster atbgp_cluster primitive_system }
+
+	init_effect = {
+		save_global_event_target_as = atb_rl_sys_preftl
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 20
+
+	planet = {
+		orbit_distance = 20
+		count = { min = 0 max = 2 }
+	}
+
+	change_orbit = 20
+
+	planet = {
+		count = 1
+		orbit_distance = 0
+		class = "rl_habitable_normal"
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 14 max = 22 }
+		init_effect = {
+			prevent_anomaly = yes
+			generate_pre_ftls_on_planet = yes
+		}
+		change_orbit = @atb_rl_moon
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		orbit_distance = 20
+		count = { min = 1 max = 3 }
+	}
+}
+
+# 极限边缘：黑洞
+atb_rl_blackhole = {
+	name = "atb_system_rl_blackhole"
+	class = "sc_black_hole"
+	flags = { atb_rl_cluster atbgp_cluster }
+
+	init_effect = {
+		save_global_event_target_as = atb_rl_sys_blackhole
+	}
+
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+	}
+
+	change_orbit = 60
+
+	planet = {
+		count = { min = 2 max = 4 }
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 辉煌耀世：中子星
+atb_rl_neutron = {
+	name = "atb_system_rl_neutron"
+	class = "sc_neutron_star"
+	flags = { atb_rl_cluster atbgp_cluster }
+
+	init_effect = {
+		save_global_event_target_as = atb_rl_sys_neutron
+	}
+
+	planet = {
+		class = "pc_neutron_star"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+	}
+
+	change_orbit = 50
+
+	planet = {
+		count = { min = 2 max = 4 }
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 窒息瑶光：脉冲星
+atb_rl_pulsar = {
+	name = "atb_system_rl_pulsar"
+	class = "sc_pulsar"
+	flags = { atb_rl_cluster atbgp_cluster }
+
+	init_effect = {
+		save_global_event_target_as = atb_rl_sys_pulsar
+	}
+
+	planet = {
+		class = "pc_pulsar"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+	}
+
+	change_orbit = 50
+
+	planet = {
+		count = { min = 2 max = 4 }
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 大传承者：G 型恒星 + 遗落星球（照原版 mechanocalibrator_system 的地形）
+# 遗落星球上放原版「行星机械」异常点：勘测发现、研究成功后由原版 ancrel.2050 生成考古点
+# 星团唯一通往银河的出口
+atb_rl_gateway = {
+	name = "atb_system_rl_gateway"
+	class = "sc_g"
+	flags = { atb_rl_cluster atbgp_cluster }
+
+	init_effect = {
+		save_global_event_target_as = atb_rl_sys_gateway
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 30 max = 35 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	change_orbit = 30
+
+	planet = {
+		name = "atb_planet_rl_relic"
+		class = "pc_relic"
+		orbit_distance = 0
+		orbit_angle = { min = 90 max = 270 }
+		size = 20
+		has_ring = no
+		init_effect = {
+			clear_deposits = yes
+			set_planet_flag = atb_rl_mechanocalibrator
+			save_global_event_target_as = mechanocalibrator_planet
+			add_anomaly = { category = ANCREL_MECHANO_CAT }
+			add_deposit = d_shattered_solar_array
+			add_deposit = d_flooded_reactor_pits
+			add_deposit = d_ancient_reactor_pits
+			add_deposit = d_collapsed_spire
+			add_deposit = d_relic_metal_boneyard
+			add_deposit = d_relic_dense_ruins
+		}
+	}
+
+	change_orbit = 35
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+}

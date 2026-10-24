@@ -1,0 +1,112 @@
+# 皇女的远征军：四位皇女的命定特质
+# 不设 leader_trait_type（与原版光耀者起源特质相同写法），不占用基础/老练/命定栏位，8 级仍可正常选择命定特质；
+# 外观用 paragon 稀有度（紫色命定边框）。没有 selectable_weight，不会出现在升级选择池里。
+# 不朽、免疫负面特质、免疫死亡事件、免维护由 atb_setup_princess_flags 设置的领袖标记实现，
+# 这里的特质负责显示和经验加成。
+
+leader_trait_atb_hyperdimensional = {
+	inline_script = {
+		script = trait/icon
+		CLASS = leader
+		ICON = "GFX_leader_trait_legendary_leader"
+		RARITY = paragon
+		COUNCIL = no
+		TIER = none
+	}
+	custom_tooltip_with_modifiers = leader_trait_atb_hyperdimensional_tt
+
+	self_modifier = {
+		species_leader_exp_gain = 1.0
+	}
+
+	leader_class = { commander scientist official }
+	initial = no
+	randomized = no
+	background_icon = GFX_leader_background_destiny_1
+}
+
+# 第一皇女 菲莉若雅：超然生命
+leader_trait_atb_transcendent_life = {
+	inline_script = {
+		script = trait/icon
+		ICON = "GFX_leader_trait_chosen"
+		RARITY = paragon
+		COUNCIL = yes
+		TIER = none
+	}
+
+	councilor_modifier = {
+		empire_size_pops_mult = -0.33
+	}
+
+	leader_class = { commander scientist official }
+	initial = no
+	randomized = no
+	background_icon = GFX_leader_background_destiny_1
+}
+
+# 第二皇女 尤古朵拉：元素主宰
+leader_trait_atb_elemental_sovereign = {
+	inline_script = {
+		script = trait/icon
+		ICON = "GFX_leader_trait_supreme_admiral"
+		RARITY = paragon
+		COUNCIL = yes
+		TIER = none
+	}
+
+	councilor_modifier = {
+		country_naval_cap_add = 1000
+	}
+
+	leader_class = { commander scientist official }
+	initial = no
+	randomized = no
+	background_icon = GFX_leader_background_destiny_1
+}
+
+# 第三皇女 幽妃丽娜：大飞升者
+leader_trait_atb_grand_ascendant = {
+	inline_script = {
+		script = trait/icon
+		ICON = "GFX_leader_trait_spark_of_genius"
+		RARITY = paragon
+		COUNCIL = yes
+		TIER = none
+	}
+
+	councilor_modifier = {
+		all_technology_research_speed = 0.15
+		num_tech_alternatives_add = 2
+		leader_trait_selection_options_add = 3
+		negative_traits_country = -2
+	}
+
+	leader_class = { commander scientist official }
+	initial = no
+	randomized = no
+	background_icon = GFX_leader_background_destiny_1
+}
+
+# 第四皇女 安泰熙雅：缄默使徒
+leader_trait_atb_silent_apostle = {
+	inline_script = {
+		script = trait/icon
+		ICON = "GFX_leader_trait_shadow_broker"
+		RARITY = paragon
+		COUNCIL = yes
+		TIER = none
+	}
+
+	councilor_modifier = {
+		intel_decryption_add = 10
+		intel_encryption_add = 10
+		divided_patrongage_max_subjects = 3
+		country_base_influence_produces_add = 1
+	}
+
+	leader_class = { commander scientist official }
+	initial = no
+	randomized = no
+	background_icon = GFX_leader_background_destiny_1
+}

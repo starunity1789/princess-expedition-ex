@@ -1,0 +1,150 @@
+﻿l_simp_chinese:
+ # 起源
+ origin_atb_princess_expedition:0 "皇女的远征军"
+ origin_atb_princess_expedition_desc:0 "§R警告：禁用除['concept_synthetic_ascension']以外的所有飞升路线。§!\n\n在一颗富饶的星球上，一个富饶的国度独自叩开了高等科技的大门——然而母星依旧四分五裂，统一遥遥无期。这个开明的威权帝国决定先行一步：皇帝留守母星，四位皇女驾驶移动要塞「起源要塞」跃迁至遥远的「起源之地」，为帝国在群星间开辟新的根基。\n\n然而随行的殖民者没能适应新的世界。一种无法治愈的病症在要塞中蔓延，他们再也无法孕育后代。为了让远征延续下去，皇女们决定以合成之躯延续族人的血脉。"
+ origin_tooltip_atb_princess_expedition_effects:0 "—$INITIAL_POPS$§G+900§!$NEW_LINE$—$SPECIES_TRAITS$['concept_pathogenic_genes']\n—母星：§Y起源要塞§!（超大型移动居住站）$TABBED_NEW_LINE$—规模：£planetsize£25$TABBED_NEW_LINE$—宜居度：§G100%§!$TABBED_NEW_LINE$—地块上限：住房、发电、采矿、农业各§G15§!$TABBED_NEW_LINE$—['concept_abandoned_cities', £blocker£$concept_abandoned_cities$]：+2$TABBED_NEW_LINE$—['concept_identity_repository',£building£$concept_identity_repository$]$TABBED_NEW_LINE$—['concept_abandoned_gene_clinic',£building£$concept_abandoned_gene_clinic$]$TABBED_NEW_LINE$—特殊地形：§Y$d_atb_fortress_core$§!、§Y$d_atb_star_sea_monument$§!、§Y$d_atb_sensor_array$§!$NEW_LINE$—母星系：§Y起源之地§!，附近有一座带§YL星门§!的星系「§Y$atb_system_lgate$§!」$NEW_LINE$—局势：['concept_identity_rescue']$NEW_LINE$—$ADDITIONAL_TECHNOLOGIES_STRING$['concept_synth_ai']$NEW_LINE$—$GUARANTEED_RESEARCH_OPTION_STRING$['concept_robotic_workers', £engineering_research£$tech_robotic_workers$]$NEW_LINE$—§Y四位皇女§!担任统治者、国防部长、科学部长与国务卿：不朽、不可解雇、免维护$NEW_LINE$—§Y第一皇女§!是帝国的§Y光耀者§!：经历光耀者的第一幕与第二幕，但她不会老去，没有第三幕$NEW_LINE$—遗珍：§Y$r_atb_princess_seal$§!$NEW_LINE$—完成§Y合成黎明§!后，可以确立§Y$auth_atb_expedition$§!$NEW_LINE$—研究考古实验室后，可以通过首都决议§Y$decision_atb_precursor_secrets$§!$NEW_LINE$—L星群中必定能找到§Y小灰§!"
+ origin_tooltip_atb_princess_expedition_negative_effects:0 "—£pop£§H人口§!：正在消亡$NEW_LINE$—L星群结局必定为§R灰色风暴§!$NEW_LINE$—仅限独裁政体"
+
+ # 星系与星球
+ atb_system_origin:0 "起源之地"
+ atb_system_lgate:0 "静默之门"
+ atb_planet_fortress:0 "起源要塞"
+ pc_atb_fortress:0 "移动要塞"
+ pc_atb_fortress_plural:0 "移动要塞"
+ pc_atb_fortress_desc:0 "帝国倾举国之力建造的超大型移动居住站。它载着皇女与殖民者跨越了群星，如今在起源之地安家。要塞内部设有完整的住房、发电、采矿与农业区，任何种族都能在这里舒适地生活。"
+ pc_atb_fortress_adj:0 "要塞"
+ pc_atb_fortress_tile:0 "要塞甲板"
+ pc_atb_fortress_tile_desc:0 "层层叠叠的人造甲板，下方是要塞的引擎与反应堆。"
+
+ # 四位皇女
+ atb_leader_name_filiruoya:0 "第一皇女 菲莉若雅"
+ atb_leader_name_yugudora:0 "第二皇女 尤古朵拉"
+ atb_leader_name_youfeilina:0 "第三皇女 幽妃丽娜"
+ atb_leader_name_antaixiya:0 "第四皇女 安泰熙雅"
+ atb_leader_desc_filiruoya:0 "远征军的统帅，帝国的长公主。白发上的晶花与白羽是她的徽记，也刻在亲卫队的印章上。临行前，皇帝把印章亲手交到了她的手里。"
+ atb_leader_desc_yugudora:0 "身着赤红礼服的二皇女。传说她身边游弋的金鱼，是凝成实体的元素之灵。她执掌远征军的舰队，舰队的引擎与炮火都回应着她的意志。"
+ atb_leader_desc_youfeilina:0 "沉静寡言的三皇女，身周常有幽暗的雾气流转。她是帝国最杰出的学者，主持着族人意识的数字化工程，也是第一个看清飞升之路的人。"
+ atb_leader_desc_antaixiya:0 "最年幼的四皇女，笑容温柔，却极少开口。远征军的外交使节与密探都直接向她汇报，没有人知道她究竟掌握了多少秘密。"
+
+ # 特质
+ leader_trait_atb_hyperdimensional:0 "高维化改造"
+ leader_trait_atb_hyperdimensional_desc:0 "这位皇女接受了只有皇族才有资格承受的高维化改造，她的存在已经部分脱离了三维时空。"
+ leader_trait_atb_hyperdimensional_tt:0 "—§G不朽§!\n—§G免疫所有负面特质§!\n—§G免疫各种形式的死亡与抹除事件§!（万一被移除，会在次日原样重新凝聚）\n—§G不需要维护费§!\n—§G不可解雇§!\n—肖像不会随物种飞升而改变"
+ leader_trait_atb_transcendent_life:0 "超然生命"
+ leader_trait_atb_transcendent_life_desc:0 "菲莉若雅的生命形态超越了凡俗。在她的意志之下，帝国能承载远超常理的规模。"
+ leader_trait_atb_elemental_sovereign:0 "元素主宰"
+ leader_trait_atb_elemental_sovereign_desc:0 "尤古朵拉以元素之力驱动舰队的引擎与炮火，远征军能维系的舰队规模因她而几乎没有上限。"
+ leader_trait_atb_grand_ascendant:0 "大飞升者"
+ leader_trait_atb_grand_ascendant_desc:0 "幽妃丽娜已经窥见了飞升的彼岸。她的学识为帝国的研究与领袖的成长开辟了更多道路。"
+ leader_trait_atb_silent_apostle:0 "缄默使徒"
+ leader_trait_atb_silent_apostle_desc:0 "安泰熙雅从不多言，但她的沉默本身，就是一张遍布银河的网。"
+ atb_princess_no_dismiss_tt:0 "$TRIGGER_FAIL$§Y皇女§!是远征军的支柱，不能被解雇。"
+
+ # 遗珍
+ r_atb_princess_seal:0 "皇女亲卫队印章"
+ r_atb_princess_seal_desc:0 "一枚由黑曜金属与蓝晶铸成的印章，饰以第一皇女的白羽徽记。皇帝在远征出发前亲手将它交给女儿们——凭此印章，可以唤醒沉睡在要塞深处的亲卫战体。"
+ r_atb_princess_seal_active_tt:0 "在首都召唤§G5§!个§Y$atb_princess_guard_warform$§!（无维护费，永久存在）。"
+ r_atb_princess_seal_cooldown_tt:0 "\n$atb_princess_seal_cooldown$：£time£ §Y10年§!"
+ r_atb_princess_seal_on_cooldown:0 "$TRIGGER_FAIL$§Y$r_atb_princess_seal$§!正在冷却中。"
+
+ # 陆军
+ atb_princess_guard_warform:0 "皇女亲卫·赛博勒克斯战体"
+ atb_princess_guard_warform_plural:0 "皇女亲卫·赛博勒克斯战体"
+ atb_princess_guard_warform_desc:0 "沉睡在起源要塞深处的巨型战斗机器人，只听从皇女亲卫队印章的号令。它不需要任何维护。"
+ atb_army_princess_guard:0 "皇女亲卫队"
+
+ # 修正
+ atb_princess_seal_cooldown:0 "印章冷却"
+ atb_princess_seal_cooldown_desc:0 "皇女亲卫队印章需要时间重新积蓄力量。"
+ atb_expedition_banner:0 "皇女的远征军"
+ atb_expedition_banner_desc:0 "我们是四位皇女率领的远征军，是帝国在群星间的先遣。母星上的皇帝，正等待着我们的好消息。"
+
+ # 异常点
+ atb_disco_gray_cat:0 "风暴残骸中的信号"
+ mod_country_base_minor_artifacts_produces_add:0 "£minor_artifacts£ 每月文物"
+ atb_disco_gray_cat_desc:0 "在灰色风暴肆虐过的残骸之间，传感器捕捉到一个微弱、断续的信号。它似乎……在呼唤我们。"
+
+ # 开局画面
+ START_SCREEN_ATB_PRINCESS_EXPEDITION:0 "\n\n远征军的四位皇女已经各就各位：第一皇女菲莉若雅执掌帝国，第二皇女尤古朵拉统领舰队，第三皇女幽妃丽娜主持科研，第四皇女安泰熙雅负责外交与情报。母星上的皇帝，正等待着我们的好消息。"
+
+ # 事件
+ atb.10.name:0 "远征的开端"
+ atb.10.desc:0 "起源要塞的跃迁引擎终于冷却下来。舷窗外是一颗陌生而温和的恒星——我们把这里命名为「起源之地」。\n\n我们的母星富饶而美丽，我们的国度率先叩开了高等科技的大门。可母星上的列国依旧纷争不休，统一遥遥无期。与其困守一隅，皇帝陛下决定让帝国先一步走向群星。他留在母星守护家园，四位皇女则带着要塞与最勇敢的殖民者，踏上了这场远征。\n\n然而新世界并不欢迎我们。殖民者接连病倒，医官们最终确认：这是一种无法治愈的病症，我们的族人再也无法孕育后代。\n\n第一皇女菲莉若雅在要塞中央大厅宣布了决定：远征不会因此终止。三皇女幽妃丽娜将主持意识数字化工程，让族人以合成之躯延续下去；二皇女尤古朵拉执掌舰队；四皇女安泰熙雅负责与群星间的其他文明打交道。\n\n「父皇在等我们的好消息，」菲莉若雅说，「我们不会让他失望。」"
+ atb.10.a:0 "为了帝国的未来。"
+ atb.10.a.tt:0 "§Y四位皇女§!已就任统治者与议会要职。\n获得遗珍§Y$r_atb_princess_seal$§!。"
+ atb.30.name:0 "高维回响"
+ atb.30.desc.filiruoya:0 "要塞中央的空气突然泛起涟漪，无数细碎的光点聚拢、交织——片刻之后，§Y第一皇女菲莉若雅§!重新站在了我们面前，仿佛什么都不曾发生。\n\n高维化改造让她的存在不再完全依附于这具身体。只要高维中的她依然存在，她就会回来。"
+ atb.30.desc.yugudora:0 "舰桥上的金鱼忽然齐齐转向同一个方向。光点在那里聚拢、交织——片刻之后，§Y第二皇女尤古朵拉§!重新站在了我们面前，仿佛什么都不曾发生。\n\n高维化改造让她的存在不再完全依附于这具身体。只要高维中的她依然存在，她就会回来。"
+ atb.30.desc.youfeilina:0 "实验室里的幽雾无风自动，渐渐凝成一个熟悉的身影——§Y第三皇女幽妃丽娜§!重新站在了我们面前，仿佛什么都不曾发生。\n\n高维化改造让她的存在不再完全依附于这具身体。只要高维中的她依然存在，她就会回来。"
+ atb.30.desc.antaixiya:0 "没有任何预兆，也没有任何声响。当我们回过神来时，§Y第四皇女安泰熙雅§!已经安静地站在那里，对我们微微一笑，仿佛什么都不曾发生。\n\n高维化改造让她的存在不再完全依附于这具身体。只要高维中的她依然存在，她就会回来。"
+ atb.30.a:0 "欢迎回来，殿下。"
+
+ # 起源要塞的特殊地形
+ d_atb_fortress_core:0 "要塞能源核心"
+ d_atb_fortress_core_desc:0 "起源要塞的心脏，一座在整场跃迁中从未熄灭过的反应堆。帝国的工匠为它写下的设计寿命，比帝国的历史还要长。如今，它的余热温暖着农场，余能驱动着矿井，科研所里彻夜不熄的灯火，也都来自它平稳的脉动。"
+ d_atb_star_sea_monument:0 "帝国星海纪念碑"
+ d_atb_star_sea_monument_desc:0 "要塞中庭立着一座纪念碑。碑上没有雕像，只有一幅星图：一道光从母星出发，穿过无数星系，停在起源之地。光的尽头还留着很长一段空白——每一个从这里经过的人，都会在心里替它往前多画一步。"
+ d_atb_sensor_array:0 "起源要塞星海探测阵列"
+ d_atb_sensor_array_desc:0 "沿着要塞外壳展开的巨型探测阵列，原本是为了在跃迁途中为要塞导航。在起源之地，它把目光投向了更远的地方——远到连四皇女都说，她的密探也没有它看得清楚。"
+
+ # 无畏舰
+ atb_dreadnought:0 "无畏舰"
+ atb_dreadnought_plural:0 "无畏舰"
+ atb_dreadnought_cap:0 "$atb_dreadnought$"
+ tech_atb_dreadnought:0 "无畏舰"
+ tech_atb_dreadnought_desc:0 "把泰坦的主炮装进战列舰的船体。更紧凑的龙骨结构与泰坦级反应堆，让一艘战列舰也能扛起一门足以撕开整支舰队阵型的泰坦级武器。"
+ TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_TITLE:0 "§H$UNLOCKS_SHIP_TYPE$：§!无畏舰"
+ TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_DESC:0 "§H无畏舰§!\n战列舰级别的船体，舰艏可以搭载一门§Y泰坦级（T）§!武器，使用泰坦反应堆。"
+ ATB_DREADNOUGHT_BOW_L1M1S2:0 "$BATTLESHIP_BOW_L1M1S2$"
+ ATB_DREADNOUGHT_BOW_L2:0 "$BATTLESHIP_BOW_L2$"
+ ATB_DREADNOUGHT_BOW_M1S2SHB:0 "$BATTLESHIP_BOW_M1S2SHB$"
+ ATB_DREADNOUGHT_BOW_T1:0 "裁决舰艏"
+ ATB_DREADNOUGHT_MID_L2M2:0 "$BATTLESHIP_MID_L2M2$"
+ ATB_DREADNOUGHT_MID_L3:0 "$BATTLESHIP_MID_L3$"
+ ATB_DREADNOUGHT_MID_M4SHB:0 "$BATTLESHIP_MID_M4SHB$"
+ ATB_DREADNOUGHT_MID_S4LHB:0 "$BATTLESHIP_MID_S4LHB$"
+ ATB_DREADNOUGHT_STERN_L1:0 "$BATTLESHIP_STERN_L1$"
+ ATB_DREADNOUGHT_STERN_M2:0 "$BATTLESHIP_STERN_M2$"
+
+ # 远征军体制
+ auth_atb_expedition:0 "远征军体制"
+ auth_atb_expedition_desc:0 "当最后一位族人完成了数字化，远征军就不再是一支等待归期的先遣队了。皇女们以合成之躯重建了帝国的秩序：权柄依旧握在第一皇女手中，但每一位合成公民都被许诺了同样丰足的生活——这是远征出发那天，她们在父皇面前许下的承诺。"
+ auth_atb_expedition_tt:0 "§Y$living_standard_utopian$§!生活水平：不要求平等主义思潮\n可以解锁§Y高级机器人特质§!"
+ atb_regime_requires_dictatorial:0 "$TRIGGER_FAIL$需要§Y$auth_dictatorial$§!政体。"
+
+ atb.40.name:0 "远征军的新秩序"
+ atb.40.desc:0 "合成黎明已经过去了一些日子。要塞的走廊里不再有人咳嗽，医疗舱改成了仓库，育婴室重新粉刷过一遍，等待着第一批新生的合成公民。\n\n今天，四位皇女在中央大厅召集了全体议会。§Y第一皇女菲莉若雅§!把一份很薄的文件放在桌上。\n\n「出发的时候，我们是一支等待归期的远征军。可我们已经回不去了——不是因为路太远，而是因为我们已经变成了另一种人。」她停了一下，「既然如此，就让这里成为帝国真正的样子。」\n\n文件上写的是一套新的体制：权力依旧集中，但每一位公民——无论他曾经是谁——都将过上同样丰足的生活。§Y第三皇女幽妃丽娜§!补充说，机器躯体的全部改造技术也会随之开放。\n\n大厅里很安静。最后，§Y第四皇女安泰熙雅§!轻轻点了点头。"
+ atb.40.a:0 "确立远征军体制。"
+ atb.40.a.tt:0 "政体变为§Y$auth_atb_expedition$§!：\n—效果与§Y$auth_synth_dictatorial_physical$§!相同，并能解锁§Y高级机器人特质§!\n—可以使用§Y$living_standard_utopian$§!生活水平\n—来自人口和区划的帝国规模：§G-12%§!"
+ atb.40.b:0 "现在还不是时候。"
+ atb.40.b.tt:0 "之后可以通过首都决议§Y$decision_atb_adopt_expedition_regime$§!确立。"
+
+ # 光耀者：第一皇女菲莉若雅
+ atb.51.name:0 "父皇的回信"
+ atb.51.desc:0 "三十年的计划走到了尽头。今天，一封来自母星的超光速信件抵达了起源要塞——这是远征出发以来，皇帝寄来的第一封信。\n\n信很短。皇帝没有问远征军打下了多少星系，也没有问工厂的产量。他只问四个女儿过得好不好，问要塞里的冬天冷不冷，最后写道：「母星上的人都在谈论你们。菲莉若雅，你已经不只是我的女儿了。」\n\n§Y第一皇女菲莉若雅§!把信读了两遍，然后当着议会的面，把它收进了印章匣里。信里的话，她一句也没有提起。\n\n有议员提议，是时候为第一皇女加冕了。她摇了摇头：「这片星海只有一位皇帝，他在母星上。我们是他的远征军。」"
+ atb.51.a:0 "远征才刚刚开始。"
+ atb.51.b:0 "这份荣耀属于父皇。"
+ atb.51.b.tt:0 "§Y第一皇女菲莉若雅§!的统治声望提升。"
+
+ atb.52.name:0 "星海之誓"
+ atb.52.desc:0 "在远征纪念日的庆典上，§Y第一皇女菲莉若雅§!走上了要塞的观景甲板，向整个帝国讲话。\n\n她没有准备讲稿。她讲起第一年那个寒冷的冬天，讲起一个接一个病倒的殖民者，讲起幽妃丽娜在实验室里熬过的那些夜晚；她讲起尤古朵拉的舰队第一次凯旋，讲起安泰熙雅带回的那份改变了一切的情报。\n\n「有人问我，我们什么时候回家，」她说，「我的回答是：我们脚下的每一颗星球，都是家。」\n\n那天，帝国所有的屏幕上都是她的身影。很多年以后，人们还会在街头巷尾复述这句话。"
+ atb.52.a:0 "群星即是故乡。"
+ atb.52.b:0 "让誓言传遍帝国。"
+ atb.52.b.tt:0 "获得修正§Y$atb_star_sea_oath$§!，持续§Y10年§!。"
+
+ atb.53.name:0 "不落的星辰"
+ atb.53.desc:0 "按照古老的说法，光耀者的故事总会走向终点：再伟大的领袖也会老去，再牢固的权柄也会松动，人们总有一天要学会在没有那个人的世界里生活。\n\n可菲莉若雅没有老去。\n\n高维化改造让她的时间停在了离开母星的那一天。当年追随她出发的殖民者早已换上合成之躯，而他们之后的新公民，从有记忆起就看着同一张面孔出现在每一次庆典上。对他们来说，第一皇女不是某一位统治者，而是像起源之地的恒星一样，理所当然地一直在那里。\n\n今夜，菲莉若雅独自站在星海纪念碑前，看着星图上那段长长的空白。她在那里站了很久，最后伸出手，把那道光往前画了一步。"
+ atb.53.a:0 "她会一直在那里。"
+ atb.53.a.tt:0 "§Y第一皇女菲莉若雅§!的统治声望大幅提升。\n获得永久修正§Y$atb_unfading_star$§!。"
+
+ atb_star_sea_oath:0 "星海之誓"
+ atb_star_sea_oath_desc:0 "「我们脚下的每一颗星球，都是家。」第一皇女的这句话，至今仍在帝国的街头巷尾流传。"
+ atb_unfading_star:0 "不落的星辰"
+ atb_unfading_star_desc:0 "第一皇女菲莉若雅不会老去，也不会离开。对远征军的子民来说，她就像起源之地的恒星一样恒常。"
+
+ # 首都决议
+ decision_atb_precursor_secrets:0 "探索先驱者文明的秘密"
+ decision_atb_precursor_secrets_desc:0 "考古实验室的研究员们拼凑出了一份清单：七个早已消逝的先驱者文明，七份被埋藏的遗产。只要有足够的文物作为线索，我们就能把它们一一找回来。"
+ decision_atb_precursor_secrets_tt:0 "随机获得一项尚未掌握的§Y先驱者科技§!（$tech_secrets_cybrex$、$tech_secrets_league$、$tech_secrets_irassian$、$tech_secrets_vultaum$、$tech_secrets_yuht$、$tech_secrets_baol$、$tech_secrets_zroni$），直到七项全部获得。"
+ decision_atb_adopt_expedition_regime:0 "确立远征军体制"
+ decision_atb_adopt_expedition_regime_desc:0 "合成黎明之后，皇女们为帝国拟定的新秩序仍然摆在议会的桌上，等待签署。"

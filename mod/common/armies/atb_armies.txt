@@ -1,0 +1,18 @@
+# 皇女亲卫·赛博勒克斯战体
+# 数值与原版赛博勒克斯战体（cybrex_warform）相同；无维护费，不可建造，只能由「皇女亲卫队印章」召唤。
+atb_princess_guard_warform = {
+	damage = 5.0
+	health = 7.0
+	has_morale = no
+	morale_damage = 2
+	collateral_damage = 5.0
+	war_exhaustion = 4.0
+	time = 500
+	has_species = no
+
+	icon = GFX_army_type_machine_assault
+
+	potential_country = {
+		always = no
+	}
+}

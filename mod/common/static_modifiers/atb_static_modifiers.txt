@@ -1,0 +1,25 @@
+# 皇女亲卫队印章的冷却
+atb_princess_seal_cooldown = {
+	icon = "gfx/interface/icons/modifiers/mod_atb_princess_seal.dds"
+}
+
+# 光耀者第二幕：星海之誓（10 年）
+atb_star_sea_oath = {
+	icon = "gfx/interface/icons/modifiers/mod_atb_princess_seal.dds"
+	planet_stability_add = 5
+	pop_happiness = 0.10
+	country_unity_produces_mult = 0.10
+}
+
+# 光耀者终章：不落的星辰（永久）
+atb_unfading_star = {
+	icon = "gfx/interface/icons/modifiers/mod_atb_princess_seal.dds"
+	planet_stability_add = 3
+	country_unity_produces_mult = 0.10
+	all_technology_research_speed = 0.05
+}
+
+# 远征军的身份标识：起源切换为合成繁衍后，用这个永久修正在国家修正列表里显示「皇女的远征军」
+atb_expedition_banner = {
+	icon = "gfx/interface/icons/modifiers/mod_atb_princess_seal.dds"
+}

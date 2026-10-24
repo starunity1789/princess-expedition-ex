@@ -1,0 +1,41 @@
+# 皇女的远征军EX：银河规则（开局加给所有国家，之后每月给新出现的国家补上）
+# - 基础存储上限 +100K
+# - 可建造舰船（生物船除外）基础舰体翻倍：按每种舰体的原版基础值加同样多的舰体值
+#   数值取自原版 common/ship_sizes；无畏舰取自本 MOD 的 atb_ship_sizes.txt
+atb_ex_galaxy_rules = {
+	country_resource_max_add = 100000
+
+	# 常规军舰
+	shipsize_corvette_hull_add = 300
+	shipsize_frigate_hull_add = 600
+	shipsize_destroyer_hull_add = 650
+	shipsize_cruiser_hull_add = 1400
+	shipsize_battleship_hull_add = 4800
+	shipsize_atb_dreadnought_hull_add = 6000
+	shipsize_titan_hull_add = 20000
+	shipsize_colossus_hull_add = 30000
+	shipsize_juggernaut_hull_add = 100000
+
+	# 民用船
+	shipsize_constructor_hull_add = 300
+	shipsize_science_hull_add = 300
+	shipsize_colonizer_hull_add = 500
+	shipsize_sponsored_colonizer_hull_add = 500
+	shipsize_lithoid_colonizer_hull_add = 500
+	shipsize_guided_sapience_colonizer_hull_add = 500
+	shipsize_transport_hull_add = 100
+	shipsize_nomads_constructor_hull_add = 300
+
+	# 特定起源 / 路线专属的可建造舰船
+	shipsize_crisis_corvette_hull_add = 300
+	shipsize_crisis_destroyer_hull_add = 650
+	shipsize_crisis_cruiser_hull_add = 1400
+	shipsize_star_eater_hull_add = 150000
+	shipsize_offspring_corvette_hull_add = 300
+	shipsize_offspring_destroyer_hull_add = 650
+	shipsize_offspring_cruiser_hull_add = 1400
+	shipsize_offspring_battleship_hull_add = 4800
+	shipsize_ember_cruiser_hull_add = 1400
+	shipsize_ember_battleship_hull_add = 4800
+	shipsize_paladin_ship_hull_add = 1500
+}

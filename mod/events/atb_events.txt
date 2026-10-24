@@ -1,0 +1,481 @@
+namespace = atb
+
+#############################################
+# 开局初始化
+#############################################
+
+# 帝国初始化（国家作用域，empire_init_add_technologies）
+# 切换为合成繁衍起源，让原版合成繁衍的全部机制生效
+country_event = {
+	id = atb.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_origin = origin_atb_princess_expedition
+			has_country_flag = atb_princess_expedition
+		}
+	}
+
+	immediate = {
+		atb_swap_origin = yes
+	}
+}
+
+# 首都初始化（殖民地作用域，empire_init_capital_colony，排在原版 game_start.12 之后）
+colony_event = {
+	id = atb.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = owner
+		owner = {
+			OR = {
+				has_origin = origin_atb_princess_expedition
+				has_country_flag = atb_princess_expedition
+			}
+		}
+	}
+
+	immediate = {
+		owner = { atb_swap_origin = yes }
+		# 如果起源切换晚于原版首都初始化，原版不会做合成繁衍的首都设置，这里补上
+		if = {
+			limit = {
+				NOT = { has_building = building_identity_repository }
+			}
+			owner = {
+				set_variable = {
+					which = num_dead_identities
+					value = 300
+				}
+				give_technology = { tech = tech_powered_exoskeletons message = no }
+			}
+			add_building = building_abandoned_gene_clinic
+			while = {
+				count = 2
+				add_deposit = d_abandoned_cities
+			}
+			add_building = building_identity_repository
+			create_pop_group = {
+				size = 900
+				species = owner_main_species
+			}
+		}
+		# 原版合成繁衍会把首都尺寸设为 20，这里恢复为 25
+		set_planet_size = 25
+		set_planet_flag = atb_origin_fortress
+		# 起源要塞的三处特殊地形
+		if = {
+			limit = {
+				NOT = { has_planet_flag = atb_fortress_deposits_added }
+			}
+			set_planet_flag = atb_fortress_deposits_added
+			add_deposit = d_atb_fortress_core
+			add_deposit = d_atb_star_sea_monument
+			add_deposit = d_atb_sensor_array
+		}
+	}
+}
+
+# 国家开局（on_game_start_country，排在原版议会生成 game_start.72 之后）
+country_event = {
+	id = atb.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princess_expedition
+		NOT = { has_country_flag = atb_princesses_installed }
+	}
+
+	immediate = {
+		set_country_flag = atb_princesses_installed
+		atb_install_princesses = yes
+		add_relic = r_atb_princess_seal
+		atb_start_luminary = yes
+		country_event = { id = atb.10 days = 3 }
+	}
+}
+
+# 全局开局（on_game_start，排在原版 distar.8000 随机 L 星群结局之后）
+# 有远征军在场时：L 星群结局固定为灰色风暴，并保证能找到小灰。
+# 如果游戏规则屏蔽了破坏性内容（灰色风暴不会出现），则改为空星群结局，小灰按原版方式出现。
+event = {
+	id = atb.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		lgate_enabled = yes
+		any_country = { has_country_flag = atb_princess_expedition }
+	}
+
+	immediate = {
+		remove_global_flag = dragon_season
+		remove_global_flag = gray_goo_empire_set
+		if = {
+			limit = { blocks_disruptive_gameplay = no }
+			set_global_flag = gray_goo_crisis_set
+			set_global_flag = active_gray_goo
+			set_global_flag = atb_forced_gray_tempest
+		}
+		else = {
+			remove_global_flag = gray_goo_crisis_set
+			remove_global_flag = active_gray_goo
+		}
+	}
+}
+
+#############################################
+# 剧情
+#############################################
+
+# 远征的开端
+country_event = {
+	id = atb.10
+	title = "atb.10.name"
+	desc = "atb.10.desc"
+	picture = GFX_evt_atb_expedition
+	show_sound = event_radio_chatter
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princess_expedition
+	}
+
+	option = {
+		name = "atb.10.a"
+		custom_tooltip = atb.10.a.tt
+	}
+}
+
+# 合成黎明之后：远征军体制
+country_event = {
+	id = atb.40
+	title = "atb.40.name"
+	desc = "atb.40.desc"
+	picture = GFX_evt_synth_fertility
+	show_sound = event_radio_chatter
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princess_expedition
+		NOT = { has_country_flag = atb_expedition_regime }
+	}
+
+	option = {
+		name = "atb.40.a"
+		allow = {
+			custom_tooltip = {
+				fail_text = atb_regime_requires_dictatorial
+				has_authority = auth_dictatorial
+			}
+		}
+		custom_tooltip = atb.40.a.tt
+		hidden_effect = {
+			atb_adopt_expedition_regime = yes
+		}
+	}
+
+	option = {
+		name = "atb.40.b"
+		custom_tooltip = atb.40.b.tt
+	}
+}
+
+#############################################
+# 光耀者：第一皇女菲莉若雅
+# 第一幕沿用原版统一承诺局势（paragon.5004 起），第二幕沿用原版的里程碑与成长事件；
+# 原本由 paragon.5020 收束的第一幕改由 atb.51 收束，之后接上 atb.52、atb.53。皇女不朽，没有第三幕。
+#############################################
+
+# 第一幕终：父皇的回信
+country_event = {
+	id = atb.51
+	title = "atb.51.name"
+	desc = "atb.51.desc"
+	picture = GFX_evt_legendary_leader
+	show_sound = event_celebration
+	event_window_type = leader_story
+
+	picture_event_data = {
+		portrait = root.owner.ruler
+		room = root.owner
+	}
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princess_expedition
+		exists = ruler
+		ruler = { has_leader_flag = paragon_origin_legendary_leader }
+	}
+
+	immediate = {
+		country_event = { id = paragon.5059 days = 3600 random = 3600 }
+		country_event = { id = atb.52 days = 3600 random = 1800 }
+	}
+
+	option = {
+		name = "atb.51.a"
+		custom_tooltip = paragon.leader.growth.positive
+		ruler = {
+			paragon_origin_legendary_leader_trait_giver = yes
+		}
+	}
+
+	option = {
+		name = "atb.51.b"
+		custom_tooltip = atb.51.b.tt
+		add_modifier = {
+			modifier = media_coverage_positive_low
+			days = 1800
+		}
+		hidden_effect = {
+			ruler = {
+				change_variable = {
+					which = paragon_origin_story_ruling
+					value = 1
+				}
+			}
+		}
+	}
+}
+
+# 第二幕：星海之誓
+country_event = {
+	id = atb.52
+	title = "atb.52.name"
+	desc = "atb.52.desc"
+	picture = GFX_evt_atb_expedition
+	show_sound = event_celebration
+	event_window_type = leader_story
+
+	picture_event_data = {
+		portrait = root.owner.ruler
+		room = root.owner
+	}
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princess_expedition
+		exists = ruler
+		ruler = { has_leader_flag = paragon_origin_legendary_leader }
+	}
+
+	immediate = {
+		ruler = {
+			change_variable = {
+				which = paragon_origin_story_ruling
+				value = 1
+			}
+		}
+		country_event = { id = atb.53 days = 3600 random = 3600 }
+	}
+
+	option = {
+		name = "atb.52.a"
+		custom_tooltip = paragon.leader.growth.positive
+		ruler = {
+			paragon_origin_legendary_leader_trait_giver = yes
+		}
+	}
+
+	option = {
+		name = "atb.52.b"
+		custom_tooltip = atb.52.b.tt
+		add_modifier = {
+			modifier = atb_star_sea_oath
+			days = 3600
+		}
+	}
+}
+
+# 终章（代替原版的第三幕）：不落的星辰
+country_event = {
+	id = atb.53
+	title = "atb.53.name"
+	desc = "atb.53.desc"
+	picture = GFX_evt_legendary_leader
+	show_sound = event_celebration
+	event_window_type = leader_story
+
+	picture_event_data = {
+		portrait = root.owner.ruler
+		room = root.owner
+	}
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princess_expedition
+		exists = ruler
+		ruler = { has_leader_flag = paragon_origin_legendary_leader }
+		NOT = { has_country_flag = atb_luminary_complete }
+	}
+
+	immediate = {
+		set_country_flag = atb_luminary_complete
+		ruler = {
+			change_variable = {
+				which = paragon_origin_story_ruling
+				value = 2
+			}
+		}
+	}
+
+	option = {
+		name = "atb.53.a"
+		custom_tooltip = atb.53.a.tt
+		ruler = {
+			paragon_origin_legendary_leader_trait_giver = yes
+		}
+		add_modifier = {
+			modifier = atb_unfading_star
+			days = -1
+		}
+	}
+}
+
+# 皇女重新凝聚形体（复活保底触发时的通知）
+country_event = {
+	id = atb.30
+	title = "atb.30.name"
+	desc = {
+		trigger = { has_country_flag = atb_princess_revived_filiruoya }
+		text = "atb.30.desc.filiruoya"
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = atb_princess_revived_filiruoya }
+			has_country_flag = atb_princess_revived_yugudora
+		}
+		text = "atb.30.desc.yugudora"
+	}
+	desc = {
+		trigger = {
+			NOR = {
+				has_country_flag = atb_princess_revived_filiruoya
+				has_country_flag = atb_princess_revived_yugudora
+			}
+			has_country_flag = atb_princess_revived_youfeilina
+		}
+		text = "atb.30.desc.youfeilina"
+	}
+	desc = {
+		trigger = {
+			NOR = {
+				has_country_flag = atb_princess_revived_filiruoya
+				has_country_flag = atb_princess_revived_yugudora
+				has_country_flag = atb_princess_revived_youfeilina
+			}
+		}
+		text = "atb.30.desc.antaixiya"
+	}
+	picture = GFX_evt_atb_expedition
+	show_sound = event_radio_chatter
+	is_triggered_only = yes
+
+	option = {
+		name = "atb.30.a"
+		hidden_effect = {
+			remove_country_flag = atb_princess_revived_filiruoya
+			remove_country_flag = atb_princess_revived_yugudora
+			remove_country_flag = atb_princess_revived_youfeilina
+			remove_country_flag = atb_princess_revived_antaixiya
+		}
+	}
+}
+
+#############################################
+# 维护与保底
+#############################################
+
+# 每月：锁肖像、锁职位、记录等级、检查是否需要复活
+country_event = {
+	id = atb.20
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princesses_installed
+	}
+
+	immediate = {
+		atb_princess_maintenance = yes
+		atb_revive_princesses = yes
+		# 旧存档补发：开局之后才加入的内容（特殊地形、光耀者）
+		every_owned_planet = {
+			limit = {
+				has_planet_flag = atb_origin_fortress
+				NOT = { has_planet_flag = atb_fortress_deposits_added }
+			}
+			set_planet_flag = atb_fortress_deposits_added
+			add_deposit = d_atb_fortress_core
+			add_deposit = d_atb_star_sea_monument
+			add_deposit = d_atb_sensor_array
+		}
+		atb_start_luminary = yes
+		# 合成黎明（原版合成繁衍事件链的终章 machine_age.3315）之后，解锁远征军体制
+		if = {
+			limit = {
+				has_modifier = synthetic_dawn
+				NOT = { has_country_flag = atb_regime_unlocked }
+			}
+			set_country_flag = atb_regime_unlocked
+			country_event = { id = atb.40 days = 7 }
+		}
+	}
+}
+
+# 皇女死亡或被解职（This = 国家，From = 领袖）：第二天检查并复活
+country_event = {
+	id = atb.21
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princesses_installed
+		from = { has_leader_flag = atb_princess }
+	}
+
+	immediate = {
+		country_event = { id = atb.22 days = 1 }
+	}
+}
+
+country_event = {
+	id = atb.22
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atb_princesses_installed
+	}
+
+	immediate = {
+		atb_revive_princesses = yes
+	}
+}
+
+# 皇女被俘（This = 领袖，From = 俘获方，FromFrom = 原所属国）：让她回到远征军
+leader_event = {
+	id = atb.23
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_leader_flag = atb_princess
+	}
+
+	immediate = {
+		fromfrom = {
+			country_event = { id = atb.22 days = 1 }
+		}
+		kill_leader = { show_notification = no }
+	}
+}

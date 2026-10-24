@@ -1,0 +1,190 @@
+# 由 _tools/gen_great_powers.py 生成，请勿手改
+
+atbgp_d_income_1 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_station_reactor
+	resources = {
+		category = planet_deposits
+		produces = {
+			energy = 222
+			minerals = 222
+			food = 222
+			consumer_goods = 222
+			alloys = 222
+			volatile_motes = 22
+			exotic_gases = 22
+			rare_crystals = 22
+			physics_research = 45
+			society_research = 45
+			engineering_research = 45
+		}
+	}
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_income_crisis_1 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_station_reactor
+	resources = {
+		category = planet_deposits
+		produces = {
+			energy = 222
+			minerals = 222
+			food = 222
+			consumer_goods = 222
+			alloys = 222
+			volatile_motes = 22
+			exotic_gases = 22
+			rare_crystals = 22
+			physics_research = 595
+			society_research = 595
+			engineering_research = 595
+		}
+	}
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_income_2 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_station_reactor
+	resources = {
+		category = planet_deposits
+		produces = {
+			energy = 222
+			minerals = 222
+			food = 222
+			consumer_goods = 222
+			alloys = 222
+			volatile_motes = 22
+			exotic_gases = 22
+			rare_crystals = 22
+			physics_research = 42
+			society_research = 42
+			engineering_research = 42
+		}
+	}
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_income_crisis_2 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_station_reactor
+	resources = {
+		category = planet_deposits
+		produces = {
+			energy = 222
+			minerals = 222
+			food = 222
+			consumer_goods = 222
+			alloys = 222
+			volatile_motes = 22
+			exotic_gases = 22
+			rare_crystals = 22
+			physics_research = 592
+			society_research = 592
+			engineering_research = 592
+		}
+	}
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_income_3 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_station_reactor
+	resources = {
+		category = planet_deposits
+		produces = {
+			energy = 222
+			minerals = 222
+			food = 222
+			consumer_goods = 222
+			alloys = 222
+			volatile_motes = 22
+			exotic_gases = 22
+			rare_crystals = 22
+			physics_research = 56
+			society_research = 56
+			engineering_research = 56
+		}
+	}
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_income_crisis_3 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_station_reactor
+	resources = {
+		category = planet_deposits
+		produces = {
+			energy = 222
+			minerals = 222
+			food = 222
+			consumer_goods = 222
+			alloys = 222
+			volatile_motes = 22
+			exotic_gases = 22
+			rare_crystals = 22
+			physics_research = 606
+			society_research = 606
+			engineering_research = 606
+		}
+	}
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_dark_matter_20 = {
+	icon = "unused/d_strategic_resources"
+	resources = {
+		category = orbital_research_deposits
+		produces = {
+			sr_dark_matter = 20
+		}
+	}
+	station = shipclass_research_station
+	is_for_colonizable = no
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_dark_matter_22 = {
+	icon = "unused/d_strategic_resources"
+	resources = {
+		category = orbital_research_deposits
+		produces = {
+			sr_dark_matter = 22
+		}
+	}
+	station = shipclass_research_station
+	is_for_colonizable = no
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_nanites_10 = {
+	icon = "d_nanite_corpses"
+	resources = {
+		category = orbital_research_deposits
+		produces = {
+			nanites = 10
+		}
+	}
+	station = shipclass_research_station
+	is_for_colonizable = no
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_unity_22 = {
+	resources = {
+		category = orbital_research_deposits
+		produces = {
+			unity = 22
+		}
+	}
+	station = shipclass_research_station
+	is_for_colonizable = no
+	drop_weight = { weight = 0 }
+}

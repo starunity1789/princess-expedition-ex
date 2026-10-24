@@ -1,0 +1,45 @@
+# 皇女的远征军：无畏舰
+# 前置：战列舰 + 泰坦（泰坦科技解锁 T 槽武器「湮灭光束」）。所有国家（包括 AI）都可以研究。
+
+tech_atb_dreadnought = {
+	icon = "tech_titans"
+	cost = @tier5cost1
+	area = engineering
+	tier = 5
+	category = { voidcraft }
+	prerequisites = { "tech_battleships" "tech_titans" }
+	weight = @tier5weight1
+
+	potential = {
+		country_uses_bio_ships = no
+		host_has_dlc = "Apocalypse"
+	}
+
+	prereqfor_desc = {
+		ship = {
+			title = "TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_TITLE"
+			desc = "TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_DESC"
+		}
+	}
+
+	modifier = {
+		command_limit_add = 20
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 2
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = 3
+			any_neighbor_country = {
+				has_technology = tech_atb_dreadnought
+			}
+		}
+	}
+
+	ai_weight = {
+		factor = @ai_ship_types_factor
+	}
+}

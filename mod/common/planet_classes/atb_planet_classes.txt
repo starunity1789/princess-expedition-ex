@@ -1,0 +1,44 @@
+# 起源要塞：外观为居住站，但使用标准地块组，因此可以建造住房、发电、采矿、农业地块。
+# 地块上限：总地块数 = 星球尺寸 25 + 35 = 60；发电/采矿/农业各 15，剩余 15 格留给住房（城市地块不封顶）。
+pc_atb_fortress = {
+	entity = "atb_fortress"
+	icon = GFX_planet_type_habitat
+	icon_large = GFX_planet_type_habitat_big
+	entity_scale = 1.0
+	enable_tilt = no
+	fixed_entity_scale = yes
+	place_entity_on_planet_plane = no
+	entity_face_object = no
+
+	atmosphere_color		= hsv { 0.58 0.25 1.0 }
+	atmosphere_intensity	= 1.0
+	atmosphere_width		= 0.5
+	show_city = no
+	city_color_lut = "gfx/portraits/misc/colorcorrection_continental.dds"
+
+	spawn_odds = 0
+	extra_orbit_size = 0
+	extra_planet_count = 0
+	chance_of_ring = 0.0
+
+	planet_size = 25
+	moon_size = 25
+
+	colonizable = yes
+	district_set = standard
+	ideal = yes
+	starting_planet = no
+	orbit_lines = yes
+	is_artificial_planet = yes
+	can_have_no_pop_colony = yes
+
+	modifier = {
+		pop_environment_tolerance = 1.0
+		planet_max_districts_add = 35
+		district_generator_max_add = 15
+		district_mining_max_add = 15
+		district_farming_max_add = 15
+	}
+
+	carry_cap_per_free_district = @carry_cap_normal
+}

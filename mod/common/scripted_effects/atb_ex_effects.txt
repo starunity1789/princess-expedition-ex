@@ -1,0 +1,245 @@
+# 皇女的远征军EX
+
+# 星系作用域：在旁边生成原版传奇领袖坠毁点（凯德斯事件链的起点），自动接上航道
+atb_ex_spawn_legendary_leader_site = {
+	spawn_system = {
+		min_distance >= 15
+		max_distance <= 30
+		initializer = atb_ex_legendary_leader_start_site
+		hyperlane = yes
+	}
+}
+
+# 给还没有银河规则的国家加上（存储上限 +100K、非生物船基础舰体翻倍）
+atb_ex_apply_galaxy_rules = {
+	every_country = {
+		limit = { NOT = { has_modifier = atb_ex_galaxy_rules } }
+		add_modifier = {
+			modifier = atb_ex_galaxy_rules
+			days = -1
+		}
+	}
+}
+
+# 国家作用域（首都是起源要塞的远征军）：开局整体搬到银河边缘外的星团
+# 星团 7 个星系见 atb_rl_initializers.txt，2 点钟方向；只有「大传承者」一条航道接入银河
+atb_ex_relocate_expedition = {
+	save_global_event_target_as = atb_rl_country
+	capital_scope = { save_global_event_target_as = atb_rl_old_capital }
+	capital_star = { save_global_event_target_as = atb_rl_old_system }
+
+	# 1. 生成星团
+	set_spawn_system_batch = begin
+	if = {
+		limit = { galaxy_size = tiny }
+		no_scope = {
+			spawn_system = {
+				min_distance >= 295
+				max_distance <= 303
+				min_orientation_angle = 28
+				max_orientation_angle = 32
+				initializer = atb_rl_home
+				hyperlane = no
+			}
+		}
+	}
+	else_if = {
+		limit = { galaxy_size = small }
+		no_scope = {
+			spawn_system = {
+				min_distance >= 395
+				max_distance <= 403
+				min_orientation_angle = 28
+				max_orientation_angle = 32
+				initializer = atb_rl_home
+				hyperlane = no
+			}
+		}
+	}
+	else_if = {
+		limit = { galaxy_size = medium }
+		no_scope = {
+			spawn_system = {
+				min_distance >= 495
+				max_distance <= 503
+				min_orientation_angle = 28
+				max_orientation_angle = 32
+				initializer = atb_rl_home
+				hyperlane = no
+			}
+		}
+	}
+	else_if = {
+		limit = { galaxy_size = large }
+		no_scope = {
+			spawn_system = {
+				min_distance >= 545
+				max_distance <= 553
+				min_orientation_angle = 28
+				max_orientation_angle = 32
+				initializer = atb_rl_home
+				hyperlane = no
+			}
+		}
+	}
+	else_if = {
+		limit = { galaxy_size = huge }
+		no_scope = {
+			spawn_system = {
+				min_distance >= 545
+				max_distance <= 553
+				min_orientation_angle = 28
+				max_orientation_angle = 32
+				initializer = atb_rl_home
+				hyperlane = no
+			}
+		}
+	}
+	else = {
+		no_scope = {
+			spawn_system = {
+				min_distance >= 545
+				max_distance <= 553
+				min_orientation_angle = 28
+				max_orientation_angle = 32
+				initializer = atb_rl_home
+				hyperlane = no
+			}
+		}
+	}
+	event_target:atb_rl_sys_home = {
+		spawn_system = {
+			min_distance >= 55
+			max_distance <= 62
+			min_orientation_angle = 207
+			max_orientation_angle = 213
+			initializer = atb_rl_gateway
+			hyperlane = no
+		}
+		spawn_system = {
+			min_distance >= 32
+			max_distance <= 38
+			min_orientation_angle = 116
+			max_orientation_angle = 124
+			initializer = atb_rl_lgate
+			hyperlane = no
+		}
+		spawn_system = {
+			min_distance >= 32
+			max_distance <= 38
+			min_orientation_angle = 296
+			max_orientation_angle = 304
+			initializer = atb_rl_preftl
+			hyperlane = no
+		}
+		spawn_system = {
+			min_distance >= 32
+			max_distance <= 38
+			min_orientation_angle = 66
+			max_orientation_angle = 74
+			initializer = atb_rl_blackhole
+			hyperlane = no
+		}
+		spawn_system = {
+			min_distance >= 32
+			max_distance <= 38
+			min_orientation_angle = 346
+			max_orientation_angle = 354
+			initializer = atb_rl_neutron
+			hyperlane = no
+		}
+		spawn_system = {
+			min_distance >= 60
+			max_distance <= 66
+			min_orientation_angle = 27
+			max_orientation_angle = 33
+			initializer = atb_rl_pulsar
+			hyperlane = no
+		}
+	}
+	set_spawn_system_batch = end
+
+	event_target:atb_rl_sys_home = { add_hyperlane = { from = this to = event_target:atb_rl_sys_gateway } }
+	event_target:atb_rl_sys_home = { add_hyperlane = { from = this to = event_target:atb_rl_sys_lgate } }
+	event_target:atb_rl_sys_home = { add_hyperlane = { from = this to = event_target:atb_rl_sys_preftl } }
+	event_target:atb_rl_sys_home = { add_hyperlane = { from = this to = event_target:atb_rl_sys_blackhole } }
+	event_target:atb_rl_sys_home = { add_hyperlane = { from = this to = event_target:atb_rl_sys_neutron } }
+	event_target:atb_rl_sys_lgate = { add_hyperlane = { from = this to = event_target:atb_rl_sys_blackhole } }
+	event_target:atb_rl_sys_preftl = { add_hyperlane = { from = this to = event_target:atb_rl_sys_neutron } }
+	event_target:atb_rl_sys_blackhole = { add_hyperlane = { from = this to = event_target:atb_rl_sys_pulsar } }
+	event_target:atb_rl_sys_neutron = { add_hyperlane = { from = this to = event_target:atb_rl_sys_pulsar } }
+	# 唯一的出口
+	atbgp_link_to_galaxy = { SYSTEM = atb_rl_sys_gateway }
+
+	# 2. 新起源要塞接管首都：人口逐组搬过去，建筑、区划、特殊地形按开局重新生成
+	event_target:atb_rl_new_capital = {
+		set_owner = event_target:atb_rl_country
+		set_controller = event_target:atb_rl_country
+		remove_planet_flag = ignore_startup_effect
+		set_planet_flag = atb_origin_fortress
+	}
+	event_target:atb_rl_old_capital = {
+		every_owned_pop_group = {
+			save_event_target_as = atb_rl_src_group
+			event_target:atb_rl_new_capital = {
+				create_pop_group = {
+					pop_group = event_target:atb_rl_src_group
+					size = 1
+					effect = { save_event_target_as = atb_rl_dst_group }
+				}
+			}
+			transfer_pop_amount = {
+				source = event_target:atb_rl_src_group
+				target = event_target:atb_rl_dst_group
+				percentage = 1
+			}
+		}
+	}
+	event_target:atb_rl_new_capital = {
+		set_capital = yes
+		# 照原版首都初始化 game_start.12 的顺序：先开局地块和障碍物，再建筑区划
+		# （建筑区划里已经包含合成繁衍的废弃基因诊所、身份存储库和 2 个废弃城市，不要再手动加）
+		# 人口已经从旧首都搬过来，不再调用 generate_start_pops
+		colony = {
+			generate_start_deposits_and_blockers = yes
+			generate_start_buildings_and_districts = yes
+		}
+		# 原版合成繁衍会把首都尺寸设为 20，恢复为起源要塞的 25
+		set_planet_size = 25
+		set_planet_flag = atb_fortress_deposits_added
+		add_deposit = d_atb_fortress_core
+		add_deposit = d_atb_star_sea_monument
+		add_deposit = d_atb_sensor_array
+	}
+	species = { set_species_homeworld = event_target:atb_rl_new_capital }
+
+	# 3. 舰队随行
+	every_owned_fleet = {
+		limit = { NOT = { is_ship_class = shipclass_starbase } }
+		set_location = event_target:atb_rl_sys_home
+	}
+
+	# 4. 旧母星：要塞已经开走，只剩一颗荒芜星球；拆掉旧星港，星系改名
+	event_target:atb_rl_old_capital = {
+		remove_planet_flag = atb_origin_fortress
+		remove_all_buildings = yes
+		destroy_colony = yes
+		clear_deposits = yes
+		change_pc = pc_barren
+	}
+	event_target:atb_rl_old_system = {
+		set_name = "atb_system_old_origin"
+		if = {
+			limit = { exists = starbase }
+			starbase = { fleet = { destroy_fleet = this } }
+		}
+	}
+
+	# 5. 只有新母星系已勘测；星团其余星系保持未探索，由科研船自己去勘测
+	event_target:atb_rl_sys_home = {
+		set_surveyed = { surveyed = yes surveyor = event_target:atb_rl_country }
+		every_system_planet = {
+			set_surveyed = { surveyed = yes surveyor = event_target:atb_rl_country }
+		}
+	}
+}

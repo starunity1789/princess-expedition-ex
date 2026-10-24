@@ -1,0 +1,32 @@
+spriteTypes = {
+	# 起源选择界面大图（220×115）
+	spriteType = {
+		name = "GFX_origin_atb_princess_expedition"
+		texturefile = "gfx/event_pictures/origins/origin_atb_princess_expedition.dds"
+		alwaystransparent = yes
+	}
+	spriteType = {
+		parent = "GFX_origin_atb_princess_expedition"
+		name = "GFX_origin_atb_princess_expedition_zoom_1"
+		upper_left = { x = 57 y = 5 }
+		lower_right = { x = 200 y = 109 }
+	}
+	spriteType = {
+		parent = "GFX_origin_atb_princess_expedition"
+		name = "GFX_origin_atb_princess_expedition_zoom_2"
+		upper_left = { x = 57 y = 5 }
+		lower_right = { x = 167 y = 85 }
+	}
+
+	# 事件图（450×150）
+	spriteType = {
+		name = "GFX_evt_atb_expedition"
+		texturefile = "gfx/event_pictures/atb_expedition.dds"
+	}
+
+	# 遗珍图标（150×150）
+	spriteType = {
+		name = "GFX_relic_atb_princess_seal"
+		texturefile = "gfx/interface/icons/relics/r_atb_princess_seal.dds"
+	}
+}

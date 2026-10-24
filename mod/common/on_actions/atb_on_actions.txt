@@ -1,0 +1,49 @@
+# 皇女的远征军：挂到原版 on_action 上（同名 on_action 会与原版合并，事件排在原版之后）
+
+empire_init_add_technologies = {
+	events = {
+		atb.1
+	}
+}
+
+empire_init_capital_colony = {
+	events = {
+		atb.2
+	}
+}
+
+on_game_start_country = {
+	events = {
+		atb.3
+	}
+}
+
+on_game_start = {
+	events = {
+		atb.4
+	}
+}
+
+on_monthly_pulse_country = {
+	events = {
+		atb.20
+	}
+}
+
+on_leader_death = {
+	events = {
+		atb.21
+	}
+}
+
+on_leader_fired = {
+	events = {
+		atb.21
+	}
+}
+
+on_leader_captured = {
+	events = {
+		atb.23
+	}
+}

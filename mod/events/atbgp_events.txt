@@ -1,0 +1,536 @@
+# 由 _tools/gen_great_powers.py 生成，请勿手改
+namespace = atbgp
+
+# 开局：在银河边缘外现造三个列强的星团（on_game_start）
+event = {
+	id = atbgp.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = atbgp_spawned }
+	}
+
+	immediate = {
+		set_global_flag = atbgp_spawned
+		set_spawn_system_batch = begin
+		# 燃烧白鹿军团：11 点方位（角度 120）
+		if = {
+			limit = { galaxy_size = tiny }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 240
+					max_distance <= 248
+					min_orientation_angle = 118
+					max_orientation_angle = 122
+					initializer = atbgp_home_1
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = small }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 340
+					max_distance <= 348
+					min_orientation_angle = 118
+					max_orientation_angle = 122
+					initializer = atbgp_home_1
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = medium }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 440
+					max_distance <= 448
+					min_orientation_angle = 118
+					max_orientation_angle = 122
+					initializer = atbgp_home_1
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = large }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 118
+					max_orientation_angle = 122
+					initializer = atbgp_home_1
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = huge }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 118
+					max_orientation_angle = 122
+					initializer = atbgp_home_1
+					hyperlane = no
+				}
+			}
+		}
+		else = {
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 118
+					max_orientation_angle = 122
+					initializer = atbgp_home_1
+					hyperlane = no
+				}
+			}
+		}
+		event_target:atbgp_sys_1_0 = {
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 36
+				max_orientation_angle = 44
+				initializer = atbgp_sys_1_1
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 76
+				max_orientation_angle = 84
+				initializer = atbgp_sys_1_2
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 156
+				max_orientation_angle = 164
+				initializer = atbgp_sys_1_3
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 196
+				max_orientation_angle = 204
+				initializer = atbgp_sys_1_4
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 62
+				max_distance <= 70
+				min_orientation_angle = 96
+				max_orientation_angle = 104
+				initializer = atbgp_sys_1_5
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 62
+				max_distance <= 70
+				min_orientation_angle = 136
+				max_orientation_angle = 144
+				initializer = atbgp_sys_1_6
+				hyperlane = no
+			}
+		}
+		# 远星同盟组织：5 点方位（角度 300）
+		if = {
+			limit = { galaxy_size = tiny }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 240
+					max_distance <= 248
+					min_orientation_angle = 298
+					max_orientation_angle = 302
+					initializer = atbgp_home_2
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = small }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 340
+					max_distance <= 348
+					min_orientation_angle = 298
+					max_orientation_angle = 302
+					initializer = atbgp_home_2
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = medium }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 440
+					max_distance <= 448
+					min_orientation_angle = 298
+					max_orientation_angle = 302
+					initializer = atbgp_home_2
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = large }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 298
+					max_orientation_angle = 302
+					initializer = atbgp_home_2
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = huge }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 298
+					max_orientation_angle = 302
+					initializer = atbgp_home_2
+					hyperlane = no
+				}
+			}
+		}
+		else = {
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 298
+					max_orientation_angle = 302
+					initializer = atbgp_home_2
+					hyperlane = no
+				}
+			}
+		}
+		event_target:atbgp_sys_2_0 = {
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 216
+				max_orientation_angle = 224
+				initializer = atbgp_sys_2_1
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 256
+				max_orientation_angle = 264
+				initializer = atbgp_sys_2_2
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 336
+				max_orientation_angle = 344
+				initializer = atbgp_sys_2_3
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 16
+				max_orientation_angle = 24
+				initializer = atbgp_sys_2_4
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 62
+				max_distance <= 70
+				min_orientation_angle = 276
+				max_orientation_angle = 284
+				initializer = atbgp_sys_2_5
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 62
+				max_distance <= 70
+				min_orientation_angle = 316
+				max_orientation_angle = 324
+				initializer = atbgp_sys_2_6
+				hyperlane = no
+			}
+		}
+		# 大君主同盟领地：9 点方位（角度 180）
+		if = {
+			limit = { galaxy_size = tiny }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 240
+					max_distance <= 248
+					min_orientation_angle = 178
+					max_orientation_angle = 182
+					initializer = atbgp_home_3
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = small }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 340
+					max_distance <= 348
+					min_orientation_angle = 178
+					max_orientation_angle = 182
+					initializer = atbgp_home_3
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = medium }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 440
+					max_distance <= 448
+					min_orientation_angle = 178
+					max_orientation_angle = 182
+					initializer = atbgp_home_3
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = large }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 178
+					max_orientation_angle = 182
+					initializer = atbgp_home_3
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = huge }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 178
+					max_orientation_angle = 182
+					initializer = atbgp_home_3
+					hyperlane = no
+				}
+			}
+		}
+		else = {
+			no_scope = {
+				spawn_system = {
+					min_distance >= 490
+					max_distance <= 498
+					min_orientation_angle = 178
+					max_orientation_angle = 182
+					initializer = atbgp_home_3
+					hyperlane = no
+				}
+			}
+		}
+		event_target:atbgp_sys_3_0 = {
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 96
+				max_orientation_angle = 104
+				initializer = atbgp_sys_3_1
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 136
+				max_orientation_angle = 144
+				initializer = atbgp_sys_3_2
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 216
+				max_orientation_angle = 224
+				initializer = atbgp_sys_3_3
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 256
+				max_orientation_angle = 264
+				initializer = atbgp_sys_3_4
+				hyperlane = no
+			}
+			spawn_system = {
+				min_distance >= 62
+				max_distance <= 70
+				min_orientation_angle = 156
+				max_orientation_angle = 164
+				initializer = atbgp_sys_3_5
+				hyperlane = no
+			}
+		}
+		set_spawn_system_batch = end
+
+		# 燃烧白鹿军团：星团内部航道
+		event_target:atbgp_sys_1_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_1 } }
+		event_target:atbgp_sys_1_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_2 } }
+		event_target:atbgp_sys_1_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_3 } }
+		event_target:atbgp_sys_1_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_4 } }
+		event_target:atbgp_sys_1_1 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_2 } }
+		event_target:atbgp_sys_1_3 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_4 } }
+		event_target:atbgp_sys_1_2 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_5 } }
+		event_target:atbgp_sys_1_3 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_6 } }
+		event_target:atbgp_sys_1_5 = { add_hyperlane = { from = this to = event_target:atbgp_sys_1_6 } }
+		# 燃烧白鹿军团：母星接入银河
+		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_1_0 }
+		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_1_0 }
+		# 远星同盟组织：星团内部航道
+		event_target:atbgp_sys_2_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_1 } }
+		event_target:atbgp_sys_2_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_2 } }
+		event_target:atbgp_sys_2_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_3 } }
+		event_target:atbgp_sys_2_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_4 } }
+		event_target:atbgp_sys_2_1 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_2 } }
+		event_target:atbgp_sys_2_3 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_4 } }
+		event_target:atbgp_sys_2_2 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_5 } }
+		event_target:atbgp_sys_2_3 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_6 } }
+		event_target:atbgp_sys_2_5 = { add_hyperlane = { from = this to = event_target:atbgp_sys_2_6 } }
+		# 远星同盟组织：母星接入银河
+		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_2_0 }
+		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_2_0 }
+		# 大君主同盟领地：星团内部航道
+		event_target:atbgp_sys_3_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_1 } }
+		event_target:atbgp_sys_3_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_2 } }
+		event_target:atbgp_sys_3_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_3 } }
+		event_target:atbgp_sys_3_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_4 } }
+		event_target:atbgp_sys_3_1 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_2 } }
+		event_target:atbgp_sys_3_3 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_4 } }
+		event_target:atbgp_sys_3_2 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_5 } }
+		event_target:atbgp_sys_3_5 = { add_hyperlane = { from = this to = event_target:atbgp_sys_3_3 } }
+		# 大君主同盟领地：母星接入银河
+		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_3_0 }
+		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_3_0 }
+		event_target:atbgp_country_1 = { country_event = { id = atbgp.2 days = 1 } }
+		event_target:atbgp_country_2 = { country_event = { id = atbgp.2 days = 1 } }
+		event_target:atbgp_country_3 = { country_event = { id = atbgp.2 days = 1 } }
+	}
+}
+
+# 开局次日：初始舰船、替换元首
+country_event = {
+	id = atbgp.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		atbgp_spawn_start_fleets = yes
+		if = {
+			limit = { has_country_flag = atbgp_power_1 }
+			atbgp_install_named_ruler = { ID = rongxin CLASS = MACHINE }
+		}
+		else_if = {
+			limit = { has_country_flag = atbgp_power_2 }
+			atbgp_install_named_ruler = { ID = taiaria CLASS = HUM }
+		}
+		else_if = {
+			limit = { has_country_flag = atbgp_power_3 }
+			atbgp_install_random_ruler = yes
+		}
+	}
+}
+
+# 每月：危机检测、补给特征跟随首都、星海天罚
+event = {
+	id = atbgp.10
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_country = {
+			limit = { has_country_flag = atbgp_great_power }
+			country_event = { id = atbgp.11 }
+		}
+	}
+}
+
+country_event = {
+	id = atbgp.11
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = capital_scope
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_country_flag = atbgp_crisis_mode }
+				atbgp_crisis_active = yes
+			}
+			set_country_flag = atbgp_crisis_mode
+		}
+		if = {
+			limit = { has_country_flag = atbgp_power_1 }
+			atbgp_maintain_income = { N = 1 }
+		}
+		else_if = {
+			limit = { has_country_flag = atbgp_power_2 }
+			atbgp_maintain_income = { N = 2 }
+		}
+		else_if = {
+			limit = { has_country_flag = atbgp_power_3 }
+			atbgp_maintain_income = { N = 3 }
+			atbgp_check_become_the_crisis = yes
+		}
+	}
+}
+
+# 选飞升时：大君主同盟领地的第 12 个飞升必定是星海天罚（on_ascension_perk_picked）
+country_event = {
+	id = atbgp.12
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atbgp_power_3
+	}
+
+	immediate = {
+		atbgp_check_become_the_crisis = yes
+	}
+}
+
+# 每年：列强灭亡或失去星球后，清掉留在别人手里的补给特征
+event = {
+	id = atbgp.13
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_galaxy_planet = {
+			limit = { atbgp_has_income_deposit = yes }
+			atbgp_clear_foreign_income = yes
+		}
+	}
+}

@@ -1,0 +1,36 @@
+# 皇女的远征军：脚本触发器
+
+# 国家作用域：AI 设计无畏舰时，没有可用的 T 槽武器就不选 T 槽舰首
+# 湮灭光束要稀有水晶，远古湮灭眩光要远古学飞升和文物收入
+atb_has_no_valid_t_weapon = {
+	NOR = {
+		AND = {
+			has_technology = tech_titans
+			has_monthly_income = {
+				resource = rare_crystals
+				value >= 2
+			}
+		}
+		AND = {
+			has_technology = tech_archaeo_titan_beam
+			has_ascension_perk = ap_archaeoengineers
+			has_monthly_income = {
+				resource = minor_artifacts
+				value >= 2
+			}
+		}
+	}
+}
+
+# 国家作用域：可以通过决议探索的先驱者科技还没有全部得到
+atb_has_unclaimed_precursor_secret = {
+	NAND = {
+		has_technology = tech_secrets_cybrex
+		has_technology = tech_secrets_league
+		has_technology = tech_secrets_irassian
+		has_technology = tech_secrets_vultaum
+		has_technology = tech_secrets_yuht
+		has_technology = tech_secrets_baol
+		has_technology = tech_secrets_zroni
+	}
+}

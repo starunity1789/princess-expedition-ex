@@ -1,0 +1,20 @@
+# 灰色风暴结局下也能找到小灰
+# 原版的小灰异常点（disco_gray_cat）只在空星群结局出现。远征军在场时 L 星群结局固定为灰色风暴，
+# 这里在 L 星群中补一个异常点，调查成功后进入原版的小灰事件链（graygoo.400）。
+atb_disco_gray_cat = {
+	desc = "atb_disco_gray_cat_desc"
+	picture = "GFX_evt_ship_in_orbit_2"
+	level = 3
+	max_once_global = yes
+
+	spawn_chance = {
+		modifier = {
+			add = 100
+			has_global_flag = atb_forced_gray_tempest
+			has_global_flag = gray_goo_crisis_set
+			solar_system = { has_star_flag = lcluster }
+		}
+	}
+
+	on_success = graygoo.400
+}

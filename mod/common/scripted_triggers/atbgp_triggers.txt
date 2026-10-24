@@ -1,0 +1,26 @@
+# 由 _tools/gen_great_powers.py 生成，请勿手改
+
+# 堕落帝国已觉醒，或终末危机已经发生
+atbgp_crisis_active = {
+	OR = {
+		has_global_flag = galactic_crisis_happened
+		any_country = { is_country_type = awakened_fallen_empire }
+	}
+}
+
+# 星球带有任一列强的补给特征
+atbgp_has_income_deposit = {
+	OR = {
+		has_deposit = atbgp_d_income_1
+		has_deposit = atbgp_d_income_crisis_1
+		has_deposit = atbgp_d_income_2
+		has_deposit = atbgp_d_income_crisis_2
+		has_deposit = atbgp_d_income_3
+		has_deposit = atbgp_d_income_crisis_3
+	}
+}
+
+# 可以接入列强星团的银河星系
+atbgp_link_candidate = {
+	NOT = { has_star_flag = atbgp_cluster }
+}

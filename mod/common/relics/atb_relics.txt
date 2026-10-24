@@ -1,0 +1,59 @@
+# 皇女亲卫队印章
+# 主动：消耗 5000 能量币，在首都召唤 5 个无维护费的皇女亲卫·赛博勒克斯战体；冷却 10 年（独立冷却，不占用原版遗珍的公共冷却）。
+# 被动：每月文物 +1；建筑建造速度、障碍物清理速度 +100%。
+r_atb_princess_seal = {
+	activation_duration = 360
+	portrait = "GFX_relic_atb_princess_seal"
+	sound = "relic_activation_cybrex_war_forge"
+
+	resources = {
+		category = relics
+		cost = {
+			energy = 5000
+		}
+	}
+
+	ai_weight = {
+		weight = 100
+	}
+
+	triggered_country_modifier = {
+		potential = {
+			always = yes
+		}
+		country_base_minor_artifacts_produces_add = 1
+		planet_building_build_speed_mult = 1.0
+		planet_clear_blocker_speed_mult = 1.0
+	}
+
+	score = 1000
+
+	active_effect = {
+		custom_tooltip = r_atb_princess_seal_active_tt
+		hidden_effect = {
+			capital_scope = {
+				while = {
+					count = 5
+					create_army = {
+						name = "atb_army_princess_guard"
+						owner = root
+						type = "atb_princess_guard_warform"
+					}
+				}
+			}
+			add_modifier = {
+				modifier = atb_princess_seal_cooldown
+				days = 3600
+			}
+		}
+		custom_tooltip = r_atb_princess_seal_cooldown_tt
+	}
+
+	possible = {
+		exists = capital_scope
+		custom_tooltip = {
+			fail_text = "r_atb_princess_seal_on_cooldown"
+			NOT = { has_modifier = atb_princess_seal_cooldown }
+		}
+	}
+}

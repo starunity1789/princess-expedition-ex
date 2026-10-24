@@ -1,0 +1,13 @@
+# 去掉议会界面肖像的全息着色：覆盖原版 interface/core.gfx 的 GFX_portrait_character_hologram，
+# 改用普通肖像着色器，保留原版的渐隐遮罩。注意：这会影响所有议员肖像的显示。
+spriteTypes = {
+	portraitType = {
+		name = "GFX_portrait_character_hologram"
+		texturefile = "gfx/interface/main/unselected_portrait.dds"
+		masking_texture = "gfx/interface/leaders/portrait_mask_fade.dds"
+		effectFile = "gfx/FX/buttonstate_rendertarget.shader"
+		type = character
+		character = yes
+		mid_close_up = yes
+	}
+}

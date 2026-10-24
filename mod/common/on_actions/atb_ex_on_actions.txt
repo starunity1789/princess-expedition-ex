@@ -1,0 +1,12 @@
+# 皇女的远征军EX：挂到原版 on_action 上（同名 on_action 会与原版合并，事件排在原版之后）
+on_game_start = {
+	events = {
+		atb_ex.1
+	}
+}
+
+on_monthly_pulse = {
+	events = {
+		atb_ex.2
+	}
+}

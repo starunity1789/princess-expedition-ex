@@ -1,0 +1,58 @@
+# 皇女的远征军：起源要塞的三处特殊地形
+# 由开局事件 atb.2 加到起源要塞上；不会随机生成，也不能清除。
+
+# 要塞能源核心：能量币、矿物、食物、三种科研各 +30/月
+d_atb_fortress_core = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_reactor
+
+	resources = {
+		category = planet_deposits
+		produces = {
+			energy = 30
+			minerals = 30
+			food = 30
+			physics_research = 30
+			society_research = 30
+			engineering_research = 30
+		}
+	}
+
+	drop_weight = {
+		weight = 0
+	}
+}
+
+# 帝国星海纪念碑：凝聚力 +20/月
+d_atb_star_sea_monument = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_monument
+
+	resources = {
+		category = planet_deposits
+		produces = {
+			unity = 20
+		}
+	}
+
+	drop_weight = {
+		weight = 0
+	}
+}
+
+# 起源要塞星海探测阵列：探测范围 +12
+d_atb_sensor_array = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_solar_array
+
+	planet_modifier = {
+		planet_sensor_range_add = 12
+	}
+
+	drop_weight = {
+		weight = 0
+	}
+}

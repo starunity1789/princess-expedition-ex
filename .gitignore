@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 工具输出的预览图
+preview/

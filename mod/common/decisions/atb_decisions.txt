@@ -1,0 +1,79 @@
+# 皇女的远征军：首都决议
+
+# 探索先驱者文明的秘密
+# 研究考古实验室后可用：花 2000 文物，随机得到一项还没有的先驱者科技，直到七项全部得到。
+decision_atb_precursor_secrets = {
+	owned_planets_only = yes
+	sound = event_activating_unknown_technology
+	icon = decision_museum
+
+	resources = {
+		category = decisions
+		cost = {
+			minor_artifacts = 2000
+		}
+	}
+
+	potential = {
+		is_capital = yes
+		owner = {
+			has_country_flag = atb_princess_expedition
+			OR = {
+				has_technology = tech_archeology_lab
+				has_technology = tech_archeology_lab_ancrel
+			}
+			atb_has_unclaimed_precursor_secret = yes
+		}
+	}
+
+	effect = {
+		custom_tooltip = decision_atb_precursor_secrets_tt
+		hidden_effect = {
+			owner = {
+				atb_grant_precursor_secret = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 5
+	}
+}
+
+# 确立远征军体制
+# 合成黎明之后，如果当时没有在事件里采用远征军体制，可以在这里补上。
+decision_atb_adopt_expedition_regime = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_politics
+
+	potential = {
+		is_capital = yes
+		owner = {
+			has_country_flag = atb_regime_unlocked
+			NOT = { has_country_flag = atb_expedition_regime }
+		}
+	}
+
+	allow = {
+		owner = {
+			custom_tooltip = {
+				fail_text = atb_regime_requires_dictatorial
+				has_authority = auth_dictatorial
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = atb.40.a.tt
+		hidden_effect = {
+			owner = {
+				atb_adopt_expedition_regime = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 10
+	}
+}

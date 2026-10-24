@@ -1,0 +1,14 @@
+# Static character portraits. Add this gfx tree to an existing mod.
+# Default IDs are upper-body crops. _full IDs retain complete silhouettes.
+# Uses texturefile directly; no animated entity or shared portrait settings override.
+portraits = {
+    atb_ark_filiruoya = { texturefile = "gfx/models/portraits/atb_arkstyle/filiruoya.dds" }
+    atb_ark_yugudora = { texturefile = "gfx/models/portraits/atb_arkstyle/yugudora.dds" }
+    atb_ark_youfeilina = { texturefile = "gfx/models/portraits/atb_arkstyle/youfeilina.dds" }
+    atb_ark_antaixiya = { texturefile = "gfx/models/portraits/atb_arkstyle/antaixiya.dds" }
+
+    atb_ark_filiruoya_full = { texturefile = "gfx/models/portraits/atb_arkstyle/filiruoya_full.dds" }
+    atb_ark_yugudora_full = { texturefile = "gfx/models/portraits/atb_arkstyle/yugudora_full.dds" }
+    atb_ark_youfeilina_full = { texturefile = "gfx/models/portraits/atb_arkstyle/youfeilina_full.dds" }
+    atb_ark_antaixiya_full = { texturefile = "gfx/models/portraits/atb_arkstyle/antaixiya_full.dds" }
+}

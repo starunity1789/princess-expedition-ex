@@ -1,0 +1,23 @@
+# 起源要塞：使用原版满级（三期）居住站模型
+# 星球模型名会自动加 _01 之类的变体后缀，所以两个名字都定义一份。
+entity = {
+	name = "atb_fortress_01_entity"
+	locator = { name = part1 }
+
+	scale = 1.5
+
+	default_state = "habitat_idle"
+	state = { name = "habitat_idle" state_time = 5 }
+
+	game_data = {
+		shader_type = ship
+		emissive_recolor_crunch = 5.0
+	}
+
+	attach = { name = "station" part1 = "mammalian_01_habitat_phase_03_section_entity" }
+}
+
+entity = {
+	name = "atb_fortress_entity"
+	clone = "atb_fortress_01_entity"
+}
