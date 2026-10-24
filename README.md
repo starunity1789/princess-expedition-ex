@@ -150,14 +150,7 @@ python tools/make_art.py art mod <预览输出文件夹>
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 
-### 发布到工坊
 
-1. 从 Steam 启动群星（单游戏启动器），进入「Mod 库 → 上传 MOD」，选「皇女的远征军EX」，上传到「Steam 创意工坊」。Mod ID 应自动显示 3821602893。
-2. 上传前把 `docs/workshop_description_en.txt` 的内容贴进描述栏——上传会用这一栏覆盖工坊的默认（英语）简介。
-3. 上传后到工坊物品页「编辑标题与描述」，语言选「简体中文」，标题填「皇女的远征军EX」，描述贴 `docs/workshop_description_zh.txt`。中文 Steam 的玩家看中文版，其他语言的玩家看英文版。
-4. 简介上限约 8000 字节（按 UTF-8 计算），两份各自计算。
-5. 如果提示「已存在具有相同远程 ID 的本地 Mod」，是启动器数据库 `launcher-v2.sqlite` 里别的本地条目还登记着这个编号：关掉启动器，把那些条目的 `remoteSteamId` 清空即可。
-6. 更新后 Steam 会自动做内容检查，期间物品暂时隐藏，通过后自动恢复。
 
 ### 需要的 DLC
 
