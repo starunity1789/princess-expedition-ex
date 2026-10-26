@@ -1,3 +1,6 @@
+# 皇女的远征军EX 改动：原包用的集合名与原版 portrait_sets 重名，会被原版同名集合顶掉
+# （游戏日志报 "portrait ... is not found in portrait set database"）。这里改成独立的集合名，
+# 并在 common/portrait_categories/00_portrait_categories.txt 里注册到对应物种类的分类下。
 # Portrait sets associated with species classes.
 # Portrait sets are grouped into portrait categories to be shown on empire editor. Check out portrait_categories database.
 # portraits = {}									List of portraits which are available for the species class without any conditions
@@ -10,12 +13,12 @@
 # uplifted_portraits = {}							List of portraits which will be used by species of corresponding class after uplifting
 #													(the number of uplifted portraits must be the same as the number of portraits in 'portraits' list).
 
-infernals = {
+adpp_infernals = {
 	species_class = INF
 	portraits = { "adpp_ancient_dragonkin_inf" }
 }
 
-reptilians = {
+adpp_reptilians = {
 	species_class = REP
 	portraits = { "adpp_ancient_dragonkin" }
 }

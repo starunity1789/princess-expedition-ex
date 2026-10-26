@@ -1,80 +1,47 @@
 [h1]The Princesses' Expedition EX[/h1]
 
-A rich nation achieved its technological breakthrough alone, yet its homeworld remained divided. The Emperor stayed behind, and his four daughters took the mobile fortress "Origin Fortress" to the distant Origin's Reach to found the Empire anew among the stars. But their colonists fell to an incurable illness and can no longer bear children - so the princesses lead their people down the path of synthetic fertility.
+The homeworld stayed divided, so the Emperor remained behind and his four daughters took the mobile fortress "Origin Fortress" to the distant Origin's Reach to found the Empire anew. Their colonists fell to an incurable illness and can no longer bear children - so the princesses lead their people down the path of synthetic fertility.
 
-[b]The setting:[/b] the four princesses come from the Empire of AllLife Chance-Born on the Deepwinter Continent of the Grove Between Stars, the world of [url=https://github.com/starunity1789/StargazerPR]The Stargazer Project[/url]. The Empire is ruled by the Dim King, the first true immortal of that world. This expedition takes place before the Dim King disappeared.
-
-EX moves the expedition beyond the galaxy rim and adds three guaranteed great powers and galaxy rules, so the AI still matters late game. [b]Requires a new game.[/b]
-
-[h2]New in EX: the Rim Cluster[/h2]
-At game start the whole expedition moves to 7 systems beyond the rim at 2 o'clock, linked to the galaxy by a single hyperlane from the Great Inheritor.
-[list]
-[*] [b]Origin's Reach[/b]: home system of the Origin Fortress, the only system surveyed at start
-[*] [b]Starsea Firefly[/b]: an L-Gate    [b]Formless Link[/b]: a random pre-FTL civilization, always using the Ancient Dragonkin portraits
-[*] [b]Utmost Edge[/b]: black hole    [b]Radiant Glory[/b]: neutron star    [b]Stifled Gleam[/b]: pulsar
-[*] [b]Great Inheritor[/b]: a Relic World holding the vanilla "Planet-Wide Machinery" anomaly, which opens the Planetary Machinery dig site
-[/list]
-Your original starting system becomes the unowned "Expedition's Departure".
-
-[h2]New in EX: Three Guaranteed Great Powers[/h2]
-Three clusters are created beyond the rim, each home to a great power and joined to the galaxy by two hyperlanes.
-[list]
-[*] [b]Burning White Stag Legion[/b] (12 o'clock): a machine empire built by the elves. Rapid Replicator + OTA Updates, on the Kemonomimi machine portraits. Ruler "Fused-Heart Calculus": custom portrait, Intemporal, level 10. Gaia homeworld, Continental, Relic and Machine Worlds, a Ringworld, a black hole (20 Dark Matter), a neutron star (22 Unity)
-[*] [b]Far Star Alliance[/b] (5 o'clock): elites and nations from the Empire's homeworld. Dictatorial, Authoritarian / Materialist / Militarist, Technocracy + Dark Consortium. Ruler "Taiaria Starheart": custom portrait, lv10, Intemporal, Supreme Organizer, Master Bureaucrat, Synthetic, Psionic. Relic World homeworld, a Gaia World with Zanaam, an Ecumenopolis, a Ringworld, a black hole (20 Dark Matter), a neutron star (22 Unity), a Shattered World (10 Nanites)
-[*] [b]Grand Suzerain Allied Fief[/b] (9 o'clock): a rural fief of a feudal civilization spread across the universe, which sees the galaxy the way an Australian farmer sees kangaroos. Necroid monarchy, Philosopher King + Feudal Society, level-10 ruler. Gaia homeworld, 6 Tomb Worlds, two black holes (22 Dark Matter each), a Ringworld. Its 12th ascension perk is always Galactic Nemesis, which also grants +1000 naval capacity and +100% ship build speed
-[/list]
-Only their homeworlds start colonized; other systems hold outposts. Each gets a fixed monthly supply: 222 each of energy, minerals, food, consumer goods and alloys, 22 of each strategic resource, 2 influence and 45 / 42 / 56 research. Once a Fallen Empire awakens or an endgame crisis begins it doubles, with another 550 of each research type.
-Dark Matter only flows after the vanilla Dark Matter extraction tech. The 12th ascension perk needs a mod that allows 12 perk slots.
-
-[h2]New in EX: Galaxy Rules[/h2]
-[list]
-[*] [b]The Chosen[/b] always spawn (about 1 in 4 in vanilla)
-[*] The crash site of [b]Keides, Scion of Vagros[/b] always spawns (about 1 in 4 in vanilla), 3-5 jumps from the Great Inheritor
-[*] All empires: resource storage [b]+100K[/b]
-[*] Every buildable ship except bio-ships has its [b]base hull doubled[/b] (defense platforms and starbases unchanged)
-[*] [b]Every vanilla shield and armor value is doubled[/b] (Psi Shields, Dark Matter Deflectors, Dragonscale Armor and space fauna too)
-[/list]
+Setting: [url=https://github.com/starunity1789/StargazerPR]The Stargazer Project[/url]. [b]Requires a new game.[/b]
 
 [h2]Origin: The Princesses' Expedition[/h2]
 [list]
-[*] Includes every mechanic of vanilla [b]Synthetic Fertility[/b] (pathogen genes, +900 starting pops, the identity salvage situation and so on); Synthetic Ascension only
-[*] Capital: the [b]Origin Fortress[/b], a size-25 giant mobile habitat with 100% habitability and 15 each of Housing / Generator / Mining / Agriculture districts, using the fully upgraded vanilla habitat model
-[*] The L-Cluster always ends with the [b]Gray Tempest[/b], but Gray can always be found there
-[*] Decision [b]Establish the Expeditionary Order[/b]: available after the Synthetic Dawn; switches to the Expeditionary Order, under which Utopian Abundance no longer requires Egalitarianism
-[*] Decision [b]Explore the Secrets of the Precursors[/b]: use artifacts as clues to recover the legacies of vanished precursor civilizations
-[*] Tech [b]Dreadnoughts[/b]: a battleship hull carrying a titan-class bow and titan reactor; every empire, AI included, can research it
-[*] Dictatorial authority only, no Spiritualist; one per galaxy
+[*] Includes every mechanic of vanilla [b]Synthetic Fertility[/b]; Synthetic Ascension only, Dictatorial only, one per galaxy
+[*] Capital is the [b]Origin Fortress[/b], a size-25 mobile habitat at 100% habitability with 15 each of Housing / Generator / Mining / Agriculture districts
+[*] The [b]four princesses[/b] start as Ruler and Councilors with custom portraits - immortal, no upkeep, cannot be dismissed, each with her own destiny trait
+[*] Relic [b]Seal of the Princess Guard[/b]: 3000 energy summons 5 permanent guard warforms; +2 minor artifacts per month
+[*] Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors", plus the Dreadnoughts tech
+[*] The L-Cluster always ends with the Gray Tempest, but Gray can always be found
 [/list]
 
-[h2]The Four Princesses[/h2]
-They start as Ruler and Councilors, each with a custom portrait and two destiny traits. The characters were designed by the author in 2022; the portraits were drawn by AI from those designs.
+[h2]EX: the Rim Cluster[/h2]
+At game start the whole expedition moves to 7 systems beyond the rim at 2 o'clock, joined to the galaxy by a single hyperlane: an L-Gate, a pre-FTL civilization (always on the Ancient Dragonkin portraits), a black hole, a neutron star, a pulsar, and a Relic World carrying the vanilla "Planet-Wide Machinery" anomaly.
 
-[b]Shared trait "Hyperdimensional Augmentation":[/b] immortal, immune to negative traits and to every kind of death or removal event, no upkeep, cannot be dismissed, +100% leader experience, portrait unchanged by ascension
+[h2]EX: Three Guaranteed Great Powers[/h2]
+Always spawned, each in its own cluster beyond the rim with two hyperlanes into the galaxy, each with a fixed empire flag.
 [list]
-[*] [b]First Princess Filiruoya[/b] (Ruler, Commander) - traditional Chinese dress with modern touches. "Transcendent Life": -33% empire size from pops
-[*] [b]Second Princess Yugudora[/b] (Minister of Defense, Commander) - a blend of three East Asian cultures, down to the wooden geta on her feet. "Elemental Sovereign": +1000 naval capacity
-[*] [b]Third Princess Youfeilina[/b] (Head of Research, Scientist) - robes of the xiuxian cultivation world popular in China today. "Grand Ascendant": +15% research speed, +2 research options, +3 leader trait options, -2 maximum negative leader traits
-[*] [b]Fourth Princess Antaixiya[/b] (Minister of State, Official) - Western style. "Silent Apostle": +10 decryption, +10 encryption, +3 Subjects Exempt from Divided Patronage, +1 monthly influence
+[*] [b]Burning White Stag Legion[/b] (12 o'clock) machine empire on the Kemonomimi portraits; ruler "Fused-Heart Calculus" with a custom portrait
+[*] [b]Far Star Alliance[/b] (5 o'clock) authoritarian state; ruler "Taiaria Starheart" with a custom portrait and 5 traits
+[*] [b]Grand Suzerain Allied Fief[/b] (9 o'clock) necroid monarchy; its 12th ascension perk is always Galactic Nemesis
 [/list]
-They start at level 1 and can still pick a third destiny trait at level 8.
+Fixed monthly supply: 222 of each basic resource, 22 of each strategic resource, 2 influence, 45-56 of each research type. Once a Fallen Empire awakens or an endgame crisis begins it doubles, with another 550 of each research type.
 
-[h2]Relic: Seal of the Princess Guard[/h2]
+[h2]EX: Galaxy Rules[/h2]
 [list]
-[*] Active: spend 3000 energy to summon 5 permanent, upkeep-free Princess Guard Cybrex Warforms at the capital; 10-year cooldown, separate from the shared relic cooldown
-[*] Passive: +2 minor artifacts per month
+[*] [b]The Chosen[/b] and the crash site of [b]Keides, Scion of Vagros[/b] always spawn
+[*] All empires: resource storage +100K; non-bio ships have their base hull doubled
+[*] [b]Every vanilla shield and armor value is doubled[/b] (Psi Shields, Dark Matter Deflectors and Dragonscale Armor included)
 [/list]
 
 [h2]Required DLC[/h2]
-The Machine Age and Ancient Relics (required for the origin); Distant Stars (L-Gate); First Contact (The Chosen); Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis (great powers); Galactic Paragons recommended.
+The Machine Age and Ancient Relics (for the origin); Distant Stars, First Contact, Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis; Galactic Paragons recommended.
 
 [h2]Compatibility[/h2]
 [list]
 [*] Stellaris 4.5.*
 [*] Bundles the Ancient Dragonkin and Kemonomimi portrait packs - [b]disable those if you are subscribed[/b]
-[*] The origin switches to vanilla Synthetic Fertility in the background at game start
-[*] Fully overrides vanilla 00_authorities.txt, 00_living_standards.txt and 02_scripted_variables_component_cost.txt (the doubled defenses)
-[*] Overrides can_dismiss_leader and the council-portrait hologram shader (this also affects virtual species)
+[*] Fully overrides vanilla 00_authorities.txt, 00_living_standards.txt and 02_scripted_variables_component_cost.txt, plus the game rule can_dismiss_leader and the council-portrait hologram shader
 [/list]
 
 ------------------------------------------------------------
-[b]中文玩家：[/b]把 Steam 切换为简体中文即可看到完整的中文简介。
+[b]中文玩家：[/b]把 Steam 切换为简体中文即可看到中文简介。

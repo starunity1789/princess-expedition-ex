@@ -173,6 +173,7 @@ python tools/check_mod.py
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 - `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
+- `common/portrait_categories/00_portrait_categories.txt`（把两套肖像包的集合注册进对应分类，只比原版多 4 行）
 
 ### 发布到工坊
 
@@ -207,7 +208,19 @@ python tools/check_mod.py
 | Ancient Dragonkin Animated Portrait Pack | 3765752651 | 爬行类、炼狱类可选；「无形链接」的前超光速土著固定使用 |
 | Kemonomimi Animated Portrait Pack | 3821158186 | 哺乳类、机器人、机械可选；燃烧白鹿军团固定使用 |
 
-更新这两套素材时，直接从对应工坊目录整体覆盖同名文件即可，不要手改。
+更新这两套素材时，直接从对应工坊目录整体覆盖同名文件即可，但 `common/portrait_sets/` 下那两个文件要重做下面这步改名。
+
+**集合名改过**：两个原包都直接用 `mammalians`、`reptilians` 这类原版已有的集合名定义 `portrait_sets`，
+会被原版同名集合顶掉，游戏日志报 `portrait '...' is not found in portrait set database`，肖像在游戏里根本不出现。
+已改成独立的集合名，并在 `common/portrait_categories/00_portrait_categories.txt` 里注册到对应分类：
+
+| 原包里的集合名 | 改成 | 注册到的分类 |
+| --- | --- | --- |
+| `mammalians` | `kmpp_mammalians` | `mammalians` |
+| `machines` | `kmpp_machines` | `machines` |
+| `robots` | `kmpp_robots` | （ROBOT 类没有分类，只需集合） |
+| `reptilians` | `adpp_reptilians` | `reptilians` |
+| `infernals` | `adpp_infernals` | `infernals` |
 玩家如果同时订阅了这两个独立包，需要停用它们，否则同一批肖像会被定义两次。
 
 ### 需要的 DLC
