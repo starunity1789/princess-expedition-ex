@@ -1,0 +1,21 @@
+
+entity = {
+	name = "kmpp_kemonomimi_01"
+	pdxmesh = "kmpp_kemonomimi_01"
+
+	default_state = "idle"
+	state = { name = "idle"       animation = "idle"    animation_blend_time = 0 chance = 3.0 looping = no next_state = idle}
+	state = { name = "idle"       animation = "happy"    animation_blend_time = 0 chance = 3.0 looping = no next_state = idle}
+	state = { name = "idle"       animation = "angry"    animation_blend_time = 0 chance = 3.0 looping = no next_state = idle}
+	scale = 1.55
+}
+entity = {
+	name = "kmpp_kemonomimi_01_machine"
+	pdxmesh = "kmpp_kemonomimi_01_machine"
+
+	default_state = "idle"
+	state = { name = "idle"       animation = "idle"    animation_blend_time = 0 chance = 3.0 looping = no next_state = idle}
+	state = { name = "idle"       animation = "happy"    animation_blend_time = 0 chance = 3.0 looping = no next_state = idle}
+	state = { name = "idle"       animation = "angry"    animation_blend_time = 0 chance = 3.0 looping = no next_state = idle}
+	scale = 1.55
+}

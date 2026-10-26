@@ -28,22 +28,28 @@ LINK_RADII = [80, 130, 200, 320, 600]
 LINK_COUNT = 2
 
 INCOME_BASE = {"energy": 222, "minerals": 222, "food": 222, "consumer_goods": 222, "alloys": 222,
-               "volatile_motes": 22, "exotic_gases": 22, "rare_crystals": 22}
+               "volatile_motes": 22, "exotic_gases": 22, "rare_crystals": 22, "influence": 2}
 CRISIS_RESEARCH_EXTRA = 550
 
 # ---------------------------------------------------------------- 三个列强
 # 星系 kind：planet（一颗指定星球）、tomb3（三颗死寂星球）、blackhole、neutron、shattered、ring
+# species_portrait：物种肖像组 ID；None = 按物种类随机
+# flag：固定的帝国标识。图标由 make_flags.py 从 art/great_power_flags/ 生成到 mod/flags/atbgp/，
+#       原版不会给国旗图标染色，所以白色 LOGO 直接显示在 colors[0] 的纯色底上。
 EMPIRES = [
     dict(
-        n=1, clock=11, research=45, pops=52,
+        n=1, clock=12, research=45, pops=52,
         name="燃烧白鹿军团", adj="白鹿", en="Burning White Stag Legion", en_adj="White Stag",
         species=("白鹿机兵", "白鹿机兵", "白鹿"), species_en=("Stag Unit", "Stag Units", "Stag"),
         species_class="MACHINE", species_traits="random",
+        species_portrait="kmpp_kemonomimi_machine",
+        flag=dict(file="flag_atbgp_1.dds", colors=["dark_red", "black"]),
         authority="auth_machine_intelligence",
         ethics=["ethic_gestalt_consciousness"],
         civics=["civic_machine_replication", "civic_machine_ota_updates"],
         ruler=dict(id="rongxin", name="融心演算", en="Fused-Heart Calculus", cls="MACHINE",
-                   species=("演算核心", "Calculus Core")),
+                   species=("演算核心", "Calculus Core"),
+                   traits=["leader_trait_intemporal"]),
         home=dict(sys="俳句", en="Haiku", star="sc_g", pc="pc_gaia", size=22),
         systems=[
             dict(sys="民谣", en="Ballad", kind="planet", pc="pc_continental", size=18),
@@ -64,11 +70,17 @@ EMPIRES = [
         species=("远星人", "远星人", "远星"), species_en=("Farstarian", "Farstarians", "Farstarian"),
         species_class="HUM",
         species_traits='{ ideal_planet_class = "pc_continental" trait = "trait_intelligent" trait = "trait_thrifty" }',
-        authority="auth_corporate",
-        ethics=["ethic_egalitarian", "ethic_materialist", "ethic_militarist"],
-        civics=["civic_worker_coop", "civic_corporate_dark_consortium"],
+        species_portrait=None,
+        flag=dict(file="flag_atbgp_2.dds", colors=["dark_blue", "black"]),
+        # 威权政体：独裁制 + 威权主义。原来的两个国民是巨企专属，换成同效果的非巨企版本。
+        authority="auth_dictatorial",
+        ethics=["ethic_authoritarian", "ethic_materialist", "ethic_militarist"],
+        civics=["civic_technocracy", "civic_dark_consortium"],
         ruler=dict(id="taiaria", name="泰阿瑞亚-星之心", en="Taiaria Starheart", cls="HUM",
-                   species=("星之心", "Starheart")),
+                   species=("星之心", "Starheart"),
+                   traits=["leader_trait_intemporal", "leader_trait_supreme_organizer",
+                           "leader_trait_master_bureaucrat", "leader_trait_synthetic",
+                           "leader_trait_psionic"]),
         home=dict(sys="救赎", en="Redemption", star="sc_f", pc="pc_relic", size=22),
         systems=[
             dict(sys="逆鳞", en="Reverse Scale", kind="planet", pc="pc_gaia", size=25, zanaam=True),
@@ -88,6 +100,8 @@ EMPIRES = [
         name="大君主同盟领地", adj="大君主", en="Grand Suzerain Allied Fief", en_adj="Suzerain",
         species=("君主裔", "君主裔", "君主裔"), species_en=("Suzerainite", "Suzerainites", "Suzerainite"),
         species_class="NECROID", species_traits="random",
+        species_portrait=None,
+        flag=dict(file="flag_atbgp_3.dds", colors=["dark_purple", "black"]),
         authority="auth_imperial",
         ethics=["ethic_fanatic_authoritarian", "ethic_xenophobe"],
         civics=["civic_philosopher_king", "civic_feudal_realm"],
@@ -114,6 +128,27 @@ def angle(clock: int) -> int:
 
 def window(a: int, half: int) -> tuple[int, int]:
     return (a - half) % 360, (a + half) % 360
+
+
+def flag_block(e: dict) -> str:
+    """create_country 里的固定帝国标识（缩进对齐 create_country 的字段）。"""
+    f = e["flag"]
+    colors = list(f["colors"]) + ["null"] * (4 - len(f["colors"]))
+    lines = [
+        "\t\t\t\tflag = {",
+        "\t\t\t\t\ticon = {",
+        '\t\t\t\t\t\tcategory = "atbgp"',
+        f'\t\t\t\t\t\tfile = "{f["file"]}"',
+        "\t\t\t\t\t}",
+        "\t\t\t\t\tbackground = {",
+        '\t\t\t\t\t\tcategory = "backgrounds"',
+        '\t\t\t\t\t\tfile = "00_solid.dds"',
+        "\t\t\t\t\t}",
+        "\t\t\t\t\tcolors = {",
+    ]
+    lines += [f'\t\t\t\t\t\t"{c}"' for c in colors]
+    lines += ["\t\t\t\t\t}", "\t\t\t\t}"]
+    return "\n".join(lines)
 
 
 out = {}  # 相对 MOD 根目录的路径 -> 文本
@@ -223,7 +258,7 @@ atbgp_home_{n} = {{
 				plural = atbgp_species_{n}_plural
 				adjective = atbgp_species_{n}_adj
 				class = {e['species_class']}
-				portrait = random
+				portrait = {e['species_portrait'] or 'random'}
 				traits = {e['species_traits']}
 				homeworld = this
 				effect = {{ save_global_event_target_as = atbgp_species_{n} }}
@@ -236,7 +271,7 @@ atbgp_home_{n} = {{
 				ethos = {{ {ethics} }}
 				species = event_target:atbgp_species_{n}
 				origin = "origin_default"
-				flag = random
+{flag_block(e)}
 				ignore_initial_colony_error = yes
 				effect = {{
 					save_global_event_target_as = atbgp_country_{n}
@@ -509,11 +544,11 @@ country_event = {
 		atbgp_spawn_start_fleets = yes
 		if = {
 			limit = { has_country_flag = atbgp_power_1 }
-			atbgp_install_named_ruler = { ID = rongxin CLASS = MACHINE }
+			atbgp_install_ruler_rongxin = yes
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_2 }
-			atbgp_install_named_ruler = { ID = taiaria CLASS = HUM }
+			atbgp_install_ruler_taiaria = yes
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_3 }
@@ -669,6 +704,64 @@ for i, r in enumerate(LINK_RADII):
 		}}
 	}}""")
 
+# 每位专属元首一个安装效果：立绘、特质都写死在里面，所以不用参数
+named_ruler_effects = []
+for e in EMPIRES:
+    r = e["ruler"]
+    if not r:
+        continue
+    traits = "\n".join(
+        f"""				add_trait = {{
+					trait = {t}
+					show_message = no
+				}}""" for t in r["traits"])
+    named_ruler_effects.append(f"""# 国家作用域：用专属立绘的元首替换 {e['name']} 的开局元首（10 级）
+# 元首是单独的物种，原版改造/飞升换肖像不会作用到她身上
+atbgp_install_ruler_{r['id']} = {{
+	if = {{
+		limit = {{ exists = ruler }}
+		ruler = {{ set_leader_flag = atbgp_replaced_ruler }}
+	}}
+	create_species = {{
+		name = atbgp_ruler_species_{r['id']}
+		plural = atbgp_ruler_species_{r['id']}
+		adjective = atbgp_ruler_species_{r['id']}
+		class = {r['cls']}
+		portrait = atbgp_{r['id']}
+		traits = random
+		allow_negative_traits = no
+		effect = {{ save_event_target_as = atbgp_ruler_species_tmp }}
+	}}
+	create_leader = {{
+		class = official
+		species = event_target:atbgp_ruler_species_tmp
+		name = atbgp_leader_{r['id']}
+		gender = female
+		skill = 10
+		immortal = yes
+		hide_age = yes
+		randomize_traits = no
+		skip_background_generation = yes
+		effect = {{
+			set_leader_flag = atbgp_named_ruler
+			set_leader_flag = leader_death_events_blocked
+			set_immortal = yes
+			# 开局后统治者不能获得非议会特质，先给 1 天豁免标记再加
+			set_timed_leader_flag = {{
+				flag = ignore_autocracy_ruler_trait_restriction
+				days = 1
+			}}
+{traits}
+			change_leader_portrait = atbgp_{r['id']}
+			save_event_target_as = atbgp_new_ruler
+		}}
+	}}
+	set_leader = event_target:atbgp_new_ruler
+	atbgp_remove_replaced_ruler = yes
+}}
+""")
+named_ruler_effects = "\n".join(named_ruler_effects)
+
 out["common/scripted_effects/atbgp_effects.txt"] = f"""# 由 _tools/gen_great_powers.py 生成，请勿手改
 
 # 给星团母星接一条通往银河的航道：由近到远找还没连上的星系
@@ -721,54 +814,7 @@ atbgp_spawn_start_fleets = {{
 	}}
 }}
 
-# 国家作用域：用专属立绘的元首替换开局元首（时间永驻，10 级）
-# 元首是单独的物种，原版改造/飞升换肖像不会作用到她身上
-atbgp_install_named_ruler = {{
-	if = {{
-		limit = {{ exists = ruler }}
-		ruler = {{ set_leader_flag = atbgp_replaced_ruler }}
-	}}
-	create_species = {{
-		name = atbgp_ruler_species_$ID$
-		plural = atbgp_ruler_species_$ID$
-		adjective = atbgp_ruler_species_$ID$
-		class = $CLASS$
-		portrait = atbgp_$ID$
-		traits = random
-		allow_negative_traits = no
-		effect = {{ save_event_target_as = atbgp_ruler_species_tmp }}
-	}}
-	create_leader = {{
-		class = official
-		species = event_target:atbgp_ruler_species_tmp
-		name = atbgp_leader_$ID$
-		gender = female
-		skill = 10
-		immortal = yes
-		hide_age = yes
-		randomize_traits = no
-		skip_background_generation = yes
-		effect = {{
-			set_leader_flag = atbgp_named_ruler
-			set_leader_flag = leader_death_events_blocked
-			set_immortal = yes
-			# 开局后统治者不能获得非议会特质，先给 1 天豁免标记再加
-			set_timed_leader_flag = {{
-				flag = ignore_autocracy_ruler_trait_restriction
-				days = 1
-			}}
-			add_trait = {{
-				trait = leader_trait_intemporal
-				show_message = no
-			}}
-			change_leader_portrait = atbgp_$ID$
-			save_event_target_as = atbgp_new_ruler
-		}}
-	}}
-	set_leader = event_target:atbgp_new_ruler
-	atbgp_remove_replaced_ruler = yes
-}}
-
+{named_ruler_effects}
 # 国家作用域：随机名字的 10 级元首（大君主同盟领地）
 atbgp_install_random_ruler = {{
 	if = {{

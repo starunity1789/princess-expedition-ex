@@ -1,0 +1,20 @@
+animation = {
+	name = "adpp_ancient_dragonkin_female_idle_animation"
+	file = "female/adpp_ancient_dragonkin_female_idle.anim"
+}
+animation = {
+	name = "adpp_ancient_dragonkin_female_angry_animation"
+	file = "female/adpp_ancient_dragonkin_female_angry.anim"
+}
+animation = {
+	name = "adpp_ancient_dragonkin_female_happy_animation"
+	file = "female/adpp_ancient_dragonkin_female_happy.anim"
+}
+animation = {
+	name = "adpp_ancient_dragonkin_female_unique_orb_happy_animation"
+	file = "female/adpp_ancient_dragonkin_female_unique_orb_happy.anim"
+}
+animation = {
+	name = "adpp_ancient_dragonkin_female_unique_orb_angry_animation"
+	file = "female/adpp_ancient_dragonkin_female_unique_orb_angry.anim"
+}

@@ -1,0 +1,17 @@
+
+animation = {
+	name = "kmpp_kemonomimi_01_idle_animation"
+	file = "kmpp_kemonomimi_01_idle.anim"
+}
+animation = {
+	name = "kmpp_kemonomimi_01_happy_animation"
+	file = "kmpp_kemonomimi_01_happy.anim"
+}
+animation = {
+	name = "kmpp_kemonomimi_01_angry_animation"
+	file = "kmpp_kemonomimi_01_angry.anim"
+}
+
+#idle 1 200
+#happy 201 400
+#angry 401 600

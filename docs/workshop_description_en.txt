@@ -10,7 +10,7 @@ EX moves the expedition beyond the galaxy rim and adds three guaranteed great po
 At game start the whole expedition moves to 7 systems beyond the rim at 2 o'clock, linked to the galaxy by a single hyperlane from the Great Inheritor.
 [list]
 [*] [b]Origin's Reach[/b]: home system of the Origin Fortress, the only system surveyed at start
-[*] [b]Starsea Firefly[/b]: an L-Gate    [b]Formless Link[/b]: a random pre-FTL civilization
+[*] [b]Starsea Firefly[/b]: an L-Gate    [b]Formless Link[/b]: a random pre-FTL civilization, always using the Ancient Dragonkin portraits
 [*] [b]Utmost Edge[/b]: black hole    [b]Radiant Glory[/b]: neutron star    [b]Stifled Gleam[/b]: pulsar
 [*] [b]Great Inheritor[/b]: a Relic World holding the vanilla "Planet-Wide Machinery" anomaly, which opens the Planetary Machinery dig site
 [/list]
@@ -19,19 +19,20 @@ Your original starting system becomes the unowned "Expedition's Departure".
 [h2]New in EX: Three Guaranteed Great Powers[/h2]
 Three clusters are created beyond the rim, each home to a great power and joined to the galaxy by two hyperlanes.
 [list]
-[*] [b]Burning White Stag Legion[/b] (11 o'clock): a machine empire built by the elves, allies of the Empire. Rapid Replicator + OTA Updates. Ruler "Fused-Heart Calculus" with a custom portrait, Intemporal, level 10. Gaia homeworld, Continental, Relic and Machine Worlds, a Ringworld, a black hole (20 Dark Matter), a neutron star (22 Unity)
-[*] [b]Far Star Alliance[/b] (5 o'clock): a megacorp of elites and nations from the Empire's homeworld - some of them its friends, some its enemies. Worker Cooperative + Shadow Corporation. Ruler "Taiaria Starheart" with a custom portrait, Intemporal, level 10. Relic World homeworld, a Gaia World with the Valley of Zanaam, an Ecumenopolis, a Ringworld, a black hole (20 Dark Matter), a neutron star (22 Unity), a Shattered World (10 Nanites)
-[*] [b]Grand Suzerain Allied Fief[/b] (9 o'clock): a mere rural fief of a feudal civilization spread across the universe, which looks at the rest of the galaxy the way an Australian farmer looks at kangaroos. Necroid monarchy, Philosopher King + Feudal Society, level-10 ruler. Gaia homeworld, 6 Tomb Worlds, two black holes (22 Dark Matter each), a Ringworld. Its 12th ascension perk is always Galactic Nemesis, which also grants +1000 naval capacity and +100% ship build speed
+[*] [b]Burning White Stag Legion[/b] (12 o'clock): a machine empire built by the elves. Rapid Replicator + OTA Updates, on the Kemonomimi machine portraits. Ruler "Fused-Heart Calculus": custom portrait, Intemporal, level 10. Gaia homeworld, Continental, Relic and Machine Worlds, a Ringworld, a black hole (20 Dark Matter), a neutron star (22 Unity)
+[*] [b]Far Star Alliance[/b] (5 o'clock): elites and nations from the Empire's homeworld. Dictatorial, Authoritarian / Materialist / Militarist, Technocracy + Dark Consortium. Ruler "Taiaria Starheart": custom portrait, lv10, Intemporal, Supreme Organizer, Master Bureaucrat, Synthetic, Psionic. Relic World homeworld, a Gaia World with Zanaam, an Ecumenopolis, a Ringworld, a black hole (20 Dark Matter), a neutron star (22 Unity), a Shattered World (10 Nanites)
+[*] [b]Grand Suzerain Allied Fief[/b] (9 o'clock): a rural fief of a feudal civilization spread across the universe, which sees the galaxy the way an Australian farmer sees kangaroos. Necroid monarchy, Philosopher King + Feudal Society, level-10 ruler. Gaia homeworld, 6 Tomb Worlds, two black holes (22 Dark Matter each), a Ringworld. Its 12th ascension perk is always Galactic Nemesis, which also grants +1000 naval capacity and +100% ship build speed
 [/list]
-Only their homeworlds start colonized; other systems hold outposts. Each gets a fixed monthly supply: 222 each of energy, minerals, food, consumer goods and alloys, 22 of each strategic resource, and 45 / 42 / 56 of each research type. Once a Fallen Empire awakens or an endgame crisis begins, it doubles and each research type gains another 550.
+Only their homeworlds start colonized; other systems hold outposts. Each gets a fixed monthly supply: 222 each of energy, minerals, food, consumer goods and alloys, 22 of each strategic resource, 2 influence and 45 / 42 / 56 research. Once a Fallen Empire awakens or an endgame crisis begins it doubles, with another 550 of each research type.
 Dark Matter only flows after the vanilla Dark Matter extraction tech. The 12th ascension perk needs a mod that allows 12 perk slots.
 
 [h2]New in EX: Galaxy Rules[/h2]
 [list]
 [*] [b]The Chosen[/b] always spawn (about 1 in 4 in vanilla)
-[*] The crash site of the legendary leader [b]Keides, Scion of Vagros[/b] always spawns (about 1 in 4 in vanilla), 3-5 jumps into the galaxy from the Great Inheritor
+[*] The crash site of [b]Keides, Scion of Vagros[/b] always spawns (about 1 in 4 in vanilla), 3-5 jumps from the Great Inheritor
 [*] All empires: resource storage [b]+100K[/b]
 [*] Every buildable ship except bio-ships has its [b]base hull doubled[/b] (defense platforms and starbases unchanged)
+[*] [b]Every vanilla shield and armor value is doubled[/b] (Psi Shields, Dark Matter Deflectors, Dragonscale Armor and space fauna too)
 [/list]
 
 [h2]Origin: The Princesses' Expedition[/h2]
@@ -64,15 +65,15 @@ They start at level 1 and can still pick a third destiny trait at level 8.
 [/list]
 
 [h2]Required DLC[/h2]
-The Machine Age and Ancient Relics (required for the origin); Distant Stars (L-Gate); First Contact (The Chosen); Synthetic Dawn, MegaCorp, Necroids and Nemesis (the great powers); Galactic Paragons recommended.
+The Machine Age and Ancient Relics (required for the origin); Distant Stars (L-Gate); First Contact (The Chosen); Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis (great powers); Galactic Paragons recommended.
 
 [h2]Compatibility[/h2]
 [list]
 [*] Stellaris 4.5.*
+[*] Bundles the Ancient Dragonkin and Kemonomimi portrait packs - [b]disable those if you are subscribed[/b]
 [*] The origin switches to vanilla Synthetic Fertility in the background at game start
-[*] Fully overrides vanilla common/governments/authorities/00_authorities.txt and common/species_rights/living_standards/00_living_standards.txt
-[*] Overrides the game rule can_dismiss_leader
-[*] Overrides the vanilla shader gfx/FX/buttonstate_rendertarget_hologram.shader to remove the hologram effect from council portraits (this also removes the holographic look of virtual species)
+[*] Fully overrides vanilla 00_authorities.txt, 00_living_standards.txt and 02_scripted_variables_component_cost.txt (the doubled defenses)
+[*] Overrides can_dismiss_leader and the council-portrait hologram shader (this also affects virtual species)
 [/list]
 
 ------------------------------------------------------------

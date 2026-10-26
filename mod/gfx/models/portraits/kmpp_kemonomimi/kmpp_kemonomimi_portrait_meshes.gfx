@@ -1,0 +1,22 @@
+objectTypes = {
+	pdxmesh = {
+		name = "kmpp_kemonomimi_01"
+		file = "gfx/models/portraits/kmpp_kemonomimi/kmpp_kemonomimi_01.mesh"
+		animation = { id = "idle"	type = "kmpp_kemonomimi_01_idle_animation" }
+		animation = { id = "happy"	type = "kmpp_kemonomimi_01_happy_animation" } 
+		animation = { id = "angry"	type = "kmpp_kemonomimi_01_angry_animation" }
+		scale = 1.00
+
+	}
+}
+objectTypes = {
+	pdxmesh = {
+		name = "kmpp_kemonomimi_01_machine"
+		file = "gfx/models/portraits/kmpp_kemonomimi/kmpp_kemonomimi_01_machine.mesh"
+		animation = { id = "idle"	type = "kmpp_kemonomimi_01_idle_animation" }
+		animation = { id = "happy"	type = "kmpp_kemonomimi_01_happy_animation" } 
+		animation = { id = "angry"	type = "kmpp_kemonomimi_01_angry_animation" }
+		scale = 1.00
+
+	}
+}

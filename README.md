@@ -39,8 +39,9 @@ The characters - their personalities, looks and every detail - were designed by 
 
 **New in EX**
 - **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 2 o'clock (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane
-- **Three guaranteed great powers**: Burning White Stag Legion (11 o'clock), Far Star Alliance (5 o'clock) and Grand Suzerain Allied Fief (9 o'clock), each with its own cluster beyond the rim and a fixed monthly supply
-- **Galaxy rules**: The Chosen and the crash site of Keides, Scion of Vagros always spawn; +100K storage for all empires; doubled base hull for non-bio ships; no hologram effect on council portraits
+- **Three guaranteed great powers**: Burning White Stag Legion (12 o'clock), Far Star Alliance (5 o'clock) and Grand Suzerain Allied Fief (9 o'clock), each with its own cluster beyond the rim, a fixed empire flag and a fixed monthly supply
+- **Galaxy rules**: The Chosen and the crash site of Keides, Scion of Vagros always spawn; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
+- **Bundled portraits**: the Ancient Dragonkin and Kemonomimi animated portrait packs are merged in - disable the standalone packs if you are subscribed to them
 
 Full details: [workshop description (English)](docs/workshop_description_en.txt).
 
@@ -49,7 +50,7 @@ Full details: [workshop description (English)](docs/workshop_description_en.txt)
 ```
 mod/      the mod itself (this folder is what gets uploaded to the Workshop)
 tools/    generator scripts (Python 3 + Pillow)
-art/      portraits, cover and relic artwork
+art/      portraits, empire flag logos, cover and relic artwork
 docs/     Workshop descriptions (English and Chinese)
 ```
 
@@ -57,7 +58,7 @@ docs/     Workshop descriptions (English and Chinese)
 
 ### Required DLC
 
-The Machine Age and Ancient Relics (origin); Distant Stars (L-Gate); First Contact (The Chosen); Synthetic Dawn, MegaCorp, Necroids and Nemesis (great powers); Galactic Paragons recommended.
+The Machine Age and Ancient Relics (origin); Distant Stars (L-Gate); First Contact (The Chosen); Synthetic Dawn, MegaCorp, Astral Planes, Necroids and Nemesis (great powers); Galactic Paragons recommended.
 
 ---
 
@@ -96,8 +97,9 @@ EX 新增的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **EX 新增**
 - **边缘星团**：开局远征军整体搬到银河 2 点钟方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河
-- **三个保底列强**：燃烧白鹿军团（11 点）、远星同盟组织（5 点）、大君主同盟领地（9 点），各在银河边缘外有自己的星团和固定补给
-- **银河规则**：必定生成天选民和凯德斯（瓦格罗之子嗣）的坠毁点；所有国家存储上限 +100K；非生物船基础舰体翻倍；议会肖像去掉全息效果
+- **三个保底列强**：燃烧白鹿军团（12 点）、远星同盟组织（5 点）、大君主同盟领地（9 点），各在银河边缘外有自己的星团、固定的帝国标识和固定补给
+- **银河规则**：必定生成天选民和凯德斯（瓦格罗之子嗣）的坠毁点；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
+- **内置肖像包**：已合并 Ancient Dragonkin（龙族）与 Kemonomimi（兽耳）两套动态肖像包——如果还订阅着这两个独立包，请停用它们
 
 完整说明见工坊简介原文：[中文](docs/workshop_description_zh.txt) / [English](docs/workshop_description_en.txt)。
 
@@ -106,7 +108,7 @@ EX 新增的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 ```
 mod/      MOD 本体（上传工坊的就是这个文件夹）
 tools/    生成脚本
-art/      立绘、封面、遗珍原图
+art/      立绘、列强帝国标识 LOGO、封面、遗珍原图
 docs/     工坊简介原文（中文、英文各一份）
 ```
 
@@ -118,6 +120,16 @@ docs/     工坊简介原文（中文、英文各一份）
 
 游戏和启动器看到的路径不变；`.git` 在 `mod/` 之外，不会被传到工坊。
 
+联接不在时（换机器、重新 clone 之后）用 cmd 重建，不需要管理员权限：
+
+```
+mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princess_expedition_ex" "%USERPROFILE%\Documents\GitHub\princess-expedition-ex\mod"
+```
+
+启动器还需要同目录下一个 `atb_princess_expedition_ex.mod` 描述文件指向这个联接：内容照抄
+`mod/descriptor.mod`，再加一行 `path="mod/atb_princess_expedition_ex"`。如果这时启动器报
+「已存在具有相同远程 ID 的本地 Mod」，按下面「发布到工坊」第 6 条处理。
+
 ### 文件前缀
 
 | 前缀 | 内容 |
@@ -125,6 +137,8 @@ docs/     工坊简介原文（中文、英文各一份）
 | `atb_` | 起源、四位皇女、搬家后的星团 |
 | `atbgp_` | 三个保底列强（全部由 `tools/gen_great_powers.py` 生成，不要手改） |
 | `atb_ex_` | 银河规则、天选民、凯德斯、搬家流程 |
+| `adpp_` | 合并进来的 Ancient Dragonkin 肖像包，原样保留，不要改 |
+| `kmpp_` | 合并进来的 Kemonomimi 肖像包，原样保留，不要改 |
 
 ### 开发
 
@@ -139,6 +153,15 @@ python tools/make_portraits.py art/great_power_rulers mod <预览输出文件夹
 
 # 生成遗珍、起源图标、事件图和缩略图
 python tools/make_art.py art mod <预览输出文件夹>
+
+# 生成三个列强的帝国标识图标（128x128 DDS）
+python tools/make_flags.py art/great_power_flags mod
+
+# 把原版所有能量盾和装甲的数值翻倍（倍率可选，默认 2）
+python tools/gen_double_defenses.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
+
+# 静态自检：括号配对、本地化格式、贴图引用、原版 ID、本次改动点
+python tools/check_mod.py
 ```
 
 **测试**：把 `文档\Paradox Interactive\Stellaris\dlc_load.json` 改成只启用本 MOD，直接运行 `stellaris.exe -gdpr-compliant`，读 `logs/error.log`。判断加载成功要确认游戏进程还在、`crashes` 文件夹没有新的崩溃报告——日志停止增长不代表没有崩溃。
@@ -149,16 +172,44 @@ python tools/make_art.py art mod <预览输出文件夹>
 - `events/origin_events_paragon.txt`
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
+- `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
 
 ### 发布到工坊
 
 1. 从 Steam 启动群星（单游戏启动器），进入「Mod 库 → 上传 MOD」，选「皇女的远征军EX」，上传到「Steam 创意工坊」。Mod ID 应自动显示 3821602893。
 2. 上传前把 `docs/workshop_description_en.txt` 的内容贴进描述栏——上传会用这一栏覆盖工坊的默认（英语）简介。
 3. 上传后到工坊物品页「编辑标题与描述」，语言选「简体中文」，标题填「皇女的远征军EX」，描述贴 `docs/workshop_description_zh.txt`。中文 Steam 的玩家看中文版，其他语言的玩家看英文版。
-4. 简介上限约 8000 字节（按 UTF-8 计算），两份各自计算。
-5. 如果提示「已存在具有相同远程 ID 的本地 Mod」，是启动器数据库 `launcher-v2.sqlite` 里别的本地条目还登记着这个编号：关掉启动器，把那些条目的 `remoteSteamId` 清空即可。
-6. 更新后 Steam 会自动做内容检查，期间物品暂时隐藏，通过后自动恢复。
+4. 简介上限 8000 字节（UTF-8），两份各自计算。**注意按 CRLF 算**：网页表单会把换行转成 `
+`，
+   仓库里的文件是 LF，所以实际占用 = 文件字节数 + 行数。超了只会弹「保存标题和描述时出现错误」，
+   不提示是长度问题。核对命令：
+   ```bash
+   python -c "import pathlib;t=pathlib.Path('docs/workshop_description_zh.txt').read_text(encoding='utf-8');print(len(t.replace(chr(10),chr(13)+chr(10)).encode()))"
+   ```
+5. 启动器上传时填的描述只写进工坊的**英文**简介，而且实测不一定生效；稳妥做法是上传后到物品页
+   「编辑标题与描述」里分别保存英文和简体中文两份。
+6. 如果提示「已存在具有相同远程 ID 的本地 Mod」，是启动器数据库 `launcher-v2.sqlite` 里别的本地条目还登记着这个编号：关掉启动器，把那些条目的 `remoteSteamId` 清空即可。
+7. 更新后 Steam 会自动做内容检查，期间物品暂时隐藏，通过后自动恢复。
+8. **把工坊物品设为私密**（2.1 起必做，因为合并了他人的肖像包）：浏览器打开
+   <https://steamcommunity.com/sharedfiles/filedetails/?id=3821602893>，右侧栏点「更改可见性 / Change Visibility」，
+   选「私密 / Private」。私密之后只有物品作者本人能看到和订阅，好友也看不到。
+   上传新版本不会改动已设好的可见性，所以只需要设一次。
+9. **上传成功后，在启动器里停用独立的两个肖像包**（Ancient Dragonkin 3765752651、Kemonomimi 3821158186），
+   否则同一批肖像会被定义两次。本 MOD 没上传完之前先别停用，不然游戏里会直接少掉这些肖像。
+
+### 内置的第三方内容
+
+本 MOD 合并了两套他人制作的动态肖像包，文件原样保留（`adpp_` / `kmpp_` 前缀，以及
+`gfx/models/portraits/adpp_ancient_dragonkin`、`gfx/models/portraits/kmpp_kemonomimi`）：
+
+| 肖像包 | 工坊 ID | 本 MOD 里的用途 |
+| --- | --- | --- |
+| Ancient Dragonkin Animated Portrait Pack | 3765752651 | 爬行类、炼狱类可选；「无形链接」的前超光速土著固定使用 |
+| Kemonomimi Animated Portrait Pack | 3821158186 | 哺乳类、机器人、机械可选；燃烧白鹿军团固定使用 |
+
+更新这两套素材时，直接从对应工坊目录整体覆盖同名文件即可，不要手改。
+玩家如果同时订阅了这两个独立包，需要停用它们，否则同一批肖像会被定义两次。
 
 ### 需要的 DLC
 
-机械纪元、远古遗珍（起源必需）；远星（L 星门）；首次接触（天选民）；合成黎明、巨企、死灵物种包、复仇女神（三个列强）；银河英杰（推荐）。
+机械纪元、远古遗珍（起源必需）；远星（L 星门）；首次接触（天选民）；合成黎明、巨企、星界风云、死灵物种包、复仇女神（三个列强）；银河英杰（推荐）。

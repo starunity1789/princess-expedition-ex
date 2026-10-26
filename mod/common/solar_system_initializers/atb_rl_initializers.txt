@@ -134,7 +134,7 @@ atb_rl_lgate = {
 	}
 }
 
-# 无形链接：随机前超光速土著（原版 pre_ftl_init_01 的写法）
+# 无形链接：随机前超光速土著（原版 pre_ftl_init_01 的写法），肖像固定为龙族
 atb_rl_preftl = {
 	name = "atb_system_rl_preftl"
 	class = "rl_standard_stars"
@@ -170,6 +170,7 @@ atb_rl_preftl = {
 		init_effect = {
 			prevent_anomaly = yes
 			generate_pre_ftls_on_planet = yes
+			atb_ex_force_dragonkin_natives = yes
 		}
 		change_orbit = @atb_rl_moon
 		moon = {

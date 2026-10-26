@@ -14,15 +14,15 @@ event = {
 	immediate = {
 		set_global_flag = atbgp_spawned
 		set_spawn_system_batch = begin
-		# 燃烧白鹿军团：11 点方位（角度 120）
+		# 燃烧白鹿军团：12 点方位（角度 90）
 		if = {
 			limit = { galaxy_size = tiny }
 			no_scope = {
 				spawn_system = {
 					min_distance >= 240
 					max_distance <= 248
-					min_orientation_angle = 118
-					max_orientation_angle = 122
+					min_orientation_angle = 88
+					max_orientation_angle = 92
 					initializer = atbgp_home_1
 					hyperlane = no
 				}
@@ -34,8 +34,8 @@ event = {
 				spawn_system = {
 					min_distance >= 340
 					max_distance <= 348
-					min_orientation_angle = 118
-					max_orientation_angle = 122
+					min_orientation_angle = 88
+					max_orientation_angle = 92
 					initializer = atbgp_home_1
 					hyperlane = no
 				}
@@ -47,8 +47,8 @@ event = {
 				spawn_system = {
 					min_distance >= 440
 					max_distance <= 448
-					min_orientation_angle = 118
-					max_orientation_angle = 122
+					min_orientation_angle = 88
+					max_orientation_angle = 92
 					initializer = atbgp_home_1
 					hyperlane = no
 				}
@@ -60,8 +60,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 118
-					max_orientation_angle = 122
+					min_orientation_angle = 88
+					max_orientation_angle = 92
 					initializer = atbgp_home_1
 					hyperlane = no
 				}
@@ -73,8 +73,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 118
-					max_orientation_angle = 122
+					min_orientation_angle = 88
+					max_orientation_angle = 92
 					initializer = atbgp_home_1
 					hyperlane = no
 				}
@@ -85,8 +85,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 118
-					max_orientation_angle = 122
+					min_orientation_angle = 88
+					max_orientation_angle = 92
 					initializer = atbgp_home_1
 					hyperlane = no
 				}
@@ -96,48 +96,48 @@ event = {
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 36
-				max_orientation_angle = 44
+				min_orientation_angle = 6
+				max_orientation_angle = 14
 				initializer = atbgp_sys_1_1
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 76
-				max_orientation_angle = 84
+				min_orientation_angle = 46
+				max_orientation_angle = 54
 				initializer = atbgp_sys_1_2
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 156
-				max_orientation_angle = 164
+				min_orientation_angle = 126
+				max_orientation_angle = 134
 				initializer = atbgp_sys_1_3
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 196
-				max_orientation_angle = 204
+				min_orientation_angle = 166
+				max_orientation_angle = 174
 				initializer = atbgp_sys_1_4
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 62
 				max_distance <= 70
-				min_orientation_angle = 96
-				max_orientation_angle = 104
+				min_orientation_angle = 66
+				max_orientation_angle = 74
 				initializer = atbgp_sys_1_5
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 62
 				max_distance <= 70
-				min_orientation_angle = 136
-				max_orientation_angle = 144
+				min_orientation_angle = 106
+				max_orientation_angle = 114
 				initializer = atbgp_sys_1_6
 				hyperlane = no
 			}
@@ -446,11 +446,11 @@ country_event = {
 		atbgp_spawn_start_fleets = yes
 		if = {
 			limit = { has_country_flag = atbgp_power_1 }
-			atbgp_install_named_ruler = { ID = rongxin CLASS = MACHINE }
+			atbgp_install_ruler_rongxin = yes
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_2 }
-			atbgp_install_named_ruler = { ID = taiaria CLASS = HUM }
+			atbgp_install_ruler_taiaria = yes
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_3 }

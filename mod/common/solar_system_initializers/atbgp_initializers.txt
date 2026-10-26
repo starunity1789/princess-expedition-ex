@@ -59,7 +59,7 @@ atbgp_home_1 = {
 				plural = atbgp_species_1_plural
 				adjective = atbgp_species_1_adj
 				class = MACHINE
-				portrait = random
+				portrait = kmpp_kemonomimi_machine
 				traits = random
 				homeworld = this
 				effect = { save_global_event_target_as = atbgp_species_1 }
@@ -72,7 +72,22 @@ atbgp_home_1 = {
 				ethos = { ethic = ethic_gestalt_consciousness }
 				species = event_target:atbgp_species_1
 				origin = "origin_default"
-				flag = random
+				flag = {
+					icon = {
+						category = "atbgp"
+						file = "flag_atbgp_1.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = {
+						"dark_red"
+						"black"
+						"null"
+						"null"
+					}
+				}
 				ignore_initial_colony_error = yes
 				effect = {
 					save_global_event_target_as = atbgp_country_1
@@ -501,12 +516,27 @@ atbgp_home_2 = {
 			create_country = {
 				name = "atbgp_country_2"
 				adjective = "atbgp_country_2_adj"
-				authority = auth_corporate
-				civics = { civic = civic_worker_coop civic = civic_corporate_dark_consortium }
-				ethos = { ethic = ethic_egalitarian ethic = ethic_materialist ethic = ethic_militarist }
+				authority = auth_dictatorial
+				civics = { civic = civic_technocracy civic = civic_dark_consortium }
+				ethos = { ethic = ethic_authoritarian ethic = ethic_materialist ethic = ethic_militarist }
 				species = event_target:atbgp_species_2
 				origin = "origin_default"
-				flag = random
+				flag = {
+					icon = {
+						category = "atbgp"
+						file = "flag_atbgp_2.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = {
+						"dark_blue"
+						"black"
+						"null"
+						"null"
+					}
+				}
 				ignore_initial_colony_error = yes
 				effect = {
 					save_global_event_target_as = atbgp_country_2
@@ -946,7 +976,22 @@ atbgp_home_3 = {
 				ethos = { ethic = ethic_fanatic_authoritarian ethic = ethic_xenophobe }
 				species = event_target:atbgp_species_3
 				origin = "origin_default"
-				flag = random
+				flag = {
+					icon = {
+						category = "atbgp"
+						file = "flag_atbgp_3.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = {
+						"dark_purple"
+						"black"
+						"null"
+						"null"
+					}
+				}
 				ignore_initial_colony_error = yes
 				effect = {
 					save_global_event_target_as = atbgp_country_3

@@ -243,3 +243,19 @@ atb_ex_relocate_expedition = {
 		}
 	}
 }
+
+# 星球作用域：把「无形链接」刚生成的前超光速土著换成龙族肖像
+# 肖像来自合并进本 MOD 的 Ancient Dragonkin Animated Portrait Pack（adpp_ 前缀）。
+# 在 generate_pre_ftls_on_planet 之后调用：原版照常挑起源、特质和国家，这里只改物种肖像。
+atb_ex_force_dragonkin_natives = {
+	if = {
+		limit = { exists = owner }
+		owner = {
+			every_owned_species = {
+				change_species_characteristics = {
+					portrait = adpp_ancient_dragonkin
+				}
+			}
+		}
+	}
+}

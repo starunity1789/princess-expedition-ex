@@ -1,0 +1,293 @@
+# This is a template which multiple species can use.
+
+kmpp_kemonomimi_clothes_01 = { # 00: 범용, 01: 중간 톤, 02: 밝은 톤, 03: 어두운 톤
+	default = "gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_civilian.dds"
+	pop = {
+		default = "gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_civilian.dds"
+	
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_farmer.dds" 	= { OR = { AND = { is_pop_category = worker is_enslaved = no } is_pop_category = simple_drone }  }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_maid.dds"	= { AND = { is_pop_category = worker is_enslaved = yes } }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_scientist.dds" 	= { OR = { is_pop_category = specialist is_pop_category = complex_drone } }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_official.dds" 	= { is_pop_category = ruler }
+	}
+	leader = {
+		random = { # 공직자 일반제국
+			trigger = { AND = { leader_class = official owner = { NOR = { has_civic = civic_machine_servitor has_spiritualist_government = yes  } } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_farmer.dds"
+			}
+		}
+		random = { # 공직자 정신주의
+			trigger = { AND = { leader_class = official owner = { has_spiritualist_government = yes } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_farmer.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_priest.dds"
+			}
+		}
+		random = { # 공직자 독자적 하인
+			trigger = { AND = { leader_class = official owner = { has_civic = civic_machine_servitor } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_maid.dds"
+			}
+		}
+
+		random = {
+			trigger = { leader_class = commander }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_general.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_admiral.dds"
+			}
+		}
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_scientist.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_archaeologist.dds"
+			}
+		}
+	}
+	ruler = {
+		default = "gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_ruler_generic.dds"
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/01/kmpp_kemonomimi_01_clothes_ruler_imperial.dds"  = { owner = { OR = {has_spiritualist_government = yes has_authority = auth_imperial } } }
+		#has_militarist_government = yes
+		#has_materialist_government = yes
+	}
+}
+kmpp_kemonomimi_clothes_02 = {
+	default = "gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_civilian.dds"
+	pop = {
+		default = "gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_civilian.dds"
+	
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_farmer.dds" 	= { OR = { AND = { is_pop_category = worker is_enslaved = no } is_pop_category = simple_drone }  }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_maid.dds"	= { AND = { is_pop_category = worker is_enslaved = yes } }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_scientist.dds" 	= { OR = { is_pop_category = specialist is_pop_category = complex_drone } }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_official.dds" 	= { is_pop_category = ruler }
+	}
+	leader = {
+		random = { # 공직자 일반제국
+			trigger = { AND = { leader_class = official owner = { NOR = { has_civic = civic_machine_servitor has_spiritualist_government = yes } } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_farmer.dds"
+			}
+		}
+		random = { # 공직자 정신주의
+			trigger = { AND = { leader_class = official owner = { has_spiritualist_government = yes } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_farmer.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_priest.dds"
+			}
+		}
+		random = { # 공직자 독자적 하인
+			trigger = { AND = { leader_class = official owner = { has_civic = civic_machine_servitor } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_maid.dds"
+			}
+		}
+		random = {
+			trigger = { leader_class = commander }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_general.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_admiral.dds"
+			}
+		}
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_scientist.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_archaeologist.dds"
+			}
+		}
+	}
+	ruler = {
+		default = "gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_ruler_generic.dds"
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/02/kmpp_kemonomimi_02_clothes_ruler_imperial.dds"  = { owner = { OR = {has_spiritualist_government = yes has_authority = auth_imperial } } }
+	}
+}
+
+kmpp_kemonomimi_clothes_03 = {
+	default = "gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_civilian.dds"
+	pop = {
+		default = "gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_civilian.dds"
+	
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_farmer.dds" 	= { OR = { AND = { is_pop_category = worker is_enslaved = no } is_pop_category = simple_drone }  }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_maid.dds"	= { AND = { is_pop_category = worker is_enslaved = yes } }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_scientist.dds" 	= { OR = { is_pop_category = specialist is_pop_category = complex_drone } }
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_official.dds" 	= { is_pop_category = ruler }
+	}
+	leader = {
+		random = { # 공직자 일반제국
+			trigger = { AND = { leader_class = official owner = { NOR = { has_civic = civic_machine_servitor has_spiritualist_government = yes } } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_farmer.dds"
+			}
+		}
+		random = { # 공직자 정신주의
+			trigger = { AND = { leader_class = official owner = { has_spiritualist_government = yes } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_farmer.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_priest.dds"
+			}
+		}
+		random = { # 공직자 독자적 하인
+			trigger = { AND = { leader_class = official owner = { has_civic = civic_machine_servitor } } }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_official.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_maid.dds"
+			}
+		}
+		random = {
+			trigger = { leader_class = commander }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_general.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/00/kmpp_kemonomimi_00_clothes_admiral.dds"
+			}
+		}
+		random = {
+			trigger = { leader_class = scientist }
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_scientist.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_archaeologist.dds"
+			}
+		}
+	}
+	ruler = {
+		default = "gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_ruler_generic.dds"
+		"gfx/models/portraits/kmpp_kemonomimi/clothes/03/kmpp_kemonomimi_03_clothes_ruler_imperial.dds"  = { owner = { OR = {has_spiritualist_government = yes has_authority = auth_imperial } } }
+	}
+}
+
+
+
+
+
+
+
+
+kmpp_kemonomimi_hair = {
+	default = "gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_brown.dds"
+	game_setup = {#will run with a limited country scope. species and government is set but the country does not actually exist
+		default = "gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_brown.dds"
+	}
+	#species scope
+	species = { #generic portrait for a species
+		default = "gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_brown.dds"
+	}
+	
+	pop = {
+		default = "gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_brown.dds"
+		random = {
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_purple.dds"
+				
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_purple.dds"
+				
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_purple.dds"
+				
+			}
+		}	
+	}
+	
+	leader = {
+		random = {
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_purple.dds"
+				
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_purple.dds"
+				
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_purple.dds"
+			}
+		}	
+	}
+	
+	ruler = {
+		random = {
+			list = {
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_01_purple.dds"
+				
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_02_purple.dds"
+				
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_brown.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_black.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_white.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_yellow.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_red.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_blue.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_cyan.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_green.dds"
+				"gfx/models/portraits/kmpp_kemonomimi/hair/kmpp_kemonomimi_hair_03_purple.dds"
+			}
+		}	
+	}
+}

@@ -174,19 +174,19 @@ atbgp_spawn_start_fleets = {
 	}
 }
 
-# 国家作用域：用专属立绘的元首替换开局元首（时间永驻，10 级）
+# 国家作用域：用专属立绘的元首替换 燃烧白鹿军团 的开局元首（10 级）
 # 元首是单独的物种，原版改造/飞升换肖像不会作用到她身上
-atbgp_install_named_ruler = {
+atbgp_install_ruler_rongxin = {
 	if = {
 		limit = { exists = ruler }
 		ruler = { set_leader_flag = atbgp_replaced_ruler }
 	}
 	create_species = {
-		name = atbgp_ruler_species_$ID$
-		plural = atbgp_ruler_species_$ID$
-		adjective = atbgp_ruler_species_$ID$
-		class = $CLASS$
-		portrait = atbgp_$ID$
+		name = atbgp_ruler_species_rongxin
+		plural = atbgp_ruler_species_rongxin
+		adjective = atbgp_ruler_species_rongxin
+		class = MACHINE
+		portrait = atbgp_rongxin
 		traits = random
 		allow_negative_traits = no
 		effect = { save_event_target_as = atbgp_ruler_species_tmp }
@@ -194,7 +194,7 @@ atbgp_install_named_ruler = {
 	create_leader = {
 		class = official
 		species = event_target:atbgp_ruler_species_tmp
-		name = atbgp_leader_$ID$
+		name = atbgp_leader_rongxin
 		gender = female
 		skill = 10
 		immortal = yes
@@ -210,11 +210,75 @@ atbgp_install_named_ruler = {
 				flag = ignore_autocracy_ruler_trait_restriction
 				days = 1
 			}
-			add_trait = {
-				trait = leader_trait_intemporal
-				show_message = no
+				add_trait = {
+					trait = leader_trait_intemporal
+					show_message = no
+				}
+			change_leader_portrait = atbgp_rongxin
+			save_event_target_as = atbgp_new_ruler
+		}
+	}
+	set_leader = event_target:atbgp_new_ruler
+	atbgp_remove_replaced_ruler = yes
+}
+
+# 国家作用域：用专属立绘的元首替换 远星同盟组织 的开局元首（10 级）
+# 元首是单独的物种，原版改造/飞升换肖像不会作用到她身上
+atbgp_install_ruler_taiaria = {
+	if = {
+		limit = { exists = ruler }
+		ruler = { set_leader_flag = atbgp_replaced_ruler }
+	}
+	create_species = {
+		name = atbgp_ruler_species_taiaria
+		plural = atbgp_ruler_species_taiaria
+		adjective = atbgp_ruler_species_taiaria
+		class = HUM
+		portrait = atbgp_taiaria
+		traits = random
+		allow_negative_traits = no
+		effect = { save_event_target_as = atbgp_ruler_species_tmp }
+	}
+	create_leader = {
+		class = official
+		species = event_target:atbgp_ruler_species_tmp
+		name = atbgp_leader_taiaria
+		gender = female
+		skill = 10
+		immortal = yes
+		hide_age = yes
+		randomize_traits = no
+		skip_background_generation = yes
+		effect = {
+			set_leader_flag = atbgp_named_ruler
+			set_leader_flag = leader_death_events_blocked
+			set_immortal = yes
+			# 开局后统治者不能获得非议会特质，先给 1 天豁免标记再加
+			set_timed_leader_flag = {
+				flag = ignore_autocracy_ruler_trait_restriction
+				days = 1
 			}
-			change_leader_portrait = atbgp_$ID$
+				add_trait = {
+					trait = leader_trait_intemporal
+					show_message = no
+				}
+				add_trait = {
+					trait = leader_trait_supreme_organizer
+					show_message = no
+				}
+				add_trait = {
+					trait = leader_trait_master_bureaucrat
+					show_message = no
+				}
+				add_trait = {
+					trait = leader_trait_synthetic
+					show_message = no
+				}
+				add_trait = {
+					trait = leader_trait_psionic
+					show_message = no
+				}
+			change_leader_portrait = atbgp_taiaria
 			save_event_target_as = atbgp_new_ruler
 		}
 	}

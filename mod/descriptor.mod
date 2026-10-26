@@ -1,9 +1,10 @@
-version="2.0"
+version="2.1"
 tags={
 	"Gameplay"
 	"Leaders"
 	"Events"
 	"Graphics"
+	"Species"
 	"AI"
 	"Galaxy Generation"
 }

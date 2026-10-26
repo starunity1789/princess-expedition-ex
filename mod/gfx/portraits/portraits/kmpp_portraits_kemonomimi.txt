@@ -1,0 +1,433 @@
+##############################################################
+###	PORTRAITS SETTINGS
+###
+### Which portraits are used is set in 
+### common\species_classes\00_species_classes.txt
+###
+###	This file configures how portraits and planet backgrounds are built.
+###	Default position orientation is lower left.
+##############################################################
+
+portraits = { #.dds (BC3 Linear, DXT5) x50%
+#	kmpp_kemonomimi_01 = {
+#		texturefile = "gfx/models/portraits/kmpp_kemonomimi/kmpp_base_test.dds"
+#		greeting_sound = "" 
+#	}
+	kmpp_kemonomimi_01 = {	
+		entity = "kmpp_kemonomimi_01" 
+		clothes_selector = "kmpp_kemonomimi_clothes_01" 
+		attachment_selector = "kmpp_kemonomimi_hair" 
+		greeting_sound = "humanoid_female_greeting_a" 
+		character_textures = { 
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_black_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_blue_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_brown_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_green_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_purple_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_red_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_cyan_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/01/kmpp_kemonomimi_01_odd_eyes.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+		
+		portrait_evolution = {
+			# cybernetization stages
+			variants = {
+				{
+					value = {
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_stage_1_decal.dds"
+							mask = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_mask.dds"
+						}
+					}
+					trigger = {
+						has_cybernetization_stage_1 = yes
+					}
+				}
+
+				{
+					value = {
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_stage_2_decal.dds"
+							mask = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_mask.dds"
+						}
+					}
+					trigger = {
+						has_cybernetization_stage_2 = yes
+					}
+				}
+				
+				# machine, set_synth_or_robot_portrait_effect
+				{
+					value = {
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_black_eyes.dds"
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_blue_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_brown_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_green_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_purple_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_red_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_cyan_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_odd_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+					}
+					trigger = {
+						always = no
+					}
+				}
+			}
+		}
+	}
+	kmpp_kemonomimi_02 = {	
+		entity = "kmpp_kemonomimi_01" 
+		clothes_selector = "kmpp_kemonomimi_clothes_02" 
+		attachment_selector = "kmpp_kemonomimi_hair" 
+		greeting_sound = "humanoid_female_greeting_a" 
+		character_textures = { 
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_black_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_blue_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_brown_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_green_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_purple_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_red_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_cyan_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/02/kmpp_kemonomimi_02_odd_eyes.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+		
+		portrait_evolution = {
+			# cybernetization stages
+			variants = {
+				{
+					value = {
+						# stage 1 variant 1
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_stage_1_decal.dds"
+							mask = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_mask.dds"
+						}
+					}
+					trigger = {
+						has_cybernetization_stage_1 = yes
+					}
+				}
+
+				{
+					value = {
+						# stage 2 variant 1
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_stage_2_decal.dds"
+							mask = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_mask.dds"
+						}
+					}
+					trigger = {
+						has_cybernetization_stage_2 = yes
+					}
+				}
+				{
+					value = {
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_black_eyes.dds"
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_blue_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_brown_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_green_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_purple_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_red_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_cyan_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_odd_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+					}
+					trigger = {
+						always = no
+					}
+				}
+			}
+		}
+	}
+	kmpp_kemonomimi_03 = {	
+		entity = "kmpp_kemonomimi_01" 
+		clothes_selector = "kmpp_kemonomimi_clothes_03" 
+		attachment_selector = "kmpp_kemonomimi_hair" 
+		greeting_sound = "humanoid_female_greeting_a" 
+		character_textures = { 
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_black_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_blue_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_brown_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_green_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_purple_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_red_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_cyan_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/03/kmpp_kemonomimi_03_odd_eyes.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+		
+		portrait_evolution = {
+			# cybernetization stages
+			variants = {
+				{
+					value = {
+						# stage 1 variant 1
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_stage_1_decal.dds"
+							mask = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_mask.dds"
+						}
+					}
+					trigger = {
+						has_cybernetization_stage_1 = yes
+					}
+				}
+
+				{
+					value = {
+						# stage 2 variant 1
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_stage_2_decal.dds"
+							mask = "gfx/models/portraits/kmpp_kemonomimi/body/cybernetic/kmpp_kemonomimi_01_cybernetic_mask.dds"
+						}
+					}
+					trigger = {
+						has_cybernetization_stage_2 = yes
+					}
+				}
+				{
+					value = {
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_black_eyes.dds"
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_blue_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_brown_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_green_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_purple_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_red_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_cyan_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+						{
+							decal = "gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_odd_eyes.dds" 
+							mask = "gfx/models/portraits/common/empty_portrait_evolution_mask.dds"
+						}
+					}
+					trigger = {
+						always = no
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	kmpp_kemonomimi_machine_01 = {
+		entity = "kmpp_kemonomimi_01_machine" 
+		clothes_selector = "kmpp_kemonomimi_clothes_01" 
+		attachment_selector = "kmpp_kemonomimi_hair" 
+		greeting_sound = "tox_portrait_machine"   #robot_human_greetings
+		character_textures = { 
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_black_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_blue_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_brown_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_green_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_purple_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_red_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_cyan_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/01/kmpp_kemonomimi_machine_01_odd_eyes.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+	}
+	kmpp_kemonomimi_machine_02 = {
+		entity = "kmpp_kemonomimi_01_machine" 
+		clothes_selector = "kmpp_kemonomimi_clothes_02" 
+		attachment_selector = "kmpp_kemonomimi_hair" 
+		greeting_sound = "tox_portrait_machine" 
+		character_textures = { 
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_black_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_blue_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_brown_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_green_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_purple_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_red_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_cyan_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/02/kmpp_kemonomimi_machine_02_odd_eyes.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+	}
+	kmpp_kemonomimi_machine_03 = {
+		entity = "kmpp_kemonomimi_01_machine" 
+		clothes_selector = "kmpp_kemonomimi_clothes_03" 
+		attachment_selector = "kmpp_kemonomimi_hair" 
+		greeting_sound = "tox_portrait_machine" 
+		character_textures = { 
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_black_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_blue_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_brown_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_green_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_purple_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_red_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_cyan_eyes.dds"
+			"gfx/models/portraits/kmpp_kemonomimi/body/machine/03/kmpp_kemonomimi_machine_03_odd_eyes.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+	}
+}
+
+portrait_groups = {
+	kmpp_kemonomimi = { #
+		default = kmpp_kemonomimi_01
+		game_setup = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_01
+					kmpp_kemonomimi_02
+					kmpp_kemonomimi_03
+				}
+			}
+		}
+		species = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_01
+					kmpp_kemonomimi_02
+					kmpp_kemonomimi_03
+				}
+			}
+		}
+		pop = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_01
+					kmpp_kemonomimi_02
+					kmpp_kemonomimi_03
+				}
+			}
+		}
+		leader = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_01
+					kmpp_kemonomimi_02
+					kmpp_kemonomimi_03
+				}
+			}
+		}
+		ruler = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_01
+					kmpp_kemonomimi_02
+					kmpp_kemonomimi_03
+				}
+			}
+		}
+	}
+	
+	
+	kmpp_kemonomimi_machine = { #
+		default = kmpp_kemonomimi_machine_01
+		game_setup = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_machine_01
+					kmpp_kemonomimi_machine_02
+					kmpp_kemonomimi_machine_03
+				}
+			}
+		}
+		species = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_machine_01
+					kmpp_kemonomimi_machine_02
+					kmpp_kemonomimi_machine_03
+				}
+			}
+		}
+		pop = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_machine_01
+					kmpp_kemonomimi_machine_02
+					kmpp_kemonomimi_machine_03
+				}
+			}
+		}
+		leader = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_machine_01
+					kmpp_kemonomimi_machine_02
+					kmpp_kemonomimi_machine_03
+				}
+			}
+		}
+		ruler = {
+			add = {
+				portraits = {
+					kmpp_kemonomimi_machine_01
+					kmpp_kemonomimi_machine_02
+					kmpp_kemonomimi_machine_03
+				}
+			}
+		}
+	}
+}

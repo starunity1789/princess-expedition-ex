@@ -1,0 +1,6 @@
+#	else_if = {
+#		limit = {
+#			prev = { use_robot_portrait_kmpp_kemonomimi_machine = yes }
+#		}
+#		change_species_characteristics = { portrait = "kmpp_kemonomimi_machine" }
+#	}

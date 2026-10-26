@@ -1,0 +1,29 @@
+objectTypes = {
+	pdxmesh = {
+		name = "adpp_ancient_dragonkin_female_unique"
+		file = "gfx/models/portraits/adpp_ancient_dragonkin/female/adpp_ancient_dragonkin_female_unique.mesh"
+		animation = { id = "idle"	type = "adpp_ancient_dragonkin_female_idle_animation" } 
+		animation = { id = "angry"	type = "adpp_ancient_dragonkin_female_angry_animation" } 
+		animation = { id = "happy"	type = "adpp_ancient_dragonkin_female_happy_animation" }
+		animation = { id = "orb_happy"	type = "adpp_ancient_dragonkin_female_unique_orb_happy_animation" }
+		animation = { id = "orb_angry"	type = "adpp_ancient_dragonkin_female_unique_orb_angry_animation" } 
+		scale = 1.00
+		meshsettings = {
+			name = "07_orb_flowmap"
+			shader = "PdxMeshAlphaAdditiveAnimateUV"
+			texture_normal = "nospec.dds"
+			texture_diffuse = "adpp_ancient_dragonkin_female_unique_orb_flowmap.dds"
+			texture_specular = "nospec.dds"
+		}
+	}
+}
+objectTypes = {
+	pdxmesh = {
+		name = "adpp_ancient_dragonkin_female"
+		file = "gfx/models/portraits/adpp_ancient_dragonkin/female/adpp_ancient_dragonkin_female.mesh"
+		animation = { id = "idle"	type = "adpp_ancient_dragonkin_female_idle_animation" } 
+		animation = { id = "angry"	type = "adpp_ancient_dragonkin_female_angry_animation" } 
+		animation = { id = "happy"	type = "adpp_ancient_dragonkin_female_happy_animation" }
+		scale = 1.00
+	}
+} 

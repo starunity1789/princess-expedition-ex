@@ -1,0 +1,197 @@
+##############################################################
+###	PORTRAITS SETTINGS
+###
+### Which portraits are used is set in 
+### common\species_classes\00_species_classes.txt
+###
+###	This file configures how portraits and planet backgrounds are built.
+###	Default position orientation is lower left.
+##############################################################
+portraits = {
+	adpp_ancient_dragonkin_female_01 = {
+		entity = "adpp_ancient_dragonkin_female" 
+		clothes_selector = "adpp_ancient_dragonkin_female_clothes" 
+		attachment_selector = "adpp_ancient_dragonkin_female_hair" 
+		greeting_sound = "humanoid_portrait_f_female" 
+		
+		character_textures = {
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/01/adpp_ancientdragonkin_female_01_grey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/01/adpp_ancientdragonkin_female_01_blue.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/01/adpp_ancientdragonkin_female_01_red.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/01/adpp_ancientdragonkin_female_01_green.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/01/adpp_ancientdragonkin_female_01_purple.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/01/adpp_ancientdragonkin_female_01_yellow.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+	}
+}
+portraits = {
+	adpp_ancient_dragonkin_female_02 = {
+		entity = "adpp_ancient_dragonkin_female" 
+		clothes_selector = "adpp_ancient_dragonkin_female_clothes" 
+		attachment_selector = "adpp_ancient_dragonkin_female_hair" 
+		greeting_sound = "humanoid_portrait_f_female" 
+		
+		character_textures = {
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/02/adpp_ancientdragonkin_female_02_grey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/02/adpp_ancientdragonkin_female_02_blue.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/02/adpp_ancientdragonkin_female_02_red.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/02/adpp_ancientdragonkin_female_02_green.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/02/adpp_ancientdragonkin_female_02_purple.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/02/adpp_ancientdragonkin_female_02_yellow.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+	}
+}
+portraits = {
+	adpp_ancient_dragonkin_female_03 = {
+		entity = "adpp_ancient_dragonkin_female" 
+		clothes_selector = "adpp_ancient_dragonkin_female_clothes" 
+		attachment_selector = "adpp_ancient_dragonkin_female_hair" 
+		greeting_sound = "humanoid_portrait_f_female" 
+		
+		character_textures = {
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/03/adpp_ancientdragonkin_female_03_grey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/03/adpp_ancientdragonkin_female_03_blue.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/03/adpp_ancientdragonkin_female_03_red.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/03/adpp_ancientdragonkin_female_03_green.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/03/adpp_ancientdragonkin_female_03_purple.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/03/adpp_ancientdragonkin_female_03_yellow.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+	}
+}
+
+portraits = {
+	adpp_ancient_dragonkin_female_unique = {
+		entity = "adpp_ancient_dragonkin_female_unique" 
+		clothes_selector = "adpp_ancient_dragonkin_female_clothes_unique" 
+		attachment_selector = "adpp_ancient_dragonkin_female_hair_unique" 
+		greeting_sound = "humanoid_portrait_f_female" 
+		
+		character_textures = {
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique01_grey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique01_blue.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique01_red.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique01_green.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique01_purple.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique01_bluegrey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique01_yellow.dds"
+					
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique02_grey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique02_blue.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique02_red.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique02_green.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique02_purple.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique02_bluegrey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique02_yellow.dds"
+			
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique03_grey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique03_blue.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique03_red.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique03_green.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique03_purple.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique03_bluegrey.dds"
+			"gfx/models/portraits/adpp_ancient_dragonkin/female/body/unique/adpp_ancientdragonkin_female_unique03_yellow.dds"
+	 	}
+		custom_attachment_label = "HAIR_STYLE"
+	}
+}
+portrait_groups = {
+	adpp_ancient_dragonkin = {
+		default = adpp_ancient_dragonkin_female_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+					adpp_ancient_dragonkin_female_unique
+				}
+			}
+		}
+		species = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+				}
+			}
+		}
+		pop = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+				}
+			}
+		}
+		leader = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+				}
+			}
+		}
+		ruler = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_unique
+				}
+			}
+		}
+	}
+}
+portrait_groups = {
+	adpp_ancient_dragonkin_inf = {
+		default = adpp_ancient_dragonkin_female_01
+		game_setup = { #will run with a limited country scope. species and government is set but the country does not actually exist
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+					adpp_ancient_dragonkin_female_unique
+				}
+			}
+		}
+		species = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+				}
+			}
+		}
+		pop = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+				}
+			}
+		}
+		leader = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_01
+					adpp_ancient_dragonkin_female_02
+					adpp_ancient_dragonkin_female_03
+				}
+			}
+		}
+		ruler = {
+			add = {
+				portraits = {
+					adpp_ancient_dragonkin_female_unique
+				}
+			}
+		}
+	}
+}
