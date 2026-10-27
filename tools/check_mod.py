@@ -117,13 +117,36 @@ ev = read(MOD / "events/atbgp_events.txt")
 rl = read(MOD / "common/solar_system_initializers/atb_rl_initializers.txt")
 exeff = read(MOD / "common/scripted_effects/atb_ex_effects.txt")
 dep = read(MOD / "common/deposits/atbgp_deposits.txt")
+opin = read(MOD / "common/opinion_modifiers/atbgp_opinion_modifiers.txt")
+gpmod = read(MOD / "common/static_modifiers/atbgp_static_modifiers.txt")
+atbmod = read(MOD / "common/static_modifiers/atb_static_modifiers.txt")
+trt = read(MOD / "common/traits/atb_leader_traits.txt")
 
 checks = [
     ("白鹿物种肖像 = 兽耳机械", "portrait = kmpp_kemonomimi_machine" in init),
     ("白鹿方位 = 90°（12 点）", "12 点方位（角度 90）" in ev),
+    ("白鹿国民 = 同化斗士 + 空中下载升级",
+     "civic = civic_machine_assimilator civic = civic_machine_ota_updates" in init),
     ("远星政体 = 独裁制", "authority = auth_dictatorial" in init),
-    ("远星国民 = 技术官僚 + 暗影财团", "civic = civic_technocracy civic = civic_dark_consortium" in init),
-    ("远星思潮含威权主义", "ethic = ethic_authoritarian ethic = ethic_materialist" in init),
+    ("远星国民 = 崇高教士团 + 暗影财团", "civic = civic_exalted_priesthood civic = civic_dark_consortium" in init),
+    ("远星思潮 = 极端排外 + 唯心", "ethic = ethic_fanatic_xenophobe ethic = ethic_spiritualist" in init),
+    ("远星开局灵能理论", "give_technology = { tech = tech_psionic_theory message = no }" in ev),
+    ("远星锁定灵能飞升", "add_ascension_perk = ap_mind_over_matter" in ev and "add_tradition = tr_psionics_adopt" in ev),
+    ("远星母星每月 +3 泽洛", "add_deposit = atbgp_d_zro_3" in init and "sr_zro = 3" in dep),
+    ("远星与远征军认同族", "atbgp_kin_with_expedition = yes" in ev
+     and "atbgp_kin_with_expedition = {" in eff and "atbgp_same_homeworld = {" in opin),
+    ("大君主方位 = 0°（3 点）", "3 点方位（角度 0）" in ev),
+    ("大君主国民含狂热净化者", "civic = civic_fanatic_purifiers" in init),
+    ("大君主额外国家修正已挂上",
+     "modifier = atbgp_bonus_3" in init and "atbgp_bonus_3 = {" in gpmod
+     and "species_leader_exp_gain = 0.5" in gpmod and "negative_traits_country = -1" in gpmod),
+    ("远征军星团方位 = 10 点半（133~137）",
+     exeff.count("min_orientation_angle = 133") == 6 and "min_orientation_angle = 312" in exeff),
+    ("二皇女带舰船加成", "ship_weapon_damage = 1.0" in trt and "ship_shield_hardening_add = 1.0" in trt),
+    ("三皇女带物种修饰点", "BIOLOGICAL_species_trait_points_add = 16" in trt
+     and "MACHINE_species_trait_points_add = 16" in trt),
+    ("四皇女带大使上限", "envoys_add = 2" in trt),
+    ("远征军同化速度 +9000%", "auto_mod_monthly_add = 4725" in atbmod),
     ("三面帝国标识都写进了 create_country", init.count('category = "atbgp"') == 3),
     ("旧的 atbgp_install_named_ruler 已清除", "atbgp_install_named_ruler" not in eff + ev),
     ("两个具名元首安装效果已定义", "atbgp_install_ruler_rongxin = {" in eff and "atbgp_install_ruler_taiaria = {" in eff),
@@ -161,9 +184,18 @@ vanilla = [
     ("leader_trait_synthetic", r"^leader_trait_synthetic\s*=\s*\{", "common/traits/*.txt"),
     ("leader_trait_psionic", r"^leader_trait_psionic\s*=\s*\{", "common/traits/*.txt"),
     ("auth_dictatorial", r"^auth_dictatorial\s*=\s*\{", "common/governments/authorities/*.txt"),
-    ("civic_technocracy", r"^civic_technocracy\s*=\s*\{", "common/governments/civics/*.txt"),
+    ("civic_exalted_priesthood", r"^civic_exalted_priesthood\s*=\s*\{", "common/governments/civics/*.txt"),
     ("civic_dark_consortium", r"^civic_dark_consortium\s*=\s*\{", "common/governments/civics/*.txt"),
-    ("ethic_authoritarian", r"^ethic_authoritarian\s*=\s*\{", "common/ethics/*.txt"),
+    ("ethic_spiritualist", r"^ethic_spiritualist\s*=\s*\{", "common/ethics/*.txt"),
+    ("ethic_fanatic_xenophobe", r"^ethic_fanatic_xenophobe\s*=\s*\{", "common/ethics/*.txt"),
+    ("civic_machine_assimilator", r"^civic_machine_assimilator\s*=\s*\{", "common/governments/civics/*.txt"),
+    ("civic_machine_ota_updates", r"^civic_machine_ota_updates\s*=\s*\{", "common/governments/civics/*.txt"),
+    ("civic_fanatic_purifiers", r"^civic_fanatic_purifiers\s*=\s*\{", "common/governments/civics/*.txt"),
+    ("tech_psionic_theory", r"^tech_psionic_theory\s*=\s*\{", "common/technology/*.txt"),
+    ("ap_mind_over_matter", r"^ap_mind_over_matter\s*=\s*\{", "common/ascension_perks/*.txt"),
+    ("tr_psionics_adopt", r"^tr_psionics_adopt\s*=\s*\{", "common/traditions/*.txt"),
+    # 同化速度靠这两个修正进 assimilation_counter，原版 set_assimilation_counter_variable 里读
+    ("auto_mod_monthly_add 用于同化计数", r"modifier\s*=\s*auto_mod_monthly_add", "common/scripted_effects/*.txt"),
     ("00_solid.dds 背景", r".", "flags/backgrounds/00_solid.dds"),
     ("generate_pre_ftls_on_planet", r"^generate_pre_ftls_on_planet\s*=\s*\{", "common/scripted_effects/*.txt"),
     ("change_species_characteristics 用法存在", r"change_species_characteristics\s*=\s*\{\s*portrait", "common/scripted_effects/*.txt"),

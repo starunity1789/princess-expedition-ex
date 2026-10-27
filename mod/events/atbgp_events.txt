@@ -270,15 +270,15 @@ event = {
 				hyperlane = no
 			}
 		}
-		# 大君主同盟领地：9 点方位（角度 180）
+		# 大君主同盟领地：3 点方位（角度 0）
 		if = {
 			limit = { galaxy_size = tiny }
 			no_scope = {
 				spawn_system = {
 					min_distance >= 240
 					max_distance <= 248
-					min_orientation_angle = 178
-					max_orientation_angle = 182
+					min_orientation_angle = 358
+					max_orientation_angle = 2
 					initializer = atbgp_home_3
 					hyperlane = no
 				}
@@ -290,8 +290,8 @@ event = {
 				spawn_system = {
 					min_distance >= 340
 					max_distance <= 348
-					min_orientation_angle = 178
-					max_orientation_angle = 182
+					min_orientation_angle = 358
+					max_orientation_angle = 2
 					initializer = atbgp_home_3
 					hyperlane = no
 				}
@@ -303,8 +303,8 @@ event = {
 				spawn_system = {
 					min_distance >= 440
 					max_distance <= 448
-					min_orientation_angle = 178
-					max_orientation_angle = 182
+					min_orientation_angle = 358
+					max_orientation_angle = 2
 					initializer = atbgp_home_3
 					hyperlane = no
 				}
@@ -316,8 +316,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 178
-					max_orientation_angle = 182
+					min_orientation_angle = 358
+					max_orientation_angle = 2
 					initializer = atbgp_home_3
 					hyperlane = no
 				}
@@ -329,8 +329,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 178
-					max_orientation_angle = 182
+					min_orientation_angle = 358
+					max_orientation_angle = 2
 					initializer = atbgp_home_3
 					hyperlane = no
 				}
@@ -341,8 +341,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 178
-					max_orientation_angle = 182
+					min_orientation_angle = 358
+					max_orientation_angle = 2
 					initializer = atbgp_home_3
 					hyperlane = no
 				}
@@ -352,40 +352,40 @@ event = {
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 96
-				max_orientation_angle = 104
+				min_orientation_angle = 276
+				max_orientation_angle = 284
 				initializer = atbgp_sys_3_1
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 136
-				max_orientation_angle = 144
+				min_orientation_angle = 316
+				max_orientation_angle = 324
 				initializer = atbgp_sys_3_2
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 216
-				max_orientation_angle = 224
+				min_orientation_angle = 36
+				max_orientation_angle = 44
 				initializer = atbgp_sys_3_3
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 256
-				max_orientation_angle = 264
+				min_orientation_angle = 76
+				max_orientation_angle = 84
 				initializer = atbgp_sys_3_4
 				hyperlane = no
 			}
 			spawn_system = {
 				min_distance >= 62
 				max_distance <= 70
-				min_orientation_angle = 156
-				max_orientation_angle = 164
+				min_orientation_angle = 336
+				max_orientation_angle = 344
 				initializer = atbgp_sys_3_5
 				hyperlane = no
 			}
@@ -436,7 +436,7 @@ event = {
 	}
 }
 
-# 开局次日：初始舰船、替换元首
+# 开局次日：初始舰船、替换元首、各自的开局内容
 country_event = {
 	id = atbgp.2
 	hide_window = yes
@@ -451,6 +451,10 @@ country_event = {
 		else_if = {
 			limit = { has_country_flag = atbgp_power_2 }
 			atbgp_install_ruler_taiaria = yes
+			give_technology = { tech = tech_psionic_theory message = no }
+			add_ascension_perk = ap_mind_over_matter
+			add_tradition = tr_psionics_adopt
+			atbgp_kin_with_expedition = yes
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_3 }

@@ -38,8 +38,8 @@ The characters - their personalities, looks and every detail - were designed by 
 - Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors", the Dreadnoughts tech, and the relic "Seal of the Princess Guard"
 
 **New in EX**
-- **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 2 o'clock (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane
-- **Three guaranteed great powers**: Burning White Stag Legion (12 o'clock), Far Star Alliance (5 o'clock) and Grand Suzerain Allied Fief (9 o'clock), each with its own cluster beyond the rim, a fixed empire flag and a fixed monthly supply
+- **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 10:30 (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane
+- **Three guaranteed great powers**: Burning White Stag Legion (12 o'clock), Far Star Alliance (5 o'clock) and Grand Suzerain Allied Fief (3 o'clock), each with its own cluster beyond the rim, a fixed empire flag and a fixed monthly supply
 - **Galaxy rules**: The Chosen and the crash site of Keides, Scion of Vagros always spawn; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
 - **Bundled portraits**: the Ancient Dragonkin and Kemonomimi animated portrait packs are merged in - disable the standalone packs if you are subscribed to them
 
@@ -96,8 +96,8 @@ EX 新增的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - 决议「确立远征军体制」「探索先驱者文明的秘密」，科技「无畏舰」，遗珍「皇女亲卫队印章」
 
 **EX 新增**
-- **边缘星团**：开局远征军整体搬到银河 2 点钟方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河
-- **三个保底列强**：燃烧白鹿军团（12 点）、远星同盟组织（5 点）、大君主同盟领地（9 点），各在银河边缘外有自己的星团、固定的帝国标识和固定补给
+- **边缘星团**：开局远征军整体搬到银河 10 点半方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河
+- **三个保底列强**：燃烧白鹿军团（12 点）、远星同盟组织（5 点）、大君主同盟领地（3 点），各在银河边缘外有自己的星团、固定的帝国标识和固定补给
 - **银河规则**：必定生成天选民和凯德斯（瓦格罗之子嗣）的坠毁点；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
 - **内置肖像包**：已合并 Ancient Dragonkin（龙族）与 Kemonomimi（兽耳）两套动态肖像包——如果还订阅着这两个独立包，请停用它们
 

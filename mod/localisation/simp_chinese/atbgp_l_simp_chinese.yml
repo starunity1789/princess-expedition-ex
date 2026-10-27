@@ -1,4 +1,5 @@
 ﻿l_simp_chinese:
+ atbgp_same_homeworld:0 "同一片母星的故人"
  atbgp_d_income_1:0 "精灵主人补给线"
  atbgp_d_income_1_desc:0 "精灵母星定期投送的物资与算力，维持着燃烧白鹿军团的远征。军团并不知道，母星早已与苍神缘起帝国结为军事同盟。"
  atbgp_d_income_crisis_1:0 "精灵主人战时投送"
@@ -19,6 +20,10 @@
  atbgp_d_nanites_10_desc:0 "这颗粉碎星球的碎片里仍有大量可回收的纳米机器。"
  atbgp_d_unity_22:0 "中子星脉冲回响"
  atbgp_d_unity_22_desc:0 "这颗中子星的脉冲带着某种近乎旋律的规律，聆听它让人心生敬畏。"
+ atbgp_d_zro_3:0 "灵能潮汐井"
+ atbgp_d_zro_3_desc:0 "救赎星地脉深处涌出的泽洛，是远星同盟踏上灵能之路的起点。"
+ atbgp_bonus_3:0 "宗主的训诫"
+ atbgp_bonus_3_desc:0 "宗主文明留给这块乡村领地的教养手册。照着做，人人都能成器。"
  atbgp_btc_bonus:0 "天罚舰队编制"
  atbgp_btc_bonus_desc:0 "宗主终于允许这块乡村领地扩编舰队。对银河其他文明来说，这意味着灾难。"
  atbgp_country_1:0 "燃烧白鹿军团"

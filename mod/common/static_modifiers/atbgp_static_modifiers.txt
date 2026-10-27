@@ -5,3 +5,9 @@ atbgp_btc_bonus = {
 	country_naval_cap_add = 1000
 	shipclass_military_build_speed_mult = 1.0
 }
+
+# 大君主同盟领地：固定的额外国家修正
+atbgp_bonus_3 = {
+	species_leader_exp_gain = 0.5
+	negative_traits_country = -1
+}

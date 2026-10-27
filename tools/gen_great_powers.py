@@ -46,7 +46,8 @@ EMPIRES = [
         flag=dict(file="flag_atbgp_1.dds", colors=["dark_red", "black"]),
         authority="auth_machine_intelligence",
         ethics=["ethic_gestalt_consciousness"],
-        civics=["civic_machine_replication", "civic_machine_ota_updates"],
+        # 2.4：固定为同化斗士 + 空中下载升级
+        civics=["civic_machine_assimilator", "civic_machine_ota_updates"],
         ruler=dict(id="rongxin", name="融心演算", en="Fused-Heart Calculus", cls="MACHINE",
                    species=("演算核心", "Calculus Core"),
                    traits=["leader_trait_intemporal"]),
@@ -76,10 +77,24 @@ EMPIRES = [
         species_from_player=True,
         drop_traits=["trait_pathogenic_genes"],
         flag=dict(file="flag_atbgp_2.dds", colors=["dark_blue", "black"]),
-        # 威权政体：独裁制 + 威权主义。原来的两个国民是巨企专属，换成同效果的非巨企版本。
+        # 威权政体：独裁制。原来的两个国民是巨企专属，换成同效果的非巨企版本。
         authority="auth_dictatorial",
-        ethics=["ethic_authoritarian", "ethic_materialist", "ethic_militarist"],
-        civics=["civic_technocracy", "civic_dark_consortium"],
+        # 2.4：极端排外 + 唯心主义（要走灵能飞升）。对远征军的例外见 kin_with_expedition。
+        # 科技官僚要求唯识，和唯心互斥，换成同样要求唯心的崇高教士团。
+        ethics=["ethic_fanatic_xenophobe", "ethic_spiritualist"],
+        civics=["civic_exalted_priesthood", "civic_dark_consortium"],
+        # 2.4：与皇女来自同一母星，所以排外不针对远征军——双方互相挂一份巨额好感
+        kin_with_expedition=True,
+        # 2.4：开局就有灵能理论，并锁死灵能飞升路线
+        start_techs=["tech_psionic_theory"],
+        ascension_perks=["ap_mind_over_matter"],
+        start_traditions=["tr_psionics_adopt"],
+        # 2.4：母星每月 +3 泽洛
+        home_deposits=[dict(
+            key="atbgp_d_zro_3", icon="d_dust_desert", produces={"sr_zro": 3},
+            cn="灵能潮汐井", cn_desc="救赎星地脉深处涌出的泽洛，是远星同盟踏上灵能之路的起点。",
+            en="Psionic Tide Well", en_desc="Zro welling up from deep beneath Redemption."),
+        ],
         ruler=dict(id="taiaria", name="泰阿瑞亚-星之心", en="Taiaria Starheart", cls="HUM",
                    species=("星之心", "Starheart"),
                    # 合成人与灵媒在原版互斥（leader_trait_synthetic.opposites 含
@@ -101,15 +116,20 @@ EMPIRES = [
                 "Alliance War Mobilization", "The homeworld factions have set their differences aside for now."),
     ),
     dict(
-        n=3, clock=9, research=56, pops=48,
+        n=3, clock=3, research=56, pops=48,
         name="大君主同盟领地", adj="大君主", en="Grand Suzerain Allied Fief", en_adj="Suzerain",
         species=("君主裔", "君主裔", "君主裔"), species_en=("Suzerainite", "Suzerainites", "Suzerainite"),
         species_class="NECROID", species_traits="random",
         species_portrait=None,
         flag=dict(file="flag_atbgp_3.dds", colors=["dark_purple", "black"]),
         authority="auth_imperial",
-        ethics=["ethic_fanatic_authoritarian", "ethic_xenophobe"],
-        civics=["civic_philosopher_king", "civic_feudal_realm"],
+        # 2.4：种族洁癖。狂热净化者要求极端排外 + 军国/灵性，这里取军国主义。
+        ethics=["ethic_fanatic_xenophobe", "ethic_militarist"],
+        civics=["civic_fanatic_purifiers", "civic_philosopher_king", "civic_feudal_realm"],
+        # 2.4：额外的固定国家修正
+        bonus=dict(cn="宗主的训诫", cn_desc="宗主文明留给这块乡村领地的教养手册。照着做，人人都能成器。",
+                   en="The Suzerain's Precepts", en_desc="The handbook the suzerain left to this rural fief.",
+                   mods={"species_leader_exp_gain": 0.5, "negative_traits_country": -1}),
         ruler=None,
         home=dict(sys="天选者", en="The Chosen", star="sc_g", pc="pc_gaia", size=22),
         systems=[
@@ -277,6 +297,12 @@ def home_initializer(e):
     country = f"event_target:atbgp_country_{n}"
     civics = " ".join(f"civic = {c}" for c in e["civics"])
     ethics = " ".join(f"ethic = {x}" for x in e["ethics"])
+    bonus = f"""
+					add_modifier = {{
+						modifier = atbgp_bonus_{n}
+						days = -1
+					}}""" if e.get("bonus") else ""
+    extra_deposits = "".join(f"\n\t\t\tadd_deposit = {d['key']}" for d in e.get("home_deposits", []))
     return f"""
 # {e['name']} 母星：{h['sys']}
 atbgp_home_{n} = {{
@@ -339,7 +365,7 @@ atbgp_home_{n} = {{
 					save_global_event_target_as = atbgp_country_{n}
 					set_country_flag = atbgp_great_power
 					set_country_flag = atbgp_power_{n}
-					advanced_empire_base_init_effect = yes
+					advanced_empire_base_init_effect = yes{bonus}
 				}}
 			}}
 			set_owner = {country}
@@ -350,7 +376,7 @@ atbgp_home_{n} = {{
 				create_pop_group = {{ species = event_target:atbgp_species_{n} }}
 			}}
 			colony = {{ generate_start_buildings_and_districts = yes }}
-			add_deposit = atbgp_d_income_{n}
+			add_deposit = atbgp_d_income_{n}{extra_deposits}
 		}}
 	}}
 
@@ -593,10 +619,31 @@ for e in EMPIRES:
     events.append(lanes_block(e) + "\n")
 for e in EMPIRES:
     events.append(f"\t\tevent_target:atbgp_country_{e['n']} = {{ country_event = {{ id = atbgp.2 days = 1 }} }}\n")
+
+# 开局次日每个列强各自要做的事：换元首、开局科技、飞升路线、与远征军的同族关系
+def setup_block(e, first):
+    n = e["n"]
+    lines = [f"\t\t\tatbgp_install_ruler_{e['ruler']['id']} = yes" if e["ruler"]
+             else "\t\t\tatbgp_install_random_ruler = yes"]
+    for t in e.get("start_techs", []):
+        lines.append(f"\t\t\tgive_technology = {{ tech = {t} message = no }}")
+    for p in e.get("ascension_perks", []):
+        lines.append(f"\t\t\tadd_ascension_perk = {p}")
+    for t in e.get("start_traditions", []):
+        lines.append(f"\t\t\tadd_tradition = {t}")
+    if e.get("kin_with_expedition"):
+        lines.append("\t\t\tatbgp_kin_with_expedition = yes")
+    kw = "if" if first else "else_if"
+    return f"""\t\t{kw} = {{
+			limit = {{ has_country_flag = atbgp_power_{n} }}
+{chr(10).join(lines)}
+		}}"""
+
+
 events.append("""	}
 }
 
-# 开局次日：初始舰船、替换元首
+# 开局次日：初始舰船、替换元首、各自的开局内容
 country_event = {
 	id = atbgp.2
 	hide_window = yes
@@ -604,18 +651,7 @@ country_event = {
 
 	immediate = {
 		atbgp_spawn_start_fleets = yes
-		if = {
-			limit = { has_country_flag = atbgp_power_1 }
-			atbgp_install_ruler_rongxin = yes
-		}
-		else_if = {
-			limit = { has_country_flag = atbgp_power_2 }
-			atbgp_install_ruler_taiaria = yes
-		}
-		else_if = {
-			limit = { has_country_flag = atbgp_power_3 }
-			atbgp_install_random_ruler = yes
-		}
+""" + "\n".join(setup_block(e, i == 0) for i, e in enumerate(EMPIRES)) + """
 	}
 }
 
@@ -952,7 +988,48 @@ atbgp_check_become_the_crisis = {{
 		}}
 	}}
 }}
+
+# 国家作用域：与皇女的远征军认同族
+# 排外的列强靠这份巨额好感和信任把远征军排除在敌意之外（双方各挂一份）。
+atbgp_kin_with_expedition = {{
+	every_country = {{
+		limit = {{ has_country_flag = atb_princess_expedition }}
+		save_event_target_as = atbgp_kin_country
+	}}
+	if = {{
+		limit = {{ exists = event_target:atbgp_kin_country }}
+		add_opinion_modifier = {{
+			who = event_target:atbgp_kin_country
+			modifier = atbgp_same_homeworld
+		}}
+		add_trust = {{
+			who = event_target:atbgp_kin_country
+			amount = 100
+		}}
+		event_target:atbgp_kin_country = {{
+			add_opinion_modifier = {{
+				who = root
+				modifier = atbgp_same_homeworld
+			}}
+			add_trust = {{
+				who = root
+				amount = 100
+			}}
+		}}
+	}}
+}}
 """
+
+out["common/opinion_modifiers/atbgp_opinion_modifiers.txt"] = """# 由 _tools/gen_great_powers.py 生成，请勿手改
+
+# 与皇女的远征军来自同一母星
+atbgp_same_homeworld = {
+	opinion = {
+		base = 400
+	}
+}
+"""
+loc("atbgp_same_homeworld", "同一片母星的故人", "Kin From the Same Homeworld")
 
 # ---------------------------------------------------------------- 特征（资源点）
 dep = ["# 由 _tools/gen_great_powers.py 生成，请勿手改\n"]
@@ -1022,16 +1099,51 @@ for kind, value, res, icon in sorted(orbital):
     cn_name, cn_desc, en_name, en_desc = ORBITAL_LOC[kind]
     loc(key, cn_name, en_name)
     loc(f"{key}_desc", cn_desc, en_desc)
+
+# 母星上额外的固定特征
+for e in EMPIRES:
+    for d in e.get("home_deposits", []):
+        res = "\n".join(f"\t\t\t{k} = {v}" for k, v in d["produces"].items())
+        dep.append(f"""
+{d['key']} = {{
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = {d['icon']}
+	resources = {{
+		category = planet_deposits
+		produces = {{
+{res}
+		}}
+	}}
+	drop_weight = {{ weight = 0 }}
+}}
+""")
+        loc(d["key"], d["cn"], d["en"])
+        loc(f"{d['key']}_desc", d["cn_desc"], d["en_desc"])
 out["common/deposits/atbgp_deposits.txt"] = "".join(dep)
 
-out["common/static_modifiers/atbgp_static_modifiers.txt"] = """# 由 _tools/gen_great_powers.py 生成，请勿手改
+static_mods = ["""# 由 _tools/gen_great_powers.py 生成，请勿手改
 
 # 大君主同盟领地选择星海天罚后
 atbgp_btc_bonus = {
 	country_naval_cap_add = 1000
 	shipclass_military_build_speed_mult = 1.0
 }
-"""
+"""]
+for e in EMPIRES:
+    b = e.get("bonus")
+    if not b:
+        continue
+    mods = "\n".join(f"\t{k} = {v}" for k, v in b["mods"].items())
+    static_mods.append(f"""
+# {e['name']}：固定的额外国家修正
+atbgp_bonus_{e['n']} = {{
+{mods}
+}}
+""")
+    loc(f"atbgp_bonus_{e['n']}", b["cn"], b["en"])
+    loc(f"atbgp_bonus_{e['n']}_desc", b["cn_desc"], b["en_desc"])
+out["common/static_modifiers/atbgp_static_modifiers.txt"] = "".join(static_mods)
 loc("atbgp_btc_bonus", "天罚舰队编制", "Retribution Fleet Charter")
 loc("atbgp_btc_bonus_desc", "宗主终于允许这块乡村领地扩编舰队。对银河其他文明来说，这意味着灾难。",
     "The suzerain has finally allowed this rural fief to expand its fleet.")

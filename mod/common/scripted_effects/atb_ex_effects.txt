@@ -22,7 +22,7 @@ atb_ex_apply_galaxy_rules = {
 }
 
 # 国家作用域（首都是起源要塞的远征军）：开局整体搬到银河边缘外的星团
-# 星团 7 个星系见 atb_rl_initializers.txt，2 点钟方向；只有「大传承者」一条航道接入银河
+# 星团 7 个星系见 atb_rl_initializers.txt，10 点半方向；只有「大传承者」一条航道接入银河
 atb_ex_relocate_expedition = {
 	save_global_event_target_as = atb_rl_country
 	capital_scope = { save_global_event_target_as = atb_rl_old_capital }
@@ -36,8 +36,8 @@ atb_ex_relocate_expedition = {
 			spawn_system = {
 				min_distance >= 295
 				max_distance <= 303
-				min_orientation_angle = 28
-				max_orientation_angle = 32
+				min_orientation_angle = 133
+				max_orientation_angle = 137
 				initializer = atb_rl_home
 				hyperlane = no
 			}
@@ -49,8 +49,8 @@ atb_ex_relocate_expedition = {
 			spawn_system = {
 				min_distance >= 395
 				max_distance <= 403
-				min_orientation_angle = 28
-				max_orientation_angle = 32
+				min_orientation_angle = 133
+				max_orientation_angle = 137
 				initializer = atb_rl_home
 				hyperlane = no
 			}
@@ -62,8 +62,8 @@ atb_ex_relocate_expedition = {
 			spawn_system = {
 				min_distance >= 495
 				max_distance <= 503
-				min_orientation_angle = 28
-				max_orientation_angle = 32
+				min_orientation_angle = 133
+				max_orientation_angle = 137
 				initializer = atb_rl_home
 				hyperlane = no
 			}
@@ -75,8 +75,8 @@ atb_ex_relocate_expedition = {
 			spawn_system = {
 				min_distance >= 545
 				max_distance <= 553
-				min_orientation_angle = 28
-				max_orientation_angle = 32
+				min_orientation_angle = 133
+				max_orientation_angle = 137
 				initializer = atb_rl_home
 				hyperlane = no
 			}
@@ -88,8 +88,8 @@ atb_ex_relocate_expedition = {
 			spawn_system = {
 				min_distance >= 545
 				max_distance <= 553
-				min_orientation_angle = 28
-				max_orientation_angle = 32
+				min_orientation_angle = 133
+				max_orientation_angle = 137
 				initializer = atb_rl_home
 				hyperlane = no
 			}
@@ -100,8 +100,8 @@ atb_ex_relocate_expedition = {
 			spawn_system = {
 				min_distance >= 545
 				max_distance <= 553
-				min_orientation_angle = 28
-				max_orientation_angle = 32
+				min_orientation_angle = 133
+				max_orientation_angle = 137
 				initializer = atb_rl_home
 				hyperlane = no
 			}
@@ -111,48 +111,48 @@ atb_ex_relocate_expedition = {
 		spawn_system = {
 			min_distance >= 55
 			max_distance <= 62
-			min_orientation_angle = 207
-			max_orientation_angle = 213
+			min_orientation_angle = 312
+			max_orientation_angle = 318
 			initializer = atb_rl_gateway
 			hyperlane = no
 		}
 		spawn_system = {
 			min_distance >= 32
 			max_distance <= 38
-			min_orientation_angle = 116
-			max_orientation_angle = 124
+			min_orientation_angle = 221
+			max_orientation_angle = 229
 			initializer = atb_rl_lgate
 			hyperlane = no
 		}
 		spawn_system = {
 			min_distance >= 32
 			max_distance <= 38
-			min_orientation_angle = 296
-			max_orientation_angle = 304
+			min_orientation_angle = 41
+			max_orientation_angle = 49
 			initializer = atb_rl_preftl
 			hyperlane = no
 		}
 		spawn_system = {
 			min_distance >= 32
 			max_distance <= 38
-			min_orientation_angle = 66
-			max_orientation_angle = 74
+			min_orientation_angle = 171
+			max_orientation_angle = 179
 			initializer = atb_rl_blackhole
 			hyperlane = no
 		}
 		spawn_system = {
 			min_distance >= 32
 			max_distance <= 38
-			min_orientation_angle = 346
-			max_orientation_angle = 354
+			min_orientation_angle = 91
+			max_orientation_angle = 99
 			initializer = atb_rl_neutron
 			hyperlane = no
 		}
 		spawn_system = {
 			min_distance >= 60
 			max_distance <= 66
-			min_orientation_angle = 27
-			max_orientation_angle = 33
+			min_orientation_angle = 132
+			max_orientation_angle = 138
 			initializer = atb_rl_pulsar
 			hyperlane = no
 		}

@@ -194,3 +194,16 @@ atbgp_d_unity_22 = {
 	is_for_colonizable = no
 	drop_weight = { weight = 0 }
 }
+
+atbgp_d_zro_3 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_dust_desert
+	resources = {
+		category = planet_deposits
+		produces = {
+			sr_zro = 3
+		}
+	}
+	drop_weight = { weight = 0 }
+}

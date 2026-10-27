@@ -1,4 +1,5 @@
 ﻿l_english:
+ atbgp_same_homeworld:0 "Kin From the Same Homeworld"
  atbgp_d_income_1:0 "Elven Masters' Supply Line"
  atbgp_d_income_1_desc:0 "Regular shipments of materiel and compute from the elven homeworld."
  atbgp_d_income_crisis_1:0 "Elven Wartime Shipments"
@@ -19,6 +20,10 @@
  atbgp_d_nanites_10_desc:0 "The fragments of this shattered world still hold salvageable nanites."
  atbgp_d_unity_22:0 "Pulsar Echo"
  atbgp_d_unity_22_desc:0 "The pulses of this neutron star follow an almost melodic pattern."
+ atbgp_d_zro_3:0 "Psionic Tide Well"
+ atbgp_d_zro_3_desc:0 "Zro welling up from deep beneath Redemption."
+ atbgp_bonus_3:0 "The Suzerain's Precepts"
+ atbgp_bonus_3_desc:0 "The handbook the suzerain left to this rural fief."
  atbgp_btc_bonus:0 "Retribution Fleet Charter"
  atbgp_btc_bonus_desc:0 "The suzerain has finally allowed this rural fief to expand its fleet."
  atbgp_country_1:0 "Burning White Stag Legion"

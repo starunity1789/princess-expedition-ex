@@ -401,3 +401,33 @@ atbgp_check_become_the_crisis = {
 		}
 	}
 }
+
+# 国家作用域：与皇女的远征军认同族
+# 排外的列强靠这份巨额好感和信任把远征军排除在敌意之外（双方各挂一份）。
+atbgp_kin_with_expedition = {
+	every_country = {
+		limit = { has_country_flag = atb_princess_expedition }
+		save_event_target_as = atbgp_kin_country
+	}
+	if = {
+		limit = { exists = event_target:atbgp_kin_country }
+		add_opinion_modifier = {
+			who = event_target:atbgp_kin_country
+			modifier = atbgp_same_homeworld
+		}
+		add_trust = {
+			who = event_target:atbgp_kin_country
+			amount = 100
+		}
+		event_target:atbgp_kin_country = {
+			add_opinion_modifier = {
+				who = root
+				modifier = atbgp_same_homeworld
+			}
+			add_trust = {
+				who = root
+				amount = 100
+			}
+		}
+	}
+}

@@ -20,6 +20,15 @@ atb_unfading_star = {
 }
 
 # 远征军的身份标识：起源切换为合成繁衍后，用这个永久修正在国家修正列表里显示「皇女的远征军」
+#
+# 同化速度 +9000%：原版没有「同化速度」这个修正。4.5 的同化完全是脚本跑的——
+# events/assimilation_events.txt 每月对每颗殖民地调一次 set_assimilation_counter_variable，
+# 算出来的 assimilation_counter 就是这个月该星球同化多少组人口：
+#     counter = ( auto_mod_monthly_add × (1 + auto_mod_monthly_mult) + 5d20 ) / 5
+# 默认 add = 0，所以基准是 5d20/5 ≈ 10.5。要 91 倍就得让 counter ≈ 955，即 add ≈ 4725。
+# auto_mod_monthly_add 是星球修正，挂在国家修正里会落到名下每颗星球上。
+# 副作用：这个值同时也是机器人自动改造的每月额度，自动改造也会一并变成瞬间完成。
 atb_expedition_banner = {
 	icon = "gfx/interface/icons/modifiers/mod_atb_princess_seal.dds"
+	auto_mod_monthly_add = 4725
 }

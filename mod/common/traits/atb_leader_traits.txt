@@ -57,6 +57,10 @@ leader_trait_atb_elemental_sovereign = {
 
 	councilor_modifier = {
 		country_naval_cap_add = 1000
+		ship_weapon_damage = 1.0
+		ship_weapon_range_mult = 1.0
+		ship_armor_hardening_add = 1.0
+		ship_shield_hardening_add = 1.0
 	}
 
 	leader_class = { commander scientist official }
@@ -80,6 +84,8 @@ leader_trait_atb_grand_ascendant = {
 		num_tech_alternatives_add = 2
 		leader_trait_selection_options_add = 3
 		negative_traits_country = -2
+		BIOLOGICAL_species_trait_points_add = 16
+		MACHINE_species_trait_points_add = 16
 	}
 
 	leader_class = { commander scientist official }
@@ -103,6 +109,7 @@ leader_trait_atb_silent_apostle = {
 		intel_encryption_add = 10
 		divided_patrongage_max_subjects = 3
 		country_base_influence_produces_add = 1
+		envoys_add = 2
 	}
 
 	leader_class = { commander scientist official }

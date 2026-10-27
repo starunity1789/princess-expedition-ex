@@ -68,7 +68,7 @@ atbgp_home_1 = {
 				name = "atbgp_country_1"
 				adjective = "atbgp_country_1_adj"
 				authority = auth_machine_intelligence
-				civics = { civic = civic_machine_replication civic = civic_machine_ota_updates }
+				civics = { civic = civic_machine_assimilator civic = civic_machine_ota_updates }
 				ethos = { ethic = ethic_gestalt_consciousness }
 				species = event_target:atbgp_species_1
 				origin = "origin_default"
@@ -549,8 +549,8 @@ atbgp_home_2 = {
 				name = "atbgp_country_2"
 				adjective = "atbgp_country_2_adj"
 				authority = auth_dictatorial
-				civics = { civic = civic_technocracy civic = civic_dark_consortium }
-				ethos = { ethic = ethic_authoritarian ethic = ethic_materialist ethic = ethic_militarist }
+				civics = { civic = civic_exalted_priesthood civic = civic_dark_consortium }
+				ethos = { ethic = ethic_fanatic_xenophobe ethic = ethic_spiritualist }
 				species = event_target:atbgp_species_2
 				origin = "origin_default"
 				flag = {
@@ -586,6 +586,7 @@ atbgp_home_2 = {
 			}
 			colony = { generate_start_buildings_and_districts = yes }
 			add_deposit = atbgp_d_income_2
+			add_deposit = atbgp_d_zro_3
 		}
 	}
 
@@ -1004,8 +1005,8 @@ atbgp_home_3 = {
 				name = "atbgp_country_3"
 				adjective = "atbgp_country_3_adj"
 				authority = auth_imperial
-				civics = { civic = civic_philosopher_king civic = civic_feudal_realm }
-				ethos = { ethic = ethic_fanatic_authoritarian ethic = ethic_xenophobe }
+				civics = { civic = civic_fanatic_purifiers civic = civic_philosopher_king civic = civic_feudal_realm }
+				ethos = { ethic = ethic_fanatic_xenophobe ethic = ethic_militarist }
 				species = event_target:atbgp_species_3
 				origin = "origin_default"
 				flag = {
@@ -1030,6 +1031,10 @@ atbgp_home_3 = {
 					set_country_flag = atbgp_great_power
 					set_country_flag = atbgp_power_3
 					advanced_empire_base_init_effect = yes
+					add_modifier = {
+						modifier = atbgp_bonus_3
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_3
