@@ -160,6 +160,9 @@ python tools/make_flags.py art/great_power_flags mod
 # 把原版所有能量盾和装甲的数值翻倍（倍率可选，默认 2）
 python tools/gen_double_defenses.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
+# 把两套内置肖像包挂进原版的 portrait_sets（覆盖原版同名文件）
+python tools/gen_portrait_sets.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
+
 # 静态自检：括号配对、本地化格式、贴图引用、原版 ID、本次改动点
 python tools/check_mod.py
 ```
@@ -173,7 +176,7 @@ python tools/check_mod.py
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 - `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
-- `common/portrait_categories/00_portrait_categories.txt`（把两套肖像包的集合注册进对应分类，只比原版多 4 行）
+- `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）
 
 ### 发布到工坊
 
@@ -210,17 +213,20 @@ python tools/check_mod.py
 
 更新这两套素材时，直接从对应工坊目录整体覆盖同名文件即可，但 `common/portrait_sets/` 下那两个文件要重做下面这步改名。
 
-**集合名改过**：两个原包都直接用 `mammalians`、`reptilians` 这类原版已有的集合名定义 `portrait_sets`，
-会被原版同名集合顶掉，游戏日志报 `portrait '...' is not found in portrait set database`，肖像在游戏里根本不出现。
-已改成独立的集合名，并在 `common/portrait_categories/00_portrait_categories.txt` 里注册到对应分类：
+**两个原包的 `common/portrait_sets/` 文件没有采用，不要拷进来。** 它们各自用 `mammalians`、
+`reptilians` 这类原版已有的集合名另开文件，实测在 4.5.2 下不生效，游戏日志报
+`portrait '...' is not found in portrait set database`，肖像在游戏里根本不出现
+（改成独立集合名再注册进 `portrait_categories` 也一样没用）。
 
-| 原包里的集合名 | 改成 | 注册到的分类 |
-| --- | --- | --- |
-| `mammalians` | `kmpp_mammalians` | `mammalians` |
-| `machines` | `kmpp_machines` | `machines` |
-| `robots` | `kmpp_robots` | （ROBOT 类没有分类，只需集合） |
-| `reptilians` | `adpp_reptilians` | `reptilians` |
-| `infernals` | `adpp_infernals` | `infernals` |
+改为整文件覆盖原版 `common/portrait_sets/00_portrait_sets.txt`，把肖像组直接追加进原版已有的集合，
+由 `tools/gen_portrait_sets.py` 生成：
+
+| 原版集合 | 追加的肖像组 |
+| --- | --- |
+| `mammalians` | `kmpp_kemonomimi` |
+| `machines` / `robots` | `kmpp_kemonomimi_machine` |
+| `reptilians` | `adpp_ancient_dragonkin` |
+| `infernals` | `adpp_ancient_dragonkin_inf` |
 玩家如果同时订阅了这两个独立包，需要停用它们，否则同一批肖像会被定义两次。
 
 ### 需要的 DLC
