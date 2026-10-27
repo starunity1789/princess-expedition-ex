@@ -127,8 +127,14 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 ```
 
 启动器还需要同目录下一个 `atb_princess_expedition_ex.mod` 描述文件指向这个联接：内容照抄
-`mod/descriptor.mod`，再加一行 `path="mod/atb_princess_expedition_ex"`。如果这时启动器报
-「已存在具有相同远程 ID 的本地 Mod」，按下面「发布到工坊」第 6 条处理。
+`mod/descriptor.mod`，再加一行 `path="mod/atb_princess_expedition_ex"`。
+
+> ⚠️ **这个描述文件只在上传时放进 MOD 目录，传完立刻移走。**
+> 它和订阅版的 `ugc_3821602893.mod` 都带 `remote_file_id="3821602893"`，两个描述文件抢同一个
+> 工坊编号时，**游戏会直接不加载这个 MOD**：起源、肖像、数值全部失效，而且启动器不报错、
+> error.log 里也只会看到 `Invalid government origin` 和
+> `portrait ... is not found in portrait set database` 这类下游症状，很难往这上面想。
+> 平时把它改名成 `atb_princess_expedition_ex.mod.disabled` 放在 MOD 目录外面即可。
 
 ### 文件前缀
 

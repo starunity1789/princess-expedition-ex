@@ -15,6 +15,9 @@ from PIL import Image
 SRC = Path(sys.argv[1])
 MOD = Path(sys.argv[2])
 SIZE = (128, 128)
+# 原版每个国旗图标还有一份 256x256 的地图版，放在同分类的 map/ 子目录下；
+# 缺了它游戏会报 could not find map-sized texture，银河地图上的帝国标识不显示。
+MAP_SIZE = (256, 256)
 # 图标在画布内留出的边距比例，避免贴边被 UI 圆角切掉
 PAD = 0.06
 
@@ -40,17 +43,17 @@ def write_dds(img: Image.Image, path: Path) -> None:
     path.write_bytes(header + Image.merge("RGBA", (b, g, r, a)).tobytes())
 
 
-def fit(img: Image.Image) -> Image.Image:
+def fit(img: Image.Image, size: tuple[int, int] = SIZE) -> Image.Image:
     """按 alpha 的实际边界裁掉空白，再等比缩放居中到画布。"""
     img = img.convert("RGBA")
     box = img.getbbox()
     if box:
         img = img.crop(box)
-    inner = (round(SIZE[0] * (1 - 2 * PAD)), round(SIZE[1] * (1 - 2 * PAD)))
+    inner = (round(size[0] * (1 - 2 * PAD)), round(size[1] * (1 - 2 * PAD)))
     scale = min(inner[0] / img.width, inner[1] / img.height)
     small = img.resize((max(1, round(img.width * scale)), max(1, round(img.height * scale))), Image.LANCZOS)
-    canvas = Image.new("RGBA", SIZE, (0, 0, 0, 0))
-    canvas.alpha_composite(small, ((SIZE[0] - small.width) // 2, (SIZE[1] - small.height) // 2))
+    canvas = Image.new("RGBA", size, (0, 0, 0, 0))
+    canvas.alpha_composite(small, ((size[0] - small.width) // 2, (size[1] - small.height) // 2))
     return canvas
 
 
@@ -58,5 +61,7 @@ for src_name, out_name in FLAGS.items():
     src = SRC / src_name
     if not src.exists():
         sys.exit(f"缺少原图：{src}")
-    write_dds(fit(Image.open(src)), MOD / "flags/atbgp" / out_name)
-    print("ok", out_name)
+    img = Image.open(src)
+    write_dds(fit(img, SIZE), MOD / "flags/atbgp" / out_name)
+    write_dds(fit(img, MAP_SIZE), MOD / "flags/atbgp/map" / out_name)
+    print("ok", out_name, f"({SIZE[0]}x{SIZE[1]} + map {MAP_SIZE[0]}x{MAP_SIZE[1]})")
