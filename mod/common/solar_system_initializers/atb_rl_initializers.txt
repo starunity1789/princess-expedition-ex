@@ -169,8 +169,7 @@ atb_rl_preftl = {
 		size = { min = 14 max = 22 }
 		init_effect = {
 			prevent_anomaly = yes
-			generate_pre_ftls_on_planet = yes
-			atb_ex_force_dragonkin_natives = yes
+			atb_ex_generate_dragonkin_preftl = yes
 		}
 		change_orbit = @atb_rl_moon
 		moon = {

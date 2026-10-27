@@ -244,18 +244,26 @@ atb_ex_relocate_expedition = {
 	}
 }
 
-# 星球作用域：把「无形链接」刚生成的前超光速土著换成龙族肖像
-# 肖像来自合并进本 MOD 的 Ancient Dragonkin Animated Portrait Pack（adpp_ 前缀）。
-# 在 generate_pre_ftls_on_planet 之后调用：原版照常挑起源、特质和国家，这里只改物种肖像。
-atb_ex_force_dragonkin_natives = {
-	if = {
-		limit = { exists = owner }
-		owner = {
-			every_owned_species = {
-				change_species_characteristics = {
-					portrait = adpp_ancient_dragonkin
-				}
-			}
+# 星球作用域：生成「无形链接」的前超光速土著，物种固定为龙族
+# 肖像来自合并进本 MOD 的 Ancient Dragonkin Animated Portrait Pack（adpp_ 前缀），
+# 该肖像组注册在爬行类(REP)与炼狱类(INF)下，所以物种类一并固定为 REP。
+#
+# 这里照搬原版 generate_pre_ftls_on_planet 的流程，只把 create_pre_ftl_species 换成
+# 自己建物种：原版 create_pre_ftl_empire 取的是 last_created_species，所以能接上。
+# （先生成再用 change_species_characteristics 改肖像的做法不行：那个效果的 portrait
+#   只认具体肖像、不认肖像组，而且物种类仍是随机的，和龙族肖像对不上。）
+atb_ex_generate_dragonkin_preftl = {
+	select_pre_ftl_origin = yes
+	create_species = {
+		name = random
+		class = REP
+		portrait = adpp_ancient_dragonkin
+		homeworld = THIS
+		traits = {
+			trait = random_traits
 		}
 	}
+	create_pre_ftl_empire = yes
+	setup_pre_ftl_planet = yes
+	pre_ftl_clean_up_effect = yes
 }
