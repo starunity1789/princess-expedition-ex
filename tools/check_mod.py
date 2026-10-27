@@ -133,6 +133,8 @@ checks = [
         "leader_trait_synthetic", "leader_trait_psionic"))),
     ("融心演算只有时间永驻", eff.split("atbgp_install_ruler_rongxin")[1].split("atbgp_install_ruler_taiaria")[0].count("add_trait") == 1),
     ("六份补给特征都有影响力 +2", dep.count("influence = 2") == 6),
+    ("远星物种复制玩家开局物种", "is_ai = no" in init and "founder_species = {" in init),
+    ("远星物种去掉致病基因", "remove_trait = trait_pathogenic_genes" in init),
     ("无形链接生成龙族土著", "atb_ex_generate_dragonkin_preftl = yes" in rl),
     ("龙族土著效果已定义", "atb_ex_generate_dragonkin_preftl = {" in exeff),
 ]

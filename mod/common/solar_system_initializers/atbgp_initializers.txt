@@ -503,15 +503,47 @@ atbgp_home_2 = {
 			save_global_event_target_as = atbgp_home_2
 			set_planet_flag = ignore_startup_effect
 			prevent_anomaly = yes
-			create_species = {
-				name = atbgp_species_2
-				plural = atbgp_species_2_plural
-				adjective = atbgp_species_2_adj
-				class = HUM
-				portrait = random
-				traits = { ideal_planet_class = "pc_continental" trait = "trait_intelligent" trait = "trait_thrifty" }
-				homeworld = this
-				effect = { save_global_event_target_as = atbgp_species_2 }
+			# 远星同盟组织与玩家来自同一母星：复制玩家的开局物种
+			random_country = {
+				limit = {
+					is_ai = no
+					exists = founder_species
+				}
+				founder_species = {
+					create_species = {
+						name = atbgp_species_2
+						plural = atbgp_species_2_plural
+						adjective = atbgp_species_2_adj
+						class = this
+						portrait = this
+						can_be_modified = this
+						traits = this
+						homeworld = event_target:atbgp_home_2
+						effect = { save_global_event_target_as = atbgp_species_2 }
+					}
+				}
+			}
+			# 拿不到玩家物种时的保底
+			if = {
+				limit = { NOT = { exists = event_target:atbgp_species_2 } }
+				create_species = {
+					name = atbgp_species_2
+					plural = atbgp_species_2_plural
+					adjective = atbgp_species_2_adj
+					class = HUM
+					portrait = random
+					traits = { ideal_planet_class = "pc_continental" trait = "trait_intelligent" trait = "trait_thrifty" }
+					homeworld = this
+					effect = { save_global_event_target_as = atbgp_species_2 }
+				}
+			}
+			if = {
+				limit = { exists = event_target:atbgp_species_2 }
+				event_target:atbgp_species_2 = {
+					change_species_characteristics = {
+					remove_trait = trait_pathogenic_genes
+					}
+				}
 			}
 			create_country = {
 				name = "atbgp_country_2"

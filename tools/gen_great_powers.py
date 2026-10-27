@@ -71,6 +71,10 @@ EMPIRES = [
         species_class="HUM",
         species_traits='{ ideal_planet_class = "pc_continental" trait = "trait_intelligent" trait = "trait_thrifty" }',
         species_portrait=None,
+        # 设定上同盟与皇女来自同一母星，所以物种直接复制玩家的开局物种，
+        # 但去掉合成繁衍带来的致病基因——他们没有跟着染上那场绝症。
+        species_from_player=True,
+        drop_traits=["trait_pathogenic_genes"],
         flag=dict(file="flag_atbgp_2.dds", colors=["dark_blue", "black"]),
         # 威权政体：独裁制 + 威权主义。原来的两个国民是巨企专属，换成同效果的非巨企版本。
         authority="auth_dictatorial",
@@ -128,6 +132,72 @@ def angle(clock: int) -> int:
 
 def window(a: int, half: int) -> tuple[int, int]:
     return (a - half) % 360, (a + half) % 360
+
+
+def indent(block: str, tabs: int = 1) -> str:
+    """整体再缩进若干个 Tab，用于把一段嵌进 if 里。"""
+    pad = "\t" * tabs
+    return "\n".join(pad + line if line.strip() else line for line in block.splitlines())
+
+
+def species_block(e: dict) -> str:
+    """init_effect 里建立强物种的那一段（缩进 3 个 Tab）。
+
+    species_from_player = True 时复制玩家的开局物种：同物种类、同肖像、同特质，
+    但单独起自己的名字，并去掉设定里不该有的特质（drop_traits）。
+    必须是复制而不是直接共用玩家的物种——共用的话去特质会改到玩家自己身上。
+    玩家物种取不到时（纯 AI 银河、观察者模式）退回写死的那一套。
+    """
+    n = e["n"]
+    plain = f"""\t\t\tcreate_species = {{
+\t\t\t\tname = atbgp_species_{n}
+\t\t\t\tplural = atbgp_species_{n}_plural
+\t\t\t\tadjective = atbgp_species_{n}_adj
+\t\t\t\tclass = {e['species_class']}
+\t\t\t\tportrait = {e['species_portrait'] or 'random'}
+\t\t\t\ttraits = {e['species_traits']}
+\t\t\t\thomeworld = this
+\t\t\t\teffect = {{ save_global_event_target_as = atbgp_species_{n} }}
+\t\t\t}}"""
+    if not e.get("species_from_player"):
+        return plain
+
+    drop = "\n".join(f"\t\t\t\t\tremove_trait = {t}" for t in e.get("drop_traits", []))
+    drop_block = f"""
+\t\t\tif = {{
+\t\t\t\tlimit = {{ exists = event_target:atbgp_species_{n} }}
+\t\t\t\tevent_target:atbgp_species_{n} = {{
+\t\t\t\t\tchange_species_characteristics = {{
+{drop}
+\t\t\t\t\t}}
+\t\t\t\t}}
+\t\t\t}}""" if drop else ""
+
+    return f"""\t\t\t# {e['name']}与玩家来自同一母星：复制玩家的开局物种
+\t\t\trandom_country = {{
+\t\t\t\tlimit = {{
+\t\t\t\t\tis_ai = no
+\t\t\t\t\texists = founder_species
+\t\t\t\t}}
+\t\t\t\tfounder_species = {{
+\t\t\t\t\tcreate_species = {{
+\t\t\t\t\t\tname = atbgp_species_{n}
+\t\t\t\t\t\tplural = atbgp_species_{n}_plural
+\t\t\t\t\t\tadjective = atbgp_species_{n}_adj
+\t\t\t\t\t\tclass = this
+\t\t\t\t\t\tportrait = this
+\t\t\t\t\t\tcan_be_modified = this
+\t\t\t\t\t\ttraits = this
+\t\t\t\t\t\thomeworld = event_target:atbgp_home_{n}
+\t\t\t\t\t\teffect = {{ save_global_event_target_as = atbgp_species_{n} }}
+\t\t\t\t\t}}
+\t\t\t\t}}
+\t\t\t}}
+\t\t\t# 拿不到玩家物种时的保底
+\t\t\tif = {{
+\t\t\t\tlimit = {{ NOT = {{ exists = event_target:atbgp_species_{n} }} }}
+{indent(plain)}
+\t\t\t}}{drop_block}"""
 
 
 def flag_block(e: dict) -> str:
@@ -253,16 +323,7 @@ atbgp_home_{n} = {{
 			save_global_event_target_as = atbgp_home_{n}
 			set_planet_flag = ignore_startup_effect
 			prevent_anomaly = yes
-			create_species = {{
-				name = atbgp_species_{n}
-				plural = atbgp_species_{n}_plural
-				adjective = atbgp_species_{n}_adj
-				class = {e['species_class']}
-				portrait = {e['species_portrait'] or 'random'}
-				traits = {e['species_traits']}
-				homeworld = this
-				effect = {{ save_global_event_target_as = atbgp_species_{n} }}
-			}}
+{species_block(e)}
 			create_country = {{
 				name = "atbgp_country_{n}"
 				adjective = "atbgp_country_{n}_adj"
