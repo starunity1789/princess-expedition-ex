@@ -128,9 +128,11 @@ checks = [
     ("旧的 atbgp_install_named_ruler 已清除", "atbgp_install_named_ruler" not in eff + ev),
     ("两个具名元首安装效果已定义", "atbgp_install_ruler_rongxin = {" in eff and "atbgp_install_ruler_taiaria = {" in eff),
     ("两个具名元首安装效果被调用", "atbgp_install_ruler_rongxin = yes" in ev and "atbgp_install_ruler_taiaria = yes" in ev),
-    ("泰阿瑞亚 5 条特质齐全", all(t in eff.split("atbgp_install_ruler_taiaria")[1] for t in (
+    # 合成人与灵媒在原版互斥，只保留灵媒
+    ("泰阿瑞亚 4 条特质齐全", all(t in eff.split("atbgp_install_ruler_taiaria")[1] for t in (
         "leader_trait_intemporal", "leader_trait_supreme_organizer", "leader_trait_master_bureaucrat",
-        "leader_trait_synthetic", "leader_trait_psionic"))),
+        "leader_trait_psionic"))),
+    ("泰阿瑞亚不带互斥的合成人", "leader_trait_synthetic" not in eff),
     ("融心演算只有时间永驻", eff.split("atbgp_install_ruler_rongxin")[1].split("atbgp_install_ruler_taiaria")[0].count("add_trait") == 1),
     ("六份补给特征都有影响力 +2", dep.count("influence = 2") == 6),
     ("远星物种复制玩家开局物种", "is_ai = no" in init and "founder_species = {" in init),

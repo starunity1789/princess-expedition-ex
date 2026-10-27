@@ -21,7 +21,7 @@ At game start the whole expedition moves to 7 systems beyond the rim at 2 o'cloc
 Always spawned, each in its own cluster beyond the rim with two hyperlanes into the galaxy, each with a fixed empire flag.
 [list]
 [*] [b]Burning White Stag Legion[/b] (12 o'clock) machine empire on the Kemonomimi portraits; ruler "Fused-Heart Calculus" with a custom portrait
-[*] [b]Far Star Alliance[/b] (5 o'clock) authoritarian state; ruler "Taiaria Starheart" with a custom portrait and 5 traits
+[*] [b]Far Star Alliance[/b] (5 o'clock) authoritarian state; ruler "Taiaria Starheart" with a custom portrait and 4 traits
 [*] [b]Grand Suzerain Allied Fief[/b] (9 o'clock) necroid monarchy; its 12th ascension perk is always Galactic Nemesis
 [/list]
 Fixed monthly supply: 222 of each basic resource, 22 of each strategic resource, 2 influence, 45-56 of each research type. Once a Fallen Empire awakens or an endgame crisis begins it doubles, with another 550 of each research type.

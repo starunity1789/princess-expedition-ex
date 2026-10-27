@@ -82,9 +82,10 @@ EMPIRES = [
         civics=["civic_technocracy", "civic_dark_consortium"],
         ruler=dict(id="taiaria", name="泰阿瑞亚-星之心", en="Taiaria Starheart", cls="HUM",
                    species=("星之心", "Starheart"),
+                   # 合成人与灵媒在原版互斥（leader_trait_synthetic.opposites 含
+                   # leader_trait_psionic），同时加只会有一条生效，这里取灵媒。
                    traits=["leader_trait_intemporal", "leader_trait_supreme_organizer",
-                           "leader_trait_master_bureaucrat", "leader_trait_synthetic",
-                           "leader_trait_psionic"]),
+                           "leader_trait_master_bureaucrat", "leader_trait_psionic"]),
         home=dict(sys="救赎", en="Redemption", star="sc_f", pc="pc_relic", size=22),
         systems=[
             dict(sys="逆鳞", en="Reverse Scale", kind="planet", pc="pc_gaia", size=25, zanaam=True),

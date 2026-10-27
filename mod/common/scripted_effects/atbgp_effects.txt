@@ -271,10 +271,6 @@ atbgp_install_ruler_taiaria = {
 					show_message = no
 				}
 				add_trait = {
-					trait = leader_trait_synthetic
-					show_message = no
-				}
-				add_trait = {
 					trait = leader_trait_psionic
 					show_message = no
 				}
