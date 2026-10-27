@@ -84,7 +84,13 @@ leader_trait_atb_grand_ascendant = {
 		num_tech_alternatives_add = 2
 		leader_trait_selection_options_add = 3
 		negative_traits_country = -2
+		# 物种修饰点按原型给，原型名和游戏里显示的名字对不上，容易写错：
+		#   BIOLOGICAL = 有机（LITHOID 岩石种 inherit_trait_points_from = BIOLOGICAL，自动跟着一起加）
+		#   ROBOT      = 显示为「机械」，机器人 / 合成人走这个；合成飞升后也是它
+		#   MACHINE    = 显示为「智械」，只有机器意识那种整体机械国家才用
+		# 远征军是合成繁衍起源，玩家实际改的是 ROBOT，少了它就等于没加。
 		BIOLOGICAL_species_trait_points_add = 16
+		ROBOT_species_trait_points_add = 16
 		MACHINE_species_trait_points_add = 16
 	}
 

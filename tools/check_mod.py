@@ -143,8 +143,8 @@ checks = [
     ("远征军星团方位 = 10 点半（133~137）",
      exeff.count("min_orientation_angle = 133") == 6 and "min_orientation_angle = 312" in exeff),
     ("二皇女带舰船加成", "ship_weapon_damage = 1.0" in trt and "ship_shield_hardening_add = 1.0" in trt),
-    ("三皇女带物种修饰点", "BIOLOGICAL_species_trait_points_add = 16" in trt
-     and "MACHINE_species_trait_points_add = 16" in trt),
+    ("三皇女带物种修饰点（有机/机械/智械三个原型）",
+     all(f"{a}_species_trait_points_add = 16" in trt for a in ("BIOLOGICAL", "ROBOT", "MACHINE"))),
     ("四皇女带大使上限", "envoys_add = 2" in trt),
     ("远征军同化速度 +9000%", "auto_mod_monthly_add = 4725" in atbmod),
     ("三面帝国标识都写进了 create_country", init.count('category = "atbgp"') == 3),
