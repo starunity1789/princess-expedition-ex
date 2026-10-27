@@ -6,31 +6,18 @@ Setting: [url=https://github.com/starunity1789/StargazerPR]The Stargazer Project
 
 [h2]Origin: The Princesses' Expedition[/h2]
 [list]
-[*] Includes every mechanic of vanilla [b]Synthetic Fertility[/b]; Synthetic Ascension only, Dictatorial only, one per galaxy
-[*] Capital is the [b]Origin Fortress[/b], a size-25 mobile habitat at 100% habitability with 15 each of Housing / Generator / Mining / Agriculture districts
-[*] The [b]four princesses[/b] start as Ruler and Councilors with custom portraits - immortal, no upkeep, cannot be dismissed, each with her own destiny trait
-[*] Relic [b]Seal of the Princess Guard[/b]: 3000 energy summons 5 permanent guard warforms; +2 minor artifacts per month
-[*] Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors", plus the Dreadnoughts tech
+[*] Includes every mechanic of vanilla [b]Synthetic Fertility[/b]; Synthetic Ascension and Dictatorial only
+[*] Capital is the [b]Origin Fortress[/b], a size-25 mobile habitat at 100% habitability
+[*] The [b]four princesses[/b] start as Ruler and Councilors with custom portraits - immortal, no upkeep, cannot be dismissed
+[*] Relic [b]Seal of the Princess Guard[/b], the [b]Dreadnoughts[/b] tech and two unique decisions
 [*] The L-Cluster always ends with the Gray Tempest, but Gray can always be found
 [/list]
 
-[h2]EX: the Rim Cluster[/h2]
-At game start the whole expedition moves to 7 systems beyond the rim at 2 o'clock, joined to the galaxy by a single hyperlane: an L-Gate, a pre-FTL civilization (always on the Ancient Dragonkin portraits), a black hole, a neutron star, a pulsar, and a Relic World carrying the vanilla "Planet-Wide Machinery" anomaly.
-
-[h2]EX: Three Guaranteed Great Powers[/h2]
-Always spawned, each in its own cluster beyond the rim with two hyperlanes into the galaxy, each with a fixed empire flag.
+[h2]New in EX[/h2]
 [list]
-[*] [b]Burning White Stag Legion[/b] (12 o'clock) machine empire on the Kemonomimi portraits; ruler "Fused-Heart Calculus" with a custom portrait
-[*] [b]Far Star Alliance[/b] (5 o'clock) authoritarian state; ruler "Taiaria Starheart" with a custom portrait and 4 traits
-[*] [b]Grand Suzerain Allied Fief[/b] (9 o'clock) necroid monarchy; its 12th ascension perk is always Galactic Nemesis
-[/list]
-Fixed monthly supply: 222 of each basic resource, 22 of each strategic resource, 2 influence, 45-56 of each research type. Once a Fallen Empire awakens or an endgame crisis begins it doubles, with another 550 of each research type.
-
-[h2]EX: Galaxy Rules[/h2]
-[list]
-[*] [b]The Chosen[/b] and the crash site of [b]Keides, Scion of Vagros[/b] always spawn
-[*] All empires: resource storage +100K; non-bio ships have their base hull doubled
-[*] [b]Every vanilla shield and armor value is doubled[/b] (Psi Shields, Dark Matter Deflectors and Dragonscale Armor included)
+[*] [b]Rim cluster[/b]: the expedition moves to 7 systems beyond the rim at 2 o'clock, joined to the galaxy by a single hyperlane
+[*] [b]Three guaranteed great powers[/b]: Burning White Stag Legion (12 o'clock), Far Star Alliance (5 o'clock) and Grand Suzerain Allied Fief (9 o'clock), each with a fixed flag, a named ruler and a monthly supply
+[*] [b]Galaxy rules[/b]: The Chosen and the Keides crash site always spawn; +100K storage; non-bio ship hull doubled; [b]every vanilla shield and armor value doubled[/b]
 [/list]
 
 [h2]Required DLC[/h2]
@@ -40,7 +27,7 @@ The Machine Age and Ancient Relics (for the origin); Distant Stars, First Contac
 [list]
 [*] Stellaris 4.5.*
 [*] Bundles the Ancient Dragonkin and Kemonomimi portrait packs - [b]disable those if you are subscribed[/b]
-[*] Fully overrides vanilla 00_authorities.txt, 00_living_standards.txt and 02_scripted_variables_component_cost.txt, plus the game rule can_dismiss_leader and the council-portrait hologram shader
+[*] Fully overrides vanilla 00_authorities.txt, 00_living_standards.txt, 00_portrait_sets.txt and 02_scripted_variables_component_cost.txt, plus the game rule can_dismiss_leader and the council-portrait hologram shader
 [/list]
 
 ------------------------------------------------------------
