@@ -189,8 +189,7 @@ python tools/check_mod.py
 1. 从 Steam 启动群星（单游戏启动器），进入「Mod 库 → 上传 MOD」，选「皇女的远征军EX」，上传到「Steam 创意工坊」。Mod ID 应自动显示 3821602893。
 2. 上传前把 `docs/workshop_description_en.txt` 的内容贴进描述栏——上传会用这一栏覆盖工坊的默认（英语）简介。
 3. 上传后到工坊物品页「编辑标题与描述」，语言选「简体中文」，标题填「皇女的远征军EX」，描述贴 `docs/workshop_description_zh.txt`。中文 Steam 的玩家看中文版，其他语言的玩家看英文版。
-4. 简介上限 8000 字节（UTF-8），两份各自计算。**注意按 CRLF 算**：网页表单会把换行转成 `
-`，
+4. 简介上限 8000 字节（UTF-8），两份各自计算。**注意按 CRLF 算**：网页表单会把换行转成 CRLF，
    仓库里的文件是 LF，所以实际占用 = 文件字节数 + 行数。超了只会弹「保存标题和描述时出现错误」，
    不提示是长度问题。核对命令：
    ```bash
@@ -233,6 +232,7 @@ python tools/check_mod.py
 | `machines` / `robots` | `kmpp_kemonomimi_machine` |
 | `reptilians` | `adpp_ancient_dragonkin` |
 | `infernals` | `adpp_ancient_dragonkin_inf` |
+
 玩家如果同时订阅了这两个独立包，需要停用它们，否则同一批肖像会被定义两次。
 
 ### 需要的 DLC
