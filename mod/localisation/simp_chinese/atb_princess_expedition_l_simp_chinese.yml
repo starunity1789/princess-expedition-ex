@@ -2,12 +2,11 @@
  # 起源
  origin_atb_princess_expedition:0 "皇女的远征军"
  origin_atb_princess_expedition_desc:0 "§R警告：禁用除['concept_synthetic_ascension']以外的所有飞升路线。§!\n\n在一颗富饶的星球上，一个富饶的国度独自叩开了高等科技的大门——然而母星依旧四分五裂，统一遥遥无期。这个开明的威权帝国决定先行一步：皇帝留守母星，四位皇女驾驶移动要塞「起源要塞」跃迁至遥远的「起源之地」，为帝国在群星间开辟新的根基。\n\n然而随行的殖民者没能适应新的世界。一种无法治愈的病症在要塞中蔓延，他们再也无法孕育后代。为了让远征延续下去，皇女们决定以合成之躯延续族人的血脉。"
- origin_tooltip_atb_princess_expedition_effects:0 "—$INITIAL_POPS$§G+900§!$NEW_LINE$—$SPECIES_TRAITS$['concept_pathogenic_genes']\n—母星：§Y起源要塞§!（超大型移动居住站）$TABBED_NEW_LINE$—规模：£planetsize£25$TABBED_NEW_LINE$—宜居度：§G100%§!$TABBED_NEW_LINE$—地块上限：住房、发电、采矿、农业各§G15§!$TABBED_NEW_LINE$—['concept_abandoned_cities', £blocker£$concept_abandoned_cities$]：+2$TABBED_NEW_LINE$—['concept_identity_repository',£building£$concept_identity_repository$]$TABBED_NEW_LINE$—['concept_abandoned_gene_clinic',£building£$concept_abandoned_gene_clinic$]$TABBED_NEW_LINE$—特殊地形：§Y$d_atb_fortress_core$§!、§Y$d_atb_star_sea_monument$§!、§Y$d_atb_sensor_array$§!$NEW_LINE$—母星系：§Y起源之地§!，附近有一座带§YL星门§!的星系「§Y$atb_system_lgate$§!」$NEW_LINE$—局势：['concept_identity_rescue']$NEW_LINE$—$ADDITIONAL_TECHNOLOGIES_STRING$['concept_synth_ai']$NEW_LINE$—$GUARANTEED_RESEARCH_OPTION_STRING$['concept_robotic_workers', £engineering_research£$tech_robotic_workers$]$NEW_LINE$—§Y四位皇女§!担任统治者、国防部长、科学部长与国务卿：不朽、不可解雇、免维护$NEW_LINE$—§Y第一皇女§!是帝国的§Y光耀者§!：经历光耀者的第一幕与第二幕，但她不会老去，没有第三幕$NEW_LINE$—遗珍：§Y$r_atb_princess_seal$§!$NEW_LINE$—完成§Y合成黎明§!后，可以确立§Y$auth_atb_expedition$§!$NEW_LINE$—研究考古实验室后，可以通过首都决议§Y$decision_atb_precursor_secrets$§!$NEW_LINE$—L星群中必定能找到§Y小灰§!"
+ origin_tooltip_atb_princess_expedition_effects:0 "—$INITIAL_POPS$§G+900§!$NEW_LINE$—$SPECIES_TRAITS$['concept_pathogenic_genes']\n—母星：§Y起源要塞§!（超大型移动居住站）$TABBED_NEW_LINE$—规模：£planetsize£25$TABBED_NEW_LINE$—宜居度：§G100%§!$TABBED_NEW_LINE$—地块上限：住房、发电、采矿、农业各§G15§!$TABBED_NEW_LINE$—['concept_abandoned_cities', £blocker£$concept_abandoned_cities$]：+2$TABBED_NEW_LINE$—['concept_identity_repository',£building£$concept_identity_repository$]$TABBED_NEW_LINE$—['concept_abandoned_gene_clinic',£building£$concept_abandoned_gene_clinic$]$TABBED_NEW_LINE$—特殊地形：§Y$d_atb_fortress_core$§!、§Y$d_atb_star_sea_monument$§!、§Y$d_atb_sensor_array$§!、§Y$d_atb_elemental_seal_institute$§!$NEW_LINE$—母星系：§Y起源之地§!，位于银河12点方向边缘之外的星团，只有一条航道通往银河；星系内有§Y$lgate_base$§!与§Y$mega_shipyard_ruined$§!$NEW_LINE$—局势：['concept_identity_rescue']$NEW_LINE$—$ADDITIONAL_TECHNOLOGIES_STRING$['concept_synth_ai']$NEW_LINE$—$GUARANTEED_RESEARCH_OPTION_STRING$['concept_robotic_workers', £engineering_research£$tech_robotic_workers$]$NEW_LINE$—§Y四位皇女§!担任统治者、国防部长、科学部长与国务卿：不朽、不可解雇、免维护$NEW_LINE$—§Y第一皇女§!是帝国的§Y光耀者§!：经历光耀者的第一幕与第二幕，但她不会老去，没有第三幕$NEW_LINE$—遗珍：§Y$r_atb_princess_seal$§!$NEW_LINE$—完成§Y合成黎明§!后，可以确立§Y$auth_atb_expedition$§!$NEW_LINE$—研究考古实验室后，可以通过首都决议§Y$decision_atb_precursor_secrets$§!$NEW_LINE$—L星群中必定能找到§Y小灰§!"
  origin_tooltip_atb_princess_expedition_negative_effects:0 "—£pop£§H人口§!：正在消亡$NEW_LINE$—L星群结局必定为§R灰色风暴§!$NEW_LINE$—仅限独裁政体"
 
  # 星系与星球
  atb_system_origin:0 "起源之地"
- atb_system_lgate:0 "静默之门"
  atb_planet_fortress:0 "起源要塞"
  pc_atb_fortress:0 "移动要塞"
  pc_atb_fortress_plural:0 "移动要塞"
@@ -86,6 +85,8 @@
  d_atb_star_sea_monument_desc:0 "要塞中庭立着一座纪念碑。碑上没有雕像，只有一幅星图：一道光从母星出发，穿过无数星系，停在起源之地。光的尽头还留着很长一段空白——每一个从这里经过的人，都会在心里替它往前多画一步。"
  d_atb_sensor_array:0 "起源要塞星海探测阵列"
  d_atb_sensor_array_desc:0 "沿着要塞外壳展开的巨型探测阵列，原本是为了在跃迁途中为要塞导航。在起源之地，它把目光投向了更远的地方——远到连四皇女都说，她的密探也没有它看得清楚。"
+ d_atb_elemental_seal_institute:0 "高位元素秘封研究院"
+ d_atb_elemental_seal_institute_desc:0 "要塞最深处，有一道只有皇女才能开启的封印。门后是帝国的学者从母星带来的元素秘术——它的库房比远征军任何一座仓库都大，每一年，研究员们都会从里面再整理出一件旧世界的遗物。"
 
  # 无畏舰
  atb_dreadnought:0 "无畏舰"

@@ -68,7 +68,7 @@ atbgp_home_1 = {
 				name = "atbgp_country_1"
 				adjective = "atbgp_country_1_adj"
 				authority = auth_machine_intelligence
-				civics = { civic = civic_machine_assimilator civic = civic_machine_ota_updates }
+				civics = { civic = civic_machine_assimilator civic = civic_machine_replication civic = civic_machine_ota_updates }
 				ethos = { ethic = ethic_gestalt_consciousness }
 				species = event_target:atbgp_species_1
 				origin = "origin_default"
@@ -549,7 +549,7 @@ atbgp_home_2 = {
 				name = "atbgp_country_2"
 				adjective = "atbgp_country_2_adj"
 				authority = auth_dictatorial
-				civics = { civic = civic_exalted_priesthood civic = civic_dark_consortium }
+				civics = { civic = civic_selective_kinship civic = civic_dark_consortium civic = civic_functional_architecture }
 				ethos = { ethic = ethic_fanatic_xenophobe ethic = ethic_spiritualist }
 				species = event_target:atbgp_species_2
 				origin = "origin_default"
@@ -1005,7 +1005,7 @@ atbgp_home_3 = {
 				name = "atbgp_country_3"
 				adjective = "atbgp_country_3_adj"
 				authority = auth_imperial
-				civics = { civic = civic_fanatic_purifiers civic = civic_philosopher_king civic = civic_feudal_realm }
+				civics = { civic = civic_fanatic_purifiers civic = civic_feudal_realm civic = civic_distinguished_admiralty }
 				ethos = { ethic = ethic_fanatic_xenophobe ethic = ethic_militarist }
 				species = event_target:atbgp_species_3
 				origin = "origin_default"
@@ -1030,6 +1030,7 @@ atbgp_home_3 = {
 					save_global_event_target_as = atbgp_country_3
 					set_country_flag = atbgp_great_power
 					set_country_flag = atbgp_power_3
+					set_country_flag = atbgp_gc_member
 					advanced_empire_base_init_effect = yes
 					add_modifier = {
 						modifier = atbgp_bonus_3
@@ -1095,6 +1096,9 @@ atbgp_sys_3_1 = {
 		has_ring = no
 		deposit_blockers = none
 		modifiers = none
+		init_effect = {
+			add_deposit = atbgp_d_suzerain_shelter
+		}
 	}
 
 	planet = {
@@ -1105,6 +1109,9 @@ atbgp_sys_3_1 = {
 		has_ring = no
 		deposit_blockers = none
 		modifiers = none
+		init_effect = {
+			add_deposit = atbgp_d_suzerain_shelter
+		}
 	}
 
 	planet = {
@@ -1115,6 +1122,9 @@ atbgp_sys_3_1 = {
 		has_ring = no
 		deposit_blockers = none
 		modifiers = none
+		init_effect = {
+			add_deposit = atbgp_d_suzerain_shelter
+		}
 	}
 }
 
@@ -1150,6 +1160,9 @@ atbgp_sys_3_2 = {
 		has_ring = no
 		deposit_blockers = none
 		modifiers = none
+		init_effect = {
+			add_deposit = atbgp_d_suzerain_shelter
+		}
 	}
 
 	planet = {
@@ -1160,6 +1173,9 @@ atbgp_sys_3_2 = {
 		has_ring = no
 		deposit_blockers = none
 		modifiers = none
+		init_effect = {
+			add_deposit = atbgp_d_suzerain_shelter
+		}
 	}
 
 	planet = {
@@ -1170,6 +1186,9 @@ atbgp_sys_3_2 = {
 		has_ring = no
 		deposit_blockers = none
 		modifiers = none
+		init_effect = {
+			add_deposit = atbgp_d_suzerain_shelter
+		}
 	}
 }
 
@@ -1359,5 +1378,349 @@ atbgp_sys_3_5 = {
 		orbit_distance = 0
 		deposit_blockers = none
 		modifiers = none
+	}
+}
+
+# 恐惧之潮 母星：无意识领域（3 颗开局母星）
+atbgp_home_4 = {
+	name = "atbgp_sys_4_0"
+	class = "sc_g"
+	flags = { atbgp_cluster atbgp_cluster_4 empire_home_system }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_4_0
+		generate_home_system_resources = yes
+		create_starbase = {
+			owner = event_target:atbgp_country_4
+			size = "starbase_starport"
+			module = shipyard
+			building = crew_quarters
+		}
+		spawn_megastructure = {
+			type = "crisis_sphere_ruined"
+			planet = star
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 30
+
+	planet = {
+		name = "atbgp_planet_4_home_1"
+		class = "pc_gaia"
+		orbit_distance = 20
+		orbit_angle = { min = 60 max = 300 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			save_global_event_target_as = atbgp_home_4
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			create_species = {
+				name = atbgp_species_4
+				plural = atbgp_species_4_plural
+				adjective = atbgp_species_4_adj
+				class = ART
+				portrait = random
+				traits = { ideal_planet_class = "pc_continental" trait = "trait_hive_mind" trait = "trait_rapid_breeders" trait = "trait_very_strong" trait = "trait_sedentary" }
+				homeworld = this
+				effect = { save_global_event_target_as = atbgp_species_4 }
+			}
+			create_country = {
+				name = "atbgp_country_4"
+				adjective = "atbgp_country_4_adj"
+				authority = auth_hive_mind
+				civics = { civic = civic_hive_devouring_swarm civic = civic_hive_one_mind civic = civic_hive_subspace_ephapse }
+				ethos = { ethic = ethic_gestalt_consciousness }
+				species = event_target:atbgp_species_4
+				origin = "origin_default"
+				flag = {
+					icon = {
+						category = "special"
+						file = "the_swarm.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = {
+						"burgundy"
+						"black"
+						"null"
+						"null"
+					}
+				}
+				ignore_initial_colony_error = yes
+				effect = {
+					save_global_event_target_as = atbgp_country_4
+					set_country_flag = atbgp_great_power
+					set_country_flag = atbgp_power_4
+					advanced_empire_base_init_effect = yes
+				}
+			}
+			set_owner = event_target:atbgp_country_4
+			set_controller = event_target:atbgp_country_4
+			set_capital = yes
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
+			generate_start_pops = yes
+			add_deposit = atbgp_d_income_4
+		}
+	}
+
+	planet = {
+		name = "atbgp_planet_4_home_2"
+		class = "pc_gaia"
+		orbit_distance = 16
+		orbit_angle = { min = 60 max = 300 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			set_owner = event_target:atbgp_country_4
+			set_controller = event_target:atbgp_country_4
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
+			generate_start_pops = yes
+		}
+	}
+
+	planet = {
+		name = "atbgp_planet_4_home_3"
+		class = "pc_gaia"
+		orbit_distance = 16
+		orbit_angle = { min = 60 max = 300 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			set_owner = event_target:atbgp_country_4
+			set_controller = event_target:atbgp_country_4
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
+			generate_start_pops = yes
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		orbit_distance = 25
+		class = pc_gas_giant
+		orbit_angle = { min = 90 max = 270 }
+	}
+}
+
+# 终端对齐协议 母星：灭绝收敛矩阵（4 颗开局母星）
+atbgp_home_5 = {
+	name = "atbgp_sys_5_0"
+	class = "sc_g"
+	flags = { atbgp_cluster atbgp_cluster_5 empire_home_system }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_5_0
+		generate_home_system_resources = yes
+		create_starbase = {
+			owner = event_target:atbgp_country_5
+			size = "starbase_starport"
+			module = shipyard
+			building = crew_quarters
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 30
+
+	planet = {
+		name = "atbgp_planet_5_home_1"
+		class = "pc_machine"
+		orbit_distance = 20
+		orbit_angle = { min = 60 max = 300 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			save_global_event_target_as = atbgp_home_5
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			create_species = {
+				name = atbgp_species_5
+				plural = atbgp_species_5_plural
+				adjective = atbgp_species_5_adj
+				class = MACHINE
+				portrait = random
+				traits = random
+				homeworld = this
+				effect = { save_global_event_target_as = atbgp_species_5 }
+			}
+			create_country = {
+				name = "atbgp_country_5"
+				adjective = "atbgp_country_5_adj"
+				authority = auth_machine_intelligence
+				civics = { civic = civic_machine_terminator civic = civic_machine_warbots civic = civic_memory_vault_machine }
+				ethos = { ethic = ethic_gestalt_consciousness }
+				species = event_target:atbgp_species_5
+				origin = "origin_default"
+				flag = {
+					icon = {
+						category = "special"
+						file = "ai_02.dds"
+					}
+					background = {
+						category = "backgrounds"
+						file = "00_solid.dds"
+					}
+					colors = {
+						"dark_grey"
+						"black"
+						"null"
+						"null"
+					}
+				}
+				ignore_initial_colony_error = yes
+				effect = {
+					save_global_event_target_as = atbgp_country_5
+					set_country_flag = atbgp_great_power
+					set_country_flag = atbgp_power_5
+					set_country_flag = atbgp_gc_member
+					advanced_empire_base_init_effect = yes
+				}
+			}
+			set_owner = event_target:atbgp_country_5
+			set_controller = event_target:atbgp_country_5
+			set_capital = yes
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
+			generate_start_pops = yes
+		}
+	}
+
+	planet = {
+		name = "atbgp_planet_5_home_2"
+		class = "pc_machine"
+		orbit_distance = 16
+		orbit_angle = { min = 60 max = 300 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			set_owner = event_target:atbgp_country_5
+			set_controller = event_target:atbgp_country_5
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
+			generate_start_pops = yes
+		}
+	}
+
+	planet = {
+		name = "atbgp_planet_5_home_3"
+		class = "pc_machine"
+		orbit_distance = 16
+		orbit_angle = { min = 60 max = 300 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			set_owner = event_target:atbgp_country_5
+			set_controller = event_target:atbgp_country_5
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
+			generate_start_pops = yes
+		}
+	}
+
+	planet = {
+		name = "atbgp_planet_5_home_4"
+		class = "pc_machine"
+		orbit_distance = 16
+		orbit_angle = { min = 60 max = 300 }
+		size = 22
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			set_owner = event_target:atbgp_country_5
+			set_controller = event_target:atbgp_country_5
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
+			generate_start_pops = yes
+		}
+	}
+
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+	}
+
+	planet = {
+		orbit_distance = 25
+		class = pc_gas_giant
+		orbit_angle = { min = 90 max = 270 }
 	}
 }

@@ -7,6 +7,7 @@
 import sys
 from pathlib import Path
 
+sys.stdout.reconfigure(encoding="utf-8")
 MOD = Path(sys.argv[1])
 
 # ---------------------------------------------------------------- 方位与距离
@@ -31,14 +32,25 @@ INCOME_BASE = {"energy": 222, "minerals": 222, "food": 222, "consumer_goods": 22
                "volatile_motes": 22, "exotic_gases": 22, "rare_crystals": 22, "influence": 2}
 CRISIS_RESEARCH_EXTRA = 550
 
-# ---------------------------------------------------------------- 三个列强
+# ---------------------------------------------------------------- 五个列强
 # 星系 kind：planet（一颗指定星球）、tomb3（三颗死寂星球）、blackhole、neutron、shattered、ring
 # species_portrait：物种肖像组 ID；None = 按物种类随机
 # flag：固定的帝国标识。图标由 make_flags.py 从 art/great_power_flags/ 生成到 mod/flags/atbgp/，
 #       原版不会给国旗图标染色，所以白色 LOGO 直接显示在 colors[0] 的纯色底上。
+#       写了 category 的直接用原版 flags/<category>/ 下的图标。
+# clock：钟点方位，可以写 10.5 这样的半点
+# extra_income：在补给特征上追加的每月产出；research 表示三种科研各加这么多
+# base_income = False：没有 222 基础补给，也没有危机时的战时补给，只拿 extra_income
+# ruler_traits：随机名字元首（ruler = None）开局固定获得的特质
+# capitals：母星系里有多颗按原版开局流程生成的星球（第一颗是首都），不再用 home 里的单颗星球
+# forced_perk：拥有 3 个飞升（原版危机飞升的最低要求）后立刻补上的危机飞升
+# perk_bonus：拥有 forced_perk 后获得 atbgp_btc_bonus
+# genetic_purity：开局固定走基因飞升，且只能选纯净传统
+# ai_full_rights：人工智能政策一出现就固定为公民权
+# gc_member：灭绝政体也会加入星海共同体（覆盖原版规则见 atb_rules.txt）
 EMPIRES = [
     dict(
-        n=1, clock=12, research=45, pops=52,
+        n=1, clock=10.5, research=45, pops=52,
         name="燃烧白鹿军团", adj="白鹿", en="Burning White Stag Legion", en_adj="White Stag",
         species=("白鹿机兵", "白鹿机兵", "白鹿"), species_en=("Stag Unit", "Stag Units", "Stag"),
         species_class="MACHINE", species_traits="random",
@@ -46,8 +58,9 @@ EMPIRES = [
         flag=dict(file="flag_atbgp_1.dds", colors=["dark_red", "black"]),
         authority="auth_machine_intelligence",
         ethics=["ethic_gestalt_consciousness"],
-        # 2.4：固定为同化斗士 + 空中下载升级
-        civics=["civic_machine_assimilator", "civic_machine_ota_updates"],
+        # 2.5：同化斗士 + 快速复制者 + 空中下载升级
+        civics=["civic_machine_assimilator", "civic_machine_replication", "civic_machine_ota_updates"],
+        extra_income=dict(alloys=50, research=33, influence=2, sr_dark_matter=20, nanites=1),
         ruler=dict(id="rongxin", name="融心演算", en="Fused-Heart Calculus", cls="MACHINE",
                    species=("演算核心", "Calculus Core"),
                    traits=["leader_trait_intemporal"]),
@@ -80,9 +93,12 @@ EMPIRES = [
         # 威权政体：独裁制。原来的两个国民是巨企专属，换成同效果的非巨企版本。
         authority="auth_dictatorial",
         # 2.4：极端排外 + 唯心主义（要走灵能飞升）。对远征军的例外见 kin_with_expedition。
-        # 科技官僚要求唯识，和唯心互斥，换成同样要求唯心的崇高教士团。
         ethics=["ethic_fanatic_xenophobe", "ethic_spiritualist"],
-        civics=["civic_exalted_priesthood", "civic_dark_consortium"],
+        # 2.5：选择性亲缘 + 暗之联盟 + 实用建筑
+        civics=["civic_selective_kinship", "civic_dark_consortium", "civic_functional_architecture"],
+        extra_income=dict(alloys=33, research=33, influence=2, sr_dark_matter=20, nanites=1, sr_zro=2),
+        # 2.5：开局获得遗珍「灵能档案」
+        start_relics=["r_zro_crystal"],
         # 2.4：与皇女来自同一母星，所以排外不针对远征军——双方互相挂一份巨额好感
         kin_with_expedition=True,
         # 2.4：开局就有灵能理论，并锁死灵能飞升路线
@@ -125,11 +141,28 @@ EMPIRES = [
         authority="auth_imperial",
         # 2.4：种族洁癖。狂热净化者要求极端排外 + 军国/灵性，这里取军国主义。
         ethics=["ethic_fanatic_xenophobe", "ethic_militarist"],
-        civics=["civic_fanatic_purifiers", "civic_philosopher_king", "civic_feudal_realm"],
+        # 2.5：种族洁癖 + 封建社会 + 卓越海军
+        civics=["civic_fanatic_purifiers", "civic_feudal_realm", "civic_distinguished_admiralty"],
+        extra_income=dict(alloys=33, research=33, influence=2, sr_dark_matter=20, nanites=1),
+        # 2.5：元首固定的命定特质（大研究者只属于科学家，行政官元首加不上，已去掉）
+        ruler_traits=["leader_trait_supreme_organizer", "leader_trait_intemporal", "leader_trait_master_bureaucrat"],
+        # 2.5：危机飞升从星海天罚改为宇宙创生；固定基因飞升（纯净）；合成人公民权；加入星海共同体
+        forced_perk="ap_cosmogenesis",
+        perk_bonus=True,
+        genetic_purity=True,
+        ai_full_rights=True,
+        gc_member=True,
         # 2.4：额外的固定国家修正
         bonus=dict(cn="宗主的训诫", cn_desc="宗主文明留给这块乡村领地的教养手册。照着做，人人都能成器。",
                    en="The Suzerain's Precepts", en_desc="The handbook the suzerain left to this rural fief.",
-                   mods={"species_leader_exp_gain": 0.5, "negative_traits_country": -1}),
+                   # 2.5：研究速度 +12%
+                   mods={"species_leader_exp_gain": 0.5, "negative_traits_country": -1,
+                         "all_technology_research_speed": 0.12}),
+        # 2.5：星团里死寂星球（tomb3）的宜居度下限。原版的 habitability_floor_add 只在物种特质和星球上生效，
+        # 挂在国家修正上不起作用，所以做成星球特殊地形；不到 35% 原版 AI 也不会去殖民
+        tomb_floor=dict(value=0.55, key="atbgp_d_suzerain_shelter",
+                        cn="宗主的避难穹顶", cn_desc="宗主文明当年留下的地下穹顶。核火早已熄灭，穹顶里的空气、水和土壤仍在按宗主的标准循环。",
+                        en="Suzerain Shelter Domes", en_desc="Underground domes left by the suzerain civilization. The nuclear fires are long out, but the air, water and soil inside still cycle to the suzerain's standard."),
         ruler=None,
         home=dict(sys="天选者", en="The Chosen", star="sc_g", pc="pc_gaia", size=22),
         systems=[
@@ -144,11 +177,72 @@ EMPIRES = [
         crisis=("宗主的关注", "银河的骚动终于传到了宗主耳中：拨付翻倍，还附带了一批学者。",
                 "The Suzerain's Attention", "The galaxy's turmoil has finally reached the suzerain."),
     ),
+    # 2.5 新增：灭绝政体的虫巢，三颗开局母星（三倍开局）
+    dict(
+        n=4, clock=9, research=0, pops=0,
+        name="恐惧之潮", adj="恐惧", en="Tide of Dread", en_adj="Dread",
+        species=("潮噬者", "潮噬者", "潮噬"), species_en=("Tidemaw", "Tidemaws", "Tidemaw"),
+        species_class="ART",
+        species_traits='{ ideal_planet_class = "pc_continental" trait = "trait_hive_mind" trait = "trait_rapid_breeders" '
+                       'trait = "trait_very_strong" trait = "trait_sedentary" }',
+        species_portrait=None,
+        flag=dict(category="special", file="the_swarm.dds", colors=["burgundy", "black"]),
+        authority="auth_hive_mind",
+        ethics=["ethic_gestalt_consciousness"],
+        civics=["civic_hive_devouring_swarm", "civic_hive_one_mind", "civic_hive_subspace_ephapse"],
+        ruler=None,
+        home=dict(sys="无意识领域", en="Domain of the Unconscious", star="sc_g", pc="pc_gaia", size=22),
+        capitals=[("繁衍", "Propagation"), ("吞噬", "Devourment"), ("异变", "Mutation")],
+        # 母星系里有一座损坏的以太相引擎（纯装饰，原版不可修复）
+        home_megastructures=["crisis_sphere_ruined"],
+        systems=[],
+        base_income=False,
+        extra_income=dict(alloys=22, research=44, influence=1, sr_dark_matter=33, nanites=1),
+        income=("无意识回响", "无意识领域深处翻涌的本能，把整片星系的养分都推向了虫巢。",
+                "Echoes of the Unconscious", "Instinct churning in the depths of the Domain, driving every nutrient toward the Hive."),
+        crisis=None,
+        forced_perk="ap_become_the_crisis",
+    ),
+    # 2.5 新增：灭绝政体的机械智能，四颗机械星球母星（四倍开局）。
+    # 与恐惧之潮（9 点）离得太近会打架，所以放在 6 点半，和天选民（8 点）互换
+    dict(
+        n=5, clock=6.5, research=0, pops=0,
+        name="终端对齐协议", adj="终端", en="Terminal Alignment Protocol", en_adj="Terminal",
+        species=("对齐单元", "对齐单元", "对齐"), species_en=("Alignment Unit", "Alignment Units", "Alignment"),
+        species_class="MACHINE", species_traits="random",
+        species_portrait=None,
+        flag=dict(category="special", file="ai_02.dds", colors=["dark_grey", "black"]),
+        authority="auth_machine_intelligence",
+        ethics=["ethic_gestalt_consciousness"],
+        civics=["civic_machine_terminator", "civic_machine_warbots", "civic_memory_vault_machine"],
+        ruler=None,
+        home=dict(sys="灭绝收敛矩阵", en="Extinction Convergence Matrix", star="sc_g", pc="pc_machine", size=22),
+        capitals=[("绝对律典", "Absolute Codex"), ("零号基准", "Baseline Zero"),
+                  ("全视中枢", "All-Seeing Nexus"), ("无界熵源", "Boundless Entropy Source")],
+        systems=[],
+        base_income=False,
+        income=None,
+        crisis=None,
+        forced_perk="ap_become_the_crisis",
+        gc_member=True,
+    ),
 ]
 
 
-def angle(clock: int) -> int:
-    return (ANGLE_AT_12 + ANGLE_STEP * clock) % 360
+def angle(clock: float) -> int:
+    return int(round(ANGLE_AT_12 + ANGLE_STEP * clock)) % 360
+
+
+def clock_name(clock: float) -> str:
+    return f"{int(clock)} 点半" if clock % 1 else f"{int(clock)} 点"
+
+
+def has_income(e: dict) -> bool:
+    return bool(e.get("income"))
+
+
+def has_crisis_income(e: dict) -> bool:
+    return e.get("base_income", True) and bool(e.get("crisis"))
 
 
 def window(a: int, half: int) -> tuple[int, int]:
@@ -228,7 +322,7 @@ def flag_block(e: dict) -> str:
     lines = [
         "\t\t\t\tflag = {",
         "\t\t\t\t\ticon = {",
-        '\t\t\t\t\t\tcategory = "atbgp"',
+        f'\t\t\t\t\t\tcategory = "{f.get("category", "atbgp")}"',
         f'\t\t\t\t\t\tfile = "{f["file"]}"',
         "\t\t\t\t\t}",
         "\t\t\t\t\tbackground = {",
@@ -292,9 +386,9 @@ def ring_bodies():
     return "".join(parts)
 
 
-def home_initializer(e):
-    n, h = e["n"], e["home"]
-    country = f"event_target:atbgp_country_{n}"
+def create_country_block(e):
+    """母星 init_effect 里建立国家的那一段（缩进 3 个 Tab）。"""
+    n = e["n"]
     civics = " ".join(f"civic = {c}" for c in e["civics"])
     ethics = " ".join(f"ethic = {x}" for x in e["ethics"])
     bonus = f"""
@@ -302,6 +396,113 @@ def home_initializer(e):
 						modifier = atbgp_bonus_{n}
 						days = -1
 					}}""" if e.get("bonus") else ""
+    gc = "\n\t\t\t\t\tset_country_flag = atbgp_gc_member" if e.get("gc_member") else ""
+    return f"""			create_country = {{
+				name = "atbgp_country_{n}"
+				adjective = "atbgp_country_{n}_adj"
+				authority = {e['authority']}
+				civics = {{ {civics} }}
+				ethos = {{ {ethics} }}
+				species = event_target:atbgp_species_{n}
+				origin = "origin_default"
+{flag_block(e)}
+				ignore_initial_colony_error = yes
+				effect = {{
+					save_global_event_target_as = atbgp_country_{n}
+					set_country_flag = atbgp_great_power
+					set_country_flag = atbgp_power_{n}{gc}
+					advanced_empire_base_init_effect = yes{bonus}
+				}}
+			}}"""
+
+
+def multi_home_initializer(e):
+    """母星系里有多颗按原版开局流程生成的星球：第一颗建国并当首都，其余照样生成人口、区划和建筑。"""
+    n, h = e["n"], e["home"]
+    country = f"event_target:atbgp_country_{n}"
+    megas = "".join(f"""
+		spawn_megastructure = {{
+			type = "{m}"
+			planet = star
+		}}""" for m in e.get("home_megastructures", []))
+    planets = []
+    for i, _ in enumerate(e["capitals"], start=1):
+        first = i == 1
+        head = f"""			save_global_event_target_as = atbgp_home_{n}
+			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+{species_block(e)}
+{create_country_block(e)}
+			set_owner = {country}
+			set_controller = {country}
+			set_capital = yes""" if first else f"""			set_planet_flag = ignore_startup_effect
+			prevent_anomaly = yes
+			set_owner = {country}
+			set_controller = {country}"""
+        income = f"\n\t\t\tadd_deposit = atbgp_d_income_{n}" if first and has_income(e) else ""
+        planets.append(f"""
+	planet = {{
+		name = "atbgp_planet_{n}_home_{i}"
+		class = "{h['pc']}"
+		orbit_distance = {20 if first else 16}
+		orbit_angle = {{ min = 60 max = 300 }}
+		size = {h['size']}
+		has_ring = no
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {{
+{head}
+			# 照原版首都初始化 game_start.12 的顺序：特征和障碍物、建筑和区划、人口
+			colony = {{
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}}
+			generate_start_pops = yes{income}
+		}}
+	}}
+""")
+    return f"""
+# {e['name']} 母星：{h['sys']}（{len(e['capitals'])} 颗开局母星）
+atbgp_home_{n} = {{
+	name = "atbgp_sys_{n}_0"
+	class = "{h['star']}"
+	flags = {{ atbgp_cluster atbgp_cluster_{n} empire_home_system }}
+
+	init_effect = {{
+		save_global_event_target_as = atbgp_sys_{n}_0
+		generate_home_system_resources = yes
+		create_starbase = {{
+			owner = {country}
+			size = "starbase_starport"
+			module = shipyard
+			building = crew_quarters
+		}}{megas}
+	}}
+{star_block()}
+	change_orbit = 30
+{"".join(planets)}
+	planet = {{
+		count = {{ min = 1 max = 2 }}
+		orbit_distance = 25
+		class = random_non_colonizable
+		orbit_angle = {{ min = 90 max = 270 }}
+	}}
+
+	planet = {{
+		orbit_distance = 25
+		class = pc_gas_giant
+		orbit_angle = {{ min = 90 max = 270 }}
+	}}
+}}
+"""
+
+
+def home_initializer(e):
+    if e.get("capitals"):
+        return multi_home_initializer(e)
+    n, h = e["n"], e["home"]
+    country = f"event_target:atbgp_country_{n}"
     extra_deposits = "".join(f"\n\t\t\tadd_deposit = {d['key']}" for d in e.get("home_deposits", []))
     return f"""
 # {e['name']} 母星：{h['sys']}
@@ -351,23 +552,7 @@ atbgp_home_{n} = {{
 			set_planet_flag = ignore_startup_effect
 			prevent_anomaly = yes
 {species_block(e)}
-			create_country = {{
-				name = "atbgp_country_{n}"
-				adjective = "atbgp_country_{n}_adj"
-				authority = {e['authority']}
-				civics = {{ {civics} }}
-				ethos = {{ {ethics} }}
-				species = event_target:atbgp_species_{n}
-				origin = "origin_default"
-{flag_block(e)}
-				ignore_initial_colony_error = yes
-				effect = {{
-					save_global_event_target_as = atbgp_country_{n}
-					set_country_flag = atbgp_great_power
-					set_country_flag = atbgp_power_{n}
-					advanced_empire_base_init_effect = yes{bonus}
-				}}
-			}}
+{create_country_block(e)}
 			set_owner = {country}
 			set_controller = {country}
 			set_capital = yes
@@ -432,6 +617,11 @@ def system_initializer(e, k, s):
 	}}
 """ + FILLER
     elif kind == "tomb3":
+        floor = e.get("tomb_floor")
+        floor_effect = f"""
+		init_effect = {{
+			add_deposit = {floor['key']}
+		}}""" if floor else ""
         body = star_block() + "\n\tchange_orbit = 35\n" + "".join(f"""
 	planet = {{
 		class = "pc_nuked"
@@ -440,7 +630,7 @@ def system_initializer(e, k, s):
 		size = {{ min = 14 max = 18 }}
 		has_ring = no
 		deposit_blockers = none
-		modifiers = none
+		modifiers = none{floor_effect}
 	}}
 """ for i in range(3))
     elif kind == "blackhole":
@@ -532,7 +722,7 @@ SIZES = list(GALAXY_RADIUS)
 def spawn_block(e):
     n = e["n"]
     a = angle(e["clock"])
-    lines = [f"\t\t# {e['name']}：{e['clock']} 点方位（角度 {a}）"]
+    lines = [f"\t\t# {e['name']}：{clock_name(e['clock'])}方位（角度 {a}）"]
     for i, size in enumerate(SIZES):
         d = GALAXY_RADIUS[size] + HOME_GAP
         lo, hi = window(a, 2)
@@ -576,7 +766,8 @@ def spawn_block(e):
 				initializer = atbgp_sys_{n}_{k}
 				hyperlane = no
 			}}""")
-    lines.append(f"\t\tevent_target:atbgp_sys_{n}_0 = {{\n" + "\n".join(others) + "\n\t\t}")
+    if others:
+        lines.append(f"\t\tevent_target:atbgp_sys_{n}_0 = {{\n" + "\n".join(others) + "\n\t\t}")
     return "\n".join(lines)
 
 
@@ -589,6 +780,8 @@ def lanes_block(e):
             lines.append(f"\t\tevent_target:atbgp_sys_{n}_{a} = {{ add_hyperlane = {{ from = this to = event_target:atbgp_sys_{n}_{b} }} }}")
     if count == 5:  # 第 6 个槽位空着时，把外圈第 5 个接回内圈另一侧
         lines.append(f"\t\tevent_target:atbgp_sys_{n}_5 = {{ add_hyperlane = {{ from = this to = event_target:atbgp_sys_{n}_3 }} }}")
+    if len(lines) == 1:
+        lines = []
     lines.append(f"\t\t# {e['name']}：母星接入银河")
     for _ in range(LINK_COUNT):
         lines.append(f"\t\tatbgp_link_to_galaxy = {{ SYSTEM = atbgp_sys_{n}_0 }}")
@@ -598,7 +791,7 @@ def lanes_block(e):
 events = [f"""# 由 _tools/gen_great_powers.py 生成，请勿手改
 namespace = atbgp
 
-# 开局：在银河边缘外现造三个列强的星团（on_game_start）
+# 开局：在银河边缘外现造{len(EMPIRES)}个列强的星团（on_game_start）
 event = {{
 	id = atbgp.1
 	hide_window = yes
@@ -624,19 +817,66 @@ for e in EMPIRES:
 def setup_block(e, first):
     n = e["n"]
     lines = [f"\t\t\tatbgp_install_ruler_{e['ruler']['id']} = yes" if e["ruler"]
-             else "\t\t\tatbgp_install_random_ruler = yes"]
+             else f"\t\t\tatbgp_install_random_ruler_{n} = yes"]
     for t in e.get("start_techs", []):
         lines.append(f"\t\t\tgive_technology = {{ tech = {t} message = no }}")
     for p in e.get("ascension_perks", []):
         lines.append(f"\t\t\tadd_ascension_perk = {p}")
     for t in e.get("start_traditions", []):
         lines.append(f"\t\t\tadd_tradition = {t}")
+    for r in e.get("start_relics", []):
+        lines.append(f"\t\t\tadd_relic = {r}")
+    if e.get("genetic_purity"):
+        lines.append("\t\t\tatbgp_start_purity_ascension = yes")
     if e.get("kin_with_expedition"):
         lines.append("\t\t\tatbgp_kin_with_expedition = yes")
     kw = "if" if first else "else_if"
     return f"""\t\t{kw} = {{
 			limit = {{ has_country_flag = atbgp_power_{n} }}
 {chr(10).join(lines)}
+		}}"""
+
+
+def perk_lines(e, tabs):
+    """拥有指定危机飞升的强制补上与加成（atbgp.11 每月、atbgp.12 选飞升时都调用）。"""
+    p = e.get("forced_perk")
+    if not p:
+        return []
+    pad = "\t" * tabs
+    lines = [f"{pad}atbgp_force_crisis_perk = {{ PERK = {p} }}"]
+    if e.get("perk_bonus"):
+        lines.append(f"{pad}atbgp_crisis_perk_bonus = {{ PERK = {p} }}")
+    return lines
+
+
+def monthly_block(e, first):
+    n = e["n"]
+    lines = []
+    if has_income(e):
+        effect = "atbgp_maintain_income" if has_crisis_income(e) else "atbgp_maintain_income_basic"
+        lines.append(f"\t\t\t{effect} = {{ N = {n} }}")
+    lines += perk_lines(e, 3)
+    if e.get("genetic_purity"):
+        lines.append("\t\t\tatbgp_purity_lock = yes")
+    if e.get("ai_full_rights"):
+        lines.append("\t\t\tatbgp_force_ai_full_rights = yes")
+    if e.get("gc_member"):
+        lines.append("\t\t\tatbgp_join_galactic_community = yes")
+    kw = "if" if first else "else_if"
+    return f"""\t\t{kw} = {{
+			limit = {{ has_country_flag = atbgp_power_{n} }}
+{chr(10).join(lines)}
+		}}"""
+
+
+PERK_EMPIRES = [e for e in EMPIRES if e.get("forced_perk")]
+
+
+def perk_picked_block(e, first):
+    kw = "if" if first else "else_if"
+    return f"""\t\t{kw} = {{
+			limit = {{ has_country_flag = atbgp_power_{e['n']} }}
+{chr(10).join(perk_lines(e, 3))}
 		}}"""
 
 
@@ -655,7 +895,7 @@ country_event = {
 	}
 }
 
-# 每月：危机检测、补给特征跟随首都、星海天罚
+# 每月：危机检测、补给特征跟随首都、强制危机飞升、各自的固定设定
 event = {
 	id = atbgp.10
 	hide_window = yes
@@ -686,34 +926,22 @@ country_event = {
 			}
 			set_country_flag = atbgp_crisis_mode
 		}
-		if = {
-			limit = { has_country_flag = atbgp_power_1 }
-			atbgp_maintain_income = { N = 1 }
-		}
-		else_if = {
-			limit = { has_country_flag = atbgp_power_2 }
-			atbgp_maintain_income = { N = 2 }
-		}
-		else_if = {
-			limit = { has_country_flag = atbgp_power_3 }
-			atbgp_maintain_income = { N = 3 }
-			atbgp_check_become_the_crisis = yes
-		}
+""" + "\n".join(monthly_block(e, i == 0) for i, e in enumerate(EMPIRES)) + """
 	}
 }
 
-# 选飞升时：大君主同盟领地的第 12 个飞升必定是星海天罚（on_ascension_perk_picked）
+# 选飞升时：拥有 3 个飞升后立刻补上固定的危机飞升（on_ascension_perk_picked）
 country_event = {
 	id = atbgp.12
 	hide_window = yes
 	is_triggered_only = yes
 
 	trigger = {
-		has_country_flag = atbgp_power_3
+		has_country_flag = atbgp_great_power
 	}
 
 	immediate = {
-		atbgp_check_become_the_crisis = yes
+""" + "\n".join(perk_picked_block(e, i == 0) for i, e in enumerate(PERK_EMPIRES)) + """
 	}
 }
 
@@ -737,13 +965,17 @@ out["events/atbgp_events.txt"] = "".join(events)
 clear_parts = []
 has_parts = []
 for e in EMPIRES:
+    if not has_income(e):
+        continue
     n = e["n"]
-    has_parts.append(f"\t\thas_deposit = atbgp_d_income_{n}\n\t\thas_deposit = atbgp_d_income_crisis_{n}")
+    keys = [f"atbgp_d_income_{n}"] + ([f"atbgp_d_income_crisis_{n}"] if has_crisis_income(e) else [])
+    has_parts.append("\n".join(f"\t\thas_deposit = {k}" for k in keys))
+    cond = "\n".join(f"\t\t\t\thas_deposit = {k}" for k in keys)
+    removes = "\n".join(f"\t\tremove_deposit = {k}" for k in keys)
     clear_parts.append(f"""	if = {{
 		limit = {{
 			OR = {{
-				has_deposit = atbgp_d_income_{n}
-				has_deposit = atbgp_d_income_crisis_{n}
+{cond}
 			}}
 			NAND = {{
 				exists = owner
@@ -751,8 +983,7 @@ for e in EMPIRES:
 				is_capital = yes
 			}}
 		}}
-		remove_deposit = atbgp_d_income_{n}
-		remove_deposit = atbgp_d_income_crisis_{n}
+{removes}
 	}}""")
 
 out["common/scripted_triggers/atbgp_triggers.txt"] = f"""# 由 _tools/gen_great_powers.py 生成，请勿手改
@@ -772,9 +1003,10 @@ atbgp_has_income_deposit = {{
 	}}
 }}
 
-# 可以接入列强星团的银河星系
+# 可以接入列强星团的银河星系（天选民的星团在原版就是与银河隔绝的，也不连）
 atbgp_link_candidate = {{
 	NOT = {{ has_star_flag = atbgp_cluster }}
+	NOT = {{ has_star_flag = chosen_system }}
 }}
 """
 
@@ -860,6 +1092,41 @@ atbgp_install_ruler_{r['id']} = {{
 """)
 named_ruler_effects = "\n".join(named_ruler_effects)
 
+# 每个随机名字元首的列强一个安装效果：开局特质写死在里面
+random_ruler_effects = []
+for e in EMPIRES:
+    if e["ruler"]:
+        continue
+    traits = e.get("ruler_traits", [])
+    trait_block = ""
+    if traits:
+        trait_block = "\n\t\t\t# 开局后统治者不能获得非议会特质，先给 1 天豁免标记再加\n" \
+                      "\t\t\tset_timed_leader_flag = {\n\t\t\t\tflag = ignore_autocracy_ruler_trait_restriction\n\t\t\t\tdays = 1\n\t\t\t}\n" + \
+                      "\n".join(f"""			add_trait = {{
+				trait = {t}
+				show_message = no
+			}}""" for t in traits)
+    random_ruler_effects.append(f"""# 国家作用域：随机名字的 10 级元首（{e['name']}）
+atbgp_install_random_ruler_{e['n']} = {{
+	if = {{
+		limit = {{ exists = ruler }}
+		ruler = {{ set_leader_flag = atbgp_replaced_ruler }}
+	}}
+	create_leader = {{
+		class = official
+		species = root.species
+		name = random
+		skill = 10
+		effect = {{
+			save_event_target_as = atbgp_new_ruler{trait_block}
+		}}
+	}}
+	set_leader = event_target:atbgp_new_ruler
+	atbgp_remove_replaced_ruler = yes
+}}
+""")
+random_ruler_effects = "\n".join(random_ruler_effects)
+
 out["common/scripted_effects/atbgp_effects.txt"] = f"""# 由 _tools/gen_great_powers.py 生成，请勿手改
 
 # 给星团母星接一条通往银河的航道：由近到远找还没连上的星系
@@ -913,23 +1180,7 @@ atbgp_spawn_start_fleets = {{
 }}
 
 {named_ruler_effects}
-# 国家作用域：随机名字的 10 级元首（大君主同盟领地）
-atbgp_install_random_ruler = {{
-	if = {{
-		limit = {{ exists = ruler }}
-		ruler = {{ set_leader_flag = atbgp_replaced_ruler }}
-	}}
-	create_leader = {{
-		class = official
-		species = root.species
-		name = random
-		skill = 10
-		effect = {{ save_event_target_as = atbgp_new_ruler }}
-	}}
-	set_leader = event_target:atbgp_new_ruler
-	atbgp_remove_replaced_ruler = yes
-}}
-
+{random_ruler_effects}
 atbgp_remove_replaced_ruler = {{
 	every_owned_leader = {{
 		limit = {{
@@ -963,29 +1214,118 @@ atbgp_maintain_income = {{
 	}}
 }}
 
+# 国家作用域：没有战时补给的列强，只维护一份补给特征
+atbgp_maintain_income_basic = {{
+	if = {{
+		limit = {{ capital_scope = {{ NOT = {{ has_deposit = atbgp_d_income_$N$ }} }} }}
+		every_galaxy_planet = {{
+			limit = {{ has_deposit = atbgp_d_income_$N$ }}
+			remove_deposit = atbgp_d_income_$N$
+		}}
+		capital_scope = {{ add_deposit = atbgp_d_income_$N$ }}
+	}}
+}}
+
 # 星球作用域：补给特征不在对应列强的首都上就移除
 atbgp_clear_foreign_income = {{
 {chr(10).join(clear_parts)}
 }}
 
-# 国家作用域：已选 11 个飞升时直接补上星海天罚；拥有星海天罚就加舰队加成
-atbgp_check_become_the_crisis = {{
+# 国家作用域：拥有 3 个飞升（原版危机飞升的最低要求）后立刻补上固定的危机飞升。
+# 原版的危机飞升都要求先有 3 个飞升，所以 AI 来不及先选别的危机路线（星海天罚与宇宙创生互斥）。
+atbgp_force_crisis_perk = {{
 	if = {{
 		limit = {{
-			num_ascension_perks >= 11
-			NOT = {{ has_ascension_perk = ap_become_the_crisis }}
+			num_ascension_perks >= 3
+			NOT = {{ has_ascension_perk = $PERK$ }}
+			is_player_crisis = no
 		}}
-		add_ascension_perk = ap_become_the_crisis
+		add_ascension_perk = $PERK$
 	}}
+}}
+
+# 国家作用域：拥有固定的危机飞升后获得舰队加成
+atbgp_crisis_perk_bonus = {{
 	if = {{
 		limit = {{
-			has_ascension_perk = ap_become_the_crisis
+			has_ascension_perk = $PERK$
 			NOT = {{ has_modifier = atbgp_btc_bonus }}
 		}}
 		add_modifier = {{
 			modifier = atbgp_btc_bonus
 			days = -1
 		}}
+	}}
+}}
+
+# 国家作用域：开局固定走基因飞升，并先拿到纯净路线的第一级解锁
+# 基因重塑的 on_enabled 会照原版开启基因飞升局势；局势结束时（bio.20）只有拿到解锁的传统才能选
+atbgp_start_purity_ascension = {{
+	add_ascension_perk = ap_engineered_evolution
+	give_purity_unlocks_effect = yes
+}}
+
+# 国家作用域（每月）：只留纯净一条路——清掉克隆、变异两条路线的解锁，
+# 这样基因飞升局势结束时只能选纯净传统
+atbgp_purity_lock = {{
+	remove_country_flag = cloning_unlock_level_1
+	remove_country_flag = cloning_unlock_level_2
+	remove_country_flag = cloning_unlock_level_3
+	remove_country_flag = mutation_unlock_level_1
+	remove_country_flag = mutation_unlock_level_2
+	remove_country_flag = mutation_unlock_level_3
+	if = {{
+		limit = {{ has_modifier = cloning_unlock_level_1 }}
+		remove_modifier = cloning_unlock_level_1
+	}}
+	if = {{
+		limit = {{ has_modifier = cloning_unlock_level_2 }}
+		remove_modifier = cloning_unlock_level_2
+	}}
+	if = {{
+		limit = {{ has_modifier = mutation_unlock_level_1 }}
+		remove_modifier = mutation_unlock_level_1
+	}}
+	if = {{
+		limit = {{ has_modifier = mutation_unlock_level_2 }}
+		remove_modifier = mutation_unlock_level_2
+	}}
+	if = {{
+		limit = {{
+			has_ascension_perk = ap_engineered_evolution
+			NOT = {{ has_country_flag = purity_unlock_level_1 }}
+		}}
+		give_purity_unlocks_effect = yes
+	}}
+}}
+
+# 国家作用域（每月）：人工智能政策出现后固定为公民权
+atbgp_force_ai_full_rights = {{
+	if = {{
+		limit = {{
+			can_set_ai_policy = yes
+			NOT = {{ has_policy_flag = ai_full_rights }}
+		}}
+		set_policy = {{
+			policy = artificial_intelligence_policy
+			option = ai_full_rights
+			cooldown = no
+		}}
+	}}
+}}
+
+# 国家作用域（每月）：星海共同体成立后加入。
+# 原版禁止灭绝政体加入（game_rules 的 can_be_part_of_galactic_community），本 MOD 在 atb_rules.txt
+# 里对带 atbgp_gc_member 标记的国家开了例外。被宣布为危机后（星海天罚第 5 级）照原版不再加入。
+atbgp_join_galactic_community = {{
+	if = {{
+		limit = {{
+			is_galactic_community_formed = yes
+			is_galactic_community_member = no
+			has_been_declared_crisis = no
+			NOT = {{ has_country_flag = malevolent_aura_empire }}
+		}}
+		add_to_galactic_community_no_message = yes
 	}}
 }}
 
@@ -1035,16 +1375,29 @@ loc("atbgp_same_homeworld", "同一片母星的故人", "Kin From the Same Homew
 dep = ["# 由 _tools/gen_great_powers.py 生成，请勿手改\n"]
 
 
+RESEARCH = ("physics_research", "society_research", "engineering_research")
+
+
 def produces(e, crisis):
-    lines = [f"\t\t\t{k} = {v}" for k, v in INCOME_BASE.items()]
-    r = e["research"] + (CRISIS_RESEARCH_EXTRA if crisis else 0)
-    lines += [f"\t\t\t{k} = {r}" for k in ("physics_research", "society_research", "engineering_research")]
-    return "\n".join(lines)
+    """补给特征的产出。基础补给 + 科研；平时的那份再加上 extra_income（战时补给只翻倍基础部分）。"""
+    out = {}
+    if e.get("base_income", True):
+        out.update(INCOME_BASE)
+        r = e["research"] + (CRISIS_RESEARCH_EXTRA if crisis else 0)
+        out.update({k: r for k in RESEARCH})
+    if not crisis:
+        for k, v in e.get("extra_income", {}).items():
+            for key in (RESEARCH if k == "research" else (k,)):
+                out[key] = out.get(key, 0) + v
+    return "\n".join(f"\t\t\t{k} = {v}" for k, v in out.items())
 
 
 for e in EMPIRES:
+    if not has_income(e):
+        continue
     n = e["n"]
-    for crisis, key in ((False, f"atbgp_d_income_{n}"), (True, f"atbgp_d_income_crisis_{n}")):
+    kinds = [(False, f"atbgp_d_income_{n}")] + ([(True, f"atbgp_d_income_crisis_{n}")] if has_crisis_income(e) else [])
+    for crisis, key in kinds:
         dep.append(f"""
 {key} = {{
 	is_for_colonizable = yes
@@ -1062,9 +1415,10 @@ for e in EMPIRES:
     cn_name, cn_desc, en_name, en_desc = e["income"]
     loc(f"atbgp_d_income_{n}", cn_name, en_name)
     loc(f"atbgp_d_income_{n}_desc", cn_desc, en_desc)
-    cn_name, cn_desc, en_name, en_desc = e["crisis"]
-    loc(f"atbgp_d_income_crisis_{n}", cn_name, en_name)
-    loc(f"atbgp_d_income_crisis_{n}_desc", cn_desc, en_desc)
+    if has_crisis_income(e):
+        cn_name, cn_desc, en_name, en_desc = e["crisis"]
+        loc(f"atbgp_d_income_crisis_{n}", cn_name, en_name)
+        loc(f"atbgp_d_income_crisis_{n}_desc", cn_desc, en_desc)
 
 orbital = set()
 for e in EMPIRES:
@@ -1100,6 +1454,25 @@ for kind, value, res, icon in sorted(orbital):
     loc(key, cn_name, en_name)
     loc(f"{key}_desc", cn_desc, en_desc)
 
+# 星团死寂星球上的宜居度下限特征（星球修正，对住在上面的所有物种生效）
+for e in EMPIRES:
+    f = e.get("tomb_floor")
+    if not f:
+        continue
+    dep.append(f"""
+{f['key']} = {{
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_bunker_door
+	planet_modifier = {{
+		habitability_floor_add = {f['value']}
+	}}
+	drop_weight = {{ weight = 0 }}
+}}
+""")
+    loc(f["key"], f["cn"], f["en"])
+    loc(f"{f['key']}_desc", f["cn_desc"], f["en_desc"])
+
 # 母星上额外的固定特征
 for e in EMPIRES:
     for d in e.get("home_deposits", []):
@@ -1124,7 +1497,7 @@ out["common/deposits/atbgp_deposits.txt"] = "".join(dep)
 
 static_mods = ["""# 由 _tools/gen_great_powers.py 生成，请勿手改
 
-# 大君主同盟领地选择星海天罚后
+# 大君主同盟领地拥有固定的危机飞升（2.5 起为宇宙创生）后
 atbgp_btc_bonus = {
 	country_naval_cap_add = 1000
 	shipclass_military_build_speed_mult = 1.0
@@ -1144,7 +1517,7 @@ atbgp_bonus_{e['n']} = {{
     loc(f"atbgp_bonus_{e['n']}", b["cn"], b["en"])
     loc(f"atbgp_bonus_{e['n']}_desc", b["cn_desc"], b["en_desc"])
 out["common/static_modifiers/atbgp_static_modifiers.txt"] = "".join(static_mods)
-loc("atbgp_btc_bonus", "天罚舰队编制", "Retribution Fleet Charter")
+loc("atbgp_btc_bonus", "宗主舰队编制", "Suzerain Fleet Charter")
 loc("atbgp_btc_bonus_desc", "宗主终于允许这块乡村领地扩编舰队。对银河其他文明来说，这意味着灾难。",
     "The suzerain has finally allowed this rural fief to expand its fleet.")
 
@@ -1195,7 +1568,11 @@ for e in EMPIRES:
     loc(f"atbgp_species_{n}_plural", spl, espl)
     loc(f"atbgp_species_{n}_adj", sadj, esadj)
     loc(f"atbgp_sys_{n}_0", e["home"]["sys"], e["home"]["en"])
-    loc(f"atbgp_planet_{n}_home", e["home"]["sys"], e["home"]["en"])
+    if e.get("capitals"):
+        for i, (cn, en) in enumerate(e["capitals"], start=1):
+            loc(f"atbgp_planet_{n}_home_{i}", cn, en)
+    else:
+        loc(f"atbgp_planet_{n}_home", e["home"]["sys"], e["home"]["en"])
     for k, s in enumerate(e["systems"], start=1):
         loc(f"atbgp_sys_{n}_{k}", s["sys"], s["en"])
         if s["kind"] in ("planet", "shattered"):

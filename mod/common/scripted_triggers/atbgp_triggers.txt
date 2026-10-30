@@ -17,10 +17,12 @@ atbgp_has_income_deposit = {
 		has_deposit = atbgp_d_income_crisis_2
 		has_deposit = atbgp_d_income_3
 		has_deposit = atbgp_d_income_crisis_3
+		has_deposit = atbgp_d_income_4
 	}
 }
 
-# 可以接入列强星团的银河星系
+# 可以接入列强星团的银河星系（天选民的星团在原版就是与银河隔绝的，也不连）
 atbgp_link_candidate = {
 	NOT = { has_star_flag = atbgp_cluster }
+	NOT = { has_star_flag = chosen_system }
 }

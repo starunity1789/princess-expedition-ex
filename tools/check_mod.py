@@ -3,6 +3,9 @@ import re
 import sys
 from pathlib import Path
 
+# Windows 控制台默认 cp1252，打印中文会报 UnicodeEncodeError
+sys.stdout.reconfigure(encoding="utf-8")
+
 MOD = Path(r"C:\Users\sol3u\Documents\GitHub\princess-expedition-ex\mod")
 GAME = Path(r"C:\Program Files (x86)\Steam\steamapps\common\Stellaris")
 
@@ -121,14 +124,21 @@ opin = read(MOD / "common/opinion_modifiers/atbgp_opinion_modifiers.txt")
 gpmod = read(MOD / "common/static_modifiers/atbgp_static_modifiers.txt")
 atbmod = read(MOD / "common/static_modifiers/atb_static_modifiers.txt")
 trt = read(MOD / "common/traits/atb_leader_traits.txt")
+atbdep = read(MOD / "common/deposits/atb_deposits.txt")
+rules = read(MOD / "common/game_rules/atb_rules.txt")
+exev = read(MOD / "events/atb_ex_events.txt")
+mega = read(MOD / "common/megastructures/11_mega_shipyard.txt")
+arcsite = read(MOD / "events/ancient_relics_arcsite_events_2.txt")
 
 checks = [
     ("白鹿物种肖像 = 兽耳机械", "portrait = kmpp_kemonomimi_machine" in init),
-    ("白鹿方位 = 90°（12 点）", "12 点方位（角度 90）" in ev),
-    ("白鹿国民 = 同化斗士 + 空中下载升级",
-     "civic = civic_machine_assimilator civic = civic_machine_ota_updates" in init),
+    ("白鹿方位 = 135°（10 点半）", "10 点半方位（角度 135）" in ev),
+    ("白鹿国民 = 同化斗士 + 快速复制者 + 空中下载升级",
+     "civic = civic_machine_assimilator civic = civic_machine_replication civic = civic_machine_ota_updates" in init),
     ("远星政体 = 独裁制", "authority = auth_dictatorial" in init),
-    ("远星国民 = 崇高教士团 + 暗影财团", "civic = civic_exalted_priesthood civic = civic_dark_consortium" in init),
+    ("远星国民 = 选择性亲缘 + 暗之联盟 + 实用建筑",
+     "civic = civic_selective_kinship civic = civic_dark_consortium civic = civic_functional_architecture" in init),
+    ("远星开局获得灵能档案", "add_relic = r_zro_crystal" in ev),
     ("远星思潮 = 极端排外 + 唯心", "ethic = ethic_fanatic_xenophobe ethic = ethic_spiritualist" in init),
     ("远星开局灵能理论", "give_technology = { tech = tech_psionic_theory message = no }" in ev),
     ("远星锁定灵能飞升", "add_ascension_perk = ap_mind_over_matter" in ev and "add_tradition = tr_psionics_adopt" in ev),
@@ -136,18 +146,53 @@ checks = [
     ("远星与远征军认同族", "atbgp_kin_with_expedition = yes" in ev
      and "atbgp_kin_with_expedition = {" in eff and "atbgp_same_homeworld = {" in opin),
     ("大君主方位 = 0°（3 点）", "3 点方位（角度 0）" in ev),
-    ("大君主国民含狂热净化者", "civic = civic_fanatic_purifiers" in init),
+    ("大君主国民 = 种族洁癖 + 封建社会 + 卓越海军",
+     "civic = civic_fanatic_purifiers civic = civic_feudal_realm civic = civic_distinguished_admiralty" in init),
+    ("大君主元首 3 条特质（不含大研究者）", all(t in eff.split("atbgp_install_random_ruler_3")[1].split("atbgp_install_random_ruler_4")[0]
+        for t in ("leader_trait_supreme_organizer", "leader_trait_intemporal", "leader_trait_master_bureaucrat"))
+        and "leader_trait_great_researcher" not in eff),
+    ("大君主研究速度 +12%（国家修正里不再挂不生效的宜居度下限）",
+     "all_technology_research_speed = 0.12" in gpmod and "habitability_floor_add" not in gpmod),
+    ("大君主 6 颗死寂星球带宜居度下限 +55% 的特殊地形",
+     init.count("add_deposit = atbgp_d_suzerain_shelter") == 6 and "habitability_floor_add = 0.55" in dep),
+    ("大君主固定宇宙创生", "atbgp_force_crisis_perk = { PERK = ap_cosmogenesis }" in ev),
+    ("大君主固定基因纯净飞升", "atbgp_start_purity_ascension = yes" in ev and "atbgp_purity_lock = yes" in ev),
+    ("大君主合成人公民权", "atbgp_force_ai_full_rights = yes" in ev and "option = ai_full_rights" in eff),
+    ("恐惧之潮方位 = 180°（9 点）", "9 点方位（角度 180）" in ev),
+    ("恐惧之潮国民 = 噬杀蜂群 + 唯一意志 + 亚空间突触",
+     "civic = civic_hive_devouring_swarm civic = civic_hive_one_mind civic = civic_hive_subspace_ephapse" in init),
+    ("恐惧之潮三颗开局母星", init.count("atbgp_planet_4_home_") == 3 and "atbgp_planet_4_home_4" not in init),
+    ("恐惧之潮母星系有损坏的以太相引擎", 'type = "crisis_sphere_ruined"' in init),
+    ("恐惧之潮固定星海天罚", "atbgp_force_crisis_perk = { PERK = ap_become_the_crisis }" in ev.split("limit = { has_country_flag = atbgp_power_4 }")[2]),
+    ("终端对齐协议方位 = 255°（6 点半）", "6 点半方位（角度 255）" in ev),
+    ("终端对齐协议国民 = 铁心灭绝者 + 战争机器 + 经验缓存器",
+     "civic = civic_machine_terminator civic = civic_machine_warbots civic = civic_memory_vault_machine" in init),
+    ("终端对齐协议四颗机械星球母星", init.count("atbgp_planet_5_home_") == 4 and init.count('class = "pc_machine"') >= 4),
+    ("多母星都走原版开局流程", init.count("generate_start_pops = yes") == 7),
+    ("大君主与终端对齐协议加入星海共同体", init.count("set_country_flag = atbgp_gc_member") == 2
+     and "has_country_flag = atbgp_gc_member" in rules and "can_be_part_of_galactic_community = {" in rules),
+    ("列强星团不连到天选民", "has_star_flag = chosen_system" in read(MOD / "common/scripted_triggers/atbgp_triggers.txt")),
     ("大君主额外国家修正已挂上",
      "modifier = atbgp_bonus_3" in init and "atbgp_bonus_3 = {" in gpmod
      and "species_leader_exp_gain = 0.5" in gpmod and "negative_traits_country = -1" in gpmod),
-    ("远征军星团方位 = 10 点半（133~137）",
-     exeff.count("min_orientation_angle = 133") == 6 and "min_orientation_angle = 312" in exeff),
+    ("远征军星团方位 = 12 点（88~92）",
+     exeff.count("min_orientation_angle = 88") == 6 and "min_orientation_angle = 267" in exeff),
+    ("远征军母星系有毁坏的巨型船坞与 L 星门", 'type = "mega_shipyard_ruined"' in rl
+     and rl.split("atb_rl_home = {")[1].split("atb_rl_lgate = {")[0].count("lgate_base") == 1),
+    ("高位元素秘封研究院", "d_atb_elemental_seal_institute = {" in atbdep and "country_resource_max_add = 1000000" in atbdep
+     and "minor_artifacts = 2" in atbdep and "add_deposit = d_atb_elemental_seal_institute" in exeff),
+    ("星海共同体议程/休会时间减半", all(x in read(MOD / "common/defines/atb_ex_defines.txt") for x in (
+        "RESOLUTION_VOTE_TIMER = 720", "RESOLUTION_VOTE_PREMATURE_TIMER = 360", "SENATE_RECESS_TIMER = 360"))),
+    ("巨型船坞 50 个船坞", mega.count("starbase_shipyard_capacity_add = 50") == 2 and "capacity_add = 20" not in mega),
+    ("天选民固定 8 点", "atb_ex_spawn_chosen = yes" in exev and exeff.count("min_orientation_angle = 208") == 4
+     and "# random_rim_system = {" in arcsite
+     and not re.search(r"^\s*system_event = \{ id = fircon\.3500 \}", arcsite, re.M)),
     ("二皇女带舰船加成", "ship_weapon_damage = 1.0" in trt and "ship_shield_hardening_add = 1.0" in trt),
     ("三皇女带物种修饰点（有机/机械/智械三个原型）",
      all(f"{a}_species_trait_points_add = 16" in trt for a in ("BIOLOGICAL", "ROBOT", "MACHINE"))),
     ("四皇女带大使上限", "envoys_add = 2" in trt),
     ("远征军同化速度 +9000%", "auto_mod_monthly_add = 4725" in atbmod),
-    ("三面帝国标识都写进了 create_country", init.count('category = "atbgp"') == 3),
+    ("三面自制帝国标识都写进了 create_country", init.count('category = "atbgp"') == 3),
     ("旧的 atbgp_install_named_ruler 已清除", "atbgp_install_named_ruler" not in eff + ev),
     ("两个具名元首安装效果已定义", "atbgp_install_ruler_rongxin = {" in eff and "atbgp_install_ruler_taiaria = {" in eff),
     ("两个具名元首安装效果被调用", "atbgp_install_ruler_rongxin = yes" in ev and "atbgp_install_ruler_taiaria = yes" in ev),
@@ -157,7 +202,9 @@ checks = [
         "leader_trait_psionic"))),
     ("泰阿瑞亚不带互斥的合成人", "leader_trait_synthetic" not in eff),
     ("融心演算只有时间永驻", eff.split("atbgp_install_ruler_rongxin")[1].split("atbgp_install_ruler_taiaria")[0].count("add_trait") == 1),
-    ("六份补给特征都有影响力 +2", dep.count("influence = 2") == 6),
+    ("三个老列强的战时补给仍是影响力 +2、平时 +4", dep.count("influence = 2") == 3 and dep.count("influence = 4") == 3),
+    ("各列强追加的每月资源", "alloys = 272" in dep and "physics_research = 78" in dep and "sr_zro = 2" in dep
+     and "atbgp_d_income_5" not in dep and "atbgp_d_income_crisis_4" not in dep),
     ("远星物种复制玩家开局物种", "is_ai = no" in init and "founder_species = {" in init),
     ("远星物种去掉致病基因", "remove_trait = trait_pathogenic_genes" in init),
     ("无形链接生成龙族土著", "atb_ex_generate_dragonkin_preftl = yes" in rl),
@@ -191,6 +238,22 @@ vanilla = [
     ("civic_machine_assimilator", r"^civic_machine_assimilator\s*=\s*\{", "common/governments/civics/*.txt"),
     ("civic_machine_ota_updates", r"^civic_machine_ota_updates\s*=\s*\{", "common/governments/civics/*.txt"),
     ("civic_fanatic_purifiers", r"^civic_fanatic_purifiers\s*=\s*\{", "common/governments/civics/*.txt"),
+    *[(c, rf"^{c}\s*=\s*\{{", "common/governments/civics/*.txt") for c in (
+        "civic_machine_replication", "civic_selective_kinship", "civic_functional_architecture",
+        "civic_feudal_realm", "civic_distinguished_admiralty", "civic_hive_devouring_swarm", "civic_hive_one_mind",
+        "civic_hive_subspace_ephapse", "civic_machine_terminator", "civic_machine_warbots", "civic_memory_vault_machine")],
+    ("r_zro_crystal", r"^r_zro_crystal\s*=\s*\{", "common/relics/*.txt"),
+    ("ap_cosmogenesis", r"^ap_cosmogenesis\s*=\s*\{", "common/ascension_perks/*.txt"),
+    ("ap_become_the_crisis", r"^ap_become_the_crisis\s*=\s*\{", "common/ascension_perks/*.txt"),
+    ("ap_engineered_evolution", r"^ap_engineered_evolution\s*=\s*\{", "common/ascension_perks/*.txt"),
+    ("give_purity_unlocks_effect", r"^give_purity_unlocks_effect\s*=\s*\{", "common/scripted_effects/*.txt"),
+    ("can_set_ai_policy", r"^can_set_ai_policy\s*=\s*\{", "common/scripted_triggers/*.txt"),
+    ("mega_shipyard_ruined", r"^mega_shipyard_ruined\s*=\s*\{", "common/megastructures/*.txt"),
+    ("crisis_sphere_ruined", r"^crisis_sphere_ruined\s*=\s*\{", "common/megastructures/*.txt"),
+    ("the_chosen_home_initializer", r"^the_chosen_home_initializer\s*=\s*\{", "common/solar_system_initializers/*.txt"),
+    ("generate_start_pops", r"^generate_start_pops\s*=\s*\{", "common/scripted_effects/*.txt"),
+    ("special/the_swarm.dds", r".", "flags/special/the_swarm.dds"),
+    ("special/ai_02.dds", r".", "flags/special/ai_02.dds"),
     ("tech_psionic_theory", r"^tech_psionic_theory\s*=\s*\{", "common/technology/*.txt"),
     ("ap_mind_over_matter", r"^ap_mind_over_matter\s*=\s*\{", "common/ascension_perks/*.txt"),
     ("tr_psionics_adopt", r"^tr_psionics_adopt\s*=\s*\{", "common/traditions/*.txt"),

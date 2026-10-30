@@ -77,6 +77,13 @@ colony_event = {
 			add_deposit = d_atb_star_sea_monument
 			add_deposit = d_atb_sensor_array
 		}
+		if = {
+			limit = {
+				NOT = { has_planet_flag = atb_fortress_institute_added }
+			}
+			set_planet_flag = atb_fortress_institute_added
+			add_deposit = d_atb_elemental_seal_institute
+		}
 	}
 }
 
@@ -418,6 +425,15 @@ country_event = {
 			add_deposit = d_atb_fortress_core
 			add_deposit = d_atb_star_sea_monument
 			add_deposit = d_atb_sensor_array
+		}
+		# 2.5 新增的高位元素秘封研究院
+		every_owned_planet = {
+			limit = {
+				has_planet_flag = atb_origin_fortress
+				NOT = { has_planet_flag = atb_fortress_institute_added }
+			}
+			set_planet_flag = atb_fortress_institute_added
+			add_deposit = d_atb_elemental_seal_institute
 		}
 		atb_start_luminary = yes
 		# 合成黎明（原版合成繁衍事件链的终章 machine_age.3315）之后，解锁远征军体制

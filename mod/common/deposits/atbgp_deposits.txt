@@ -11,14 +11,16 @@ atbgp_d_income_1 = {
 			minerals = 222
 			food = 222
 			consumer_goods = 222
-			alloys = 222
+			alloys = 272
 			volatile_motes = 22
 			exotic_gases = 22
 			rare_crystals = 22
-			influence = 2
-			physics_research = 45
-			society_research = 45
-			engineering_research = 45
+			influence = 4
+			physics_research = 78
+			society_research = 78
+			engineering_research = 78
+			sr_dark_matter = 20
+			nanites = 1
 		}
 	}
 	drop_weight = { weight = 0 }
@@ -59,14 +61,17 @@ atbgp_d_income_2 = {
 			minerals = 222
 			food = 222
 			consumer_goods = 222
-			alloys = 222
+			alloys = 255
 			volatile_motes = 22
 			exotic_gases = 22
 			rare_crystals = 22
-			influence = 2
-			physics_research = 42
-			society_research = 42
-			engineering_research = 42
+			influence = 4
+			physics_research = 75
+			society_research = 75
+			engineering_research = 75
+			sr_dark_matter = 20
+			nanites = 1
+			sr_zro = 2
 		}
 	}
 	drop_weight = { weight = 0 }
@@ -107,14 +112,16 @@ atbgp_d_income_3 = {
 			minerals = 222
 			food = 222
 			consumer_goods = 222
-			alloys = 222
+			alloys = 255
 			volatile_motes = 22
 			exotic_gases = 22
 			rare_crystals = 22
-			influence = 2
-			physics_research = 56
-			society_research = 56
-			engineering_research = 56
+			influence = 4
+			physics_research = 89
+			society_research = 89
+			engineering_research = 89
+			sr_dark_matter = 20
+			nanites = 1
 		}
 	}
 	drop_weight = { weight = 0 }
@@ -139,6 +146,25 @@ atbgp_d_income_crisis_3 = {
 			physics_research = 606
 			society_research = 606
 			engineering_research = 606
+		}
+	}
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_income_4 = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_station_reactor
+	resources = {
+		category = planet_deposits
+		produces = {
+			alloys = 22
+			physics_research = 44
+			society_research = 44
+			engineering_research = 44
+			influence = 1
+			sr_dark_matter = 33
+			nanites = 1
 		}
 	}
 	drop_weight = { weight = 0 }
@@ -192,6 +218,16 @@ atbgp_d_unity_22 = {
 	}
 	station = shipclass_research_station
 	is_for_colonizable = no
+	drop_weight = { weight = 0 }
+}
+
+atbgp_d_suzerain_shelter = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_bunker_door
+	planet_modifier = {
+		habitability_floor_add = 0.55
+	}
 	drop_weight = { weight = 0 }
 }
 

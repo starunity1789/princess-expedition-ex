@@ -283,7 +283,7 @@ atbgp_install_ruler_taiaria = {
 }
 
 # 国家作用域：随机名字的 10 级元首（大君主同盟领地）
-atbgp_install_random_ruler = {
+atbgp_install_random_ruler_3 = {
 	if = {
 		limit = { exists = ruler }
 		ruler = { set_leader_flag = atbgp_replaced_ruler }
@@ -293,7 +293,64 @@ atbgp_install_random_ruler = {
 		species = root.species
 		name = random
 		skill = 10
-		effect = { save_event_target_as = atbgp_new_ruler }
+		effect = {
+			save_event_target_as = atbgp_new_ruler
+			# 开局后统治者不能获得非议会特质，先给 1 天豁免标记再加
+			set_timed_leader_flag = {
+				flag = ignore_autocracy_ruler_trait_restriction
+				days = 1
+			}
+			add_trait = {
+				trait = leader_trait_supreme_organizer
+				show_message = no
+			}
+			add_trait = {
+				trait = leader_trait_intemporal
+				show_message = no
+			}
+			add_trait = {
+				trait = leader_trait_master_bureaucrat
+				show_message = no
+			}
+		}
+	}
+	set_leader = event_target:atbgp_new_ruler
+	atbgp_remove_replaced_ruler = yes
+}
+
+# 国家作用域：随机名字的 10 级元首（恐惧之潮）
+atbgp_install_random_ruler_4 = {
+	if = {
+		limit = { exists = ruler }
+		ruler = { set_leader_flag = atbgp_replaced_ruler }
+	}
+	create_leader = {
+		class = official
+		species = root.species
+		name = random
+		skill = 10
+		effect = {
+			save_event_target_as = atbgp_new_ruler
+		}
+	}
+	set_leader = event_target:atbgp_new_ruler
+	atbgp_remove_replaced_ruler = yes
+}
+
+# 国家作用域：随机名字的 10 级元首（终端对齐协议）
+atbgp_install_random_ruler_5 = {
+	if = {
+		limit = { exists = ruler }
+		ruler = { set_leader_flag = atbgp_replaced_ruler }
+	}
+	create_leader = {
+		class = official
+		species = root.species
+		name = random
+		skill = 10
+		effect = {
+			save_event_target_as = atbgp_new_ruler
+		}
 	}
 	set_leader = event_target:atbgp_new_ruler
 	atbgp_remove_replaced_ruler = yes
@@ -329,6 +386,18 @@ atbgp_maintain_income = {
 			remove_deposit = atbgp_d_income_crisis_$N$
 		}
 		capital_scope = { add_deposit = atbgp_d_income_crisis_$N$ }
+	}
+}
+
+# 国家作用域：没有战时补给的列强，只维护一份补给特征
+atbgp_maintain_income_basic = {
+	if = {
+		limit = { capital_scope = { NOT = { has_deposit = atbgp_d_income_$N$ } } }
+		every_galaxy_planet = {
+			limit = { has_deposit = atbgp_d_income_$N$ }
+			remove_deposit = atbgp_d_income_$N$
+		}
+		capital_scope = { add_deposit = atbgp_d_income_$N$ }
 	}
 }
 
@@ -379,26 +448,116 @@ atbgp_clear_foreign_income = {
 		remove_deposit = atbgp_d_income_3
 		remove_deposit = atbgp_d_income_crisis_3
 	}
+	if = {
+		limit = {
+			OR = {
+				has_deposit = atbgp_d_income_4
+			}
+			NAND = {
+				exists = owner
+				owner = { has_country_flag = atbgp_power_4 }
+				is_capital = yes
+			}
+		}
+		remove_deposit = atbgp_d_income_4
+	}
 }
 
-# 国家作用域：已选 11 个飞升时直接补上星海天罚；拥有星海天罚就加舰队加成
-atbgp_check_become_the_crisis = {
+# 国家作用域：拥有 3 个飞升（原版危机飞升的最低要求）后立刻补上固定的危机飞升。
+# 原版的危机飞升都要求先有 3 个飞升，所以 AI 来不及先选别的危机路线（星海天罚与宇宙创生互斥）。
+atbgp_force_crisis_perk = {
 	if = {
 		limit = {
-			num_ascension_perks >= 11
-			NOT = { has_ascension_perk = ap_become_the_crisis }
+			num_ascension_perks >= 3
+			NOT = { has_ascension_perk = $PERK$ }
+			is_player_crisis = no
 		}
-		add_ascension_perk = ap_become_the_crisis
+		add_ascension_perk = $PERK$
 	}
+}
+
+# 国家作用域：拥有固定的危机飞升后获得舰队加成
+atbgp_crisis_perk_bonus = {
 	if = {
 		limit = {
-			has_ascension_perk = ap_become_the_crisis
+			has_ascension_perk = $PERK$
 			NOT = { has_modifier = atbgp_btc_bonus }
 		}
 		add_modifier = {
 			modifier = atbgp_btc_bonus
 			days = -1
 		}
+	}
+}
+
+# 国家作用域：开局固定走基因飞升，并先拿到纯净路线的第一级解锁
+# 基因重塑的 on_enabled 会照原版开启基因飞升局势；局势结束时（bio.20）只有拿到解锁的传统才能选
+atbgp_start_purity_ascension = {
+	add_ascension_perk = ap_engineered_evolution
+	give_purity_unlocks_effect = yes
+}
+
+# 国家作用域（每月）：只留纯净一条路——清掉克隆、变异两条路线的解锁，
+# 这样基因飞升局势结束时只能选纯净传统
+atbgp_purity_lock = {
+	remove_country_flag = cloning_unlock_level_1
+	remove_country_flag = cloning_unlock_level_2
+	remove_country_flag = cloning_unlock_level_3
+	remove_country_flag = mutation_unlock_level_1
+	remove_country_flag = mutation_unlock_level_2
+	remove_country_flag = mutation_unlock_level_3
+	if = {
+		limit = { has_modifier = cloning_unlock_level_1 }
+		remove_modifier = cloning_unlock_level_1
+	}
+	if = {
+		limit = { has_modifier = cloning_unlock_level_2 }
+		remove_modifier = cloning_unlock_level_2
+	}
+	if = {
+		limit = { has_modifier = mutation_unlock_level_1 }
+		remove_modifier = mutation_unlock_level_1
+	}
+	if = {
+		limit = { has_modifier = mutation_unlock_level_2 }
+		remove_modifier = mutation_unlock_level_2
+	}
+	if = {
+		limit = {
+			has_ascension_perk = ap_engineered_evolution
+			NOT = { has_country_flag = purity_unlock_level_1 }
+		}
+		give_purity_unlocks_effect = yes
+	}
+}
+
+# 国家作用域（每月）：人工智能政策出现后固定为公民权
+atbgp_force_ai_full_rights = {
+	if = {
+		limit = {
+			can_set_ai_policy = yes
+			NOT = { has_policy_flag = ai_full_rights }
+		}
+		set_policy = {
+			policy = artificial_intelligence_policy
+			option = ai_full_rights
+			cooldown = no
+		}
+	}
+}
+
+# 国家作用域（每月）：星海共同体成立后加入。
+# 原版禁止灭绝政体加入（game_rules 的 can_be_part_of_galactic_community），本 MOD 在 atb_rules.txt
+# 里对带 atbgp_gc_member 标记的国家开了例外。被宣布为危机后（星海天罚第 5 级）照原版不再加入。
+atbgp_join_galactic_community = {
+	if = {
+		limit = {
+			is_galactic_community_formed = yes
+			is_galactic_community_member = no
+			has_been_declared_crisis = no
+			NOT = { has_country_flag = malevolent_aura_empire }
+		}
+		add_to_galactic_community_no_message = yes
 	}
 }
 

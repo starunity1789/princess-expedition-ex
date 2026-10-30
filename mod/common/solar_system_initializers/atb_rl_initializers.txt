@@ -8,7 +8,7 @@
 atb_rl_home = {
 	name = "atb_system_origin"
 	class = "sc_g"
-	flags = { atb_rl_cluster atbgp_cluster empire_home_system atb_origin_system }
+	flags = { atb_rl_cluster atbgp_cluster empire_home_system atb_origin_system atb_lgate_system }
 
 	init_effect = {
 		save_global_event_target_as = atb_rl_sys_home
@@ -18,6 +18,24 @@ atb_rl_home = {
 			size = "starbase_starport"
 			module = shipyard
 			building = crew_quarters
+		}
+		# 2.5：母星系的两座巨构——毁坏的巨型船坞（可修复）与 L 星门
+		spawn_megastructure = {
+			type = "mega_shipyard_ruined"
+			orbit_angle = 45
+			orbit_distance = 60
+		}
+		if = {
+			limit = {
+				has_distar = yes
+				lgate_enabled = yes
+			}
+			set_star_flag = lgate
+			spawn_megastructure = {
+				type = lgate_base
+				orbit_angle = 225
+				orbit_distance = 45
+			}
 		}
 	}
 

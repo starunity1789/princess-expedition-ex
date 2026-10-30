@@ -1,3 +1,52 @@
+# 覆盖原版 can_be_part_of_galactic_community（common/game_rules/00_rules.txt，4.5.2）。
+# 与原版唯一的区别：带 atbgp_gc_member 标记的保底列强（大君主同盟领地、终端对齐协议）不受「灭绝政体不能加入」的限制。
+# 被宣布为危机的限制照旧，所以星海天罚升到第 5 级后仍会照原版被踢出、且不能再加入。
+# This = country
+can_be_part_of_galactic_community = {
+	custom_tooltip = {
+		fail_text = "community_default_failtext"
+		OR = {
+			is_country_type = default
+			AND = {
+				is_country_type = awakened_fallen_empire
+				has_country_flag = fallen_empire_hive_control
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = "community_homicidal_failtext"
+		OR = {
+			# 皇女的远征军EX：保底列强的例外
+			has_country_flag = atbgp_gc_member
+			NOR = {
+				has_civic = civic_fanatic_purifiers
+				has_civic = civic_hive_devouring_swarm
+				has_civic = civic_machine_terminator
+				has_menace_perk = menp_behemoth_ever_hungry
+				has_civic = civic_scorched_earth
+				has_civic = civic_hive_scorched_earth
+				has_country_flag = heir_of_the_khan_khan
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		has_been_declared_crisis = no
+		NOT = { has_country_flag = malevolent_aura_empire }
+	}
+	custom_tooltip = {
+		fail_text = "community_declared_crisis_failtext"
+		#fail_text = "community_overlord_declared_crisis_failtext"
+		OR = {
+			NOT = { exists = overlord }
+			overlord = {
+				has_been_declared_crisis = no
+				NOT = { has_country_flag = malevolent_aura_empire }
+			}
+		}
+	}
+}
+
 # 覆盖原版 can_dismiss_leader（common/game_rules/00_rules.txt，4.5.2），只在开头加了皇女不可解雇的判断，其余与原版一致。
 # this = leader
 can_dismiss_leader = {

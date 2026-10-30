@@ -18,16 +18,14 @@ event = {
 			atb_ex_relocate_expedition = yes
 		}
 
-		# 每局必定生成天选民：原版只有 1/4 概率，没刷出来就补一次（原版同一个生成事件）
+		# 每局必定生成天选民，固定在 8 点方向：原版 1/4 概率的随机生成已在覆盖文件里关掉，
+		# 这里用原版同一个初始化器在固定方位生成
 		if = {
 			limit = {
 				has_first_contact_dlc = yes
 				NOT = { any_system = { has_star_flag = chosen_system } }
 			}
-			random_rim_system = {
-				limit = { is_mindwardens_story_system = no }
-				system_event = { id = fircon.3500 }
-			}
+			atb_ex_spawn_chosen = yes
 		}
 
 		# 每局必定生成传奇领袖凯德斯（瓦格罗之子嗣）的坠毁点：原版银河生成时约 1/4 概率出现。

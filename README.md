@@ -6,7 +6,7 @@
 
 ## English
 
-A Stellaris (4.5.*) mod: the new origin **The Princesses' Expedition**, plus a rim cluster for the expedition, three guaranteed great powers and a set of galaxy rules.
+A Stellaris (4.5.*) mod: the new origin **The Princesses' Expedition**, plus a rim cluster for the expedition, five guaranteed great powers and a set of galaxy rules.
 
 - Steam Workshop: [The Princesses' Expedition EX](https://steamcommunity.com/sharedfiles/filedetails/?id=3821602893)
 - Setting: [The Stargazer Project](https://github.com/starunity1789/StargazerPR)
@@ -17,7 +17,7 @@ The four princesses come from the **Empire of AllLife Chance-Born** (CNP8) on th
 
 This mod takes place **before the Dim King disappeared**. The Empire achieved its technological breakthrough alone, yet its homeworld remained divided. The Emperor stayed behind, and his four daughters took the mobile fortress "Origin Fortress" to the stars to found the Empire anew. Their colonists fell to an incurable illness and can no longer bear children, so the princesses lead their people down the path of synthetic fertility.
 
-The three great powers added by EX are tied to the Empire too: the Burning White Stag Legion is a machine army built by the Elves, the Empire's allies; the Far Star Alliance is made up of other elites and nations from the Empire's homeworld; and the Grand Suzerain Allied Fief is merely a rural fief of a feudal civilization spread across the universe.
+The first three great powers added by EX are tied to the Empire too: the Burning White Stag Legion is a machine army built by the Elves, the Empire's allies; the Far Star Alliance is made up of other elites and nations from the Empire's homeworld; and the Grand Suzerain Allied Fief is merely a rural fief of a feudal civilization spread across the universe. Since 2.5 two genocidal empires join them: the hive Tide of Dread and the machine Terminal Alignment Protocol.
 
 ### The four princesses
 
@@ -38,9 +38,14 @@ The characters - their personalities, looks and every detail - were designed by 
 - Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors", the Dreadnoughts tech, and the relic "Seal of the Princess Guard"
 
 **New in EX**
-- **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 10:30 (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane
-- **Three guaranteed great powers**: Burning White Stag Legion (12 o'clock), Far Star Alliance (5 o'clock) and Grand Suzerain Allied Fief (3 o'clock), each with its own cluster beyond the rim, a fixed empire flag and a fixed monthly supply
-- **Galaxy rules**: The Chosen and the crash site of Keides, Scion of Vagros always spawn; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
+- **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 12 o'clock (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane. Origin's Reach itself holds a second L-Gate and a Ruined Mega Shipyard, and the capital gains the High Elemental Sealing Institute (+1,000,000 storage, +2 minor artifacts per month)
+- **Five guaranteed great powers**, each beyond the rim with a fixed empire flag and a fixed monthly supply:
+  - Burning White Stag Legion (10:30): Driven Assimilators, Rapid Replicators, OTA Updates
+  - Far Star Alliance (5 o'clock): Selective Kinship, Dark Consortium, Functional Architecture; Psionic Ascension; starts with the Psionic Archive relic
+  - Grand Suzerain Allied Fief (3 o'clock): Fanatic Purifiers, Feudal Realm, Distinguished Admiralty; +12% research speed; its six tomb worlds carry a +55% habitability floor; Genetic Ascension (Purity); AI full rights; always takes Cosmogenesis; joins the Galactic Community
+  - Tide of Dread (9 o'clock, new): Devouring Swarm, One Mind, Subspace Ephapse; three start-sized homeworlds and a Ruined Aetherophasic Engine; always Becomes the Crisis
+  - Terminal Alignment Protocol (6:30, new): Determined Exterminators, Warbots, Experience Cache; four start-sized machine worlds; always Becomes the Crisis; joins the Galactic Community until Crisis level 5
+- **Galaxy rules**: The Chosen (always at 8 o'clock) and the crash site of Keides, Scion of Vagros always spawn; Mega Shipyards have 50 shipyard slots; Galactic Community sessions and recesses take half as long; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
 - **Bundled portraits**: the Ancient Dragonkin and Kemonomimi animated portrait packs are merged in - disable the standalone packs if you are subscribed to them
 
 Full details: [workshop description (English)](docs/workshop_description_en.txt).
@@ -58,13 +63,13 @@ docs/     Workshop descriptions (English and Chinese)
 
 ### Required DLC
 
-The Machine Age and Ancient Relics (origin); Distant Stars (L-Gate); First Contact (The Chosen); Synthetic Dawn, MegaCorp, Astral Planes, Necroids and Nemesis (great powers); Galactic Paragons recommended.
+The Machine Age and Ancient Relics (origin); Distant Stars (L-Gate); First Contact (The Chosen); Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis and BioGenesis (great powers); Galactic Paragons recommended.
 
 ---
 
 ## 中文
 
-群星（Stellaris 4.5.*）MOD。新起源「皇女的远征军」，外加银河边缘的远征军星团、三个保底列强和一组银河规则。
+群星（Stellaris 4.5.*）MOD。新起源「皇女的远征军」，外加银河边缘的远征军星团、五个保底列强和一组银河规则。
 
 - Steam 创意工坊：[皇女的远征军EX](https://steamcommunity.com/sharedfiles/filedetails/?id=3821602893)
 - 世界观：[观星者计划 / The Stargazer Project](https://github.com/starunity1789/StargazerPR)
@@ -75,7 +80,7 @@ The Machine Age and Ancient Relics (origin); Distant Stars (L-Gate); First Conta
 
 本 MOD 的故事发生在**黯王失踪之前**：帝国独自突破了高等科技，但母星依旧四分五裂。皇帝留守母星，四位皇女驾驶移动要塞「起源要塞」远赴群星，为帝国开辟新的根基。随行的殖民者水土不服、身患绝症，再也无法繁衍，皇女们只能带领族人走上合成繁衍之路。
 
-EX 新增的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友精灵族制造的机器人军团，远星同盟组织由帝国母星上的其他精英与国家组成，大君主同盟领地则是一个遍布宇宙的高等封建文明的乡村领地。
+EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友精灵族制造的机器人军团，远星同盟组织由帝国母星上的其他精英与国家组成，大君主同盟领地则是一个遍布宇宙的高等封建文明的乡村领地。2.5 又加入了两个灭绝政体：虫巢「恐惧之潮」与机械智能「终端对齐协议」。
 
 ### 四位皇女
 
@@ -96,9 +101,14 @@ EX 新增的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - 决议「确立远征军体制」「探索先驱者文明的秘密」，科技「无畏舰」，遗珍「皇女亲卫队印章」
 
 **EX 新增**
-- **边缘星团**：开局远征军整体搬到银河 10 点半方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河
-- **三个保底列强**：燃烧白鹿军团（12 点）、远星同盟组织（5 点）、大君主同盟领地（3 点），各在银河边缘外有自己的星团、固定的帝国标识和固定补给
-- **银河规则**：必定生成天选民和凯德斯（瓦格罗之子嗣）的坠毁点；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
+- **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
+- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给：
+  - 燃烧白鹿军团（10 点半）：同化斗士、快速复制者、空中下载升级
+  - 远星同盟组织（5 点）：选择性亲缘、暗之联盟、实用建筑；灵能飞升；开局获得遗珍「灵能档案」
+  - 大君主同盟领地（3 点）：种族洁癖、封建社会、卓越海军；研究速度 +12%；星团里 6 颗死寂星球的宜居度下限 +55%；基因飞升（纯净）；人工智能公民权；必选宇宙创生；加入星海共同体
+  - 恐惧之潮（9 点，新增）：噬杀蜂群、唯一意志、亚空间突触；三颗开局规格的母星，母星系有一座损坏的以太相引擎；必选星海天罚
+  - 终端对齐协议（6 点半，新增）：铁心灭绝者、战争机器、经验缓存器；四颗开局规格的机械星球母星；必选星海天罚；加入星海共同体（星海天罚第 5 级时照原版被踢出）
+- **银河规则**：必定生成天选民（固定在 8 点）和凯德斯（瓦格罗之子嗣）的坠毁点；巨型船坞的船坞数量改为 50；星海共同体的议程与休会时间减半；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
 - **内置肖像包**：已合并 Ancient Dragonkin（龙族）与 Kemonomimi（兽耳）两套动态肖像包——如果还订阅着这两个独立包，请停用它们
 
 完整说明见工坊简介原文：[中文](docs/workshop_description_zh.txt) / [English](docs/workshop_description_en.txt)。
@@ -141,7 +151,7 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 | 前缀 | 内容 |
 |---|---|
 | `atb_` | 起源、四位皇女、搬家后的星团 |
-| `atbgp_` | 三个保底列强（全部由 `tools/gen_great_powers.py` 生成，不要手改） |
+| `atbgp_` | 五个保底列强（全部由 `tools/gen_great_powers.py` 生成，不要手改） |
 | `atb_ex_` | 银河规则、天选民、凯德斯、搬家流程 |
 | `adpp_` | 合并进来的 Ancient Dragonkin 肖像包，原样保留，不要改 |
 | `kmpp_` | 合并进来的 Kemonomimi 肖像包，原样保留，不要改 |
@@ -166,6 +176,9 @@ python tools/make_flags.py art/great_power_flags mod
 # 把原版所有能量盾和装甲的数值翻倍（倍率可选，默认 2）
 python tools/gen_double_defenses.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
+# 重新生成巨型船坞（50 个船坞）与关掉原版天选民随机生成的两份覆盖文件
+python tools/gen_vanilla_patches.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
+
 # 把两套内置肖像包挂进原版的 portrait_sets（覆盖原版同名文件）
 python tools/gen_portrait_sets.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
@@ -182,6 +195,9 @@ python tools/check_mod.py
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 - `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
+- `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成，跑 `gen_vanilla_patches.py` 重做即可）
+- `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时，原版改了数值时对照调整）
+- `common/game_rules/atb_rules.txt` 里的 `can_be_part_of_galactic_community`、`can_dismiss_leader`（原版同名规则的副本）
 - `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）
 
 ### 发布到工坊
@@ -237,4 +253,4 @@ python tools/check_mod.py
 
 ### 需要的 DLC
 
-机械纪元、远古遗珍（起源必需）；远星（L 星门）；首次接触（天选民）；合成黎明、巨企、星界风云、死灵物种包、复仇女神（三个列强）；银河英杰（推荐）。
+机械纪元、远古遗珍（起源必需）；远星（L 星门）；首次接触（天选民）；合成黎明、巨企、星界风云、死灵物种包、复仇女神、生物创世（列强）；银河英杰（推荐）。

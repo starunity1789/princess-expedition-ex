@@ -42,6 +42,28 @@ d_atb_star_sea_monument = {
 	}
 }
 
+# 高位元素秘封研究院：帝国储存上限 +1000000，每月文物 +2
+d_atb_elemental_seal_institute = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+	icon = d_ancient_vault
+
+	resources = {
+		category = planet_deposits
+		produces = {
+			minor_artifacts = 2
+		}
+	}
+
+	country_modifier = {
+		country_resource_max_add = 1000000
+	}
+
+	drop_weight = {
+		weight = 0
+	}
+}
+
 # 起源要塞星海探测阵列：探测范围 +12
 d_atb_sensor_array = {
 	is_for_colonizable = yes

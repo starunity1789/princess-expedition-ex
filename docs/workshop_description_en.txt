@@ -1,34 +1,25 @@
 [h1]The Princesses' Expedition EX[/h1]
 
-The homeworld stayed divided, so the Emperor remained behind and his four daughters took the mobile fortress "Origin Fortress" to the distant Origin's Reach to found the Empire anew. Their colonists fell to an incurable illness and can no longer bear children - so the princesses lead their people down the path of synthetic fertility.
+The Emperor stays behind on a divided homeworld while his four daughters take the mobile fortress "Origin Fortress" to the stars. Their people fall to an incurable illness and can no longer bear children, so the princesses lead them down the path of synthetic fertility.
 
 Setting: [url=https://github.com/starunity1789/StargazerPR]The Stargazer Project[/url]. [b]Requires a new game.[/b]
 
 [h2]Origin: The Princesses' Expedition[/h2]
 [list]
-[*] Includes every mechanic of vanilla [b]Synthetic Fertility[/b]; Synthetic Ascension and Dictatorial only
-[*] Capital is the [b]Origin Fortress[/b], a size-25 mobile habitat at 100% habitability
-[*] The [b]four princesses[/b] start as Ruler and Councilors with custom portraits - immortal, no upkeep, cannot be dismissed
-[*] Relic [b]Seal of the Princess Guard[/b], the [b]Dreadnoughts[/b] tech and two unique decisions
-[*] The L-Cluster always ends with the Gray Tempest, but Gray can always be found
+[*] Every mechanic of vanilla [b]Synthetic Fertility[/b]; Synthetic Ascension and Dictatorial only
+[*] Capital is a size-25 mobile fortress; the [b]four princesses[/b] serve as Ruler and Councilors - immortal, cannot be dismissed
+[*] Starts in its own cluster beyond the rim at 12 o'clock, with an L-Gate and a Ruined Mega Shipyard in the home system
 [/list]
 
-[h2]New in EX[/h2]
+[h2]Galaxy[/h2]
 [list]
-[*] [b]Rim cluster[/b]: the expedition moves to 7 systems beyond the rim at 2 o'clock, joined to the galaxy by a single hyperlane
-[*] [b]Three guaranteed great powers[/b]: Burning White Stag Legion (12 o'clock), Far Star Alliance (5 o'clock) and Grand Suzerain Allied Fief (9 o'clock), each with a fixed flag, a named ruler and a monthly supply
-[*] [b]Galaxy rules[/b]: The Chosen and the Keides crash site always spawn; +100K storage; non-bio ship hull doubled; [b]every vanilla shield and armor value doubled[/b]
+[*] [b]Five guaranteed great powers[/b]: Burning White Stag Legion, Far Star Alliance, Grand Suzerain Allied Fief, and the genocidal Tide of Dread and Terminal Alignment Protocol
+[*] The Chosen and the Keides crash site always spawn; Mega Shipyards have 50 slots; Galactic Community sessions and recesses take half as long
+[*] Vanilla shields, armor and non-bio ship hull doubled; +100K storage
 [/list]
 
-[h2]Required DLC[/h2]
-The Machine Age and Ancient Relics (for the origin); Distant Stars, First Contact, Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis; Galactic Paragons recommended.
-
-[h2]Compatibility[/h2]
-[list]
-[*] Stellaris 4.5.*
-[*] Bundles the Ancient Dragonkin and Kemonomimi portrait packs - [b]disable those if you are subscribed[/b]
-[*] Fully overrides vanilla 00_authorities.txt, 00_living_standards.txt, 00_portrait_sets.txt and 02_scripted_variables_component_cost.txt, plus the game rule can_dismiss_leader and the council-portrait hologram shader
-[/list]
+[h2]Requirements[/h2]
+Stellaris 4.5.*; The Machine Age and Ancient Relics (for the origin); the great powers and events also use Distant Stars, First Contact, Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis and BioGenesis. Bundles the Ancient Dragonkin and Kemonomimi portrait packs - [b]disable those if you are subscribed[/b]. Fully overrides several vanilla files, so it may conflict with mods that change the same files.
 
 ------------------------------------------------------------
 [b]中文玩家：[/b]把 Steam 切换为简体中文即可看到中文简介。
