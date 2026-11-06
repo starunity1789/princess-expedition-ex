@@ -36,6 +36,8 @@ The characters - their personalities, looks and every detail - were designed by 
 - Includes every mechanic of vanilla Synthetic Fertility; Synthetic Ascension only
 - Capital: the Origin Fortress, a size-25 giant mobile habitat; the four princesses serve as Ruler and Councilors
 - Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors", the Dreadnoughts tech, and the relic "Seal of the Princess Guard"
+- **Name list "苍神缘起帝国" (AllLife Chance-Born)**: 24 clans with three-part names "clan=name=epithet" (2,304 in all), dedicated ship and class names for every vanilla hull, fleets and armies numbered as "帝国第N舰队/军团"; selectable by any empire, shown in Chinese in all ten UI languages
+- **Preset empire "Empire of AllLife Chance-Born"**: this origin with the name list above, Fanatic Authoritarian and Materialist, Philosopher King and Technocracy - pick it directly on the empire selection screen
 
 **New in EX**
 - **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 12 o'clock (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane. Origin's Reach itself holds a second L-Gate and a Ruined Mega Shipyard, and the capital gains the High Elemental Sealing Institute (+1,000,000 storage, +2 minor artifacts per month)
@@ -54,9 +56,9 @@ Full details: [workshop description (English)](docs/workshop_description_en.txt)
 
 ```
 mod/      the mod itself (this folder is what gets uploaded to the Workshop)
-tools/    generator scripts (Python 3 + Pillow)
+tools/    generator scripts (Python 3 + Pillow) and the name-list source data
 art/      portraits, empire flag logos, cover and relic artwork
-docs/     Workshop descriptions (English and Chinese)
+docs/     Workshop descriptions (English and Chinese) and the name-list overview
 ```
 
 `mod/` is linked into the game's mod folder with a directory junction, so `.git` never reaches the Workshop. See the Chinese section below for development, testing and publishing notes.
@@ -99,6 +101,8 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - 融合原版合成繁衍的全部机制，只能走机械飞升
 - 首都是规模 25 的超大型移动居住站「起源要塞」，四位皇女担任统治者和议会要职
 - 决议「确立远征军体制」「探索先驱者文明的秘密」，科技「无畏舰」，遗珍「皇女亲卫队印章」
+- **名称集「苍神缘起帝国」**：24 个部落姓，人名为「部落姓=个人名=长名」（共 2304 个）；原版每种舰体都有专属舰名与舰级，舰队、陆军编号为「帝国第N舰队/军团」。任何帝国都能选用，10 种界面语言都显示中文
+- **预设帝国「苍神缘起帝国」**：皇女的远征军起源 + 上面的名称集，狂热威权 + 唯物，哲人王 + 技术官僚，开局界面直接可选
 
 **EX 新增**
 - **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
@@ -117,9 +121,9 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 ```
 mod/      MOD 本体（上传工坊的就是这个文件夹）
-tools/    生成脚本
+tools/    生成脚本，以及名称集的源数据 cgen_names_source.json
 art/      立绘、列强帝国标识 LOGO、封面、遗珍原图
-docs/     工坊简介原文（中文、英文各一份）
+docs/     工坊简介原文（中文、英文各一份），名称集总览与全部人名
 ```
 
 `mod/` 通过目录联接（junction）挂到游戏的 MOD 目录：
@@ -155,6 +159,7 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 | `atb_ex_` | 银河规则、天选民、凯德斯、搬家流程 |
 | `adpp_` | 合并进来的 Ancient Dragonkin 肖像包，原样保留，不要改 |
 | `kmpp_` | 合并进来的 Kemonomimi 肖像包，原样保留，不要改 |
+| `cgen_` / `CGEN_` | 名称集「苍神缘起帝国」（全部由 `tools/gen_names.py` 生成，不要手改；2.6 起由独立 MOD「苍神缘起帝国·名称集 0.1.0」并入） |
 
 ### 开发
 
@@ -181,6 +186,9 @@ python tools/gen_vanilla_patches.py "C:\Program Files (x86)\Steam\steamapps\comm
 
 # 把两套内置肖像包挂进原版的 portrait_sets（覆盖原版同名文件）
 python tools/gen_portrait_sets.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
+
+# 重新生成名称集「苍神缘起帝国」（改名字改 tools/cgen_names_source.json）
+python tools/gen_names.py mod docs
 
 # 静态自检：括号配对、本地化格式、贴图引用、原版 ID、本次改动点
 python tools/check_mod.py

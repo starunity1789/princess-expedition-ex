@@ -1,0 +1,75 @@
+# 皇女的远征军EX：预设帝国「苍神缘起帝国」
+# 起源固定为皇女的远征军，名称集固定为内置的「苍神缘起帝国」（common/name_lists/00_cgen_azure_genesis.txt）。
+# 只给玩家选，AI 不会随机生成（spawn_enabled = no；起源本身也是全银河限一个）。
+# 统治者开局会被第一皇女菲莉若雅替换（atb.3），这里的 ruler 只是开局占位。
+# 物种点数：默认 2 + 致病基因 1 = 3，聪慧 2 + 天生工程师 1。思潮点数：狂热威权 2 + 唯物 1。
+
+atb_cangshen_empire = {
+	name = "EMPIRE_DESIGN_atb_cangshen_empire"
+	adjective = "PRESCRIPTED_adjective_atb_cangshen_empire"
+	spawn_enabled = no
+	ignore_portrait_duplication = yes
+
+	playable = atb_preset_playable
+
+	ship_prefix = "PRESCRIPTED_ship_prefix_atb_cangshen_empire"
+
+	species = {
+		class = "HUM"
+		portrait = "human"
+		name = "PRESCRIPTED_species_name_atb_cangshen_empire"
+		plural = "PRESCRIPTED_species_plural_atb_cangshen_empire"
+		adjective = "PRESCRIPTED_species_adjective_atb_cangshen_empire"
+		name_list = "CGEN_AZURE_GENESIS"
+		trait = "trait_organic"
+		trait = "trait_intelligent"
+		trait = "trait_natural_engineers"
+		trait = "trait_pathogenic_genes"
+	}
+
+	# 哲人王威权：狂热威权 + 唯物；独裁制（起源要求）+ 哲人王 + 技术官僚
+	ethic = "ethic_fanatic_authoritarian"
+	ethic = "ethic_materialist"
+	authority = "auth_dictatorial"
+	# 预设帝国必须写明政体，且要与游戏按权重算出来的一致：技术官僚（国民理念权重最高）+ 独裁制 = 技术独裁
+	government = "gov_technocratic_dictatorship"
+	civics = { "civic_philosopher_king" "civic_technocracy" }
+	origin = "origin_atb_princess_expedition"
+
+	# planet_class 是物种的偏好星球，不能写起源要塞（会被当成物种特质 trait_pc_atb_fortress_preference，判为无效）。
+	# 母星和母星系由起源自己指定（starting_colony = pc_atb_fortress，initializers = atb_origin_system），initializer 留空
+	planet_name = "atb_planet_fortress"
+	planet_class = "pc_continental"
+	system_name = "atb_system_origin"
+	initializer = ""
+
+	graphical_culture = "humanoid_01"
+	city_graphical_culture = "humanoid_01"
+
+	empire_flag = {
+		icon = {
+			category = "imperial"
+			file = "imperial_01.dds"
+		}
+		background = {
+			category = "backgrounds"
+			file = "00_solid.dds"
+		}
+		colors = {
+			"light_blue"
+			"white"
+			"null"
+			"null"
+		}
+	}
+
+	ruler = {
+		name = "atb_leader_name_filiruoya"
+		gender = female
+		portrait = "human_female_05"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		leader_class = commander
+	}
+}

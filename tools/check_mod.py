@@ -183,6 +183,15 @@ checks = [
      and "minor_artifacts = 2" in atbdep and "add_deposit = d_atb_elemental_seal_institute" in exeff),
     ("星海共同体议程/休会时间减半", all(x in read(MOD / "common/defines/atb_ex_defines.txt") for x in (
         "RESOLUTION_VOTE_TIMER = 720", "RESOLUTION_VOTE_PREMATURE_TIMER = 360", "SENATE_RECESS_TIMER = 360"))),
+    ("内置名称集「苍神缘起帝国」与 10 种语言本地化",
+     (MOD / "common/name_lists/00_cgen_azure_genesis.txt").exists()
+     and len(list((MOD / "localisation").glob("*/cgen_names_l_*.yml"))) == 10
+     and read(MOD / "common/name_lists/00_cgen_azure_genesis.txt").count("full_names = {") == 24
+     and (MOD / "common/name_lists/00_cgen_azure_genesis.txt").read_bytes().startswith(b"\xef\xbb\xbf")),
+    ("预设帝国「苍神缘起帝国」：皇女起源 + 内置名称集", all(x in read(MOD / "prescripted_countries/atb_prescripted_countries.txt") for x in (
+        'origin = "origin_atb_princess_expedition"', 'name_list = "CGEN_AZURE_GENESIS"', "playable = atb_preset_playable",
+        'authority = "auth_dictatorial"', 'government = "gov_technocratic_dictatorship"', 'planet_class = "pc_continental"'))
+     and "atb_preset_playable = {" in read(MOD / "common/scripted_triggers/atb_triggers.txt")),
     ("巨型船坞 50 个船坞", mega.count("starbase_shipyard_capacity_add = 50") == 2 and "capacity_add = 20" not in mega),
     ("天选民固定 8 点", "atb_ex_spawn_chosen = yes" in exev and exeff.count("min_orientation_angle = 208") == 4
      and "# random_rim_system = {" in arcsite
@@ -253,6 +262,12 @@ vanilla = [
     ("the_chosen_home_initializer", r"^the_chosen_home_initializer\s*=\s*\{", "common/solar_system_initializers/*.txt"),
     ("generate_start_pops", r"^generate_start_pops\s*=\s*\{", "common/scripted_effects/*.txt"),
     ("special/the_swarm.dds", r".", "flags/special/the_swarm.dds"),
+    # 预设帝国「苍神缘起帝国」用到的原版内容
+    *[(x, rf"^{x}\s*=\s*\{{", "common/governments/civics/*.txt") for x in ("civic_philosopher_king", "civic_technocracy")],
+    *[(x, rf"^{x}\s*=\s*\{{", "common/ethics/*.txt") for x in ("ethic_fanatic_authoritarian", "ethic_materialist")],
+    *[(x, rf"^{x}\s*=\s*\{{", "common/traits/*.txt") for x in ("trait_intelligent", "trait_natural_engineers", "trait_pathogenic_genes")],
+    ("human_female_05 肖像", r"^\s*human_female_05\s*=", "gfx/portraits/portraits/*.txt"),
+    ("imperial/imperial_01.dds", r".", "flags/imperial/imperial_01.dds"),
     ("special/ai_02.dds", r".", "flags/special/ai_02.dds"),
     ("tech_psionic_theory", r"^tech_psionic_theory\s*=\s*\{", "common/technology/*.txt"),
     ("ap_mind_over_matter", r"^ap_mind_over_matter\s*=\s*\{", "common/ascension_perks/*.txt"),

@@ -22,6 +22,12 @@ atb_has_no_valid_t_weapon = {
 	}
 }
 
+# 预设帝国「苍神缘起帝国」可选的条件：与起源 origin_atb_princess_expedition 的 playable 相同
+atb_preset_playable = {
+	has_machine_age_dlc = yes
+	has_ancrel = yes
+}
+
 # 国家作用域：可以通过决议探索的先驱者科技还没有全部得到
 atb_has_unclaimed_precursor_secret = {
 	NAND = {

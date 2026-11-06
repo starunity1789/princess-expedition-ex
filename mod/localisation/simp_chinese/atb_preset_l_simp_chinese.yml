@@ -1,0 +1,8 @@
+﻿l_simp_chinese:
+ # 预设帝国：苍神缘起帝国（prescripted_countries/atb_prescripted_countries.txt）
+ EMPIRE_DESIGN_atb_cangshen_empire:0 "苍神缘起帝国"
+ PRESCRIPTED_adjective_atb_cangshen_empire:0 "苍神"
+ PRESCRIPTED_ship_prefix_atb_cangshen_empire:0 "苍神"
+ PRESCRIPTED_species_name_atb_cangshen_empire:0 "苍神人"
+ PRESCRIPTED_species_plural_atb_cangshen_empire:0 "苍神人"
+ PRESCRIPTED_species_adjective_atb_cangshen_empire:0 "苍神"

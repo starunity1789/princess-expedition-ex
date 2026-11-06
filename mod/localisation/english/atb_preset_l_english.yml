@@ -1,0 +1,8 @@
+﻿l_english:
+ # Preset empire: Empire of AllLife Chance-Born (prescripted_countries/atb_prescripted_countries.txt)
+ EMPIRE_DESIGN_atb_cangshen_empire:0 "Empire of AllLife Chance-Born"
+ PRESCRIPTED_adjective_atb_cangshen_empire:0 "Chance-Born"
+ PRESCRIPTED_ship_prefix_atb_cangshen_empire:0 "ACB"
+ PRESCRIPTED_species_name_atb_cangshen_empire:0 "Chance-Born"
+ PRESCRIPTED_species_plural_atb_cangshen_empire:0 "Chance-Born"
+ PRESCRIPTED_species_adjective_atb_cangshen_empire:0 "Chance-Born"

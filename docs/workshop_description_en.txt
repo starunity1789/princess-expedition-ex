@@ -9,6 +9,7 @@ Setting: [url=https://github.com/starunity1789/StargazerPR]The Stargazer Project
 [*] Every mechanic of vanilla [b]Synthetic Fertility[/b]; Synthetic Ascension and Dictatorial only
 [*] Capital is a size-25 mobile fortress; the [b]four princesses[/b] serve as Ruler and Councilors - immortal, cannot be dismissed
 [*] Starts in its own cluster beyond the rim at 12 o'clock, with an L-Gate and a Ruined Mega Shipyard in the home system
+[*] Bundled name list and preset empire [b]Empire of AllLife Chance-Born[/b], ready on the empire selection screen
 [/list]
 
 [h2]Galaxy[/h2]
