@@ -7491,14 +7491,32 @@ country_event = {
 	id = ancrel.10300
 	title = ancrel.10300.name
 	desc = {
-		trigger = { has_technology = tech_epigenetic_triggers }
+		trigger = {
+			has_technology = tech_epigenetic_triggers
+			is_nomadic = no
+		}
 		text = ancrel.10300.desc.terraform
 	}
 	desc = {
 		trigger = {
 			NOT = { has_technology = tech_epigenetic_triggers }
+			is_nomadic = no
 		}
 		text = ancrel.10300.desc.uplift
+	}
+	desc = {
+		trigger = {
+			has_technology = tech_epigenetic_triggers
+			is_nomadic = yes
+		}
+		text = ancrel.10300.desc.terraform.nomad
+	}
+	desc = {
+		trigger = {
+			NOT = { has_technology = tech_epigenetic_triggers }
+			is_nomadic = yes
+		}
+		text = ancrel.10300.desc.uplift.nomad
 	}
 
 	picture = GFX_evt_baol_grunur
@@ -7531,9 +7549,12 @@ country_event = {
 				progress = 0.1
 			}
 		}
-		add_modifier = {
-			modifier = artifact_baol_research_completed # terraforming speed
-			days = -1
+		if = {
+			limit = { is_nomadic = no }
+			add_modifier = {
+				modifier = artifact_baol_research_completed # terraforming speed
+				days = -1
+			}
 		}
 	}
 
@@ -7542,6 +7563,7 @@ country_event = {
 			owner = {
 				has_technology = tech_epigenetic_triggers
 				NOT = { has_technology = tech_terrestrial_sculpting }
+				is_nomadic = no
 			}
 		}
 
@@ -7566,9 +7588,12 @@ country_event = {
 				progress = 0.1
 			}
 		}
-		add_modifier = {
-			modifier = artifact_baol_research_completed # terraforming speed bonus
-			days = -1
+		if = {
+			limit = { is_nomadic = no }
+			add_modifier = {
+				modifier = artifact_baol_research_completed # terraforming speed bonus
+				days = -1
+			}
 		}
 	}
 
@@ -7599,9 +7624,12 @@ country_event = {
 				progress = 0.1
 			}
 		}
-		add_modifier = {
-			modifier = artifact_baol_research_completed # terraforming speed bonus
-			days = -1
+		if = {
+			limit = { is_nomadic = no }
+			add_modifier = {
+				modifier = artifact_baol_research_completed # terraforming speed bonus
+				days = -1
+			}
 		}
 	}
 }

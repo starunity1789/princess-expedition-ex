@@ -1,4 +1,4 @@
-# 皇女的远征军：覆盖原版 common/species_rights/living_standards/00_living_standards.txt（4.5.2）。
+# 皇女的远征军：覆盖原版 common/species_rights/living_standards/00_living_standards.txt（4.5.3）。
 # 与原版唯一的区别：乌托邦富足（living_standard_utopian）在远征军体制下不要求平等主义。
 # 游戏更新后，请用新版原版文件重新做同样的修改。
 
@@ -1505,7 +1505,7 @@ living_standard_decadent = {
 			is_pop_category = civilian
 		}
 		key = job_fe_hedonist_plural
-		pop_amenities_usage_base = 1
+		pop_amenities_usage_base = 0.5
 	}
 
 	triggered_pop_group_modifier = {

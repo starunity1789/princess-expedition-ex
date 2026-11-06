@@ -87,8 +87,7 @@ mega_shipyard_0 = {
 		}
 		custom_tooltip = {
 			fail_text = "requires_no_binary_trinary"
-			is_binary_star = no
-			is_trinary_star = no
+			is_multiple_star = no
 		}
 		custom_tooltip = {
 			fail_text = "requires_no_existing_megastructure"
