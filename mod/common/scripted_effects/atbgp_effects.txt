@@ -129,7 +129,7 @@ atbgp_link_to_galaxy = {
 	}
 }
 
-# 国家作用域：普通开局的初始舰船（建造舰、科研舰带科学家、3 艘护卫舰）
+# 国家作用域：普通开局的初始舰船（建造舰、科研舰带科学家、3 艘护卫舰带 10 级永生舰队司令）
 atbgp_spawn_start_fleets = {
 	create_fleet = {
 		effect = {
@@ -170,8 +170,24 @@ atbgp_spawn_start_fleets = {
 				}
 			}
 			set_location = root.capital_star
+			save_event_target_as = atbgp_start_warfleet
 		}
 	}
+	# 2.7：开局舰队带一位 10 级永生舰队司令
+	create_leader = {
+		name = random
+		species = root.species
+		class = commander
+		skill = 10
+		immortal = yes
+		effect = {
+			set_leader_flag = atbgp_admiral
+			set_leader_flag = leader_death_events_blocked
+			set_immortal = yes
+			save_event_target_as = atbgp_start_admiral
+		}
+	}
+	event_target:atbgp_start_warfleet = { assign_leader = event_target:atbgp_start_admiral }
 }
 
 # 国家作用域：用专属立绘的元首替换 燃烧白鹿军团 的开局元首（10 级）

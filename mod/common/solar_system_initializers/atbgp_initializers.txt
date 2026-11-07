@@ -94,17 +94,41 @@ atbgp_home_1 = {
 					set_country_flag = atbgp_great_power
 					set_country_flag = atbgp_power_1
 					advanced_empire_base_init_effect = yes
+					add_modifier = {
+						modifier = atbgp_power_base
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_1
 			set_controller = event_target:atbgp_country_1
 			set_capital = yes
+			# 照原版首都初始化 game_start.12 的顺序：先放开局特征和障碍物，再建建筑和区划，最后放人口。
+			# 4.x 的农业/发电/采矿区划上限来自开局特征（肥沃土地、矿脉等），2.7 之前漏了第一步，
+			# 母星乡村区划被压成 0，只有首都建筑和 2 个城市区划，人口大量失业。
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
 			while = {
 				count = 52
 				create_pop_group = { species = event_target:atbgp_species_1 }
 			}
-			colony = { generate_start_buildings_and_districts = yes }
 			add_deposit = atbgp_d_income_1
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
+			add_modifier = {
+				modifier = atbgp_homeworld_districts
+				days = -1
+			}
+			while = {
+				count = 10
+				add_district = { district_type = district_farming ignore_cap = yes }
+				add_district = { district_type = district_generator ignore_cap = yes }
+				add_district = { district_type = district_mining ignore_cap = yes }
+			}
 		}
 	}
 
@@ -575,18 +599,42 @@ atbgp_home_2 = {
 					set_country_flag = atbgp_great_power
 					set_country_flag = atbgp_power_2
 					advanced_empire_base_init_effect = yes
+					add_modifier = {
+						modifier = atbgp_power_base
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_2
 			set_controller = event_target:atbgp_country_2
 			set_capital = yes
+			# 照原版首都初始化 game_start.12 的顺序：先放开局特征和障碍物，再建建筑和区划，最后放人口。
+			# 4.x 的农业/发电/采矿区划上限来自开局特征（肥沃土地、矿脉等），2.7 之前漏了第一步，
+			# 母星乡村区划被压成 0，只有首都建筑和 2 个城市区划，人口大量失业。
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
 			while = {
 				count = 48
 				create_pop_group = { species = event_target:atbgp_species_2 }
 			}
-			colony = { generate_start_buildings_and_districts = yes }
 			add_deposit = atbgp_d_income_2
 			add_deposit = atbgp_d_zro_3
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
+			add_modifier = {
+				modifier = atbgp_homeworld_districts
+				days = -1
+			}
+			while = {
+				count = 10
+				add_district = { district_type = district_farming ignore_cap = yes }
+				add_district = { district_type = district_generator ignore_cap = yes }
+				add_district = { district_type = district_mining ignore_cap = yes }
+			}
 		}
 	}
 
@@ -1036,17 +1084,41 @@ atbgp_home_3 = {
 						modifier = atbgp_bonus_3
 						days = -1
 					}
+					add_modifier = {
+						modifier = atbgp_power_base
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_3
 			set_controller = event_target:atbgp_country_3
 			set_capital = yes
+			# 照原版首都初始化 game_start.12 的顺序：先放开局特征和障碍物，再建建筑和区划，最后放人口。
+			# 4.x 的农业/发电/采矿区划上限来自开局特征（肥沃土地、矿脉等），2.7 之前漏了第一步，
+			# 母星乡村区划被压成 0，只有首都建筑和 2 个城市区划，人口大量失业。
+			colony = {
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}
 			while = {
 				count = 48
 				create_pop_group = { species = event_target:atbgp_species_3 }
 			}
-			colony = { generate_start_buildings_and_districts = yes }
 			add_deposit = atbgp_d_income_3
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
+			add_modifier = {
+				modifier = atbgp_homeworld_districts
+				days = -1
+			}
+			while = {
+				count = 10
+				add_district = { district_type = district_farming ignore_cap = yes }
+				add_district = { district_type = district_generator ignore_cap = yes }
+				add_district = { district_type = district_mining ignore_cap = yes }
+			}
 		}
 	}
 
@@ -1466,6 +1538,10 @@ atbgp_home_4 = {
 					set_country_flag = atbgp_great_power
 					set_country_flag = atbgp_power_4
 					advanced_empire_base_init_effect = yes
+					add_modifier = {
+						modifier = atbgp_power_base
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_4
@@ -1478,6 +1554,20 @@ atbgp_home_4 = {
 			}
 			generate_start_pops = yes
 			add_deposit = atbgp_d_income_4
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
+			add_modifier = {
+				modifier = atbgp_homeworld_districts
+				days = -1
+			}
+			while = {
+				count = 10
+				add_district = { district_type = district_farming ignore_cap = yes }
+				add_district = { district_type = district_generator ignore_cap = yes }
+				add_district = { district_type = district_mining ignore_cap = yes }
+			}
 		}
 	}
 
@@ -1502,6 +1592,20 @@ atbgp_home_4 = {
 				generate_start_buildings_and_districts = yes
 			}
 			generate_start_pops = yes
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
+			add_modifier = {
+				modifier = atbgp_homeworld_districts
+				days = -1
+			}
+			while = {
+				count = 10
+				add_district = { district_type = district_farming ignore_cap = yes }
+				add_district = { district_type = district_generator ignore_cap = yes }
+				add_district = { district_type = district_mining ignore_cap = yes }
+			}
 		}
 	}
 
@@ -1526,6 +1630,20 @@ atbgp_home_4 = {
 				generate_start_buildings_and_districts = yes
 			}
 			generate_start_pops = yes
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
+			add_modifier = {
+				modifier = atbgp_homeworld_districts
+				days = -1
+			}
+			while = {
+				count = 10
+				add_district = { district_type = district_farming ignore_cap = yes }
+				add_district = { district_type = district_generator ignore_cap = yes }
+				add_district = { district_type = district_mining ignore_cap = yes }
+			}
 		}
 	}
 
@@ -1625,6 +1743,10 @@ atbgp_home_5 = {
 					set_country_flag = atbgp_power_5
 					set_country_flag = atbgp_gc_member
 					advanced_empire_base_init_effect = yes
+					add_modifier = {
+						modifier = atbgp_power_base
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_5
@@ -1636,6 +1758,10 @@ atbgp_home_5 = {
 				generate_start_buildings_and_districts = yes
 			}
 			generate_start_pops = yes
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
 		}
 	}
 
@@ -1660,6 +1786,10 @@ atbgp_home_5 = {
 				generate_start_buildings_and_districts = yes
 			}
 			generate_start_pops = yes
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
 		}
 	}
 
@@ -1684,6 +1814,10 @@ atbgp_home_5 = {
 				generate_start_buildings_and_districts = yes
 			}
 			generate_start_pops = yes
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
 		}
 	}
 
@@ -1708,6 +1842,10 @@ atbgp_home_5 = {
 				generate_start_buildings_and_districts = yes
 			}
 			generate_start_pops = yes
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}
 		}
 	}
 

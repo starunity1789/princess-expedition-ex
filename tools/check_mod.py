@@ -171,6 +171,20 @@ checks = [
     ("多母星都走原版开局流程", init.count("generate_start_pops = yes") == 7),
     ("大君主与终端对齐协议加入星海共同体", init.count("set_country_flag = atbgp_gc_member") == 2
      and "has_country_flag = atbgp_gc_member" in rules and "can_be_part_of_galactic_community = {" in rules),
+    ("2.7：五个列强开局海军容量 +1000、恒星基地上限 +10", init.count("modifier = atbgp_power_base") == 5
+     and "country_naval_cap_add = 1000\n\tcountry_starbase_capacity_add = 10" in gpmod),
+    ("2.7：10 颗开局母星人口增长翻倍 20 年", init.count("modifier = atbgp_growth_boost") == 10
+     and "days = 7200" in init and "logistic_growth_mult = 1.0" in gpmod and "planet_pop_assembly_mult = 1.0" in gpmod),
+    ("2.7：开局舰队带 10 级永生舰队司令", "class = commander" in eff and "skill = 10" in eff
+     and "assign_leader = event_target:atbgp_start_admiral" in eff),
+    ("2.7：10 颗列强开局母星都先放开局特征（决定乡村区划上限）再建区划",
+     init.count("generate_start_deposits_and_blockers = yes") == 10
+     and init.count("generate_start_buildings_and_districts = yes") == 10),
+    ("2.7：6 颗标准区划集开局母星加农业/发电/采矿区划各 10 个（机械星球不加）",
+     init.count("modifier = atbgp_homeworld_districts") == 6
+     and init.count("add_district = { district_type = district_farming ignore_cap = yes }") == 6
+     and "planet_max_districts_add = 30" in gpmod),
+    ("2.7：舰船不再用编号命名", "CGEN_SEQ_SHIP" not in read(MOD / "common/name_lists/00_cgen_azure_genesis.txt")),
     ("列强星团不连到天选民", "has_star_flag = chosen_system" in read(MOD / "common/scripted_triggers/atbgp_triggers.txt")),
     ("大君主额外国家修正已挂上",
      "modifier = atbgp_bonus_3" in init and "atbgp_bonus_3 = {" in gpmod

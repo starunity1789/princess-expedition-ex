@@ -2,8 +2,10 @@
 
 用法：python gen_names.py <MOD 根目录> <文档目录>
 源数据是 tools/cgen_names_source.json，改名字都改那里，然后重新运行；不要手改生成出来的 .txt/.yml。
-名称集原本是独立 MOD「苍神缘起帝国·名称集 0.1.0」，2.6 起并入本 MOD。生成结果与原包只差一处：
-名称集 .txt 加了 UTF-8 BOM（原包没有，游戏会在 error.log 里报 should be in utf8-bom encoding）。
+名称集原本是独立 MOD「苍神缘起帝国·名称集 0.1.0」，2.6 起并入本 MOD。与原包的区别：
+- 名称集 .txt 加了 UTF-8 BOM（原包没有，游戏会在 error.log 里报 should be in utf8-bom encoding）
+- 2.7：殖民船、运输舰、防御平台（含各类空间站）、离子炮不再用 sequential_name 编号——原版只给恒星基地这样用，
+  其他舰体用了会显示成很长的数字。改为和原版一样的具名舰名池（源数据里 ship_sequential 留空）
 
 - MOD 根目录：common/name_lists/00_cgen_azure_genesis.txt 与 10 种语言的 localisation/<语言>/cgen_names_l_<语言>.yml
 - 文档目录：cgen_名称总览.md（审阅用的总览）与 cgen_characters.txt（全部人名）
@@ -118,7 +120,7 @@ for g, vals in d["class_pools"].items():
     rule = d["ship_sequential"].get(g, str(len(d["ship_pools"].get(g, []))) + " 个名字")
     review.append("| " + labels[g] + " | " + "、".join(vals) + " | " + rule.replace("$C$", "数字编号") + " |")
 review += ["", "巨像和主宰各 7 个舰级，是填写表明确指定的例外。科研船／工程船分别选择 2 个元素舰级，其余元素用作单艘船名。"
-           "编号船的设计名仅保留一个编号型号；单艘船按原版 sequential_name 格式请求编号。", "",
+           "殖民船、运输舰、防御平台、离子炮和原版一样用具名舰名池，不用编号。", "",
            "本 MOD 的无畏舰写了 use_shipnames_from = battleship，舰名与舰级都沿用战列舰。", ""]
 for g, vals in d["ship_pools"].items():
     review += ["### " + labels[g], "", "、".join(vals), ""]

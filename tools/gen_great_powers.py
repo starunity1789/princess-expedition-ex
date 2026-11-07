@@ -412,8 +412,39 @@ def create_country_block(e):
 					set_country_flag = atbgp_great_power
 					set_country_flag = atbgp_power_{n}{gc}
 					advanced_empire_base_init_effect = yes{bonus}
+					add_modifier = {{
+						modifier = atbgp_power_base
+						days = -1
+					}}
 				}}
 			}}"""
+
+
+# 2.7：开局母星人口增长翻倍 20 年（每颗开局母星都挂）
+GROWTH_BOOST = """
+			add_modifier = {
+				modifier = atbgp_growth_boost
+				days = 7200
+			}"""
+
+# 2.7：标准区划集的开局母星（盖亚、遗落星球等）再加农业、发电、采矿区划各 10 个。
+# 永久修正先给出区划格与三种上限，再照原版 add_district_and_planet_size_if_needed_effect_amount 的写法忽略上限放区划。
+# 机械星球用 machine_world 区划集，没有这三种区划，不加
+EXTRA_DISTRICTS = """
+			add_modifier = {
+				modifier = atbgp_homeworld_districts
+				days = -1
+			}
+			while = {
+				count = 10
+				add_district = { district_type = district_farming ignore_cap = yes }
+				add_district = { district_type = district_generator ignore_cap = yes }
+				add_district = { district_type = district_mining ignore_cap = yes }
+			}"""
+
+
+def home_bonus(pc):
+    return GROWTH_BOOST + ("" if pc == "pc_machine" else EXTRA_DISTRICTS)
 
 
 def multi_home_initializer(e):
@@ -458,7 +489,7 @@ def multi_home_initializer(e):
 				generate_start_deposits_and_blockers = yes
 				generate_start_buildings_and_districts = yes
 			}}
-			generate_start_pops = yes{income}
+			generate_start_pops = yes{income}{home_bonus(h['pc'])}
 		}}
 	}}
 """)
@@ -556,12 +587,18 @@ atbgp_home_{n} = {{
 			set_owner = {country}
 			set_controller = {country}
 			set_capital = yes
+			# 照原版首都初始化 game_start.12 的顺序：先放开局特征和障碍物，再建建筑和区划，最后放人口。
+			# 4.x 的农业/发电/采矿区划上限来自开局特征（肥沃土地、矿脉等），2.7 之前漏了第一步，
+			# 母星乡村区划被压成 0，只有首都建筑和 2 个城市区划，人口大量失业。
+			colony = {{
+				generate_start_deposits_and_blockers = yes
+				generate_start_buildings_and_districts = yes
+			}}
 			while = {{
 				count = {e['pops']}
 				create_pop_group = {{ species = event_target:atbgp_species_{n} }}
 			}}
-			colony = {{ generate_start_buildings_and_districts = yes }}
-			add_deposit = atbgp_d_income_{n}{extra_deposits}
+			add_deposit = atbgp_d_income_{n}{extra_deposits}{home_bonus(h['pc'])}
 		}}
 	}}
 
@@ -1134,7 +1171,7 @@ atbgp_link_to_galaxy = {{
 {chr(10).join(link_tiers)}
 }}
 
-# 国家作用域：普通开局的初始舰船（建造舰、科研舰带科学家、3 艘护卫舰）
+# 国家作用域：普通开局的初始舰船（建造舰、科研舰带科学家、3 艘护卫舰带 10 级永生舰队司令）
 atbgp_spawn_start_fleets = {{
 	create_fleet = {{
 		effect = {{
@@ -1175,8 +1212,24 @@ atbgp_spawn_start_fleets = {{
 				}}
 			}}
 			set_location = root.capital_star
+			save_event_target_as = atbgp_start_warfleet
 		}}
 	}}
+	# 2.7：开局舰队带一位 10 级永生舰队司令
+	create_leader = {{
+		name = random
+		species = root.species
+		class = commander
+		skill = 10
+		immortal = yes
+		effect = {{
+			set_leader_flag = atbgp_admiral
+			set_leader_flag = leader_death_events_blocked
+			set_immortal = yes
+			save_event_target_as = atbgp_start_admiral
+		}}
+	}}
+	event_target:atbgp_start_warfleet = {{ assign_leader = event_target:atbgp_start_admiral }}
 }}
 
 {named_ruler_effects}
@@ -1502,6 +1555,27 @@ atbgp_btc_bonus = {
 	country_naval_cap_add = 1000
 	shipclass_military_build_speed_mult = 1.0
 }
+
+# 2.7：所有列强开局就有的国家修正。AI 造舰被海军容量卡住，光给资源只会囤在仓库里
+atbgp_power_base = {
+	country_naval_cap_add = 1000
+	country_starbase_capacity_add = 10
+}
+
+# 2.7：开局母星 20 年内人口增长翻倍（有机人口的自然增长、额外增长与机械人口的组装各 +100%）
+atbgp_growth_boost = {
+	logistic_growth_mult = 1.0
+	bonus_pop_growth_mult = 1.0
+	planet_pop_assembly_mult = 1.0
+}
+
+# 2.7：标准区划集的开局母星：区划格 +30，农业、发电、采矿区划上限各 +10（开局各放 10 个）
+atbgp_homeworld_districts = {
+	planet_max_districts_add = 30
+	district_farming_max_add = 10
+	district_generator_max_add = 10
+	district_mining_max_add = 10
+}
 """]
 for e in EMPIRES:
     b = e.get("bonus")
@@ -1520,6 +1594,15 @@ out["common/static_modifiers/atbgp_static_modifiers.txt"] = "".join(static_mods)
 loc("atbgp_btc_bonus", "宗主舰队编制", "Suzerain Fleet Charter")
 loc("atbgp_btc_bonus_desc", "宗主终于允许这块乡村领地扩编舰队。对银河其他文明来说，这意味着灾难。",
     "The suzerain has finally allowed this rural fief to expand its fleet.")
+loc("atbgp_power_base", "列强的底蕴", "Great Power's Foundation")
+loc("atbgp_power_base_desc", "这个文明背后站着远比银河诸国强大的力量，它的舰队与要塞规模不受寻常国力的限制。",
+    "Something far mightier than the galaxy's nations stands behind this civilization; its fleets and fortresses are not bound by ordinary limits.")
+loc("atbgp_homeworld_districts", "母星的开拓区", "Homeworld Development Zones")
+loc("atbgp_homeworld_districts_desc", "列强在母星上早已规划好大片农田、电站与矿区，足以养活远超寻常的人口。",
+    "The great power long ago laid out vast farmlands, power plants and mines on its homeworld, enough to support an unusually large population.")
+loc("atbgp_growth_boost", "开拓者的繁荣", "Pioneers' Boom")
+loc("atbgp_growth_boost_desc", "初到这片星域的头二十年，母星的人口以惊人的速度增长。",
+    "For the first twenty years in this corner of space, the homeworld's population grows at an astonishing rate.")
 
 out["common/on_actions/atbgp_on_actions.txt"] = """# 由 _tools/gen_great_powers.py 生成，请勿手改
 on_game_start = {

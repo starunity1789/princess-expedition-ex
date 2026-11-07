@@ -6,6 +6,27 @@ atbgp_btc_bonus = {
 	shipclass_military_build_speed_mult = 1.0
 }
 
+# 2.7：所有列强开局就有的国家修正。AI 造舰被海军容量卡住，光给资源只会囤在仓库里
+atbgp_power_base = {
+	country_naval_cap_add = 1000
+	country_starbase_capacity_add = 10
+}
+
+# 2.7：开局母星 20 年内人口增长翻倍（有机人口的自然增长、额外增长与机械人口的组装各 +100%）
+atbgp_growth_boost = {
+	logistic_growth_mult = 1.0
+	bonus_pop_growth_mult = 1.0
+	planet_pop_assembly_mult = 1.0
+}
+
+# 2.7：标准区划集的开局母星：区划格 +30，农业、发电、采矿区划上限各 +10（开局各放 10 个）
+atbgp_homeworld_districts = {
+	planet_max_districts_add = 30
+	district_farming_max_add = 10
+	district_generator_max_add = 10
+	district_mining_max_add = 10
+}
+
 # 大君主同盟领地：固定的额外国家修正
 atbgp_bonus_3 = {
 	species_leader_exp_gain = 0.5

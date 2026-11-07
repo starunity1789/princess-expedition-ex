@@ -41,7 +41,7 @@ The characters - their personalities, looks and every detail - were designed by 
 
 **New in EX**
 - **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 12 o'clock (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane. Origin's Reach itself holds a second L-Gate and a Ruined Mega Shipyard, and the capital gains the High Elemental Sealing Institute (+1,000,000 storage, +2 minor artifacts per month)
-- **Five guaranteed great powers**, each beyond the rim with a fixed empire flag and a fixed monthly supply:
+- **Five guaranteed great powers**, each beyond the rim with a fixed empire flag and a fixed monthly supply; all start with +1000 naval capacity, +10 starbase capacity, a level-10 immortal admiral, doubled pop growth on their homeworlds for 20 years, and 10 extra agriculture, generator and mining districts each on every non-machine homeworld:
   - Burning White Stag Legion (10:30): Driven Assimilators, Rapid Replicators, OTA Updates
   - Far Star Alliance (5 o'clock): Selective Kinship, Dark Consortium, Functional Architecture; Psionic Ascension; starts with the Psionic Archive relic
   - Grand Suzerain Allied Fief (3 o'clock): Fanatic Purifiers, Feudal Realm, Distinguished Admiralty; +12% research speed; its six tomb worlds carry a +55% habitability floor; Genetic Ascension (Purity); AI full rights; always takes Cosmogenesis; joins the Galactic Community
@@ -106,7 +106,7 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **EX 新增**
 - **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
-- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给：
+- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +1000、恒星基地上限 +10、一位 10 级永生舰队司令，母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
   - 燃烧白鹿军团（10 点半）：同化斗士、快速复制者、空中下载升级
   - 远星同盟组织（5 点）：选择性亲缘、暗之联盟、实用建筑；灵能飞升；开局获得遗珍「灵能档案」
   - 大君主同盟领地（3 点）：种族洁癖、封建社会、卓越海军；研究速度 +12%；星团里 6 颗死寂星球的宜居度下限 +55%；基因飞升（纯净）；人工智能公民权；必选宇宙创生；加入星海共同体
