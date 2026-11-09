@@ -42,8 +42,8 @@ The characters - their personalities, looks and every detail - were designed by 
 **New in EX**
 - **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 12 o'clock (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane. Origin's Reach itself holds a second L-Gate and a Ruined Mega Shipyard, and the capital gains the High Elemental Sealing Institute (+1,000,000 storage, +2 minor artifacts per month)
 - **Five guaranteed great powers**, each beyond the rim with a fixed empire flag and a fixed monthly supply; all start with +1000 naval capacity, +10 starbase capacity, a level-10 immortal admiral, doubled pop growth on their homeworlds for 20 years, and 10 extra agriculture, generator and mining districts each on every non-machine homeworld:
-  - Burning White Stag Legion (10:30): Driven Assimilators, Rapid Replicators, OTA Updates
-  - Far Star Alliance (5 o'clock): Selective Kinship, Dark Consortium, Functional Architecture; Psionic Ascension; starts with the Psionic Archive relic
+  - Burning White Stag Legion (10:30): Ascensionists, Rapid Replicators, OTA Updates; an L-Gate in the home system
+  - Far Star Alliance (5 o'clock): MegaCorp, Fanatic Militarist + Spiritualist; Private Prospectors, Corporate Crafters, Naval Contractors; Psionic Ascension; starts with the Psionic Archive relic; an L-Gate in the home system
   - Grand Suzerain Allied Fief (3 o'clock): Fanatic Purifiers, Feudal Realm, Distinguished Admiralty; +12% research speed; its six tomb worlds carry a +55% habitability floor; Genetic Ascension (Purity); AI full rights; always takes Cosmogenesis; joins the Galactic Community
   - Tide of Dread (9 o'clock, new): Devouring Swarm, One Mind, Subspace Ephapse; three start-sized homeworlds and a Ruined Aetherophasic Engine; always Becomes the Crisis
   - Terminal Alignment Protocol (6:30, new): Determined Exterminators, Warbots, Experience Cache; four start-sized machine worlds; always Becomes the Crisis; joins the Galactic Community until Crisis level 5
@@ -58,7 +58,7 @@ Full details: [workshop description (English)](docs/workshop_description_en.txt)
 mod/      the mod itself (this folder is what gets uploaded to the Workshop)
 tools/    generator scripts (Python 3 + Pillow) and the name-list source data
 art/      portraits, empire flag logos, cover and relic artwork
-docs/     Workshop descriptions (English and Chinese) and the name-list overview
+docs/     Workshop descriptions (English and Chinese), the name-list overview, and the PD/GPM/Stellar AI merge plan
 ```
 
 `mod/` is linked into the game's mod folder with a directory junction, so `.git` never reaches the Workshop. See the Chinese section below for development, testing and publishing notes.
@@ -106,13 +106,13 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **EX 新增**
 - **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
-- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +1000、恒星基地上限 +10、一位 10 级永生舰队司令，母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
-  - 燃烧白鹿军团（10 点半）：同化斗士、快速复制者、空中下载升级
-  - 远星同盟组织（5 点）：选择性亲缘、暗之联盟、实用建筑；灵能飞升；开局获得遗珍「灵能档案」
+- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +1000、恒星基地上限 +10、领袖上限 +10、初始舰队 ×10（10 支建造舰、10 支带科学家的科研舰、30 艘护卫舰一支舰队带一位 10 级永生舰队司令），母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
+  - 燃烧白鹿军团（10 点半）：升格假设、快速复制者、空中下载升级；母星系一座 L 星门
+  - 远星同盟组织（5 点）：巨型企业，极端军国 + 唯心；民营勘探者、巧手公司、舰队承包商；灵能飞升；开局获得遗珍「灵能档案」；母星系一座 L 星门
   - 大君主同盟领地（3 点）：种族洁癖、封建社会、卓越海军；研究速度 +12%；星团里 6 颗死寂星球的宜居度下限 +55%；基因飞升（纯净）；人工智能公民权；必选宇宙创生；加入星海共同体
   - 恐惧之潮（9 点，新增）：噬杀蜂群、唯一意志、亚空间突触；三颗开局规格的母星，母星系有一座损坏的以太相引擎；必选星海天罚
   - 终端对齐协议（6 点半，新增）：铁心灭绝者、战争机器、经验缓存器；四颗开局规格的机械星球母星；必选星海天罚；加入星海共同体（星海天罚第 5 级时照原版被踢出）
-- **银河规则**：必定生成天选民（固定在 8 点）和凯德斯（瓦格罗之子嗣）的坠毁点；巨型船坞的船坞数量改为 50；星海共同体的议程与休会时间减半；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
+- **银河规则**：所有帝国开局就有居住站科技（轨道居住站及其两级扩建）；必定生成天选民（固定在 8 点）和凯德斯（瓦格罗之子嗣）的坠毁点；巨型船坞的船坞数量改为 50；星海共同体的议程与休会时间减半；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
 - **内置肖像包**：已合并 Ancient Dragonkin（龙族）与 Kemonomimi（兽耳）两套动态肖像包——如果还订阅着这两个独立包，请停用它们
 
 完整说明见工坊简介原文：[中文](docs/workshop_description_zh.txt) / [English](docs/workshop_description_en.txt)。
@@ -123,7 +123,7 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 mod/      MOD 本体（上传工坊的就是这个文件夹）
 tools/    生成脚本，以及名称集的源数据 cgen_names_source.json
 art/      立绘、列强帝国标识 LOGO、封面、遗珍原图
-docs/     工坊简介原文（中文、英文各一份），名称集总览与全部人名
+docs/     工坊简介原文（中文、英文各一份），名称集总览与全部人名，三方整合方案
 ```
 
 `mod/` 通过目录联接（junction）挂到游戏的 MOD 目录：
