@@ -15,6 +15,18 @@ atbgp_home_1 = {
 			module = shipyard
 			building = crew_quarters
 		}
+		if = {
+			limit = {
+				has_distar = yes
+				lgate_enabled = yes
+			}
+			set_star_flag = lgate
+			spawn_megastructure = {
+				type = lgate_base
+				orbit_angle = 225
+				orbit_distance = 45
+			}
+		}
 	}
 
 	planet = {
@@ -68,7 +80,7 @@ atbgp_home_1 = {
 				name = "atbgp_country_1"
 				adjective = "atbgp_country_1_adj"
 				authority = auth_machine_intelligence
-				civics = { civic = civic_machine_assimilator civic = civic_machine_replication civic = civic_machine_ota_updates }
+				civics = { civic = civic_machine_ascensionists civic = civic_machine_replication civic = civic_machine_ota_updates }
 				ethos = { ethic = ethic_gestalt_consciousness }
 				species = event_target:atbgp_species_1
 				origin = "origin_default"
@@ -488,6 +500,18 @@ atbgp_home_2 = {
 			module = shipyard
 			building = crew_quarters
 		}
+		if = {
+			limit = {
+				has_distar = yes
+				lgate_enabled = yes
+			}
+			set_star_flag = lgate
+			spawn_megastructure = {
+				type = lgate_base
+				orbit_angle = 225
+				orbit_distance = 45
+			}
+		}
 	}
 
 	planet = {
@@ -572,9 +596,9 @@ atbgp_home_2 = {
 			create_country = {
 				name = "atbgp_country_2"
 				adjective = "atbgp_country_2_adj"
-				authority = auth_dictatorial
-				civics = { civic = civic_selective_kinship civic = civic_dark_consortium civic = civic_functional_architecture }
-				ethos = { ethic = ethic_fanatic_xenophobe ethic = ethic_spiritualist }
+				authority = auth_corporate
+				civics = { civic = civic_private_prospectors civic = civic_corporate_crafters civic = civic_naval_contractors }
+				ethos = { ethic = ethic_fanatic_militarist ethic = ethic_spiritualist }
 				species = event_target:atbgp_species_2
 				origin = "origin_default"
 				flag = {

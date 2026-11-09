@@ -133,13 +133,15 @@ arcsite = read(MOD / "events/ancient_relics_arcsite_events_2.txt")
 checks = [
     ("白鹿物种肖像 = 兽耳机械", "portrait = kmpp_kemonomimi_machine" in init),
     ("白鹿方位 = 135°（10 点半）", "10 点半方位（角度 135）" in ev),
-    ("白鹿国民 = 同化斗士 + 快速复制者 + 空中下载升级",
-     "civic = civic_machine_assimilator civic = civic_machine_replication civic = civic_machine_ota_updates" in init),
-    ("远星政体 = 独裁制", "authority = auth_dictatorial" in init),
-    ("远星国民 = 选择性亲缘 + 暗之联盟 + 实用建筑",
-     "civic = civic_selective_kinship civic = civic_dark_consortium civic = civic_functional_architecture" in init),
+    ("白鹿国民 = 升格假设 + 快速复制者 + 空中下载升级",
+     "civic = civic_machine_ascensionists civic = civic_machine_replication civic = civic_machine_ota_updates" in init),
+    ("白鹿母星系有 L 星门", init.count("type = lgate_base") == 2),
+    ("远星政体 = 巨型企业", "authority = auth_corporate" in init),
+    ("远星国民 = 民营勘探者 + 巧手公司 + 舰队承包商",
+     "civic = civic_private_prospectors civic = civic_corporate_crafters civic = civic_naval_contractors" in init),
+    ("专属立绘元首永不下台", "id = atbgp.14" in ev and "on_ruler_set = {" in read(MOD / "common/on_actions/atbgp_on_actions.txt")),
     ("远星开局获得灵能档案", "add_relic = r_zro_crystal" in ev),
-    ("远星思潮 = 极端排外 + 唯心", "ethic = ethic_fanatic_xenophobe ethic = ethic_spiritualist" in init),
+    ("远星思潮 = 极端军国 + 唯心", "ethic = ethic_fanatic_militarist ethic = ethic_spiritualist" in init),
     ("远星开局灵能理论", "give_technology = { tech = tech_psionic_theory message = no }" in ev),
     ("远星锁定灵能飞升", "add_ascension_perk = ap_mind_over_matter" in ev and "add_tradition = tr_psionics_adopt" in ev),
     ("远星母星每月 +3 泽洛", "add_deposit = atbgp_d_zro_3" in init and "sr_zro = 3" in dep),
@@ -232,6 +234,17 @@ checks = [
     ("远星物种去掉致病基因", "remove_trait = trait_pathogenic_genes" in init),
     ("无形链接生成龙族土著", "atb_ex_generate_dragonkin_preftl = yes" in rl),
     ("龙族土著效果已定义", "atb_ex_generate_dragonkin_preftl = {" in exeff),
+    # 2.8
+    ("居住站科技开局给所有帝国", "atb_ex_grant_habitat_techs = {" in exeff
+     and exev.count("atb_ex_grant_habitat_techs = yes") == 2
+     and all(f"give_technology = {{ tech = tech_habitat_{i} message = no }}" in exeff for i in (1, 2, 3))),
+    ("初始舰队 x10", eff.count("random_existing_design = constructor") == 1
+     and "count = 10" in eff and "count = 30" in eff
+     and eff.split("atbgp_spawn_start_fleets = {")[1].count("count = 10") == 2),
+    ("列强领袖上限 +10", "country_leader_cap_add = 10" in atbmod or "country_leader_cap_add = 10" in read(
+        MOD / "common/static_modifiers/atbgp_static_modifiers.txt")),
+    ("白鹿与远星母星系各一座 L 星门", init.count("type = lgate_base") == 2
+     and init.count("lgate_enabled = yes") == 2),
 ]
 for label, ok in checks:
     if not ok:
@@ -258,7 +271,14 @@ vanilla = [
     ("civic_dark_consortium", r"^civic_dark_consortium\s*=\s*\{", "common/governments/civics/*.txt"),
     ("ethic_spiritualist", r"^ethic_spiritualist\s*=\s*\{", "common/ethics/*.txt"),
     ("ethic_fanatic_xenophobe", r"^ethic_fanatic_xenophobe\s*=\s*\{", "common/ethics/*.txt"),
-    ("civic_machine_assimilator", r"^civic_machine_assimilator\s*=\s*\{", "common/governments/civics/*.txt"),
+    ("civic_machine_ascensionists", r"^civic_machine_ascensionists\s*=\s*\{", "common/governments/civics/*.txt"),
+    ("auth_corporate", r"^auth_corporate\s*=\s*\{", "common/governments/authorities/*.txt"),
+    ("ethic_fanatic_militarist", r"^ethic_fanatic_militarist\s*=\s*\{", "common/ethics/*.txt"),
+    ("lgate_base", r"^lgate_base\s*=\s*\{", "common/megastructures/*.txt"),
+    *[(c, rf"^{c}\s*=\s*\{{", "common/governments/civics/*.txt") for c in (
+        "civic_private_prospectors", "civic_corporate_crafters", "civic_naval_contractors")],
+    *[(t, rf"^{t}\s*=\s*\{{", "common/technology/*.txt") for t in (
+        "tech_habitat_1", "tech_habitat_2", "tech_habitat_3")],
     ("civic_machine_ota_updates", r"^civic_machine_ota_updates\s*=\s*\{", "common/governments/civics/*.txt"),
     ("civic_fanatic_purifiers", r"^civic_fanatic_purifiers\s*=\s*\{", "common/governments/civics/*.txt"),
     *[(c, rf"^{c}\s*=\s*\{{", "common/governments/civics/*.txt") for c in (

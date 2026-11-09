@@ -78,6 +78,25 @@ atb_ex_apply_galaxy_rules = {
 	}
 }
 
+# 2.8：居住站科技开局就给所有帝国（tech_habitat_1/2/3）。
+# 原版前置是 tech_starbase_3/4/5，give_technology 不会连带前置；建造居住站只看
+# tech_habitat_1，tech_habitat_2/3 各给 habitat_max_districts_add = 1。
+# 按原版 tech_habitat_* 的 potential 排除荒野与游牧帝国，并且只发给常规国家
+# （陨落帝国、强盗、天选民之类不发）。有 tech_habitat_3 就跳过，所以每月重复调用不做无用功。
+atb_ex_grant_habitat_techs = {
+	every_country = {
+		limit = {
+			is_country_type = default
+			is_wilderness_empire = no
+			is_nomadic = no
+			NOT = { has_technology = tech_habitat_3 }
+		}
+		give_technology = { tech = tech_habitat_1 message = no }
+		give_technology = { tech = tech_habitat_2 message = no }
+		give_technology = { tech = tech_habitat_3 message = no }
+	}
+}
+
 # 国家作用域（首都是起源要塞的远征军）：开局整体搬到银河边缘外的星团
 # 星团 7 个星系见 atb_rl_initializers.txt，12 点方向（2.5 起；之前是 10 点半）；只有「大传承者」一条航道接入银河
 atb_ex_relocate_expedition = {

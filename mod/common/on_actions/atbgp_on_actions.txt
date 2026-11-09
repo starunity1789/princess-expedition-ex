@@ -22,3 +22,9 @@ on_ascension_perk_picked = {
 		atbgp.12
 	}
 }
+
+on_ruler_set = {
+	events = {
+		atbgp.14
+	}
+}

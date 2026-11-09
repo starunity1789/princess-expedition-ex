@@ -8,6 +8,7 @@ event = {
 
 	immediate = {
 		atb_ex_apply_galaxy_rules = yes
+		atb_ex_grant_habitat_techs = yes
 
 		# 远征军整体搬到银河边缘外的星团（首都是起源要塞的国家，每个银河最多一个）
 		random_playable_country = {
@@ -60,7 +61,7 @@ event = {
 	}
 }
 
-# 每月：新出现的国家也套上银河规则
+# 每月：新出现的国家也套上银河规则与居住站科技
 event = {
 	id = atb_ex.2
 	hide_window = yes
@@ -68,5 +69,6 @@ event = {
 
 	immediate = {
 		atb_ex_apply_galaxy_rules = yes
+		atb_ex_grant_habitat_techs = yes
 	}
 }

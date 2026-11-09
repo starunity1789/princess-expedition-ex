@@ -738,3 +738,35 @@ event = {
 		}
 	}
 }
+
+# 2.8：有专属立绘的元首永不下台（on_ruler_set，国家作用域）。
+# 远星同盟 2.8 起是巨型企业：auth_corporate 每 20 年一次寡头选举，而原版
+# re_election_allowed 默认 no，现任元首连候选都进不去，必然被换掉。政体的
+# advanced_authority_swap 虽然能写 election_type = none，但 auth_corporate 已经有
+# 10 个 swap（灵能飞升会触发 is_transcendent_authority 那一个），同时只有一个生效，
+# 所以不走政体，改成换下来就立刻重新任命——对任何原因的换人都有效。
+# set_leader 会再触发一次 on_ruler_set，那时 trigger 不成立，不会递归。
+country_event = {
+	id = atbgp.14
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atbgp_great_power
+		any_owned_leader = {
+			has_leader_flag = atbgp_named_ruler
+			is_ruler = no
+		}
+	}
+
+	immediate = {
+		random_owned_leader = {
+			limit = {
+				has_leader_flag = atbgp_named_ruler
+				is_ruler = no
+			}
+			save_event_target_as = atbgp_ruler_restore
+		}
+		set_leader = event_target:atbgp_ruler_restore
+	}
+}

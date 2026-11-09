@@ -58,13 +58,15 @@ EMPIRES = [
         flag=dict(file="flag_atbgp_1.dds", colors=["dark_red", "black"]),
         authority="auth_machine_intelligence",
         ethics=["ethic_gestalt_consciousness"],
-        # 2.5：同化斗士 + 快速复制者 + 空中下载升级
-        civics=["civic_machine_assimilator", "civic_machine_replication", "civic_machine_ota_updates"],
+        # 2.8：升格假设 + 快速复制者 + 空中下载升级（2.5-2.7 是同化斗士 civic_machine_assimilator）
+        civics=["civic_machine_ascensionists", "civic_machine_replication", "civic_machine_ota_updates"],
         extra_income=dict(alloys=50, research=33, influence=2, sr_dark_matter=20, nanites=1),
         ruler=dict(id="rongxin", name="融心演算", en="Fused-Heart Calculus", cls="MACHINE",
                    species=("演算核心", "Calculus Core"),
                    traits=["leader_trait_intemporal"]),
         home=dict(sys="俳句", en="Haiku", star="sc_g", pc="pc_gaia", size=22),
+        # 2.8：母星系一座 L 星门
+        home_megastructures=["lgate_base"],
         systems=[
             dict(sys="民谣", en="Ballad", kind="planet", pc="pc_continental", size=18),
             dict(sys="十四行诗", en="Sonnet", kind="planet", pc="pc_relic", size=18),
@@ -90,12 +92,15 @@ EMPIRES = [
         species_from_player=True,
         drop_traits=["trait_pathogenic_genes"],
         flag=dict(file="flag_atbgp_2.dds", colors=["dark_blue", "black"]),
-        # 威权政体：独裁制。原来的两个国民是巨企专属，换成同效果的非巨企版本。
-        authority="auth_dictatorial",
-        # 2.4：极端排外 + 唯心主义（要走灵能飞升）。对远征军的例外见 kin_with_expedition。
-        ethics=["ethic_fanatic_xenophobe", "ethic_spiritualist"],
-        # 2.5：选择性亲缘 + 暗之联盟 + 实用建筑
-        civics=["civic_selective_kinship", "civic_dark_consortium", "civic_functional_architecture"],
+        # 2.8：巨型企业。auth_corporate 只禁止 gestalt / 狂热平等 / 狂热威权，极端军国合法。
+        # 初始领袖不参加 20 年一次的寡头选举：见 00_authorities.txt 里 auth_corporate 的
+        # advanced_authority_swap（trigger 是 atbgp_power_2，election_type = none）。
+        # 不能自建政体——原版 is_megacorp = { has_authority = auth_corporate }，换政体会打断全部巨企机制。
+        authority="auth_corporate",
+        # 2.8：极端军国 + 唯心主义（要走灵能飞升）。2.4-2.7 是极端排外 + 唯心。
+        ethics=["ethic_fanatic_militarist", "ethic_spiritualist"],
+        # 2.8：民营勘探者 + 巧手公司 + 舰队承包商（三个都只要求 auth_corporate，没有伦理限制）
+        civics=["civic_private_prospectors", "civic_corporate_crafters", "civic_naval_contractors"],
         extra_income=dict(alloys=33, research=33, influence=2, sr_dark_matter=20, nanites=1, sr_zro=2),
         # 2.5：开局获得遗珍「灵能档案」
         start_relics=["r_zro_crystal"],
@@ -118,6 +123,8 @@ EMPIRES = [
                    traits=["leader_trait_intemporal", "leader_trait_supreme_organizer",
                            "leader_trait_master_bureaucrat", "leader_trait_psionic"]),
         home=dict(sys="救赎", en="Redemption", star="sc_f", pc="pc_relic", size=22),
+        # 2.8：母星系一座 L 星门
+        home_megastructures=["lgate_base"],
         systems=[
             dict(sys="逆鳞", en="Reverse Scale", kind="planet", pc="pc_gaia", size=25, zanaam=True),
             dict(sys="异端", en="Heresy", kind="blackhole", dark_matter=20),
@@ -443,6 +450,35 @@ EXTRA_DISTRICTS = """
 			}"""
 
 
+def home_megastructure_block(e, indent="		"):
+    """母星系 init_effect 里的巨构。L 星门照原版条件门控（需要远星之迹 DLC 且本局开启了 L 星群），
+    写法与起源之地 atb_rl_home 一致。"""
+    out = []
+    for i, m in enumerate(e.get("home_megastructures", [])):
+        angle = 225 - i * 90
+        if m == "lgate_base":
+            out.append(f"""
+{indent}if = {{
+{indent}	limit = {{
+{indent}		has_distar = yes
+{indent}		lgate_enabled = yes
+{indent}	}}
+{indent}	set_star_flag = lgate
+{indent}	spawn_megastructure = {{
+{indent}		type = lgate_base
+{indent}		orbit_angle = {angle}
+{indent}		orbit_distance = 45
+{indent}	}}
+{indent}}}""")
+        else:
+            out.append(f"""
+{indent}spawn_megastructure = {{
+{indent}	type = "{m}"
+{indent}	planet = star
+{indent}}}""")
+    return "".join(out)
+
+
 def home_bonus(pc):
     return GROWTH_BOOST + ("" if pc == "pc_machine" else EXTRA_DISTRICTS)
 
@@ -451,11 +487,7 @@ def multi_home_initializer(e):
     """母星系里有多颗按原版开局流程生成的星球：第一颗建国并当首都，其余照样生成人口、区划和建筑。"""
     n, h = e["n"], e["home"]
     country = f"event_target:atbgp_country_{n}"
-    megas = "".join(f"""
-		spawn_megastructure = {{
-			type = "{m}"
-			planet = star
-		}}""" for m in e.get("home_megastructures", []))
+    megas = home_megastructure_block(e, indent="		")
     planets = []
     for i, _ in enumerate(e["capitals"], start=1):
         first = i == 1
@@ -550,7 +582,7 @@ atbgp_home_{n} = {{
 			size = "starbase_starport"
 			module = shipyard
 			building = crew_quarters
-		}}
+		}}{home_megastructure_block(e, indent=chr(9) + chr(9))}
 	}}
 {star_block()}
 	change_orbit = 45
@@ -995,6 +1027,38 @@ event = {
 		}
 	}
 }
+
+# 2.8：有专属立绘的元首永不下台（on_ruler_set，国家作用域）。
+# 远星同盟 2.8 起是巨型企业：auth_corporate 每 20 年一次寡头选举，而原版
+# re_election_allowed 默认 no，现任元首连候选都进不去，必然被换掉。政体的
+# advanced_authority_swap 虽然能写 election_type = none，但 auth_corporate 已经有
+# 10 个 swap（灵能飞升会触发 is_transcendent_authority 那一个），同时只有一个生效，
+# 所以不走政体，改成换下来就立刻重新任命——对任何原因的换人都有效。
+# set_leader 会再触发一次 on_ruler_set，那时 trigger 不成立，不会递归。
+country_event = {
+	id = atbgp.14
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atbgp_great_power
+		any_owned_leader = {
+			has_leader_flag = atbgp_named_ruler
+			is_ruler = no
+		}
+	}
+
+	immediate = {
+		random_owned_leader = {
+			limit = {
+				has_leader_flag = atbgp_named_ruler
+				is_ruler = no
+			}
+			save_event_target_as = atbgp_ruler_restore
+		}
+		set_leader = event_target:atbgp_ruler_restore
+	}
+}
 """)
 out["events/atbgp_events.txt"] = "".join(events)
 
@@ -1171,41 +1235,49 @@ atbgp_link_to_galaxy = {{
 {chr(10).join(link_tiers)}
 }}
 
-# 国家作用域：普通开局的初始舰船（建造舰、科研舰带科学家、3 艘护卫舰带 10 级永生舰队司令）
+# 国家作用域：普通开局的初始舰船。2.8 起全部 x10：10 支建造舰、10 支带科学家的科研舰、
+# 30 艘护卫舰一支舰队带 10 级永生舰队司令。建造舰和科研舰各自成队，否则 AI 不会分开派出去。
+# 10 位科学家会超出开局领袖上限，所以 atbgp_power_base 同时给 +10 领袖上限。
 atbgp_spawn_start_fleets = {{
-	create_fleet = {{
-		effect = {{
-			set_owner = root
-			create_ship = {{
-				name = random
-				random_existing_design = constructor
+	while = {{
+		count = 10
+		create_fleet = {{
+			effect = {{
+				set_owner = root
+				create_ship = {{
+					name = random
+					random_existing_design = constructor
+				}}
+				set_location = root.capital_star
 			}}
-			set_location = root.capital_star
 		}}
 	}}
-	create_fleet = {{
-		effect = {{
-			set_owner = root
-			create_ship = {{
-				name = random
-				random_existing_design = science
+	while = {{
+		count = 10
+		create_fleet = {{
+			effect = {{
+				set_owner = root
+				create_ship = {{
+					name = random
+					random_existing_design = science
+				}}
+				set_location = root.capital_star
+				save_event_target_as = atbgp_science_ship
 			}}
-			set_location = root.capital_star
-			save_event_target_as = atbgp_science_ship
 		}}
+		create_leader = {{
+			name = random
+			species = root.species
+			class = scientist
+			skill = 1
+		}}
+		event_target:atbgp_science_ship = {{ assign_leader = last_created_leader }}
 	}}
-	create_leader = {{
-		name = random
-		species = root.species
-		class = scientist
-		skill = 1
-	}}
-	event_target:atbgp_science_ship = {{ assign_leader = last_created_leader }}
 	create_fleet = {{
 		effect = {{
 			set_owner = root
 			while = {{
-				count = 3
+				count = 30
 				create_ship = {{
 					name = random
 					random_existing_design = corvette
@@ -1560,6 +1632,8 @@ atbgp_btc_bonus = {
 atbgp_power_base = {
 	country_naval_cap_add = 1000
 	country_starbase_capacity_add = 10
+	# 2.8：初始舰队 x10 带来 10 位科学家，领袖上限要跟着抬
+	country_leader_cap_add = 10
 }
 
 # 2.7：开局母星 20 年内人口增长翻倍（有机人口的自然增长、额外增长与机械人口的组装各 +100%）
@@ -1626,6 +1700,12 @@ on_yearly_pulse = {
 on_ascension_perk_picked = {
 	events = {
 		atbgp.12
+	}
+}
+
+on_ruler_set = {
+	events = {
+		atbgp.14
 	}
 }
 """
