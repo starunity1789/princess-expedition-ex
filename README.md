@@ -160,6 +160,11 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 > `portrait ... is not found in portrait set database` 这类下游症状，很难往这上面想。
 > 平时把它改名成 `atb_princess_expedition_ex.mod.disabled` 放在 MOD 目录外面即可。
 
+**日常游玩本地版**用另一个描述文件 `atb_princess_expedition_ex_dev.mod`（名字「皇女的远征军EX（本地开发版）」）：
+内容同上但**不写 `remote_file_id`**，所以能和订阅版共存、不会撞号。在启动器里启用它，同时停用订阅版的
+皇女的远征军EX，以及已经内置进来的 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI
+（这三个要保持订阅——`merge_upstream.py` 从订阅目录读源文件——但不能启用，否则同一批内容会出现两份）。
+
 ### 文件前缀
 
 | 前缀 | 内容 |
