@@ -1,0 +1,55 @@
+# 由 tools/gen_ai_limits.py 生成，不要手改
+
+namespace = atb_ex_lim
+
+# 开工：root = 国家，from = 星系。给本国在这个星系里新出现、还没记过的工地计数
+country_event = {
+	id = atb_ex_lim.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		from = {
+			every_system_megastructure = {
+				limit = {
+					atb_ex_ai_capped_megastructure = yes
+					NOT = { has_megastructure_flag = atb_ex_counted }
+					exists = owner
+					owner = { is_same_value = root }
+				}
+				atb_ex_count_megastructure = yes
+			}
+		}
+	}
+}
+
+# 完工：root = 国家，from = 巨构。开工时没记上的在这里补记
+country_event = {
+	id = atb_ex_lim.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		from = {
+			atb_ex_ai_capped_megastructure = yes
+			NOT = { has_megastructure_flag = atb_ex_counted }
+		}
+	}
+
+	immediate = {
+		from = { atb_ex_count_megastructure = yes }
+	}
+}
+
+# 物种改造完成：this = 国家。AI 进入 20 年冷却
+country_event = {
+	id = atb_ex_lim.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = { is_ai = yes }
+
+	immediate = {
+		set_timed_country_flag = { flag = atb_ex_species_mod_cooldown days = 7200 }
+	}
+}

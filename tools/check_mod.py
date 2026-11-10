@@ -266,6 +266,24 @@ checks = [
      and init.count("lgate_enabled = yes") == 2),
 ]
 
+# ---------------------------------------------------------------- 2.9：AI 限制与减卡（tools/gen_ai_limits.py）
+lim_mega = read(MOD / "common/megastructures/zz_atb_ex_ai_limits.txt") if (MOD / "common/megastructures/zz_atb_ex_ai_limits.txt").exists() else ""
+lim_oa = read(MOD / "common/on_actions/atb_ex_ai_limits_on_actions.txt") if (MOD / "common/on_actions/atb_ex_ai_limits_on_actions.txt").exists() else ""
+checks += [
+    ("AI 巨构上限：居住站 7 / 环世界 1 / 星门 2 / 中继器 18", all(
+        re.search(r"^%s\s*=\s*\{" % t, lim_mega, re.M) and f"TYPE = {t} CAP = {c} " in lim_mega
+        for t, c in (("habitat_central_complex", 7), ("ring_world_1", 1), ("gateway_0", 2), ("hyper_relay", 18)))
+     and "value:ai_habitat_cap" not in lim_mega),
+    ("AI 巨构计数挂在开工与完工上", "on_megastructure_build_start = {" in lim_oa
+     and "on_megastructure_built = {" in lim_oa and "on_monthly_pulse" not in lim_oa),
+    ("AI 不选跨物种杂交", "is_ai = no" in read(MOD / "common/ascension_perks/zz_atb_ex_ai_limits.txt").split("modifier = {")[0]),
+    ("AI 物种改造 20 年冷却", "has_country_flag = atb_ex_species_mod_cooldown" in read(MOD / "common/game_rules/zz_atb_ex_ai_limits.txt")
+     and "days = 7200" in read(MOD / "events/atb_ex_ai_limits_events.txt")
+     and "on_modification_completion = {" in lim_oa),
+    ("减卡 defines：触发修正 15 天、思潮偏移 30 天", (lambda d: "TRIGGERED_MODIFIER_UPDATE_DELAY = 15" in d
+     and "POP_ETHOS_DIVERGENCE_INTERVAL = 30" in d)(read(MOD / "common/defines/zz_atb_ex_performance_defines.txt"))),
+]
+
 # ---------------------------------------------------------------- 2.8：三方整合（tools/merge_upstream.py）
 if UPSTREAM:
     def exists(rel):

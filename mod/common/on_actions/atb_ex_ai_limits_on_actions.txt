@@ -1,0 +1,19 @@
+# 由 tools/gen_ai_limits.py 生成，不要手改
+
+on_megastructure_build_start = {
+	events = {
+		atb_ex_lim.1
+	}
+}
+
+on_megastructure_built = {
+	events = {
+		atb_ex_lim.2
+	}
+}
+
+on_modification_completion = {
+	events = {
+		atb_ex_lim.3
+	}
+}

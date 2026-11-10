@@ -1,0 +1,59 @@
+# 由 tools/gen_ai_limits.py 生成，不要手改
+# 来源：原版 00_ascension_perks.txt
+
+ap_xeno_compatibility = {
+	potential = {
+		host_has_dlc = "Megacorp"
+		NOT = {
+			has_ascension_perk = ap_xeno_compatibility
+		}
+		is_regular_empire = yes
+		is_wilderness_empire = no
+		# 皇女的远征军EX：AI 不选（大量杂交亚种拖慢后期，效果也弱）
+		is_ai = no
+	}
+
+	modifier = {
+		planet_resettlement_unemployed_destination_mult = 0.33
+		refugee_attraction = 1
+		add_attunement_the_composer_of_strands = @ascension_perk_attunement1
+	}
+
+	possible = {
+		custom_tooltip = {
+			fail_text = "requires_xenophile"
+			is_xenophile = yes
+		}
+		custom_tooltip = {
+			fail_text = "requires_xeno_species"
+			any_owned_pop_group = {
+				NOR = {
+					is_same_species = root.owner
+					has_trait = trait_mechanical
+					has_trait = trait_machine_unit
+					has_trait = trait_hive_mind
+				}
+			}
+		}
+		custom_tooltip = {
+			fail_text = "requires_technology_gene_tailoring"
+			has_technology = tech_gene_tailoring
+		}
+	}
+
+	on_enabled = {
+		custom_tooltip = "allow_crossbreeding"
+	}
+
+	ai_weight = {
+		factor = 10
+		modifier = {
+			factor = 2
+			has_ethic = ethic_xenophile
+		}
+		modifier = {
+			factor = 3
+			has_ethic = ethic_fanatic_xenophile
+		}
+	}
+}

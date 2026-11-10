@@ -1,0 +1,22 @@
+# 由 tools/gen_ai_limits.py 生成，不要手改
+
+# 巨构作用域，root = 建造它的国家：打标记并给 root 计数 +1
+atb_ex_count_megastructure = {
+	set_megastructure_flag = atb_ex_counted
+	if = {
+		limit = { is_megastructure_type = habitat_central_complex }
+		root = { change_variable = { which = atb_ex_built_habitat_central_complex value = 1 } }
+	}
+	else_if = {
+		limit = { is_megastructure_type = ring_world_1 }
+		root = { change_variable = { which = atb_ex_built_ring_world_1 value = 1 } }
+	}
+	else_if = {
+		limit = { is_megastructure_type = gateway_0 }
+		root = { change_variable = { which = atb_ex_built_gateway_0 value = 1 } }
+	}
+	else_if = {
+		limit = { is_megastructure_type = hyper_relay }
+		root = { change_variable = { which = atb_ex_built_hyper_relay value = 1 } }
+	}
+}

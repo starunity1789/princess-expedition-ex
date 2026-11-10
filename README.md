@@ -121,6 +121,12 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - **Stellar AI**：原样内置
 - 新增玩家首都决议 **「探寻遗珍」**：花 10000 能量币随机获得一件尚未拥有的 GPM 遗珍，直到 21 件全部获得
 
+**减轻后期卡顿（2.9 起，只限 AI，玩家不受影响）**——由 `tools/gen_ai_limits.py` 生成：
+- AI 每个国家终身最多**自己开工建造**：居住站 7 座、环世界 1 座、星门 2 座、超空间中继器 18 座。捡到、修复废墟、俘获的都不算；拆掉或被毁也不退名额。原版按星系大小与难度算的 AI 居住站上限被这条替换
+- AI 不选飞升天赋「跨物种杂交」（大量杂交亚种拖慢后期，效果也弱）
+- AI 每完成一次物种改造，20 年内不能再改（频繁改造会拖住科研）
+- 触发修正每 15 天刷新一次（原版 5 天），人口思潮偏移每 30 天检查一次（原版 18 天）
+
 完整说明见工坊简介原文：[中文](docs/workshop_description_zh.txt) / [English](docs/workshop_description_en.txt)。
 
 ### 目录结构
@@ -179,6 +185,7 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 | `pd_` / `pdengine` / `!vanilla_*_fix` | 合并进来的 Planetary Diversity（同上） |
 | `stellarai_` / `~stellarai_` / `111_stellarai` | 合并进来的 Stellar AI（同上） |
 | `atb_relic_quest_` | 决议「探寻遗珍」（由 `tools/gen_relic_quest.py` 生成，不要手改） |
+| `atb_ex_ai_limits` / `zz_atb_ex_ai_limits` / `atb_ex_lim.` / `zz_atb_ex_performance_defines` | 2.9 的 AI 限制与减卡（由 `tools/gen_ai_limits.py` 生成，不要手改） |
 
 上游文件的完整清单与来源见 `tools/upstream_manifest.json`。除了上面这些前缀，上游还以原版同名路径覆盖了一批原版文件，见下文「覆盖的原版文件」。
 
@@ -218,6 +225,12 @@ python tools/merge_upstream.py "C:/Program Files (x86)/Steam/steamapps/workshop/
 # 重新生成决议「探寻遗珍」（遗珍清单读合并后的 mod/common/relics/gpm_relics*.txt，合并之后跑）
 python tools/gen_relic_quest.py mod
 
+# 2.9 的 AI 巨构上限、AI 禁杂交飞升、AI 物种改造冷却、减卡 defines（改数字改脚本顶部的 CAPS 等常量；原版更新后重跑）
+python tools/gen_ai_limits.py
+
+# 上传到创意工坊（经 Steam 客户端更新 3821602893，只换内容与更新说明；Steam 要开着）
+python tools/upload_workshop.py 2.9
+
 # 静态自检：括号配对、本地化格式、贴图引用、原版 ID、本次改动点、三方整合
 python tools/check_mod.py
 ```
@@ -235,6 +248,7 @@ python tools/check_mod.py
 - `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时，原版改了数值时对照调整）
 - `common/game_rules/atb_rules.txt` 里的 `can_be_part_of_galactic_community`、`can_dismiss_leader`（原版同名规则的副本）
 - `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）
+- `zz_atb_ex_ai_limits.txt`（megastructures / ascension_perks / game_rules 三处）：原版 `habitat_central_complex`、`gateway_0`、`hyper_relay`、`ap_xeno_compatibility`、`can_modify_species` 与 Real Space 的 `ring_world_1` 的副本，跑 `gen_ai_limits.py` 重做即可
 
 2.8 起合并进来的上游另外覆盖了 42 个原版文件（Stellar AI 27 个、Planetary Diversity 15 个；GPM 不覆盖原版路径），
 清单见 `docs/整合方案.md` §1.1。四方之间没有任何两家覆盖同一个原版文件。游戏更新后有两种做法：
@@ -242,6 +256,10 @@ python tools/check_mod.py
 （改完后重跑 `merge_upstream.py` 会把它们覆盖回上游版本，所以自维护时要把改动做进脚本的 `PATCHES`）。
 
 ### 发布到工坊
+
+**更新内容（2.8 起）**：`python tools/upload_workshop.py <版本号>`。它经 Steam 客户端直接更新物品 3821602893，
+只换内容和更新说明，标题、简介、预览图、可见性都不动，不用在启动器里挑条目，也不需要密码。最后一行
+`eResult=1` 表示成功。下面是第一次发布与改简介时的启动器流程，留作参考。
 
 1. 从 Steam 启动群星（单游戏启动器），进入「Mod 库 → 上传 MOD」，选「皇女的远征军EX」，上传到「Steam 创意工坊」。Mod ID 应自动显示 3821602893。
 2. 上传前把 `docs/workshop_description_en.txt` 的内容贴进描述栏——上传会用这一栏覆盖工坊的默认（英语）简介。

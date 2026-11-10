@@ -1,0 +1,20 @@
+# 由 tools/gen_ai_limits.py 生成，不要手改
+
+# 国家作用域：这个国家还能不能再开工一座 $TYPE$
+atb_ex_ai_mega_under_cap = {
+	OR = {
+		is_ai = no
+		NOT = { is_variable_set = atb_ex_built_$TYPE$ }
+		check_variable = { which = atb_ex_built_$TYPE$ value < $CAP$ }
+	}
+}
+
+# 巨构作用域：受 AI 上限管的类型
+atb_ex_ai_capped_megastructure = {
+	OR = {
+		is_megastructure_type = habitat_central_complex
+		is_megastructure_type = ring_world_1
+		is_megastructure_type = gateway_0
+		is_megastructure_type = hyper_relay
+	}
+}

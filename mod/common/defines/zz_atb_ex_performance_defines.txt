@@ -1,0 +1,6 @@
+# 由 tools/gen_ai_limits.py 生成，不要手改
+# 减轻后期卡顿：原版 5 天 / 18 天
+NGameplay = {
+	TRIGGERED_MODIFIER_UPDATE_DELAY = 15
+	POP_ETHOS_DIVERGENCE_INTERVAL = 30
+}
