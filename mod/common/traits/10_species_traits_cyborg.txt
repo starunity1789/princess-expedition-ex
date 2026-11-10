@@ -1109,6 +1109,7 @@ trait_cyborg_climate_adjustment_dry = {
 	opposites = {
 		"trait_cyborg_climate_adjustment_wet"
 		"trait_cyborg_climate_adjustment_cold"
+		"trait_cyborg_climate_adjustment_volcanic"
 	}
 	species_potential_add = {
 		can_add_cybernetic_traits = yes
@@ -1159,6 +1160,7 @@ trait_cyborg_climate_adjustment_wet = {
 	opposites = {
 		"trait_cyborg_climate_adjustment_cold"
 		"trait_cyborg_climate_adjustment_dry"
+		"trait_cyborg_climate_adjustment_volcanic"
 	}
 	species_potential_add = {
 		can_add_cybernetic_traits = yes
@@ -1206,6 +1208,7 @@ trait_cyborg_climate_adjustment_cold = {
 	opposites = {
 		"trait_cyborg_climate_adjustment_wet"
 		"trait_cyborg_climate_adjustment_dry"
+		"trait_cyborg_climate_adjustment_volcanic"
 	}
 	species_potential_add = {
 		can_add_cybernetic_traits = yes
@@ -1521,5 +1524,46 @@ trait_cyborg_ritualistic_implants = {
 		modifier = {
 			add = 0.5 #always good
 		}
+	}
+}
+
+# [merge_upstream] 从原版 4.5.3 同名文件补回（上游缺）
+trait_cyborg_climate_adjustment_volcanic = {
+	icon = "gfx/interface/icons/traits/trait_pc_volcanic_preference.dds"
+	host_has_dlc = "The Machine Age"
+	cost = 1
+	custom_tooltip = trait_cyborg_climate_adjustment_volcanic_tt
+	allowed_archetypes = { BIOLOGICAL LITHOID }
+	localized_tags = {
+		SPECIES_TRAIT_CYBORG
+	}
+	tags = { organic positive habitability cybernetic }
+	initial = no
+	opposites = {
+		"trait_cyborg_climate_adjustment_wet"
+		"trait_cyborg_climate_adjustment_dry"
+		"trait_cyborg_climate_adjustment_cold"
+	}
+	species_potential_add = {
+		can_add_cybernetic_traits = yes
+	}
+	species_possible_add = {
+		can_take_non_ocean_planet_preference = yes
+	}
+	species_possible_remove = {
+		can_remove_cybernetic_traits = yes
+	}
+	randomized = no
+	category = cyborg
+	sorting_priority = 30
+	bound_to_planet_classes = {
+		pc_volcanic
+	}
+	modifier = {
+		# Volcanic
+		pc_volcanic_habitability 	= @cyborg_hab_preference_volcanic
+	}
+	slave_cost = {
+		trade = 500
 	}
 }

@@ -222,6 +222,14 @@ PATCHES = {
     # 星系网络枢纽属于已删的穹顶基地，永远不会出现：计数恒为 0
     ("pd", "common/script_values/pd_script_values.txt"): [
         ("sub", (r"has_deposit\s*=\s*d_pd_solar_system_network_hub", "always = no"))],
+    # PD 整个覆盖了原版的赛博特质文件，但那份比 4.5.3 旧，缺火山气候赛博适应（地狱 DLC 加的）。
+    # 原版的断开连接局势（unplugged_effects.txt）与同化事件（assimilation_events.txt）都引用它。
+    # 从原版同名文件把这个块补回来，并把它加进另外三个气候适应特质的互斥列表（与原版一致）。
+    # 顺序不能反：先补互斥（只命中 PD 原有的 3 个），再追加原版块（它自己的互斥列表已经是对的）
+    ("pd", "common/traits/10_species_traits_cyborg.txt"): [
+        ("sub", (r'(opposites\s*=\s*\{(?:\s*"trait_cyborg_climate_adjustment_(?:wet|dry|cold)")+)',
+                 '\\1\n\t\t"trait_cyborg_climate_adjustment_volcanic"', 3)),
+        ("append_vanilla", ["trait_cyborg_climate_adjustment_volcanic"])],
 }
 
 # 从被排除的上游文件里只抽出指定的顶层块，单独成一个新文件。
@@ -536,9 +544,24 @@ def main():
                     report[s].append(f"{rel}：裁掉 {len(removed)} 个已删事件的钩子")
                 elif op == "sub":
                     text, n = re.subn(arg[0], arg[1], text)
-                    if not n:
-                        raise SystemExit(f"[补丁失败] {rel}：正则 {arg[0]} 没有命中（上游结构变了？）")
-                    report[s].append(f"{rel}：替换 {n} 处 {arg[0]} -> {arg[1]}")
+                    want = arg[2] if len(arg) > 2 else None
+                    if not n or (want is not None and n != want):
+                        raise SystemExit(f"[补丁失败] {rel}：正则 {arg[0]} 命中 {n} 处"
+                                         f"{f'（应为 {want}）' if want else ''}（上游结构变了？）")
+                    report[s].append(f"{rel}：替换 {n} 处 {arg[0][:50]}")
+                elif op == "append_vanilla":
+                    vtext, _b, _c = decode((game / rel).read_bytes())
+                    vblocks = {b[0]: b for b in top_blocks(vtext)}
+                    have = {b[0] for b in top_blocks(text)}
+                    for n in arg:
+                        if n in have:
+                            raise SystemExit(f"[补丁失败] {rel}：{n} 上游已经有了，不需要从原版补（上游更新了？）")
+                        if n not in vblocks:
+                            raise SystemExit(f"[补丁失败] {rel}：原版同名文件里找不到 {n}")
+                        b = vblocks[n]
+                        text = text.rstrip("\n") + f"\n\n# [merge_upstream] 从原版 4.5.3 同名文件补回（上游缺）\n" \
+                                                   f"{vtext[b[1]:b[3] + 1]}\n"
+                    report[s].append(f"{rel}：从原版补回 {len(arg)} 块 {arg}")
             if is_script and s in ("gpm", "pd"):
                 for rx, rep in GLOBAL_SUBS:
                     text, n = rx.subn(rep, text)
@@ -696,21 +719,32 @@ def main():
     van = {p.relative_to(game).as_posix().lower() for d in ("gfx", "sound") for p in (game / d).rglob("*") if p.is_file()}
     missing = sorted(x for x in path_need if x not in have and x not in van and not x.endswith(".mesh"))
 
-    # ---------- 5. 落盘 ----------
-    for rel in prev_files:
+    # ---------- 5. 落盘（只写有变化的；上次写过、这次不要的删掉） ----------
+    stale = prev_files - set(out_text) - set(out_bin)
+    for rel in stale:
         p = mod / rel
         if p.exists():
             p.unlink()
+    n_text = n_bin = 0
     for rel, raw in out_text.items():
         p = mod / rel
+        if p.exists() and p.read_bytes() == raw:
+            continue
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_bytes(raw)
+        n_text += 1
     for rel, src in out_bin.items():
         p = mod / rel
+        if p.exists():
+            a, b = p.stat(), src.stat()
+            if a.st_size == b.st_size and int(a.st_mtime) == int(b.st_mtime):
+                continue
         p.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(src, p)
+        shutil.copy2(src, p)   # 保留修改时间，下次按「大小 + 修改时间」判断是否需要重拷
+        n_bin += 1
+    print(f"写入：文本 {n_text} 个、二进制 {n_bin} 个有变化；删除 {len(stale)} 个不再需要的上游文件")
     # 清掉因为删文件留下的空目录
-    for d in sorted({(mod / r).parent for r in prev_files}, key=lambda x: -len(x.parts)):
+    for d in sorted({(mod / r).parent for r in stale}, key=lambda x: -len(x.parts)):
         try:
             while d != mod and not any(d.iterdir()):
                 d.rmdir(); d = d.parent

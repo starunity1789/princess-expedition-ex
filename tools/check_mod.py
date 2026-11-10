@@ -301,6 +301,13 @@ if UPSTREAM:
          and "set_global_flag = gpm_modifiers_precursor_disabled" in gstart),
         # 这个旗标会连金属环/冰环修正一起关掉（游戏存档实测发现）
         ("GPM 行星环修正没有被关掉", "gpm_planetary_rings_disabled" not in strip_noise(gstart, True)),
+        # PD 的赛博特质覆盖缺原版 4.5.3 的火山气候适应，原版断开连接局势与同化事件会报错
+        ("PD 赛博特质补回原版火山气候适应", (lambda cy: re.search(
+            r"^trait_cyborg_climate_adjustment_volcanic\s*=\s*\{", cy, re.M) is not None
+            # 另外三个气候适应特质的互斥列表里各有一次（strip_noise 会去掉字符串，所以用原文数）
+            and cy.count('"trait_cyborg_climate_adjustment_volcanic"') == 3)(
+                read(MOD / "common/traits/10_species_traits_cyborg.txt")) if exists(
+                "common/traits/10_species_traits_cyborg.txt") else False),
         ("PD 岗位与区域已删、行星类型保留", not list((MOD / "common").glob("pop_jobs/zzz_pd_*"))
          and not list((MOD / "common").glob("zones/pd_*"))
          and exists("common/planet_classes/pd_superhabitable_planet_classes.txt")
