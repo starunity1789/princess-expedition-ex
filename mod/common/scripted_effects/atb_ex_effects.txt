@@ -67,9 +67,9 @@ atb_ex_spawn_legendary_leader_site = {
 	}
 }
 
-# 给还没有银河规则的国家加上（存储上限 +100K、非生物船基础舰体翻倍）
-atb_ex_apply_galaxy_rules = {
-	every_country = {
+# 国家作用域：本国还没有银河规则就加上（存储上限 +100K、非生物船基础舰体翻倍）
+atb_ex_give_galaxy_rules = {
+	if = {
 		limit = { NOT = { has_modifier = atb_ex_galaxy_rules } }
 		add_modifier = {
 			modifier = atb_ex_galaxy_rules
@@ -78,13 +78,23 @@ atb_ex_apply_galaxy_rules = {
 	}
 }
 
+# 全体国家补银河规则（开局一次、每年兜底一次）
+atb_ex_apply_galaxy_rules = {
+	every_country = {
+		limit = { NOT = { has_modifier = atb_ex_galaxy_rules } }
+		atb_ex_give_galaxy_rules = yes
+	}
+}
+
 # 2.8：居住站科技开局就给所有帝国（tech_habitat_1/2/3）。
 # 原版前置是 tech_starbase_3/4/5，give_technology 不会连带前置；建造居住站只看
 # tech_habitat_1，tech_habitat_2/3 各给 habitat_max_districts_add = 1。
 # 按原版 tech_habitat_* 的 potential 排除荒野与游牧帝国，并且只发给常规国家
-# （陨落帝国、强盗、天选民之类不发）。有 tech_habitat_3 就跳过，所以每月重复调用不做无用功。
-atb_ex_grant_habitat_techs = {
-	every_country = {
+# （陨落帝国、强盗、天选民之类不发）。已有 tech_habitat_3 就跳过。
+
+# 国家作用域：本国符合条件就发
+atb_ex_give_habitat_techs = {
+	if = {
 		limit = {
 			is_country_type = default
 			is_wilderness_empire = no
@@ -94,6 +104,17 @@ atb_ex_grant_habitat_techs = {
 		give_technology = { tech = tech_habitat_1 message = no }
 		give_technology = { tech = tech_habitat_2 message = no }
 		give_technology = { tech = tech_habitat_3 message = no }
+	}
+}
+
+# 全体国家补发（开局一次、每年兜底一次）
+atb_ex_grant_habitat_techs = {
+	every_country = {
+		limit = {
+			is_country_type = default
+			NOT = { has_technology = tech_habitat_3 }
+		}
+		atb_ex_give_habitat_techs = yes
 	}
 }
 

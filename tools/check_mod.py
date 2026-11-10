@@ -235,14 +235,16 @@ checks = [
     ("无形链接生成龙族土著", "atb_ex_generate_dragonkin_preftl = yes" in rl),
     ("龙族土著效果已定义", "atb_ex_generate_dragonkin_preftl = {" in exeff),
     # 2.8
-    ("居住站科技开局给所有帝国", "atb_ex_grant_habitat_techs = {" in exeff
-     and exev.count("atb_ex_grant_habitat_techs = yes") == 2
+    ("居住站科技开局给所有帝国", "atb_ex_grant_habitat_techs = {" in exeff and "atb_ex_give_habitat_techs = {" in exeff
+     and exev.count("atb_ex_grant_habitat_techs = yes") == 2 and "atb_ex_give_habitat_techs = yes" in exev
      and all(f"give_technology = {{ tech = tech_habitat_{i} message = no }}" in exeff for i in (1, 2, 3))),
-    ("初始舰队 x10", eff.count("random_existing_design = constructor") == 1
-     and "count = 10" in eff and "count = 30" in eff
-     and eff.split("atbgp_spawn_start_fleets = {")[1].count("count = 10") == 2),
-    ("列强领袖上限 +10", "country_leader_cap_add = 10" in atbmod or "country_leader_cap_add = 10" in read(
-        MOD / "common/static_modifiers/atbgp_static_modifiers.txt")),
+    ("atb_ex 不再挂月脉冲：年兜底 + 新国家事件钩子", (lambda oa: "on_monthly_pulse" not in oa
+     and "on_yearly_pulse = {" in oa and "on_country_created = {" in oa and "on_country_type_changed = {" in oa)(
+         read(MOD / "common/on_actions/atb_ex_on_actions.txt")) and "id = atb_ex.3" in exev),
+    ("初始护卫舰 x10 = 30 艘，建造舰/科研舰各 1 艘",
+     (lambda f: "count = 30" in f and "count = 10" not in f and "while" not in f.split("random_existing_design = corvette")[0].split("create_leader")[0]
+      and f.count("random_existing_design = constructor") == 1 and f.count("random_existing_design = science") == 1)(
+         eff.split("atbgp_spawn_start_fleets = {")[1].split("atbgp_install_ruler_")[0])),
     ("白鹿与远星母星系各一座 L 星门", init.count("type = lgate_base") == 2
      and init.count("lgate_enabled = yes") == 2),
 ]

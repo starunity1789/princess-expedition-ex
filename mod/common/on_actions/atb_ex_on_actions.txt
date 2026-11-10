@@ -5,8 +5,21 @@ on_game_start = {
 	}
 }
 
-on_monthly_pulse = {
+# 2.8：每月改每年，只做兜底
+on_yearly_pulse = {
 	events = {
 		atb_ex.2
+	}
+}
+
+on_country_created = {
+	events = {
+		atb_ex.3
+	}
+}
+
+on_country_type_changed = {
+	events = {
+		atb_ex.3
 	}
 }

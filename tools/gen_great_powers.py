@@ -1235,44 +1235,37 @@ atbgp_link_to_galaxy = {{
 {chr(10).join(link_tiers)}
 }}
 
-# 国家作用域：普通开局的初始舰船。2.8 起全部 x10：10 支建造舰、10 支带科学家的科研舰、
-# 30 艘护卫舰一支舰队带 10 级永生舰队司令。建造舰和科研舰各自成队，否则 AI 不会分开派出去。
-# 10 位科学家会超出开局领袖上限，所以 atbgp_power_base 同时给 +10 领袖上限。
+# 国家作用域：普通开局的初始舰船。建造舰、带科学家的科研舰各 1 艘；
+# 护卫舰 2.8 起 x10 = 30 艘一支舰队，带 10 级永生舰队司令。
 atbgp_spawn_start_fleets = {{
-	while = {{
-		count = 10
-		create_fleet = {{
-			effect = {{
-				set_owner = root
-				create_ship = {{
-					name = random
-					random_existing_design = constructor
-				}}
-				set_location = root.capital_star
+	create_fleet = {{
+		effect = {{
+			set_owner = root
+			create_ship = {{
+				name = random
+				random_existing_design = constructor
 			}}
+			set_location = root.capital_star
 		}}
 	}}
-	while = {{
-		count = 10
-		create_fleet = {{
-			effect = {{
-				set_owner = root
-				create_ship = {{
-					name = random
-					random_existing_design = science
-				}}
-				set_location = root.capital_star
-				save_event_target_as = atbgp_science_ship
+	create_fleet = {{
+		effect = {{
+			set_owner = root
+			create_ship = {{
+				name = random
+				random_existing_design = science
 			}}
+			set_location = root.capital_star
+			save_event_target_as = atbgp_science_ship
 		}}
-		create_leader = {{
-			name = random
-			species = root.species
-			class = scientist
-			skill = 1
-		}}
-		event_target:atbgp_science_ship = {{ assign_leader = last_created_leader }}
 	}}
+	create_leader = {{
+		name = random
+		species = root.species
+		class = scientist
+		skill = 1
+	}}
+	event_target:atbgp_science_ship = {{ assign_leader = last_created_leader }}
 	create_fleet = {{
 		effect = {{
 			set_owner = root
@@ -1632,8 +1625,6 @@ atbgp_btc_bonus = {
 atbgp_power_base = {
 	country_naval_cap_add = 1000
 	country_starbase_capacity_add = 10
-	# 2.8：初始舰队 x10 带来 10 位科学家，领袖上限要跟着抬
-	country_leader_cap_add = 10
 }
 
 # 2.7：开局母星 20 年内人口增长翻倍（有机人口的自然增长、额外增长与机械人口的组装各 +100%）

@@ -10,8 +10,6 @@ atbgp_btc_bonus = {
 atbgp_power_base = {
 	country_naval_cap_add = 1000
 	country_starbase_capacity_add = 10
-	# 2.8：初始舰队 x10 带来 10 位科学家，领袖上限要跟着抬
-	country_leader_cap_add = 10
 }
 
 # 2.7：开局母星 20 年内人口增长翻倍（有机人口的自然增长、额外增长与机械人口的组装各 +100%）
