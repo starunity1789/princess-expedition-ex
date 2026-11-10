@@ -49,7 +49,7 @@ pc_pd_cold_gaia = {
 	entity = "cold_gaia_planet"
 	entity_scale = @planet_standard_scale
 	icon = GFX_planet_type_pdcoldgaia
-	icon_large = GFX_planet_type_pdcoldgaiaa_big
+	icon_large = GFX_planet_type_pdcoldgaia_big
 
 	atmosphere_color		= hsv { 0.58	0.3 0.7 }
 	atmosphere_intensity	= 1.0

@@ -435,7 +435,7 @@
   },
   "common/planet_classes/pd_gaia_planet_classes.txt": {
    "from": "pd:common/planet_classes/pd_gaia_planet_classes.txt",
-   "sha1": "554dfe0fa4ef6ec73856734404f7c04285569e15"
+   "sha1": "5fa2800baa5db11488a93047285f17a9800186ac"
   },
   "common/planet_classes/pd_regular_dry_planet_dummy_classes.txt": {
    "from": "pd:common/planet_classes/pd_regular_dry_planet_dummy_classes.txt",

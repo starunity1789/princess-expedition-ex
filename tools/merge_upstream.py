@@ -230,6 +230,10 @@ PATCHES = {
         ("sub", (r'(opposites\s*=\s*\{(?:\s*"trait_cyborg_climate_adjustment_(?:wet|dry|cold)")+)',
                  '\\1\n\t\t"trait_cyborg_climate_adjustment_volcanic"', 3)),
         ("append_vanilla", ["trait_cyborg_climate_adjustment_volcanic"])],
+    # PD 原作者笔误：冷盖亚的大图标多写了一个 a，pdplanet.gfx 里定义的是 GFX_planet_type_pdcoldgaia_big。
+    # 打开冷盖亚星球界面时 error.log 报 unknown sprite，图标显示为空
+    ("pd", "common/planet_classes/pd_gaia_planet_classes.txt"): [
+        ("sub", (r"GFX_planet_type_pdcoldgaiaa_big", "GFX_planet_type_pdcoldgaia_big", 1))],
 }
 
 # 从被排除的上游文件里只抽出指定的顶层块，单独成一个新文件。
