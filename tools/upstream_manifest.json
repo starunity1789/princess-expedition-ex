@@ -1059,7 +1059,7 @@
   },
   "events/gpm_game_start.txt": {
    "from": "gpm:events/gpm_game_start.txt",
-   "sha1": "8099959e88cfc7efe65b195eb54dc910e39f95a9"
+   "sha1": "2368843e401c62a33abc501c42cba1b3436e8e37"
   },
   "events/gpm_on_planet_class_changed_events.txt": {
    "from": "gpm:events/gpm_on_planet_class_changed_events.txt",

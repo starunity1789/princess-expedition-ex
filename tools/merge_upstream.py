@@ -152,8 +152,7 @@ GAME_START = """namespace = gpm_game_start
 
 # 皇女的远征军EX：GPM 原来在这里弹出设置菜单（gpm_start_menu.1），由菜单里的「开始游戏」选项
 # 启动引擎 gpm_engine.0。菜单已删，这里固定用默认设置直接启动。
-# 同时打开 GPM 自带的几个子系统关闭开关——对应内容（迷你巨构、前驱者、行星环装饰、事件掉落遗珍、
-# AI 偷遗珍）已经整个删掉，走作者自己设计的关闭路径最稳。
+# 同时打开 GPM 自带的两个子系统关闭开关——迷你巨构、前驱者修正已经整个删掉，走作者自己设计的关闭路径最稳。
 # 起源相关的分支（死亡世界、前驱者世界、陨落帝国殖民地、后裔）与詹姆斯·韦伯彩蛋一并删除。
 event = {
 	id = gpm_game_start.0
@@ -174,9 +173,9 @@ event = {
 		# 已删子系统的关闭开关
 		set_global_flag = gpm_mini_megas_disabled
 		set_global_flag = gpm_modifiers_precursor_disabled
-		set_global_flag = gpm_planetary_rings_disabled
-		set_global_flag = gpm_relic_drops_disabled
-		set_global_flag = gpm_relic_heists_AI_disabled
+		# 不要设 gpm_planetary_rings_disabled：它不只关行星环装饰，还会关掉金属环/冰环这两个
+		# 挂在真实星球上的行星修正（gpm_spawn_planet_ring_modifier）。装饰函数 gpm_set_planetary_rings
+		# 与资源开采站 gpm_spawn_RES 已经掏空，所以不设它的结果是：修正照挂、不生成环形装饰和开采站
 		# 原菜单「开始游戏」选项
 		country_event = { id = gpm_engine.0 days = 1 }
 	}

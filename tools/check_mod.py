@@ -297,7 +297,10 @@ if UPSTREAM:
             "common/ambient_objects/gpm_ambient_objects.txt", "events/gpm_start_menu.txt"))),
         ("GPM 引擎跳过设置菜单直接启动", "country_event = { id = gpm_engine.0 days = 1 }" in gstart
          and "gpm_start_menu" not in strip_noise(gstart, True)
-         and "set_global_flag = gpm_planetary_rings_disabled" in gstart),
+         and "set_global_flag = gpm_mini_megas_disabled" in gstart
+         and "set_global_flag = gpm_modifiers_precursor_disabled" in gstart),
+        # 这个旗标会连金属环/冰环修正一起关掉（游戏存档实测发现）
+        ("GPM 行星环修正没有被关掉", "gpm_planetary_rings_disabled" not in strip_noise(gstart, True)),
         ("PD 岗位与区域已删、行星类型保留", not list((MOD / "common").glob("pop_jobs/zzz_pd_*"))
          and not list((MOD / "common").glob("zones/pd_*"))
          and exists("common/planet_classes/pd_superhabitable_planet_classes.txt")
