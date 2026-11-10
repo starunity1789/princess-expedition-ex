@@ -1,0 +1,52 @@
+# Stellar AI 0.14.1: basic-resource recovery, used by every economic plan tier (before, only basic and advanced
+# had energy, minerals and food recovery, as scaling income goals that apply only once the plan's main
+# targets are met, and no tier had alloys; late-game AIs defaulted).
+# A focus applies whenever its potential holds and never holds a plan open. A focus target is where the extra
+# priority stops, not how fast the AI recovers. Triggers: common/scripted_triggers/stellarai_reactive_triggers.txt.
+subplan = {
+	optional = yes
+	scaling = yes
+	set_name = "Stellar AI energy recovery"
+	potential = {
+		stellarai_energy_recovery_needed = yes
+	}
+	focus = {
+		energy = 40
+	}
+}
+
+subplan = {
+	optional = yes
+	scaling = yes
+	set_name = "Stellar AI minerals recovery"
+	potential = {
+		stellarai_minerals_recovery_needed = yes
+	}
+	focus = {
+		minerals = 30
+	}
+}
+
+subplan = {
+	optional = yes
+	scaling = yes
+	set_name = "Stellar AI food recovery"
+	potential = {
+		stellarai_food_recovery_needed = yes
+	}
+	focus = {
+		food = 20
+	}
+}
+
+subplan = {
+	optional = yes
+	scaling = yes
+	set_name = "Stellar AI alloys recovery"
+	potential = {
+		stellarai_alloys_recovery_needed = yes
+	}
+	focus = {
+		alloys = 30
+	}
+}

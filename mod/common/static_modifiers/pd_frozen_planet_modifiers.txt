@@ -1,0 +1,182 @@
+#Arctic
+pd_arctic = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_arctic.dds"
+	icon_frame = 1
+}
+pd_cold_desert = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_cold_desert.dds"
+	icon_frame = 1
+}
+pd_glacial = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_glacial.dds"
+	icon_frame = 1
+}
+pd_antarctic = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_antarctic.dds"
+	icon_frame = 1
+}
+pd_aeolian = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_aeolian.dds"
+	icon_frame = 1
+}
+pd_ice_spike = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_ice_spike.dds"
+	icon_frame = 1
+}
+pd_crevasse = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_crevasse.dds"
+	icon_frame = 1
+}
+pd_ice_dunes = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_ice_dunes.dds"
+	icon_frame = 1
+}
+pd_ferrospring = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_ferrospring.dds"
+	icon_frame = 1
+}
+pd_supraglacial_lakes = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_supraglacial_lakes.dds"
+	icon_frame = 1
+}
+pd_storm = {
+	custom_tooltip = pd_storm_buildings_tt
+	show_only_custom_tooltip = no
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_storm.dds"
+	icon_frame = 1
+	district_generator_max_add = 6
+	district_farming_max_add = -2
+	planet_structures_cost_mult = 0.10
+	planet_housing_mult = -0.1
+}
+pd_iceberg = {
+	custom_tooltip = pd_iceberg_buildings_tt
+	show_only_custom_tooltip = no
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_iceberg.dds"
+	icon_frame = 1
+	district_farming_max_add = 4
+	planet_housing_mult = -0.1
+	planet_structures_cost_mult = 0.10
+}
+
+#Alpine
+pd_alpine = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_alpine.dds"
+	icon_frame = 1
+}
+pd_boreal = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_boreal.dds"
+	icon_frame = 1
+}
+pd_snow = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_snow.dds"
+	icon_frame = 1
+}
+pd_highland = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_highland.dds"
+	icon_frame = 1
+}
+pd_dune_forest = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_dune_forest.dds"
+	icon_frame = 1
+}
+pd_fjord = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_fjord.dds"
+	icon_frame = 1
+}
+pd_blossom = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_blossom.dds"
+	icon_frame = 1
+}
+pd_taiga = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_taiga.dds"
+	icon_frame = 1
+}
+pd_craton = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_craton.dds"
+	icon_frame = 1
+}
+pd_ravine = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_ravine.dds"
+	icon_frame = 1
+}
+pd_glaciovolcanic = {
+	custom_tooltip = pd_glaciovolcanic_buildings_tt
+	show_only_custom_tooltip = no
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_glaciovolcanic.dds"
+	icon_frame = 1
+	district_mining_max_add = 2
+	district_generator_max_add = 2
+	pop_environment_tolerance = -0.1
+	planet_housing_mult = -0.1
+}
+pd_lanthanide = {
+	custom_tooltip = pd_lanthanide_buildings_tt
+	show_only_custom_tooltip = no
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_lanthanide.dds"
+	icon_frame = 1
+	district_mining_max_add = 4
+	planet_structures_cost_mult = 0.1
+	planet_structures_upkeep_mult = 0.1
+}
+
+#Tundra
+pd_tundra = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_tundra.dds"
+	icon_frame = 1
+}
+pd_bog = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_bog.dds"
+	icon_frame = 1
+}
+pd_mycelium = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_mycelium.dds"
+	icon_frame = 1
+}
+pd_mud = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_mud.dds"
+	icon_frame = 1
+}
+pd_basalt = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_basalt.dds"
+	icon_frame = 1
+}
+pd_tuya = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_tuya.dds"
+	icon_frame = 1
+}
+pd_cryovolcano = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_cryovolcano.dds"
+	icon_frame = 1
+}
+pd_treeline = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_treeline.dds"
+	icon_frame = 1
+}
+pd_peatland = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_peatland.dds"
+	icon_frame = 1
+}
+pd_travertine = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_travertine.dds"
+	icon_frame = 1
+}
+pd_cryoflora = {
+	custom_tooltip = pd_cryoflora_buildings_tt
+	show_only_custom_tooltip = no
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_cryoflora.dds"
+	icon_frame = 1
+	district_generator_max_add = 4
+	pop_environment_tolerance = -0.20
+	pop_happiness = 0.1
+}
+pd_lichen = {
+	custom_tooltip = pd_lichen_buildings_tt
+	show_only_custom_tooltip = no
+	icon = "gfx/interface/icons/planet_modifiers/pm_pd_lichen.dds"
+	icon_frame = 1
+	district_farming_max_add = 6
+	district_mining_max_add = -2
+	pop_environment_tolerance = 0.1
+	planet_structures_upkeep_mult = 0.2
+}

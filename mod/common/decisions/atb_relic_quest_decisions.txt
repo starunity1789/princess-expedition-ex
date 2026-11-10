@@ -1,0 +1,37 @@
+# 由 tools/gen_relic_quest.py 生成，请勿手改
+
+# 探寻遗珍：玩家首都决议，花 10000 能量币随机获得一个还没有的 GPM 遗珍，直到 21 个全部获得。
+# 拿齐之后决议自动消失（条件写在 potential 里）。
+decision_atb_relic_quest = {
+	owned_planets_only = yes
+	sound = event_activating_unknown_technology
+	icon = decision_museum
+
+	resources = {
+		category = decisions
+		cost = {
+			energy = 10000
+		}
+	}
+
+	potential = {
+		is_capital = yes
+		owner = {
+			is_ai = no
+			atb_has_unclaimed_gpm_relic = yes
+		}
+	}
+
+	effect = {
+		custom_tooltip = decision_atb_relic_quest_tt
+		hidden_effect = {
+			owner = {
+				atb_grant_gpm_relic = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}

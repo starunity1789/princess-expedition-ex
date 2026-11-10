@@ -1,0 +1,60 @@
+namespace = stellarai_strategy
+# Monthly war-duration counter used by long-war refit funding.
+country_event = {
+  id = stellarai_strategy.1
+  hide_window = yes
+  is_triggered_only = yes
+  trigger = {
+    is_ai = yes
+    is_nomadic = no
+  }
+  immediate = {
+    if = {
+      limit = {
+        is_at_war = yes
+      }
+      if = {
+        limit = {
+          NOT = {
+            is_variable_set = stellarai_war_months
+          }
+        }
+        set_variable = { which = stellarai_war_months value = 0 }
+      }
+      if = {
+        limit = {
+          check_variable = { which = stellarai_war_months value < @stellarai_refit_war_months }
+        }
+        change_variable = { which = stellarai_war_months value = 1 }
+      }
+    }
+    else = {
+      clear_variable = stellarai_war_months
+    }
+  }
+}
+
+# Retired coalition worker. Kept only to consume events already queued in older saves.
+country_event = {
+  id = stellarai_strategy.4
+  hide_window = yes
+  is_triggered_only = yes
+  immediate = {
+    clear_variable = stellarai_assessment_due_day
+  }
+}
+
+# on_claim_system: This = claimant, From = owner of the claimed system.
+country_event = {
+  id = stellarai_strategy.5
+  hide_window = yes
+  is_triggered_only = yes
+  trigger = {
+    is_at_war = no
+    stellarai_managed_empire = yes
+    stellarai_conquest_identity = yes
+  }
+  immediate = {
+    stellarai_note_claim_target = yes
+  }
+}

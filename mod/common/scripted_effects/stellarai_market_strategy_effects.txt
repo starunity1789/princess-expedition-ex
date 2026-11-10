@@ -1,0 +1,43 @@
+stellarai_strategic_market_purchase = {
+ if = {
+  limit = {
+   OR = {
+    stellarai_opportunity_ready = yes
+    stellarai_war_fleet_push = yes
+    stellarai_long_war_refit = yes
+   }
+   stellarai_foundation_ready = yes
+   stellarai_war_economy_sustainable = yes
+   NOT = { stellarai_basic_econ_recovery_needed = yes }
+   NOR = { has_deficit = volatile_motes has_deficit = exotic_gases has_deficit = rare_crystals }
+  }
+  # No active-economic-plan trigger is exposed. Scale by absolute fleet capacity,
+  # not a technology gate or percentage, with a strict monthly transaction cap.
+  set_variable = { which = stellarai_market_buffer value = @stellarai_market_small_buffer }
+  set_variable = { which = stellarai_market_batch_cap value = 100 }
+  if = {
+   limit = { max_naval_capacity >= 800 }
+   set_variable = { which = stellarai_market_buffer value = @stellarai_market_large_buffer }
+   set_variable = { which = stellarai_market_batch_cap value = 500 }
+  }
+  else_if = {
+   limit = { max_naval_capacity >= 200 }
+   set_variable = { which = stellarai_market_buffer value = @stellarai_market_medium_buffer }
+   set_variable = { which = stellarai_market_batch_cap value = 250 }
+  }
+  if = {
+   limit = { stellarai_alloy_navy = yes }
+   inline_script = { script = stellarai/market_strategic_resource RESOURCE = alloys BUFFER_MULT = 1 MAX_UNIT_PRICE = @stellarai_alloy_price_ceiling_per_unit }
+  }
+  if = {
+   limit = { stellarai_food_navy = yes }
+   inline_script = { script = stellarai/market_strategic_resource RESOURCE = food BUFFER_MULT = 2 MAX_UNIT_PRICE = 2.6 }
+  }
+  if = {
+   limit = { stellarai_mineral_navy = yes }
+   inline_script = { script = stellarai/market_strategic_resource RESOURCE = minerals BUFFER_MULT = 2 MAX_UNIT_PRICE = 2.6 }
+  }
+  clear_variable = stellarai_market_buffer
+  clear_variable = stellarai_market_batch_cap
+ }
+}

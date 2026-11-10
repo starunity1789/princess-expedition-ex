@@ -1,0 +1,30 @@
+complex_trigger_modifier = {
+  trigger = num_zones
+  parameters = { type = zone_industrial }
+  mode = add
+  mult = @zone_industry_weight_per_zone
+}
+
+modifier = {
+	AND = {
+		has_any_factory_zone = yes
+		has_any_foundry_zone = yes
+	}
+	add = @industry_mixed_zone_pair_weight
+}
+
+modifier = {
+	AND = {
+		OR = {
+			has_building = building_factory_1
+			has_building = building_factory_2
+			has_building = building_factory_3
+		}
+		OR = {
+			has_building = building_foundry_1
+			has_building = building_foundry_2
+			has_building = building_foundry_3
+		}
+	}
+	add = @industry_mixed_building_pair_weight
+}

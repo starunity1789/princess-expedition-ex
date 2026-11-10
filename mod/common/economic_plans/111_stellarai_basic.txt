@@ -1,0 +1,258 @@
+# Stellar AI basic plan, staged for Stellaris 4.5.
+
+basic_economy_plan = {
+		ai_weight = { weight = 900 }
+
+		focus = {
+			physics_research = @stellarai_early_economic_plan_research_focus_target
+			society_research = @stellarai_early_economic_plan_research_focus_target
+			engineering_research = @stellarai_early_economic_plan_research_focus_target
+		}
+
+		subplan = {
+			scaling = yes
+			set_name = "Physics Stellar AI earlygame"
+			potential = {
+				meets_basic_resource_thresholds = yes
+				has_monthly_income = { resource = physics_research value < @stellarai_early_economic_plan_scaling_research_limit }
+			}
+	
+			income = {
+				physics_research = @stellarai_early_economic_plan_scaling_research_target
+			}
+		}
+
+		subplan = {
+			scaling = yes
+			set_name = "Society Stellar AI earlygame"
+			potential = {
+				meets_basic_resource_thresholds = yes
+				has_monthly_income = { resource = society_research value < @stellarai_early_economic_plan_scaling_research_limit }
+			}
+	
+			income = {
+				society_research = @stellarai_early_economic_plan_scaling_research_target
+			}
+		}
+
+		subplan = {
+			scaling = yes
+			set_name = "Engineering Stellar AI earlygame"
+			potential = {
+				meets_basic_resource_thresholds = yes
+				has_monthly_income = { resource = engineering_research value < @stellarai_early_economic_plan_scaling_research_limit }
+			}
+			
+			income = {
+				engineering_research = @stellarai_early_economic_plan_scaling_research_target
+			}
+		}
+
+		subplan = {
+			optional = yes # Stellar AI 0.14.1: focus applies while behind
+			scaling = yes
+			set_name = "Machine Stellar AI early energy support"
+			potential = {
+				is_machine_empire = yes
+				OR = {
+					has_monthly_income = { resource = energy value < 35 }
+					resource_stockpile_compare = { resource = energy value < 4500 }
+				}
+			}
+	
+			focus = {
+				energy = 36
+			}
+		}
+
+		subplan = {
+			optional = yes # Stellar AI 0.14.1: focus applies while behind
+			scaling = yes
+			set_name = "Machine Stellar AI early severe energy support"
+			potential = {
+				is_machine_empire = yes
+				has_monthly_income = { resource = energy value < 0 }
+				resource_stockpile_compare = { resource = energy value < 2200 }
+			}
+	
+			focus = {
+				energy = 65
+			}
+		}
+
+		subplan = {
+			optional = yes # Stellar AI 0.14.1: focus applies while behind
+			scaling = yes
+			set_name = "Determined Exterminator early energy support"
+			potential = {
+				has_valid_civic = civic_machine_terminator
+				OR = {
+					has_monthly_income = { resource = energy value < 45 }
+					resource_stockpile_compare = { resource = energy value < 5200 }
+				}
+			}
+	
+			focus = {
+				energy = 32
+			}
+		}
+
+		subplan = {
+			optional = yes # Stellar AI 0.14.1: focus applies while behind
+			scaling = yes
+			set_name = "Machine Stellar AI early energy safety buffer"
+			potential = {
+				is_machine_empire = yes
+				OR = {
+					NOT = { has_monthly_income = { resource = energy value > 45 } }
+					resource_stockpile_compare = { resource = energy value < 6000 }
+				}
+			}
+	
+			focus = {
+				energy = 18
+			}
+		}
+
+		subplan = {
+			optional = yes # Stellar AI 0.14.1: focus applies while behind
+			scaling = yes
+			set_name = "First tier Stellar AI consumer goods recovery"
+			potential = {
+				stellarai_consumer_goods_pressure = yes
+			}
+
+			focus = { consumer_goods = 12 }
+		}
+
+	subplan = {
+			scaling = yes
+			set_name = "Stellar AI unity support"
+			potential = {
+				stellarai_country_unity_push = yes
+			}
+
+			income = {
+				unity = 12
+			}
+		}
+
+		inline_script = "stellarai/basic_resource_recovery" # Stellar AI 0.14.1: energy, minerals, food and alloys recovery in every tier
+
+		subplan = {
+			optional = yes
+			scaling = yes
+			set_name = "Stellar AI fleet readiness focus"
+			potential = {
+				NOT = { stellarai_war_fleet_push = yes }
+				stellarai_fleet_readiness_focus = yes
+				stellarai_alloy_navy = yes
+			}
+
+			focus = {
+				alloys = 28
+			}
+		}
+
+		subplan = {
+			optional = yes
+			scaling = yes
+			set_name = "Stellar AI strategic resource recovery - volatile motes"
+			potential = {
+				OR = {
+					has_technology = tech_mine_volatile_motes
+					has_technology = tech_volatile_motes
+					resource_stockpile_compare = { resource = volatile_motes value > 0 }
+				}
+				OR = {
+					has_deficit = volatile_motes
+					NOT = { has_monthly_income = { resource = volatile_motes value > 1 } }
+					resource_stockpile_compare = { resource = volatile_motes value < 40 }
+				}
+			}
+	
+			focus = {
+				volatile_motes = 3
+			}
+		}
+
+		subplan = {
+			optional = yes
+			scaling = yes
+			set_name = "Stellar AI strategic resource recovery - exotic gases"
+			potential = {
+				OR = {
+					has_technology = tech_mine_exotic_gases
+					has_technology = tech_exotic_gases
+					resource_stockpile_compare = { resource = exotic_gases value > 0 }
+				}
+				OR = {
+					has_deficit = exotic_gases
+					NOT = { has_monthly_income = { resource = exotic_gases value > 2 } }
+					resource_stockpile_compare = { resource = exotic_gases value < 60 }
+				}
+			}
+	
+			focus = {
+				exotic_gases = 4
+			}
+		}
+
+		subplan = {
+			optional = yes
+			scaling = yes
+			set_name = "Stellar AI strategic resource recovery - rare crystals"
+			potential = {
+				OR = {
+					has_technology = tech_mine_rare_crystals
+					has_technology = tech_rare_crystals
+					resource_stockpile_compare = { resource = rare_crystals value > 0 }
+				}
+				OR = {
+					has_deficit = rare_crystals
+					NOT = { has_monthly_income = { resource = rare_crystals value > 1 } }
+					resource_stockpile_compare = { resource = rare_crystals value < 40 }
+				}
+			}
+	
+			focus = {
+				rare_crystals = 3
+			}
+		}
+
+	subplan = {
+		scaling = yes
+		set_name = "Physics Stellar AI additional research"
+		potential = {
+			stellarai_research_ready = yes
+			has_monthly_income = { resource = physics_research value < @stellarai_additional_research_economic_plan_scaling_research_limit }
+		}
+		income = {
+			physics_research = @stellarai_additional_research_economic_plan_scaling_research_target
+		}
+	}
+
+	subplan = {
+		scaling = yes
+		set_name = "Society Stellar AI additional research"
+		potential = {
+			stellarai_research_ready = yes
+			has_monthly_income = { resource = society_research value < @stellarai_additional_research_economic_plan_scaling_research_limit }
+		}
+		income = {
+			society_research = @stellarai_additional_research_economic_plan_scaling_research_target
+		}
+	}
+
+	subplan = {
+		scaling = yes
+		set_name = "Engineering Stellar AI additional research"
+		potential = {
+			stellarai_research_ready = yes
+			has_monthly_income = { resource = engineering_research value < @stellarai_additional_research_economic_plan_scaling_research_limit }
+		}
+		income = {
+			engineering_research = @stellarai_additional_research_economic_plan_scaling_research_target
+		}
+	}
+}

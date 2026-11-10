@@ -1,0 +1,588 @@
+stellarai_military_emergency = {
+  OR = {
+    AND = {
+      highest_threat > 30
+      used_naval_capacity_percent < 0.90
+    }
+    AND = {
+      is_at_war = yes
+      highest_threat > 20
+      used_naval_capacity_percent < 1.00
+    }
+    AND = {
+      OR = {
+        has_valid_civic = civic_machine_terminator
+        has_valid_civic = civic_fanatic_purifiers
+        has_valid_civic = civic_hive_devouring_swarm
+      }
+      highest_threat > 24
+      used_naval_capacity_percent < 1.05
+    }
+    highest_threat > 45
+  }
+}
+
+# Shared settled-empire economic states, read from net monthly income (profit minus loss).
+# Construction spends minerals as they arrive, so a low stockpile alone is not trouble;
+# a crisis is a real deficit or a loss with almost nothing left to cover it.
+stellarai_economic_crisis = {
+  is_nomadic = no
+  OR = {
+    has_deficit = energy
+    has_deficit = minerals
+    AND = {
+      resource_income_compare = { resource = energy value < 0 }
+      resource_stockpile_compare = { resource = energy value < 1000 }
+    }
+    AND = {
+      resource_income_compare = { resource = minerals value < 0 }
+      resource_stockpile_compare = { resource = minerals value < 500 }
+    }
+    AND = {
+      country_uses_food = yes
+      OR = {
+        has_deficit = food
+        AND = {
+          resource_income_compare = { resource = food value < 0 }
+          resource_stockpile_compare = { resource = food value < 500 }
+        }
+      }
+    }
+    AND = {
+      country_uses_consumer_goods = yes
+      OR = {
+        has_deficit = consumer_goods
+        AND = {
+          resource_income_compare = { resource = consumer_goods value < 0 }
+          resource_stockpile_compare = { resource = consumer_goods value < 300 }
+        }
+      }
+    }
+  }
+}
+
+stellarai_consumer_goods_pressure = {
+  is_nomadic = no
+  country_uses_consumer_goods = yes
+  OR = {
+    has_deficit = consumer_goods
+    NOT = {
+      has_monthly_income = { resource = consumer_goods value > 8 }
+    }
+    resource_stockpile_compare = { resource = consumer_goods value < 300 }
+  }
+}
+
+# A working economy: positive basic incomes (a large energy reserve also carries upkeep)
+# and a small energy floor.
+stellarai_foundation_ready = {
+  is_nomadic = no
+  NOT = {
+    stellarai_economic_crisis = yes
+  }
+  OR = {
+    has_monthly_income = { resource = energy value > 15 }
+    resource_stockpile_compare = { resource = energy value > 5000 }
+  }
+  has_monthly_income = { resource = minerals value > 12 }
+  resource_stockpile_compare = { resource = energy value > 500 }
+  OR = {
+    country_uses_food = no
+    has_monthly_income = { resource = food value > 5 }
+  }
+  OR = {
+    country_uses_consumer_goods = no
+    has_monthly_income = { resource = consumer_goods value > 6 }
+  }
+}
+
+# A strong economy that can carry extra research targets, whenever it is reached.
+stellarai_research_ready = {
+  is_nomadic = no
+  NOT = {
+    stellarai_economic_crisis = yes
+  }
+  OR = {
+    has_monthly_income = { resource = energy value > 25 }
+    resource_stockpile_compare = { resource = energy value > 10000 }
+  }
+  has_monthly_income = { resource = minerals value > 20 }
+  resource_stockpile_compare = { resource = energy value > 1000 }
+  OR = {
+    country_uses_food = no
+    has_monthly_income = { resource = food value > 10 }
+  }
+  OR = {
+    country_uses_consumer_goods = no
+    has_monthly_income = { resource = consumer_goods value > 10 }
+  }
+}
+
+stellarai_has_consumer_goods_world = {
+  OR = {
+    country_uses_consumer_goods = no
+    any_owned_planet = {
+      OR = {
+        has_designation = col_factory
+        has_designation = col_habitat_factory
+        has_designation = col_mac_factory
+        has_any_factory_zone = yes
+        has_building = building_factory_1
+        has_building = building_factory_2
+        has_building = building_factory_3
+      }
+    }
+  }
+}
+
+stellarai_settled_ai_has_unemployment = {
+  is_ai = yes
+  is_nomadic = no
+  any_owned_planet = {
+    num_unemployed > 0
+  }
+}
+
+# Live wartime mobilisation. No year, technology, intel or personality gate.
+# Below 85% retain emergency rebuilding; further growth needs a sustainable economy.
+stellarai_war_economy_sustainable = {
+  is_nomadic = no
+  NOT = {
+    stellarai_economic_crisis = yes
+  }
+  resource_income_compare = { resource = energy value >= 0 }
+  resource_income_compare = { resource = minerals value >= 0 }
+  OR = {
+    country_uses_food = no
+    resource_income_compare = { resource = food value >= 0 }
+  }
+  OR = {
+    country_uses_consumer_goods = no
+    resource_income_compare = { resource = consumer_goods value >= 0 }
+  }
+  # Each construction resource needs its own surplus; hybrids cannot bypass a deficit.
+  OR = {
+    stellarai_alloy_navy = no
+    resource_income_compare = { resource = alloys value > 0 }
+  }
+  OR = {
+    stellarai_food_navy = no
+    resource_income_compare = { resource = food value > 10 }
+  }
+  OR = {
+    stellarai_mineral_navy = no
+    resource_income_compare = { resource = minerals value > 10 }
+  }
+}
+
+# Reserve and income headroom for ordinary over-cap upkeep, not an upkeep discount.
+stellarai_war_overcap_affordable = {
+  stellarai_war_economy_sustainable = yes
+  stellarai_foundation_ready = yes
+  resource_stockpile_compare = { resource = energy value > 2500 }
+  resource_income_to_expenditure_balance_ratio = {
+    resource = energy
+    value >= 1.25
+  }
+  OR = {
+    stellarai_alloy_navy = no
+    AND = {
+      resource_stockpile_compare = { resource = alloys value > 500 }
+      resource_income_compare = { resource = alloys value > 10 }
+      resource_income_to_expenditure_balance_ratio = {
+        resource = alloys
+        value >= 1.25
+      }
+    }
+  }
+  OR = {
+    stellarai_food_navy = no
+    AND = {
+      resource_stockpile_compare = { resource = food value > 1500 }
+      resource_income_to_expenditure_balance_ratio = {
+        resource = food
+        value >= 1.25
+      }
+    }
+  }
+  OR = {
+    stellarai_mineral_navy = no
+    AND = {
+      resource_stockpile_compare = { resource = minerals value > 1500 }
+      resource_income_to_expenditure_balance_ratio = {
+        resource = minerals
+        value >= 1.25
+      }
+    }
+  }
+}
+
+stellarai_war_fleet_push = {
+  is_ai = yes
+  is_nomadic = no
+  is_at_war = yes
+  OR = {
+    used_naval_capacity_percent < 0.85
+    AND = {
+      used_naval_capacity_percent < @stellarai_war_fleet_capacity_target
+      stellarai_war_economy_sustainable = yes
+    }
+    AND = {
+      used_naval_capacity_percent < @stellarai_war_fleet_overcap_target
+      stellarai_war_overcap_affordable = yes
+    }
+  }
+}
+
+stellarai_colonization_push = {
+  is_ai = yes
+  is_nomadic = no
+  is_at_war = no
+  ai_colonize_plans > 0
+  NOT = {
+    stellarai_economic_crisis = yes
+  }
+}
+
+# The empire is still claiming living space: real colony plans, peace, no threat, and fewer
+# colonies than vanilla's own few-planets threshold. Ship spending yields to colony ships meanwhile.
+stellarai_expansion_phase = {
+  is_ai = yes
+  is_nomadic = no
+  is_at_war = no
+  ai_colonize_plans > 0
+  num_owned_colonies < @stellarai_expansion_colony_limit
+  highest_threat < 20
+  # Stellar AI 0.14.1: not once alloys pile up; then alloys are not what holds colony ships back
+  # (a one-colony empire sat on 24,000 alloys with one corvette).
+  resource_stockpile_compare = { resource = alloys value < @stellarai_expansion_alloy_stock }
+  NOT = {
+    stellarai_military_emergency = yes
+  }
+}
+
+stellarai_should_rebuild_fleet = {
+  is_nomadic = no
+  OR = {
+    stellarai_war_fleet_push = yes
+    AND = {
+      stellarai_military_emergency = yes
+      used_naval_capacity_percent < 0.85
+    }
+    # Peacetime tiers follow the economy: a baseline fleet, then 80%, 90% and a full fleet.
+    # Early expansion trades ships for colony ships through the alloy budget, not a calendar cap.
+    AND = {
+      is_at_war = no
+      NOT = {
+        stellarai_economic_crisis = yes
+      }
+      used_naval_capacity_percent < 0.60
+    }
+    AND = {
+      is_at_war = no
+      stellarai_foundation_ready = yes
+      used_naval_capacity_percent < @stellarai_routine_fleet_target
+    }
+    AND = {
+      is_at_war = no
+      stellarai_military_foundation_strong = yes
+      used_naval_capacity_percent < @stellarai_strong_fleet_target
+    }
+    AND = {
+      is_at_war = no
+      used_naval_capacity_percent < @stellarai_affordable_fleet_target
+      NOT = { stellarai_opening_colonization_push = yes }
+      stellarai_fleet_affordable = yes
+    }
+    AND = {
+      recently_lost_war = yes
+      stellarai_foundation_ready = yes
+      used_naval_capacity_percent < 0.75
+    }
+  }
+}
+
+stellarai_energy_recovery_needed = {
+  is_nomadic = no
+  OR = {
+    has_deficit = energy
+    NOT = {
+      has_monthly_income = { resource = energy value > 25 }
+    }
+    resource_stockpile_compare = { resource = energy value < 1000 }
+  }
+}
+
+stellarai_minerals_recovery_needed = {
+  is_nomadic = no
+  OR = {
+    has_deficit = minerals
+    NOT = {
+      has_monthly_income = { resource = minerals value > 20 }
+    }
+    resource_stockpile_compare = { resource = minerals value < 500 }
+  }
+}
+
+stellarai_food_recovery_needed = {
+  is_nomadic = no
+  country_uses_food = yes
+  OR = {
+    has_deficit = food
+    NOT = {
+      has_monthly_income = { resource = food value > 15 }
+    }
+    resource_stockpile_compare = { resource = food value < 500 }
+  }
+}
+
+# Stellar AI 0.14.1: alloys run short when fleet and starbase upkeep outgrow production (lost forge worlds,
+# a large navy). A deficit, or negative net income with little left in stock, gets a recovery focus.
+stellarai_alloys_recovery_needed = {
+  is_nomadic = no
+  OR = {
+    has_deficit = alloys
+    AND = {
+      resource_income_compare = { resource = alloys value < 0 }
+      resource_stockpile_compare = { resource = alloys value < 1000 }
+    }
+  }
+}
+
+stellarai_basic_econ_recovery_needed = {
+  OR = {
+    stellarai_energy_recovery_needed = yes
+    stellarai_minerals_recovery_needed = yes
+    stellarai_food_recovery_needed = yes
+    stellarai_consumer_goods_pressure = yes
+  }
+}
+
+stellarai_country_unity_push = {
+  stellarai_foundation_ready = yes
+  OR = {
+    AND = {
+      years_passed < 80
+      num_ascension_perks < 2
+    }
+    AND = {
+      years_passed < 140
+      num_ascension_perks < 3
+    }
+  }
+}
+
+stellarai_planet_unity_push = {
+  exists = owner_or_space_owner
+  owner_or_space_owner = {
+    stellarai_country_unity_push = yes
+  }
+}
+
+stellarai_good_research_candidate = {
+  OR = {
+    check_modifier_value = { modifier = planet_researchers_produces_mult value > 0.09 }
+    check_modifier_value = { modifier = planet_researchers_physics_research_produces_mult value > 0.09 }
+    check_modifier_value = { modifier = planet_researchers_society_research_produces_mult value > 0.09 }
+    check_modifier_value = { modifier = planet_researchers_engineering_research_produces_mult value > 0.09 }
+    num_districts = { type = district_polytechnic value > 0 }
+    num_free_districts = {
+      type = district_polytechnic
+      value > 0
+    }
+    num_districts = { type = district_hab_science value > 0 }
+    num_districts = { type = district_rw_science value > 0 }
+    has_carrier_flag = stellarai_research_commitment_soft
+    has_carrier_flag = stellarai_research_commitment_hard
+    has_any_research_zone = yes
+    has_building = building_research_lab_1
+    has_building = building_research_lab_2
+    has_building = building_research_lab_3
+    has_building = building_physics_lab_1
+    has_building = building_engineering_facility_1
+    has_building = building_biolab_1
+  }
+}
+
+# A research claim is a designation lock for AI empires, so it must respect
+# durable existing investment. Established science development overrides
+# rural, trade and incidental industry; fortress, unity and strong industry stay protected.
+stellarai_research_plan_suitable = {
+  is_scope_type = planet
+  is_colony = yes
+  is_capital = no
+  is_special_colony_type = no
+  NOT = {
+    is_planet_class = pc_nanotech
+  }
+  NOR = {
+    has_carrier_flag = stellarai_industry_commitment_hard
+    has_designation = col_fortress
+    num_buildings = { type = building_stronghold value > 1 }
+    has_building = building_fortress
+    num_zones = { type = zone_unity value > 1 }
+    has_designation = col_bureau
+    has_designation = col_bureau_spiritualist
+    has_designation = col_bureau_hive
+    has_designation = col_bureau_machine
+    has_building = building_bureaucratic_2
+    has_building = building_bureaucratic_3
+  }
+  OR = {
+    has_carrier_flag = stellarai_research_commitment_hard
+    NOR = {
+      # A single factory/foundry investment is protected until science is established.
+      has_carrier_flag = stellarai_industry_commitment_soft
+      # A rural world with real district or zone investment keeps its role.
+      AND = {
+        has_designation = col_mining
+        num_districts = { type = district_mining value > 1 }
+      }
+      AND = {
+        has_designation = col_farming
+        num_districts = { type = district_farming value > 1 }
+      }
+      AND = {
+        has_designation = col_generator
+        num_districts = { type = district_generator value > 1 }
+      }
+      num_zones = { type = zone_minerals value > 1 }
+      num_zones = { type = zone_food value > 1 }
+      num_zones = { type = zone_energy value > 1 }
+      num_zones = { type = zone_trade value > 1 }
+      has_building = building_commercial_megaplex
+    }
+  }
+}
+
+stellarai_research_early_candidate = {
+  stellarai_research_claim_candidate = yes
+  stellarai_good_research_candidate = yes
+}
+
+# A fallback still needs a defensible reason to become a science world. It is
+# either already research-positive or is a large, uncommitted urban colony
+# with enough city capacity to support a dedicated specialist economy.
+stellarai_research_fallback_candidate = {
+  stellarai_research_claim_candidate = yes
+  OR = {
+    stellarai_good_research_candidate = yes
+    AND = {
+      planet_size >= 16
+      OR = {
+        num_districts = { type = district_city value > 1 }
+        num_free_districts = {
+          type = district_city
+          value > 2
+        }
+      }
+    }
+  }
+}
+
+stellarai_research_claim_candidate = {
+  stellarai_research_plan_suitable = yes
+  NOT = {
+    has_carrier_flag = stellarai_research_plan_claimed
+  }
+  NOR = {
+    check_modifier_value = { modifier = planet_researchers_produces_mult value < -0.09 }
+    check_modifier_value = { modifier = planet_researchers_physics_research_produces_mult value < -0.09 }
+    check_modifier_value = { modifier = planet_researchers_society_research_produces_mult value < -0.09 }
+    check_modifier_value = { modifier = planet_researchers_engineering_research_produces_mult value < -0.09 }
+  }
+}
+
+# Machine empires use energy as their main economic safety rail.
+stellarai_machine_energy_emergency = {
+  is_machine_empire = yes
+  OR = {
+    NOT = {
+      has_monthly_income = { resource = energy value > 30 }
+    }
+    resource_stockpile_compare = { resource = energy value < 1000 }
+  }
+}
+
+stellarai_machine_minerals_emergency = {
+  is_machine_empire = yes
+  OR = {
+    NOT = {
+      has_monthly_income = { resource = minerals value > 12 }
+    }
+    resource_stockpile_compare = { resource = minerals value < 300 }
+  }
+}
+
+stellarai_machine_basic_econ_stable = {
+  is_machine_empire = yes
+  stellarai_foundation_ready = yes
+  has_monthly_income = { resource = alloys value > 6 }
+}
+
+stellarai_machine_research_ramp = {
+  is_machine_empire = yes
+  stellarai_research_ready = yes
+  num_owned_planets > 3
+}
+
+stellarai_exterminator_war_ramp = {
+  has_valid_civic = civic_machine_terminator
+  OR = {
+    is_at_war = yes
+    years_passed > 12
+    highest_threat > 20
+  }
+}
+
+# Country ROOT. Evaluated once a month by the planning worker into stellarai_science_lead.
+# Relative power is considered only after the matching native intel category exists.
+stellarai_verified_scientific_lead = {
+  any_relation = {
+    is_country_type = default
+    NOT = {
+      is_same_value = root
+    }
+    OR = {
+      is_neighbor_of = root
+      root = {
+        is_rival = prev
+      }
+      root = {
+        is_at_war_with = prev
+      }
+    }
+    stellarai_relevant_opponent = {
+      OBSERVER = root
+    }
+    root = {
+      has_intel_level = {
+        who = prev
+        category = technology
+        level = 1
+      }
+      relative_power = {
+        who = prev
+        category = technology
+        value >= superior
+      }
+    }
+  }
+}
+
+# A secure scientific leader may build to 90% before the stronger economic tier.
+stellarai_science_lead_fleet_conversion = {
+  has_country_flag = stellarai_science_lead
+  is_nomadic = no
+  is_at_war = no
+  used_naval_capacity_percent < @stellarai_strong_fleet_target
+  stellarai_foundation_ready = yes
+}
+
+stellarai_fleet_readiness_focus = {
+  OR = {
+    stellarai_opportunity_ready = yes
+    stellarai_science_lead_fleet_conversion = yes
+    stellarai_should_rebuild_fleet = yes
+  }
+}

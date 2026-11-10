@@ -1,0 +1,397 @@
+# Country scope. Helpers do not change ROOT or scope. Affordability stays live.
+stellarai_run_monthly_market = {
+  stellarai_market_begin = yes
+  stellarai_market_sell_surpluses = yes
+  stellarai_market_cover_deficits = yes
+  stellarai_market_refill_buffers = yes
+  stellarai_market_finish = yes
+}
+
+stellarai_market_begin = {
+  set_variable = { which = stellarai_market_bought_minerals value = 0 }
+  set_variable = { which = stellarai_market_sold_minerals value = 0 }
+  set_variable = { which = stellarai_market_bought_food value = 0 }
+  set_variable = { which = stellarai_market_sold_food value = 0 }
+  set_variable = { which = stellarai_market_bought_consumer_goods value = 0 }
+  set_variable = { which = stellarai_market_sold_consumer_goods value = 0 }
+  set_variable = { which = stellarai_market_bought_alloys value = 0 }
+  set_variable = { which = stellarai_market_sold_alloys value = 0 }
+  set_variable = { which = stellarai_market_bought_volatile_motes value = 0 }
+  set_variable = { which = stellarai_market_sold_volatile_motes value = 0 }
+  set_variable = { which = stellarai_market_bought_exotic_gases value = 0 }
+  set_variable = { which = stellarai_market_sold_exotic_gases value = 0 }
+  set_variable = { which = stellarai_market_bought_rare_crystals value = 0 }
+  set_variable = { which = stellarai_market_sold_rare_crystals value = 0 }
+  set_variable = { which = stellarai_market_strategic_done value = 0 }
+  set_variable = { which = stellarai_market_sale_count value = 0 }
+  set_variable = { which = stellarai_market_purchase_count value = 0 }
+}
+
+stellarai_market_sell_surpluses = {
+  if = {
+    limit = {
+      is_at_war = no
+    }
+    if = {
+      limit = {
+        check_variable = { which = stellarai_market_sale_count value < 2 }
+      }
+      if = {
+        limit = {
+          NOT = {
+            stellarai_minerals_recovery_needed = yes
+          }
+          stellarai_mineral_navy = no
+          NOT = {
+            stellarai_army_objective = yes
+          }
+          NOT = {
+            stellarai_settled_ai_has_unemployment = yes
+          }
+        }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = minerals AMOUNT = 250 RESERVE = 2000 }
+      }
+    }
+    if = {
+      limit = {
+        check_variable = { which = stellarai_market_sale_count value < 2 }
+      }
+      if = {
+        limit = {
+          NOT = {
+            stellarai_food_recovery_needed = yes
+          }
+          stellarai_food_navy = no
+        }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = food AMOUNT = 250 RESERVE = 1500 }
+      }
+    }
+    if = {
+      limit = {
+        check_variable = { which = stellarai_market_sale_count value < 2 }
+      }
+      if = {
+        limit = {
+          NOT = {
+            stellarai_consumer_goods_pressure = yes
+          }
+        }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = consumer_goods AMOUNT = 100 RESERVE = 1000 }
+      }
+    }
+    if = {
+      limit = {
+        check_variable = { which = stellarai_market_sale_count value < 2 }
+      }
+      if = {
+        limit = {
+          NOT = {
+            stellarai_opportunity_ready = yes
+          }
+        }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = volatile_motes AMOUNT = 10 RESERVE = 100 }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = exotic_gases AMOUNT = 10 RESERVE = 100 }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = rare_crystals AMOUNT = 10 RESERVE = 100 }
+      }
+    }
+  }
+  else = {
+    if = {
+      limit = {
+        check_variable = { which = stellarai_market_sale_count value < 2 }
+      }
+      if = {
+        limit = {
+          NOT = {
+            stellarai_minerals_recovery_needed = yes
+          }
+          stellarai_mineral_navy = no
+          NOT = {
+            stellarai_army_objective = yes
+          }
+          NOT = {
+            stellarai_settled_ai_has_unemployment = yes
+          }
+        }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = minerals AMOUNT = 250 RESERVE = 1000 }
+      }
+    }
+    if = {
+      limit = {
+        check_variable = { which = stellarai_market_sale_count value < 2 }
+      }
+      if = {
+        limit = {
+          NOT = {
+            stellarai_food_recovery_needed = yes
+          }
+          stellarai_food_navy = no
+        }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = food AMOUNT = 250 RESERVE = 750 }
+      }
+    }
+    if = {
+      limit = {
+        check_variable = { which = stellarai_market_sale_count value < 2 }
+      }
+      if = {
+        limit = {
+          NOT = {
+            stellarai_consumer_goods_pressure = yes
+          }
+        }
+        inline_script = { script = stellarai/market_sell_surplus RESOURCE = consumer_goods AMOUNT = 100 RESERVE = 500 }
+      }
+    }
+  }
+}
+
+stellarai_market_cover_deficits = {
+  # Wartime rare resources remain reserved for upkeep and refits.
+  # Deficits consume purchase slots before low-stock buffers.
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        country_uses_consumer_goods = yes
+        has_deficit = consumer_goods
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = consumer_goods AMOUNT = 100 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        country_uses_food = yes
+        has_deficit = food
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = food AMOUNT = 200 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        has_deficit = minerals
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = minerals AMOUNT = 200 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        has_deficit = volatile_motes
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = volatile_motes AMOUNT = 10 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        has_deficit = exotic_gases
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = exotic_gases AMOUNT = 10 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        has_deficit = rare_crystals
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = rare_crystals AMOUNT = 10 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        is_at_war = yes
+        has_deficit = alloys
+      }
+      inline_script = {
+        script = stellarai/market_buy_shortage
+        RESOURCE = alloys
+        AMOUNT = 100
+        MARKUP = 1.05
+        TRADE_FLOOR = 500
+      }
+    }
+  }
+}
+
+stellarai_market_refill_buffers = {
+  # If slots remain, refill only critical buffers.
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        country_uses_consumer_goods = yes
+        NOT = {
+          has_deficit = consumer_goods
+        }
+        resource_stockpile_compare = { resource = consumer_goods value < 300 }
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = consumer_goods AMOUNT = 100 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        country_uses_food = yes
+        NOT = {
+          has_deficit = food
+        }
+        resource_stockpile_compare = { resource = food value < 500 }
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = food AMOUNT = 200 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        NOT = {
+          has_deficit = minerals
+        }
+        resource_stockpile_compare = { resource = minerals value < 500 }
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = minerals AMOUNT = 200 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        NOT = {
+          has_deficit = volatile_motes
+        }
+        resource_stockpile_compare = { resource = volatile_motes value < 20 }
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = volatile_motes AMOUNT = 10 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        NOT = {
+          has_deficit = exotic_gases
+        }
+        resource_stockpile_compare = { resource = exotic_gases value < 20 }
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = exotic_gases AMOUNT = 10 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        NOT = {
+          has_deficit = rare_crystals
+        }
+        resource_stockpile_compare = { resource = rare_crystals value < 20 }
+      }
+      inline_script = { script = stellarai/market_buy_recovery RESOURCE = rare_crystals AMOUNT = 10 }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        is_at_war = yes
+        NOT = {
+          has_deficit = alloys
+        }
+        resource_stockpile_compare = { resource = alloys value < 250 }
+      }
+      inline_script = {
+        script = stellarai/market_buy_shortage
+        RESOURCE = alloys
+        AMOUNT = 100
+        MARKUP = 1.05
+        TRADE_FLOOR = 500
+      }
+    }
+  }
+  # Wealthy peacetime empires can turn spare market currency into jobs.
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    if = {
+      limit = {
+        is_at_war = no
+        resource_stockpile_compare = { resource = minerals value < 1500 }
+        stellarai_settled_ai_has_unemployment = yes
+      }
+      inline_script = {
+        script = stellarai/market_buy_shortage
+        RESOURCE = minerals
+        AMOUNT = 500
+        MARKUP = 1
+        TRADE_FLOOR = 2500
+      }
+    }
+  }
+  if = {
+    limit = {
+      check_variable = { which = stellarai_market_purchase_count value < 2 }
+    }
+    stellarai_strategic_market_purchase = yes
+  }
+}
+
+stellarai_market_finish = {
+  clear_variable = stellarai_market_bought_minerals
+  clear_variable = stellarai_market_sold_minerals
+  clear_variable = stellarai_market_bought_food
+  clear_variable = stellarai_market_sold_food
+  clear_variable = stellarai_market_bought_consumer_goods
+  clear_variable = stellarai_market_sold_consumer_goods
+  clear_variable = stellarai_market_bought_alloys
+  clear_variable = stellarai_market_sold_alloys
+  clear_variable = stellarai_market_bought_volatile_motes
+  clear_variable = stellarai_market_sold_volatile_motes
+  clear_variable = stellarai_market_bought_exotic_gases
+  clear_variable = stellarai_market_sold_exotic_gases
+  clear_variable = stellarai_market_bought_rare_crystals
+  clear_variable = stellarai_market_sold_rare_crystals
+  clear_variable = stellarai_market_strategic_done
+  clear_variable = stellarai_market_trade_value
+  clear_variable = stellarai_market_currency_stockpile
+  clear_variable = stellarai_market_sale_count
+  clear_variable = stellarai_market_purchase_count
+}

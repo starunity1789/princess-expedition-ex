@@ -1,0 +1,8 @@
+# AI-only: no new construction or upgrade into upkeep of a strategic resource that is already in deficit.
+hidden_trigger = {
+	OR = {
+		NOT = { exists = owner }
+		owner = { is_ai = no }
+		NOT = { owner = { has_deficit = $RESOURCE$ } }
+	}
+}

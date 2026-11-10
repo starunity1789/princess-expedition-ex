@@ -1,0 +1,3541 @@
+###################
+# Specialist Jobs
+###################
+physicist = {
+	category = specialist
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_research_lab_1
+		}
+		# Astrometeorologists
+		swap_type = {
+			trigger = {
+				physicist_is_astrometeorologist_trigger = yes
+			}
+			name = astrometeorologist
+			desc = astrometeorologist
+			icon = astrometeorologist
+			building_icon = building_astrometeorology_observation_center
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 5
+		}
+		# Astral Researcher
+		swap_type = {
+			trigger = {
+				physicist_is_astral_researcher_trigger = yes
+			}
+			name = astral_researcher
+			desc = astral_researcher
+			icon = astral_researcher
+			building_icon = building_astral_siphon_1
+			weight = 5
+		}
+		# Space-Time Anomaly Researcher
+		swap_type = {
+			trigger = {
+				physicist_is_space_time_researcher_trigger = yes
+			}
+			name = space_time_anomaly_researcher
+			desc = space_time_anomaly_researcher
+			weight = 10
+		}
+		# Dimension Portal Researcher
+		swap_type = {
+			trigger = {
+				physicist_is_dimensional_portal_researcher_trigger = yes
+			}
+			name = dimensional_portal_researcher
+			desc = dimensional_portal_researcher
+			weight = 15
+		}
+		# Astral-Metrorologists
+		swap_type = {
+			trigger = {
+				physicist_is_astral_researcher_trigger = yes
+				physicist_is_astrometeorologist_trigger = yes
+			}
+			name = astral_meteorologist
+			desc = astral_meteorologist
+			icon = astrometeorologist
+			building_icon = building_astral_siphon_1
+			weight = 20
+		}
+	}
+
+	tags = { research }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		complex_specialist_job_check_trigger = yes
+	}
+
+	inline_script = "jobs/academia_recruiter_naval_cap_add"
+
+	inline_script = "jobs/inf_navalcap_jobs"
+
+	resources = {
+		category = planet_physicists
+		produces = {
+			physics_research = 5 # Stellar AI (vanilla 3)
+		}
+		# Astrometrorologists
+		produces = {
+			trigger = {
+				colony? = {
+					physicist_is_astrometeorologist_trigger = yes
+					solar_system? = {
+						OR = {
+							has_environmental_effects = yes
+							has_star_flag = storm_system
+						}
+					}
+				}
+			}
+			physics_research = 3 # Stellar AI (vanilla 2)
+		}
+		upkeep = {
+			consumer_goods = 1.5
+		}
+		# Space-Time Researcher
+		produces = {
+			trigger = {
+				physicist_is_space_time_researcher_trigger = yes
+			}
+			physics_research = 1.5 # Stellar AI (vanilla 1)
+			sr_dark_matter = 0.2
+		}
+		upkeep = {
+			trigger = {
+				physicist_is_space_time_researcher_trigger = yes
+			}
+			consumer_goods = 1.5
+		}
+		inline_script = "output/researcher_output"
+	}
+
+	overlord_resources = {
+		category = planet_requisitioned_research
+		produces = {
+			trigger = {
+				colony = {
+					has_carrier_flag = has_science_ministry
+				}
+			}
+			physics_research = 1.5 # Stellar AI (vanilla 0.75)
+		}
+		produces = {
+			trigger = {
+				colony = {
+					has_carrier_flag = has_science_ministry
+					physicist_is_astrometeorologist_trigger = yes
+					solar_system? = {
+						OR = {
+							has_environmental_effects = yes
+							has_star_flag = storm_system
+						}
+					}
+				}
+			}
+			physics_research = 1.5 # Stellar AI (vanilla 0.5)
+		}
+	}
+
+	## Amenities
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_active_tradition = tr_discovery_faith_in_science }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Caregiver Paragon Effect
+	triggered_planet_modifier = {
+		potential = {
+			leader? = {
+				has_trait = leader_trait_nomadic_caregiver
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 150
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Dimensional Portal Amenities
+	triggered_planet_modifier = {
+		potential = {
+			colony? = {
+				has_modifier = dportal_trade_normal
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 600
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			colony? = {
+				has_modifier = dportal_trade_high
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 1200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			colony? = {
+				has_modifier = dportal_trade_low
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 300
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			colony? = {
+				has_modifier = dportal_trade_crisis
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 2
+			has_living_standard = { type = living_standard_academic_privilege }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 0.8
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+		modifier = {
+			factor = 5
+			has_trait = trait_cyborg_creed_of_research
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_research"
+
+}
+
+biologist = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_research_lab_1
+		}
+		# Rangers
+		swap_type = {
+			trigger = {
+				biologist_is_ranger_trigger = yes
+			}
+			name = ranger
+			desc = ranger
+			icon = ranger
+			building_icon = holding_park_ranger_lodge
+			weight = 5
+		}
+		# Vent Reseachers
+		swap_type = {
+			trigger = {
+				biologist_is_vent_researcher_trigger = yes
+			}
+			name = stratovent_researcher
+			desc = stratovent_researcher
+			icon = xeno_zoo_keeper
+			building_icon = building_nanolab_1
+			weight = 10
+		}
+		# Zookeepers
+		swap_type = {
+			trigger = {
+				biologist_is_zookeeper_trigger = yes
+			}
+			name = xeno_zoo_keeper
+			desc = xeno_zoo_keeper
+			icon = xeno_zoo_keeper
+			building_icon = building_xeno_zoo
+			weight = 15
+		}
+		# Archaeo-Engineers
+		swap_type = {
+			trigger = {
+				biologist_is_archaeo_engineer_trigger = yes
+			}
+			name = archaeoengineers
+			desc = archaeoengineers
+			icon = archaeoengineers
+			building_icon = building_archaeostudies_faculty
+			weight = 20
+		}
+	}
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		complex_specialist_job_check_trigger = yes
+	}
+
+	inline_script = "jobs/academia_recruiter_naval_cap_add"
+
+	inline_script = "jobs/inf_navalcap_jobs"
+
+	resources = {
+		category = planet_biologists
+		produces = {
+			society_research = 5 # Stellar AI (vanilla 3)
+		}
+		produces = {
+			trigger = {
+				biologist_is_zookeeper_trigger = yes
+			}
+			society_research = 1.5 # Stellar AI (vanilla 0.5)
+		}
+		upkeep = {
+			trigger = {
+				biologist_is_zookeeper_trigger = yes
+			}
+			consumer_goods = 0.5
+		}
+		upkeep = {
+			consumer_goods = 1.5
+		}
+		inline_script = "output/researcher_output"
+	}
+
+	overlord_resources = {
+		category = planet_requisitioned_research
+		produces = {
+			trigger = {
+				colony = {
+					has_carrier_flag = has_science_ministry
+				}
+			}
+			society_research = 1.5 # Stellar AI (vanilla 0.75)
+		}
+	}
+
+	## Amenities
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_active_tradition = tr_discovery_faith_in_science }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Caregiver Paragon Effect
+	triggered_planet_modifier = {
+		potential = {
+			leader? = {
+				has_trait = leader_trait_nomadic_caregiver
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 150
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Job Swap - Rangers
+	triggered_planet_modifier = {
+		potential = {
+			biologist_is_ranger_trigger = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 300
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Job Swap - Vent Researchers
+	triggered_planet_modifier = {
+		potential = {
+			biologist_is_vent_researcher_trigger = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 300
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Job Swap - Zookeepers
+	triggered_planet_modifier = {
+		potential = {
+			biologist_is_zookeeper_trigger = yes
+		}
+		planet_amenities_add = 100
+		mult = value:zoo_keeper_amenity_output
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 2
+			has_living_standard = { type = living_standard_academic_privilege }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 0.8
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+		modifier = {
+			factor = 5
+			has_trait = trait_cyborg_creed_of_research
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_research"
+
+}
+
+engineer = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_research_lab_1
+		}
+		# Dismantler
+		swap_type = {
+			trigger = {
+				engineer_is_manufactorium_scraper_trigger = yes
+			}
+			name = manufactorium_scraper
+			desc = manufactorium_scraper
+			icon = broken_shackles_scavenger
+			building_icon = building_research_lab_1
+			weight = 5
+		}
+		# Munitions Decommissioner
+		swap_type = {
+			trigger = {
+				engineer_is_munitions_decommissioner_trigger = yes
+			}
+			name = munitions_decommissioner
+			desc = munitions_decommissioner
+			icon = munitions_decommissioner
+			building_icon = building_research_lab_1
+			weight = 10
+		}
+		# Nanotech Researcher
+		swap_type = {
+			trigger = {
+				engineer_is_nanotech_researcher_trigger = yes
+			}
+			name = nanotech_researcher
+			desc = nanotech_researcher
+			building_icon = building_nanolab_1
+			weight = 15
+		}
+	}
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		complex_specialist_job_check_trigger = yes
+	}
+
+	inline_script = "jobs/academia_recruiter_naval_cap_add"
+
+	inline_script = "jobs/inf_navalcap_jobs"
+
+	resources = {
+		category = planet_engineers
+		produces = {
+			engineering_research = 5 # Stellar AI (vanilla 3)
+		}
+		produces = {
+			trigger = {
+				engineer_is_nanotech_researcher_trigger = yes
+			}
+			engineering_research = 1.5 # Stellar AI (vanilla 1)
+		}
+		upkeep = {
+			consumer_goods = 1.5
+		}
+		upkeep = {
+			trigger = {
+				engineer_is_nanotech_researcher_trigger = yes
+			}
+			nanites = 1
+		}
+		inline_script = "output/researcher_output"
+	}
+
+	overlord_resources = {
+		category = planet_requisitioned_research
+		produces = {
+			trigger = {
+				colony = {
+					has_carrier_flag = has_science_ministry
+				}
+			}
+			engineering_research = 1.5 # Stellar AI (vanilla 0.5)
+		}
+	}
+
+	## Amenities
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_active_tradition = tr_discovery_faith_in_science }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Caregiver Paragon Effect
+	triggered_planet_modifier = {
+		potential = {
+			leader? = {
+				has_trait = leader_trait_nomadic_caregiver
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 150
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 2
+			has_living_standard = { type = living_standard_academic_privilege }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 0.8
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+		modifier = {
+			factor = 5
+			has_trait = trait_cyborg_creed_of_research
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_research"
+
+}
+
+xeno_zoo_keeper = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_xeno_zoo
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+bureaucrat = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_bureaucratic_1
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_manager = yes
+			}
+			name = manager
+			desc = manager
+			icon = manager
+			building_icon = building_bureaucratic_1
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 2
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_priest = yes
+			}
+			name = priest
+			desc = priest
+			icon = priest
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 5
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_steward = yes
+			}
+			name = steward
+			desc = steward
+			icon = manager
+			building_icon = building_bureaucratic_1
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 10
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_preacher = yes
+			}
+			name = preacher
+			desc = preacher
+			icon = numistic_priest
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 15
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_numistic_priest = yes
+			}
+			name = numistic_priest
+			desc = numistic_priest
+			icon = numistic_priest
+			building_icon = building_nuumismatic_shrine
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 20
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_unifier = yes
+			}
+			name = unifier
+			desc = unifier
+			icon = overlord_propagandist
+			building_icon = building_capital
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 25
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_culture_worker = yes
+			}
+			name = culture_worker
+			desc = culture_worker
+			icon = culture_worker
+			building_icon = building_artist_patron
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 30
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_death_priest = yes
+			}
+			name = death_priest
+			desc = death_priest
+			icon = death_priest
+			building_icon = building_sacrificial_temple_1
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 35
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_fire_dancer = yes
+			}
+			name = fire_dancer
+			desc = fire_dancer
+			icon = fire_dancer
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 40
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_fire_seer = yes
+			}
+			name = fire_seer
+			desc = fire_seer
+			icon = fire_seer
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 450
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_pyromancer = yes
+			}
+			name = pyromancer
+			desc = pyromancer
+			icon = fire_dancer
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 450
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_cremator = yes
+			}
+			name = cremator
+			desc = cremator
+			icon = cremator
+			building_icon = building_sacrificial_temple_1
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 450
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_low_tech = yes
+			}
+			name = low_tech_bureaucrat
+			desc = low_tech_bureaucrat
+			icon = low_tech_bureaucrat
+			building_icon = building_low_tech_admin_hub
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 40
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_low_tech_manager = yes
+			}
+			name = low_tech_manager
+			desc = low_tech_manager
+			icon = manager
+			building_icon = building_low_tech_admin_hub
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 45
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_low_tech_priest = yes
+			}
+			name = low_tech_priest
+			desc = low_tech_priest
+			icon = low_tech_priest
+			building_icon = building_low_tech_admin_hub
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 50
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_memorialist = yes
+			}
+			name = memorialist
+			desc = memorialist
+			icon = death_chronicler
+			building_icon = building_galactic_memorial_1
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 200
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_death_priest = yes
+				bureaucrat_is_manager = yes
+			}
+			name = death_manager
+			desc = death_manager
+			icon = manager
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 300
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_haruspex = yes
+			}
+			name = haruspex
+			desc = haruspex
+			icon = haruspex
+			building_icon = building_the_sanctum_of_augmentation
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 500
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_superstitious_beliefs_priest = yes
+			}
+			name = superstitious_beliefs_priest
+			desc = superstitious_beliefs_priest
+			icon = superstitious_beliefs_priest
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 400
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_superstitious_beliefs_priest_corporate = yes
+			}
+			name = superstitious_beliefs_priest_corporate
+			desc = superstitious_beliefs_priest_corporate
+			icon = superstitious_beliefs_priest
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 400
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_corpse_reader = yes
+			}
+			name = corpse_reader
+			desc = corpse_reader
+			icon = death_priest
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 500
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_corpse_broker = yes
+			}
+			name = corpse_broker
+			desc = corpse_broker
+			icon = death_priest
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 500
+		}
+		swap_type = {
+			trigger = {
+				bureaucrat_is_sacred_path_specialist = yes
+			}
+			name = sacred_path_specialist
+			desc = job_sacred_path_specialist_desc
+			icon = sacred_path_specialist
+			building_icon = building_temple
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 500
+		}
+	}
+	tags = { unity }
+	triggered_tags = {
+		trigger = {
+			OR = {
+				bureaucrat_is_priest = yes
+				bureaucrat_is_death_priest = yes
+				bureaucrat_is_numistic_priest = yes
+				bureaucrat_is_preacher = yes
+				bureaucrat_is_haruspex = yes
+				bureaucrat_is_superstitious_beliefs_priest = yes
+				bureaucrat_is_superstitious_beliefs_priest_corporate = yes
+				bureaucrat_is_corpse_broker = yes
+				bureaucrat_is_corpse_reader = yes
+				bureaucrat_is_fire_dancer = yes
+				bureaucrat_is_pyromancer = yes
+				bureaucrat_is_fire_seer = yes
+				bureaucrat_is_cremator = yes
+				bureaucrat_is_sacred_path_specialist = yes
+			}
+		}
+		tags = { psionic_aura }
+	}
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		complex_specialist_job_check_trigger = yes
+	}
+
+	resources = {
+		category = planet_bureaucrats
+		# PRODUCES
+		produces = {
+			unity = 3
+		}
+		upkeep = {
+			consumer_goods = 2
+		}
+		##Government Swaps
+		produces = {
+			trigger = {
+				bureaucrat_is_manager = yes
+			}
+			trade = 2
+		}
+		produces = {
+			trigger = {
+				bureaucrat_is_steward = yes
+			}
+			trade = 1
+		}
+		produces = {
+			trigger = {
+				OR = {
+					bureaucrat_is_death_priest = yes
+					bureaucrat_is_cremator = yes
+				}
+			}
+			unity = -1
+			society_research = 0.5
+		}
+		produces = {
+			trigger = {
+				bureaucrat_is_haruspex = yes
+			}
+			unity = -1
+			engineering_research = 1
+		}
+		##Broken Shackles
+		produces = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_low_tech = yes
+				}
+			}
+			unity = -1
+		}
+		produces = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_sacred_path_specialist = yes
+				}
+			}
+			unity = -2
+			trade = 2
+			society_research = 1
+		}
+		upkeep = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_low_tech = yes
+				}
+			}
+			consumer_goods = -1
+		}
+		produces = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_low_tech_manager = yes
+				}
+			}
+			unity = -1
+			trade = 2
+		}
+		upkeep = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_low_tech_manager = yes
+				}
+			}
+			consumer_goods = -1
+		}
+		produces = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_low_tech_priest = yes
+				}
+			}
+			unity = -1
+		}
+		upkeep = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_low_tech_priest = yes
+				}
+			}
+			consumer_goods = -1
+		}
+		##Event Swaps
+		upkeep = {
+			trigger = {
+				bureaucrat_is_unifier = yes
+			}
+			consumer_goods = -1
+		}
+		# Job Swap - Numistic Priests
+		produces = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_numistic_priest = yes
+				}
+			}
+			unity = -1
+			trade = 6
+		}
+		upkeep = {
+			trigger = {
+				colony? = {
+					bureaucrat_is_numistic_priest = yes
+				}
+			}
+			consumer_goods = -1
+			trade = 2
+		}
+		# Job Swap - Superstitions Beliefs and Death Cult
+		produces = {
+			trigger = {
+				OR = {
+					bureaucrat_is_corpse_reader = yes
+					bureaucrat_is_corpse_broker = yes
+				}
+			}
+			society_research = 0.5
+		}
+		inline_script = "jobs/ethic_job_resources_memorialist"
+	}
+
+	# Caregiver Paragon Effect
+	triggered_planet_modifier = {
+		potential = {
+			leader? = {
+				has_trait = leader_trait_nomadic_caregiver
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 150
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	## Amenities
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_priest = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_steward = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 100
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_preacher = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_death_priest = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_fire_dancer = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			OR = {
+				bureaucrat_is_pyromancer = yes
+				bureaucrat_is_fire_seer = yes
+				bureaucrat_is_cremator = yes
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 400
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_unifier = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 300
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_low_tech_priest = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_numistic_priest = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_haruspex = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_culture_worker = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 300
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	inline_script = "jobs/ethic_job_modifiers_memorialist"
+
+	##Stability
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_memorialist = yes
+		}
+		planet_stability_add = 0.2
+	}
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_fire_dancer = yes
+		}
+		planet_stability_add = 0.5
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			colony? = {
+				check_modifier_value = {
+					modifier = planet_bureaucrats_stability_produces_add
+					value > 0
+				}
+			}
+		}
+		planet_stability_add = 1
+		mult = colony.modifier:planet_bureaucrats_stability_produces_add
+	}
+
+	## Ethics Attraction
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_culture_worker = yes
+		}
+		pop_government_ethic_attraction = 0.10
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			OR = {
+				bureaucrat_is_superstitious_beliefs_priest = yes
+				bureaucrat_is_superstitious_beliefs_priest_corporate = yes
+			}
+		}
+		planet_stability_add = 0.2
+	}
+	triggered_planet_modifier = {
+		potential = {
+			OR = {
+				# Getting these costs 2 Civic points and deserve better rewards.
+				bureaucrat_is_pyromancer = yes
+				bureaucrat_is_fire_seer = yes
+				bureaucrat_is_cremator = yes
+			}
+		}
+		planet_stability_add = 1.5
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			OR = {
+				bureaucrat_is_corpse_reader = yes
+				bureaucrat_is_corpse_broker = yes
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			OR = {
+				bureaucrat_is_corpse_reader = yes
+				bureaucrat_is_corpse_broker = yes
+			}
+		}
+		planet_stability_add = 1
+		mult = colony.modifier:planet_bureaucrats_stability_produces_add
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			colony? = {
+				has_active_building = building_league_offices
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 100
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_country_modifier = {
+		potential = {
+			owner? = { has_valid_civic = civic_efficient_bureaucracy }
+		}
+		country_edict_fund_add = 2
+		mult = value:job_total_output_modifier|JOB|bureaucrat|RESOURCE|unity|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_modularity_4 }
+		}
+		planet_jobs_worker_produces_mult = 0.02
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_sacred_path_specialist = yes
+			owner? = {
+				OR = {
+					has_modifier = deeply_devoted
+					has_modifier = spiritual_equality_devoted
+				}
+			}
+		}
+		ship_speed_mult = 0.01
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			bureaucrat_is_sacred_path_specialist = yes
+			owner? = { has_modifier = deeply_devoted_2 }
+		}
+		ship_speed_mult = 0.025
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		mult = value:scripted_modifier_job_weight_mult|MODIFIER|pop_job_amenities_mult|
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 2
+			owner? = { has_civic = civic_exalted_priesthood }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 0.1
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_unity"
+
+}
+
+enforcer = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			building_icon = building_precinct_house
+		}
+		swap_type = {
+			trigger = {
+				enforcer_is_educator_trigger = yes
+			}
+			name = educator
+			desc = educator
+			icon = educator
+			building_icon = building_state_academy
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			weight = 10
+		}
+	}
+
+	tags = { crime enforcer }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible = {
+		battle_thrall_job_check_trigger = yes
+	}
+
+	inline_script = "jobs/job_enforcer"
+
+	weight = {
+		weight = @specialist_job_weight
+
+		modifier = {
+			owner = { has_active_tradition = tr_domination_judgment_corps }
+		}
+		modifier = {
+			factor = 50
+		}
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_resilient
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_very_strong
+		}
+		modifier = {
+			factor = 1.5
+			has_trait = trait_strong
+		}
+		modifier = {
+			factor = 10
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_military }
+		}
+		modifier = {
+			factor = 0.50
+			has_trait = trait_weak
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 1.1
+			has_trait = trait_cybernetic
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_presapient_earthbound
+		}
+		modifier = {
+			factor = 1.1
+			has_trait = trait_limited_regeneration
+		}
+		modifier = {
+			factor = 0.8
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_lithoid
+		}
+	}
+
+}
+
+educator = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			building_icon = building_state_academy
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+telepath = {
+	category = specialist
+	can_be_automated = no
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_psi_corps
+		}
+		swap_type = {
+			trigger = {
+				enforcer_is_educator_trigger = yes
+			}
+			name = educator_telepath
+			desc = educator_telepath
+			icon = telepath
+			building_icon = building_psi_corps
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 10
+		}
+	}
+
+	inline_script = "jobs/job_telepath"
+
+	possible_precalc = can_fill_specialist_job
+
+	weight = {
+		weight = @specialist_job_weight
+		mult = 2
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+		}
+		modifier = {
+			factor = 0.1
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+	}
+}
+
+entertainer = {
+	category = specialist
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_holo_theatres
+		}
+		# Duelists
+		swap_type = {
+			trigger = {
+				entertainer_is_duelist_trigger = yes
+				entertainer_is_storm_dancer_trigger = no
+			}
+			name = duelist
+			desc = duelist
+			icon = duelist
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			weight = 5
+		}
+		# Storm Dancers
+		swap_type = {
+			trigger = {
+				entertainer_is_duelist_trigger = no
+				entertainer_is_storm_dancer_trigger = yes
+			}
+			name = storm_dancer
+			desc = storm_dancer
+			icon = storm_dancer
+			building_icon = building_storm_summoning_theater
+			weight = 5
+		}
+		# Curator
+		swap_type = {
+			trigger = {
+				entertainer_is_curator_trigger = yes
+			}
+			name = curator
+			desc = curator
+			icon = historical_curator
+			building_icon = aesthetic_wonders_holomuseum
+			weight = 10
+		}
+		# Storm Duelists
+		swap_type = {
+			trigger = {
+				entertainer_is_duelist_trigger = yes
+				entertainer_is_storm_dancer_trigger = yes
+			}
+			name = storm_duelist
+			desc = storm_duelist
+			icon = duelist
+			building_icon = building_storm_summoning_theater
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			weight = 20
+		}
+		# Reenactor
+		swap_type = {
+			trigger = {
+				entertainer_is_duelist_trigger = yes
+				entertainer_is_curator_trigger = yes
+			}
+			name = reenactor
+			desc = reenactor
+			icon = duelist
+			building_icon = aesthetic_wonders_holomuseum
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			weight = 20
+		}
+	}
+
+	tags = { amenities unity }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible = {
+		if = {
+			limit = {
+				entertainer_is_duelist_trigger = yes
+			}
+			battle_thrall_job_check_trigger = yes
+		}
+		else = {
+			entertainer_job_check_trigger = yes
+		}
+	}
+
+	resources = {
+		category = planet_entertainers
+		produces = {
+			unity = 0.5
+		}
+		upkeep = {
+			trigger = {
+				entertainer_is_duelist_trigger = no
+			}
+			consumer_goods = 1
+		}
+		# Job Swap - Curator
+		produces = {
+			trigger = {
+				entertainer_is_curator_trigger = yes
+			}
+			society_research = 0.5
+		}
+		upkeep = {
+			trigger = {
+				entertainer_is_curator_trigger = yes
+				entertainer_is_duelist_trigger = no
+			}
+			consumer_goods = 1
+		}
+		upkeep = {
+			trigger = {
+				entertainer_is_curator_trigger = yes
+				entertainer_is_duelist_trigger = yes
+			}
+			alloys = 0.5
+		}
+		# Job Swap - Duelist
+		produces = {
+			trigger = {
+				entertainer_is_duelist_trigger = yes
+			}
+			unity = 0.5
+		}
+		upkeep = {
+			trigger = {
+				entertainer_is_duelist_trigger = yes
+				entertainer_is_storm_dancer_trigger = no
+			}
+			alloys = 0.5
+		}
+		# Job Swap - Storm Dancer
+		produces = {
+			trigger = {
+				entertainer_is_storm_dancer_trigger = yes
+			}
+			unity = 1.5
+		}
+		upkeep = {
+			trigger = {
+				entertainer_is_storm_dancer_trigger = yes
+				entertainer_is_duelist_trigger = no
+			}
+			consumer_goods = 1
+		}
+		upkeep = {
+			trigger = {
+				entertainer_is_storm_dancer_trigger = yes
+				entertainer_is_duelist_trigger = yes
+			}
+			alloys = 1
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 1250
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_country_modifier = {
+		potential = {
+			entertainer_is_duelist_trigger = yes
+		}
+		country_naval_cap_add = 2
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_modifier = exploitation_accord }
+		}
+		planet_jobs_produces_mult = @accord_exploitation_resources_from_jobs
+	}
+
+	weight = {
+		weight = @high_prio_specialist_job_weight
+		mult = value:scripted_modifier_job_weight_mult|MODIFIER|pop_job_amenities_mult|
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 3
+			has_trait = trait_robot_domestic_protocols
+			OR = {
+				is_non_sapient_robot = yes
+				is_shackled_robot = yes
+			}
+		}
+		modifier = {
+			factor = 0.1
+			is_domestic_servant = yes
+		}
+
+		modifier = {
+			factor = 50
+		}
+
+		modifier = {
+			add = 500
+			colony? = {
+				has_modifier = artistic_boom
+			}
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_charisma"
+
+}
+
+culture_worker = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_autochthon_monument
+		}
+	}
+	possible = { always = no }
+}
+
+unifier = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_capital
+			icon = overlord_propagandist
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+chemist = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_chemical_plant
+		}
+	}
+
+	tags = { strategic_resource volatile_motes }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+
+	resources = {
+		category = planet_chemists
+		produces = {
+			trigger = {
+				owner? = { is_catalytic_empire = no }
+			}
+			volatile_motes = 2
+		}
+		produces = {
+			trigger = {
+				owner? = { is_catalytic_empire = yes }
+			}
+			volatile_motes = 2.5
+		}
+		upkeep = {
+			trigger = {
+				owner? = { is_catalytic_empire = no }
+			}
+			minerals = 10
+		}
+		upkeep = {
+			trigger = {
+				owner? = { is_catalytic_empire = yes }
+			}
+			food = 15
+		}
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+	}
+
+}
+
+translucer = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_crystal_plant
+		}
+	}
+	tags = { strategic_resource rare_crystals }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+
+	resources = {
+		category = planet_translucers
+		produces = {
+			trigger = {
+				owner? = { is_catalytic_empire = no }
+			}
+			rare_crystals = 2
+		}
+		produces = {
+			trigger = {
+				owner? = { is_catalytic_empire = yes }
+			}
+			rare_crystals = 2.5
+		}
+		upkeep = {
+			trigger = {
+				owner? = { is_catalytic_empire = no }
+			}
+			minerals = 10
+		}
+		upkeep = {
+			trigger = {
+				owner? = { is_catalytic_empire = yes }
+			}
+			food = 15
+		}
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 1.2
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+	}
+
+}
+
+gas_refiner = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_refinery
+		}
+	}
+
+	tags = { strategic_resource exotic_gases }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+
+	resources = {
+		category = planet_refiners
+		produces = {
+			trigger = {
+				owner? = { is_catalytic_empire = no }
+			}
+			exotic_gases = 2
+		}
+		produces = {
+			trigger = {
+				owner? = { is_catalytic_empire = yes }
+			}
+			exotic_gases = 2.5
+		}
+		upkeep = {
+			trigger = {
+				owner? = { is_catalytic_empire = no }
+			}
+			minerals = 10
+		}
+		upkeep = {
+			trigger = {
+				owner? = { is_catalytic_empire = yes }
+			}
+			food = 15
+		}
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 1.2
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+	}
+
+}
+
+roboticist = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_robot_assembly_plant
+		}
+	}
+	tags = { pop_assembly }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+
+	resources = {
+		category = planet_pop_assemblers
+		upkeep = {
+			alloys = 2
+		}
+		upkeep = {
+			trigger = {
+				owner? = { has_country_flag = synth_unscheduled_updates }
+			}
+			alloys = 1
+		}
+		upkeep = {
+			trigger = {
+				owner = {
+					has_active_tradition = tr_cybernetics_metabolic_reprocessing
+				}
+			}
+			alloys = 0.35
+		}
+	}
+
+	triggered_planet_modifier = {
+		planet_pop_assembly_add = 2
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				exists = ruler
+				ruler = {
+					has_trait = leader_trait_legendary_great_inventor
+				}
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 100
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				exists = ruler
+				ruler = {
+					has_trait = leader_trait_legendary_great_inventor_2
+				}
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				exists = ruler
+				ruler = {
+					has_trait = leader_trait_legendary_great_inventor_3
+				}
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 300
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_modularity_2 }
+		}
+		planet_pop_assembly_add = 1 #If this changes, update tr_modularity_2_modifier_desc
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_active_tradition = tr_synthetics_prefabricated_components
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	inline_script = {
+		script = output/bonus_pop_growth
+		TRIGGER = "owner? = {
+			has_active_tradition = tr_cybernetics_metabolic_reprocessing
+		}"
+		AMOUNT = 0.5
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			check_modifier_value = {
+				modifier = job_roboticist_branch_office_value_mult
+				value > 0
+			}
+		}
+		# Actual value determined in the script value below
+		branch_office_value_mult = 1
+		mult = value:roboticist_branch_office_value_mult
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_policy_flag = computation_core_production }
+		}
+		foundry_jobs_bonus_workforce_mult = 0.025
+		artisan_jobs_bonus_workforce_mult = 0.025
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_policy_flag = computation_core_stability }
+		}
+		bureaucrat_jobs_bonus_workforce_mult = 0.025
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_policy_flag = computation_core_research }
+		}
+		physicist_jobs_bonus_workforce_mult = 0.025
+		biologist_jobs_bonus_workforce_mult = 0.025
+		engineer_jobs_bonus_workforce_mult = 0.025
+	}
+
+	weight = {
+		weight = 500
+		modifier = {
+			factor = 10
+			owner = { is_synthetic_empire = yes }
+		}
+	}
+
+}
+
+healthcare = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_medical_2
+		}
+		# Genomic Researchers
+		swap_type = {
+			trigger = {
+				healthcare_is_genomic_researcher_trigger = yes
+			}
+			name = genomic_researcher
+			desc = genomic_researcher
+			icon = genomic_researcher
+			building_icon = building_genomic_facility
+			condition_string = SPECIALIST_JOB_TRIGGER
+			weight = 10
+		}
+	}
+
+	tags = { pop_growth pop_assembly amenities }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+
+	resources = {
+		category = planet_doctors
+		# Base Upkeep
+		upkeep = {
+			consumer_goods = 1
+		}
+		# Job Swap - Genomic Researcher
+		produces = {
+			trigger = {
+				colony? = {
+					healthcare_is_genomic_researcher_trigger = yes
+				}
+			}
+			society_research = 1.75
+		}
+		produces = {
+			trigger = {
+				colony? = {
+					healthcare_is_genomic_researcher_trigger = yes
+				}
+				owner? = { has_completed_genetic_situation = yes }
+			}
+			society_research = 1.75
+		}
+		upkeep = {
+			trigger = {
+				colony? = {
+					healthcare_is_genomic_researcher_trigger = yes
+				}
+			}
+			consumer_goods = 2
+		}
+	}
+
+	inline_script = "output/healthcare_triggered_modifiers"
+
+	inline_script = "output/genomic_triggered_modifiers"
+
+	weight = {
+		weight = @high_prio_specialist_job_weight
+		mult = value:scripted_modifier_job_weight_mult|MODIFIER|pop_job_amenities_mult|
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 2
+			owner = { has_valid_civic = civic_private_healthcare_corporate }
+		}
+		modifier = {
+			factor = 1.5
+			colony = {
+				has_branch_office = yes
+				branch_office_owner = {
+					has_valid_civic = civic_private_healthcare_corporate
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+		modifier = {
+			factor = 10
+			colony = {
+				healthcare_is_genomic_researcher_trigger = yes
+			}
+		}
+		modifier = {
+			factor = 5
+			colony = {
+				free_amenities < 0
+				has_available_jobs = healthcare
+			}
+		}
+	}
+
+}
+
+trader = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_galactic_stock_exchange
+			icon = overlord_trader
+		}
+		# Subterranean Liaison Officer
+		swap_type = {
+			trigger = {
+				trader_is_subterranean = yes
+			}
+			name = underground_trade_worker
+			desc = underground_trade_worker
+			weight = 5
+		}
+	}
+
+	tags = { trade amenities }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+
+	resources = {
+		category = planet_traders
+		produces = {
+			trade = 8
+		}
+		produces = {
+			trigger = {
+				trader_is_subterranean = yes
+			}
+			trade = 2
+		}
+		upkeep = {
+			consumer_goods = 1
+		}
+		upkeep = {
+			trigger = {
+				trader_is_subterranean = yes
+			}
+			consumer_goods = 1
+		}
+	}
+
+	overlord_resources = {
+		category = planet_corporate_franchising_meddling
+		produces = {
+			trigger = {
+				colony = {
+					has_carrier_flag = has_franchise_headquarters
+				}
+			}
+			unity = 0.5
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			trader_is_subterranean = yes
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 300
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_tradition = tr_mercantile_commercial_enterprise
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			colony.orbital_defence.starbase? = {
+				has_starbase_building = ring_trade_hub
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 100
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			starbase? = {
+				has_starbase_building = arkship_trade_hub
+			}
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 100
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		mult = value:scripted_modifier_job_weight_mult|MODIFIER|pop_job_amenities_mult|
+		# crisis purge
+		modifier = {
+			factor = 0.01
+			colony.controller? = {
+				OR = {
+					is_country_type = swarm
+					is_country_type = ai_empire
+				}
+			}
+			OR = { # contingency won't purge itself
+				NOT = { exists = event_target:custodian_bot }
+				AND = {
+					exists = event_target:custodian_bot
+					NOT = { species = { is_same_value = event_target:custodian_bot } }
+				}
+			}
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_trade"
+
+}
+
+numistic_priest = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_nuumismatic_shrine
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+preacher = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_temple_of_prosperity
+			icon = numistic_priest
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+manager = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_capital
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+steward = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_capital
+			icon = manager
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+necromancer = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			building_icon = building_dread_encampment
+		}
+	}
+
+	possible = {
+		always = no
+	}
+}
+
+death_chronicler = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_galactic_memorial_1
+		}
+	}
+
+	possible = {
+		always = no
+	}
+
+}
+
+necro_apprentice = {
+	category = specialist
+	exempt_from_ai_amenity_prioritization = yes
+	can_be_automated = no
+
+	swappable_data = {
+		default = {
+			condition_string = NECRO_APPRENTICE_JOB_TRIGGER
+			building_icon = building_chamber_of_elevation_1
+		}
+
+		swap_type = {
+			desc = job_necro_apprentice_desc_hive
+			trigger = {
+				owner? = { is_hive_empire = yes }
+			}
+			weight = 1
+		}
+	}
+
+	tags = { unity }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible = { #deliberately allows slaves!
+		species = { species_can_be_necrophaged = yes }
+		owner = {
+			has_trait = trait_necrophage
+			has_origin = origin_necrophage
+		}
+	}
+
+	resources = {
+		category = planet_necro_apprentices
+		produces = {
+			unity = 0.75
+		}
+		upkeep = {
+			trigger = {
+				owner? = { is_hive_empire = no }
+			}
+			consumer_goods = 1
+		}
+
+		upkeep = {
+			trigger = {
+				owner? = { is_hive_empire = yes }
+			}
+			minerals = @living_standard_food_normal
+		}
+	}
+
+	triggered_planet_pop_group_modifier_for_species = {
+		potential = {
+			NOT = {
+				has_trait = trait_necrophage
+			}
+		}
+		bonus_pop_growth = 0.5
+	}
+
+	triggered_planet_modifier = {
+		fake_pop_growth_mod = 0.5
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { NOT = { has_valid_civic = civic_dystopian_society } }
+		}
+		planet_amenities_add = 500
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	weight = {
+		weight = @ruler_job_weight #deliberate
+		mult = value:scripted_modifier_job_weight_mult|MODIFIER|pop_job_amenities_mult|
+		modifier = {
+			factor = 0.75
+			is_enslaved = yes #willing apprentices first, please
+		}
+		modifier = {
+			factor = 0.75
+			pop_has_happiness = no
+		}
+
+		modifier = {
+			factor = 0.1
+			owner? = { is_ai = yes }
+			colony? = {
+				NOT = {
+					any_owned_pop_group = {
+						NOT = { is_same_value = root }
+						species = { species_can_be_necrophaged = yes }
+					}
+				}
+				num_assigned_jobs = {
+					job = necro_apprentice
+					value > 1
+				}
+			}
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_unity"
+
+}
+
+foundry = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_foundry_1
+		}
+		# Catalytic Swap
+		swap_type = {
+			trigger = {
+				industrial_jobs_are_catalytic_trigger = yes
+			}
+			name = catalytic_technician
+			desc = job_catalytic_technician_desc
+			weight = 5
+		}
+	}
+
+	tags = { alloys }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		hidden_trigger = { exists = owner }
+		owner = {
+			is_gestalt = no
+		}
+	}
+
+	inline_script = "jobs/inf_navalcap_jobs"
+	inline_script = "output/foundry_nomad_triggered_modifiers"
+
+	resources = {
+		category = planet_metallurgists
+		inline_script = "output/foundry_output"
+	}
+
+	overlord_resources = {
+		category = planet_requisitioned_alloys
+		produces = {
+			trigger = {
+				colony = {
+					has_carrier_flag = has_material_requisitorium
+				}
+			}
+			alloys = @requisitorium_alloys_overlord
+		}
+	}
+
+	weight = {
+		weight = @specialist_job_weight # Fairly important job
+		modifier = {
+			factor = 2
+			is_enslaved = yes
+			can_take_servant_job = no
+		}
+		modifier = {
+			factor = 5
+			has_trait = trait_cyborg_creed_of_construction
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_alloys"
+
+}
+
+catalytic_technician = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_foundry_1
+		}
+	}
+	tags = { alloys }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible = {
+		always = no
+	}
+
+}
+
+artisan = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_factory_1
+		}
+		swap_type = {
+			trigger = {
+				artisan_is_artificer_trigger = yes
+			}
+			name = artificer
+			desc = artificer
+			icon = artificer
+			weight = 5
+		}
+		swap_type = {
+			trigger = {
+				artisan_is_pearl_diver_trigger = yes
+			}
+			name = pearl_diver
+			desc = pearl_diver
+			icon = pearl_diver
+			building_icon = building_food_processing_facility
+			weight = 5
+		}
+		swap_type = {
+			trigger = {
+				artisan_is_artificer_trigger = yes
+				artisan_is_pearl_diver_trigger = yes
+			}
+			name = pearl_crafter
+			desc = pearl_crafter
+			icon = pearl_diver
+			building_icon = building_food_processing_facility
+			weight = 10
+		}
+	}
+	tags = { consumer_goods }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		hidden_trigger = { exists = owner }
+		owner = {
+			is_gestalt = no
+		}
+	}
+
+	resources = {
+		category = planet_artisans
+		# PRODUCES
+		produces = {
+			consumer_goods = 6
+		}
+		# Job Swap - Artificers
+		produces = {
+			trigger = {
+				artisan_is_artificer_trigger = yes
+			}
+			consumer_goods = 2
+			trade = 2
+		}
+		# Job Swap - Pearl Divers
+		produces = {
+			trigger = {
+				colony? = {
+					artisan_is_pearl_diver_trigger = yes
+				}
+			}
+			trade = 2
+		}
+		# Job Swap - Catalytic
+		produces = {
+			trigger = {
+				industrial_jobs_are_catalytic_trigger = yes
+			}
+			consumer_goods = 1.5
+		}
+		# UPKEEP
+		upkeep = {
+			trigger = {
+				industrial_jobs_are_catalytic_trigger = no
+			}
+			minerals = 6
+		}
+		# Job Swap - Pearl Divers
+		upkeep = {
+			trigger = {
+				industrial_jobs_are_catalytic_trigger = no
+				colony? = {
+					artisan_is_pearl_diver_trigger = yes
+				}
+			}
+			minerals = -2
+			food = 3
+		}
+		# Job Swap - Catalytic
+		upkeep = {
+			trigger = {
+				industrial_jobs_are_catalytic_trigger = yes
+			}
+			food = 9
+		}
+		upkeep = {
+			trigger = {
+				industrial_jobs_are_catalytic_trigger = yes
+				colony? = {
+					artisan_is_pearl_diver_trigger = yes
+				}
+			}
+			minerals = 2
+			food = -3
+		}
+		produces = {
+			trigger = {
+				has_carrier_flag = has_produce_requisitorium
+				exists = owner.overlord
+				owner.overlord = { country_uses_consumer_goods = yes }
+			}
+			consumer_goods = @requisitorium_consumer_goods_reduction
+		}
+		upkeep = {
+			trigger = {
+				has_carrier_flag = has_produce_requisitorium
+				exists = owner.overlord
+				owner.overlord = { country_uses_consumer_goods = yes }
+			}
+			minerals = 1
+		}
+		upkeep = {
+			trigger = {
+				industrial_jobs_are_catalytic_trigger = yes
+				has_carrier_flag = has_produce_requisitorium
+				exists = owner.overlord
+				owner.overlord = { country_uses_consumer_goods = yes }
+			}
+			food = 1.5
+		}
+		inline_script = "output/factory_output"
+	}
+
+	overlord_resources = {
+		category = planet_requisitioned_consumer_goods
+		produces = {
+			trigger = {
+				colony = {
+					has_carrier_flag = has_produce_requisitorium
+					exists = owner.overlord
+					owner.overlord = { country_uses_consumer_goods = yes }
+				}
+			}
+			consumer_goods = @requisitorium_consumer_goods_overlord
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			artisan_is_pearl_diver_trigger = yes
+			owner? = {
+				has_valid_civic = civic_agrarian_idyll
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 2
+			is_enslaved = yes
+			can_take_servant_job = no
+		}
+	}
+
+	inline_script = "jobs/automodding_priority_consumer_goods"
+
+}
+
+artificer = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_factory_1
+		}
+	}
+	possible = { always = no }
+}
+
+pearl_diver = {
+	possible = { always = no }
+}
+
+reassigner = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_posthumous_employment_center
+			icon = necromancer
+		}
+	}
+
+	tags = { pop_assembly }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+
+	triggered_planet_pop_group_modifier_for_species = {
+		potential = {
+			has_trait = trait_zombie
+		}
+		bonus_pop_growth = 1
+	}
+
+	triggered_planet_modifier = {
+		fake_pop_growth_mod = 1
+	}
+
+	triggered_planet_pop_group_modifier_for_species = {
+		potential = {
+			has_trait = trait_zombie
+			owner? = { has_edict = sacrifice_bounty_zombie }
+		}
+		bonus_pop_growth = 1
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = { has_edict = sacrifice_bounty_zombie }
+		}
+		fake_pop_growth_mod = 1
+	}
+
+	resources = {
+		category = planet_jobs
+		upkeep = {
+			consumer_goods = 2
+		}
+	}
+
+	weight = {
+		weight = 500
+	}
+
+}
+
+bath_attendant = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_toxic_bath
+		}
+		swap_type = {
+			trigger = {
+				owner? = { is_individual_machine = yes }
+			}
+			name = bath_attendant_individual_machine
+			desc = bath_attendant_individual_machine
+			icon = bath_attendant_individual_machine
+			weight = 5
+		}
+	}
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		hidden_trigger = { exists = owner }
+		owner = {
+			is_gestalt = no
+		}
+	}
+
+	resources = {
+		category = planet_bath_attendants
+		produces = {
+			trigger = {
+				owner? = { is_megacorp = yes }
+			}
+			trade = 2
+		}
+		upkeep = {
+			consumer_goods = 1
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				NOT = { has_valid_civic = civic_worker_coop }
+				OR = {
+					NOT = { has_origin = origin_forever_cruise }
+					has_country_flag = forever_cruise_over
+				}
+			}
+		}
+		pop_cat_ruler_bonus_workforce_mult = 0.05
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_valid_civic = civic_worker_coop
+				OR = {
+					NOT = {	has_origin = origin_forever_cruise }
+					has_country_flag = forever_cruise_over
+				}
+			}
+		}
+		pop_bureaucrat_bonus_workforce_mult = 0.025
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				is_megacorp = no
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 500
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_origin = origin_forever_cruise
+				NOT = { has_country_flag = forever_cruise_over }
+			}
+		}
+		planet_cruise_passengers_produces_mult = 0.05
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+	}
+}
+
+
+bath_attendant_individual_machine = {
+	category = specialist
+	possible = {
+		always = no
+	}
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_toxic_bath
+		}
+	}
+}
+
+knight = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_order_keep
+		}
+	}
+	tags = { soldier unity research }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_enslaved = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		hidden_trigger = { exists = owner }
+		owner = {
+			is_gestalt = no
+		}
+	}
+
+	resources = {
+		category = planet_knights
+		produces = {
+			trigger = { exists = owner }
+			unity = 1
+			mult = value:knights_unity_output_modifier
+		}
+		produces = {
+			trigger = { exists = owner }
+			physics_research = 1.5 # Stellar AI (vanilla 1)
+			engineering_research = 1.5 # Stellar AI (vanilla 1)
+			society_research = 1.5 # Stellar AI (vanilla 1)
+			mult = value:knights_research_output_modifier
+		}
+		produces = {
+			trigger = {
+				owner? = { has_country_flag = cosmogenesis_knights }
+			}
+			advanced_logic = 0.5
+			mult = value:knights_research_output_modifier
+		}
+		upkeep = {
+			alloys = 1.15
+			consumer_goods = 0.15
+			mult = value:knights_upkeep_modifier
+		}
+	}
+
+	planet_modifier = {
+		planet_defense_armies_add = 1
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_country_flag = toxoids_7090_a
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 500
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	# Arkship weapon modifiers
+	triggered_planet_modifier = {
+		potential = { soldier_is_missile_crew_trigger = yes }
+		weapon_type_explosive_weapon_damage_mult = @arkship_zone_weapon_damage_from_soldiers
+	}
+
+	triggered_planet_modifier = {
+		potential = { soldier_is_ammunition_loader_trigger = yes }
+		weapon_type_kinetic_weapon_damage_mult = @arkship_zone_weapon_damage_from_soldiers
+	}
+
+	triggered_planet_modifier = {
+		potential = { soldier_is_laser_gunner_trigger = yes }
+		weapon_type_energy_weapon_damage_mult = @arkship_zone_weapon_damage_from_soldiers
+	}
+
+	triggered_planet_modifier = {
+		potential = { soldier_is_flight_deck_crew_trigger = yes }
+		weapon_type_strike_craft_weapon_damage_mult = @arkship_zone_weapon_damage_from_soldiers
+	}
+
+	country_modifier = {
+		country_naval_cap_add = 4
+		knight_quest_progress_add = 0.010
+	}
+
+	weight = {
+		weight = @high_prio_specialist_job_weight
+		factor = 1.2
+		add = 5 #Somehow pops preferred to work as squires than as knights. No more.
+	}
+
+	inline_script = "jobs/automodding_priority_unity"
+
+}
+
+archaeoengineers = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_archaeostudies_faculty
+		}
+	}
+
+	tags = { research minor_artifacts }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible = {
+		always = no
+	}
+
+}
+
+resort_worker = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_amusement_megaplex
+			icon = servant
+		}
+	}
+
+	tags = { unity amenities }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		entertainer_job_check_trigger = yes
+	}
+
+	resources = {
+		category = planet_entertainers
+		produces = {
+			unity = 1
+			trade = 4
+		}
+		upkeep = {
+			consumer_goods = 2
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_tradition = tr_mercantile_commercial_enterprise
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+
+	country_modifier = {
+		pop_amenities_usage_mult = -0.01
+		planet_pops_trade_produces_mult = 0.02
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		mult = value:scripted_modifier_job_weight_mult|MODIFIER|pop_job_amenities_mult|
+		# crisis purge
+		modifier = {
+			factor = 0.01
+			colony.controller? = {
+				OR = {
+					is_country_type = swarm
+					is_country_type = ai_empire
+				}
+			}
+			OR = { # contingency won't purge itself
+				NOT = { exists = event_target:custodian_bot }
+				AND = {
+					exists = event_target:custodian_bot
+					NOT = { species = { is_same_value = event_target:custodian_bot } }
+				}
+			}
+		}
+	}
+
+}
+
+polytechnic_mentor = {
+	category = specialist
+	auto_generate_description = no
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_research_lab_1
+		}
+	}
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+	possible_precalc = can_fill_specialist_job
+	possible = { complex_specialist_job_check_trigger = yes }
+
+	resources = {
+		category = planet_mentors
+		upkeep = { consumer_goods = 3 }
+		produces = {
+			unity = @polytechnic_base_output
+			physics_research = @polytechnic_base_output
+			society_research = @polytechnic_base_output
+			engineering_research = @polytechnic_base_output
+		}
+		produces = {
+			unity = @polytechnic_output
+			mult = value:mentor_scale_value|TAG|minerals|
+		}
+		produces = {
+			physics_research = @polytechnic_output
+			mult = value:mentor_scale_value|TAG|energy|
+		}
+		produces = {
+			society_research = @polytechnic_output
+			mult = value:mentor_scale_value|TAG|consumer_goods|
+		}
+		produces = {
+			engineering_research = @polytechnic_output
+			mult = value:mentor_scale_value|TAG|alloys|
+		}
+	}
+
+	auto_generate_description = no
+
+	weight = {
+		weight = @specialist_job_weight
+		modifier = {
+			factor = 0.2
+			has_citizenship_rights = no
+			NOT = { has_trait = trait_mechanical }
+		}
+		modifier = {
+			factor = 2
+			has_living_standard = { type = living_standard_academic_privilege }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 0.8
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_indentured }
+		}
+		modifier = {
+			factor = 5
+			has_trait = trait_cyborg_creed_of_research
+		}
+	}
+
+}
+
+offworld_prospector = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_offworld_expedition_hub
+		}
+	}
+
+	tags = { strategic_resource sr_living_metal volatile_motes }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+	possible_precalc = can_fill_specialist_job
+	possible = { complex_specialist_job_check_trigger = yes }
+
+	resources = {
+		category = planet_jobs
+		upkeep = {
+			energy = @offworld_prospector_upkeep
+		}
+		produces = {
+			sr_living_metal = @offworld_prospector_lm
+			volatile_motes = @offworld_prospector_vm
+		}
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+	}
+}
+
+soldier = {
+	category = specialist
+	swappable_data = {
+		default = {
+			condition_string = SOLDIER_JOB_TRIGGER
+			building_icon = building_stronghold
+		}
+		swap_type = {
+			trigger = {
+				soldier_is_necromancer = yes
+			}
+			name = necromancer
+			desc = necromancer
+			icon = necromancer
+			building_icon = building_dread_encampment
+			weight = 50
+		}
+	}
+
+	tags = { soldier }
+
+	country_modifier = {
+		country_naval_cap_add = 4
+	}
+
+	resources = {
+		category = planet_soldiers
+		produces = {
+			trigger = {
+				soldier_is_necromancer = yes
+			}
+			society_research = 0.5
+			engineering_research = 0.5
+		}
+		upkeep = {
+			trigger = {
+				soldier_is_necromancer = yes
+			}
+			consumer_goods = 0.5
+		}
+		upkeep = {
+			alloys = 1.0
+		}
+	}
+
+	inline_script = "output/soldier_triggered_modifiers"
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible = {
+		soldier_job_check_trigger = yes
+		owner = { is_gestalt = no }
+	}
+
+	weight = {
+		weight = @soldier_job_weight
+		modifier = {
+			factor = 10
+			colony? = {
+				exists = leader
+				leader = {
+					leader_class = commander
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_resilient
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_very_strong
+		}
+		modifier = {
+			factor = 1.5
+			has_trait = trait_strong
+		}
+		modifier = {
+			factor = 0.5
+			has_trait = trait_weak
+		}
+		modifier = {
+			factor = 10
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_military }
+		}
+		modifier = {
+			factor = 1.1
+			has_trait = trait_cybernetic
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_presapient_earthbound
+		}
+		modifier = {
+			factor = 1.1
+			has_trait = trait_limited_regeneration
+		}
+		modifier = {
+			factor = 0
+			species = { can_be_soldier = no }
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_lithoid
+		}
+		modifier = {
+			factor = 5
+			has_trait = trait_cyborg_creed_of_war
+		}
+	}
+
+}
+
+battle_thrall = {
+	category = specialist
+	swappable_data = {
+		default = {
+			condition_string = BATTLE_THRALL_JOB_TRIGGER
+			building_icon = building_stronghold
+		}
+	}
+
+	tags = { soldier }
+
+	country_modifier = {
+		country_naval_cap_add = 4
+	}
+
+	resources = {
+		category = planet_soldiers
+
+		upkeep = {
+			alloys = 1.0
+		}
+	}
+
+	inline_script = "output/soldier_triggered_modifiers"
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+		is_enslaved = yes
+	}
+
+	possible = {
+		soldier_job_check_trigger = yes
+		owner = { is_gestalt = no }
+	}
+
+	weight = {
+		weight = @soldier_job_weight
+		modifier = {
+			factor = 10
+			colony? = {
+				exists = leader
+				leader = {
+					leader_class = commander
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_resilient
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_very_strong
+		}
+		modifier = {
+			factor = 1.5
+			has_trait = trait_strong
+		}
+		modifier = {
+			factor = 0.5
+			has_trait = trait_weak
+		}
+		modifier = {
+			factor = 0.1
+			is_enslaved = yes
+			NOT = { has_slavery_type = { type = slavery_military } }
+		}
+		modifier = {
+			factor = 10
+			is_enslaved = yes
+			has_slavery_type = { type = slavery_military }
+		}
+		modifier = {
+			factor = 0.1
+			can_take_servant_job = yes
+		}
+		modifier = {
+			factor = 1.1
+			has_trait = trait_cybernetic
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_presapient_earthbound
+		}
+		modifier = {
+			factor = 1.1
+			has_trait = trait_limited_regeneration
+		}
+		modifier = {
+			factor = 0
+			species = { can_be_soldier = no }
+		}
+		modifier = {
+			factor = 2
+			has_trait = trait_lithoid
+		}
+		modifier = {
+			factor = 5
+			has_trait = trait_cyborg_creed_of_war
+		}
+	}
+
+}

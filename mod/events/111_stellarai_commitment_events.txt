@@ -1,0 +1,264 @@
+namespace = stellarai_commitment
+# Construction hooks: local structural refresh for the affected AI colony. Claims and the
+# economy do not change on construction; the monthly worker refreshes permissions.
+carrier_event = {
+  id = stellarai_commitment.1
+  hide_window = yes
+  is_triggered_only = yes
+  pre_triggers = {
+    has_owner = yes
+  }
+  trigger = {
+    is_scope_type = planet
+    exists = owner
+    owner = {
+      stellarai_managed_empire = yes
+    }
+  }
+  immediate = {
+    stellarai_classify_planet_structure = yes
+  }
+}
+
+# Monthly dispatch only. Planning, market and aid run in each AI's fixed worker slot.
+event = {
+  id = stellarai_commitment.898
+  hide_window = yes
+  is_triggered_only = yes
+  immediate = {
+    every_country = {
+      limit = {
+        OR = {
+          is_regular_empire = yes
+          is_gestalt = yes
+          is_hive_empire = yes
+          is_virtual_empire = yes
+          is_galvanic_empire = yes
+        }
+      }
+      if = {
+        limit = {
+          NOT = {
+            has_country_flag = stellarai_monthly_service_done
+          }
+        }
+        set_timed_country_flag = { flag = stellarai_monthly_service_done days = 1 }
+        if = {
+          limit = {
+            is_ai = yes
+            is_nomadic = no
+          }
+          country_event = { id = stellarai_commitment.904 }
+          country_event = { id = stellarai_strategy.1 }
+        }
+        if = {
+          limit = {
+            is_country_type = default
+            is_nomadic = no
+            NOT = {
+              has_modifier = stellarai_diplomatic_capacity
+            }
+          }
+          country_event = { id = stellarai_commitment.902 }
+        }
+        stellarai_reset_recovered_aid_episodes = yes
+      }
+    }
+  }
+}
+
+event = {
+  id = stellarai_commitment.899
+  hide_window = yes
+  is_triggered_only = yes
+  immediate = {
+    # Capacity repair and the annual reconciliation marker need only one traversal.
+    every_country = {
+      if = {
+        limit = {
+          is_country_type = default
+          is_nomadic = no
+          NOT = {
+            has_modifier = stellarai_diplomatic_capacity
+          }
+        }
+        country_event = { id = stellarai_commitment.902 }
+      }
+      if = {
+        limit = {
+          stellarai_managed_empire = yes
+        }
+        country_event = { id = stellarai_commitment.900 }
+      }
+    }
+  }
+}
+
+country_event = {
+  id = stellarai_commitment.900
+  hide_window = yes
+  is_triggered_only = yes
+  trigger = {
+    stellarai_managed_empire = yes
+  }
+  immediate = {
+    set_country_flag = stellarai_annual_refresh_due
+    # The game-start annual hook initializes all existing colonies before dispatch.
+    stellarai_initialize_planning = yes
+  }
+}
+
+# A single permanent envoy is granted to every normal non-nomadic empire, gestalts included.
+# Fallen and ancient empires get none.
+# It changes capacity only: player diplomacy remains entirely player-driven.
+country_event = {
+  id = stellarai_commitment.902
+  hide_window = yes
+  is_triggered_only = yes
+  trigger = {
+    is_country_type = default
+    is_nomadic = no
+  }
+  immediate = {
+    if = {
+      limit = {
+        NOT = {
+          has_modifier = stellarai_diplomatic_capacity
+        }
+      }
+      add_modifier = { modifier = stellarai_diplomatic_capacity days = -1 }
+    }
+  }
+}
+
+# Country-root adapter for initialization and the fixed monthly worker slot.
+country_event = {
+  id = stellarai_commitment.904
+  hide_window = yes
+  is_triggered_only = yes
+  trigger = {
+    stellarai_managed_empire = yes
+  }
+  immediate = {
+    stellarai_initialize_planning = yes
+    stellarai_queue_monthly_planning = yes
+  }
+}
+
+# Immediate capital repair never queues a full empire search.
+country_event = {
+  id = stellarai_commitment.905
+  hide_window = yes
+  is_triggered_only = yes
+  trigger = {
+    stellarai_managed_empire = yes
+  }
+  immediate = {
+    stellarai_refresh_capital_science = yes
+  }
+}
+
+# Monthly worker. No eligibility trigger: always consume a due request, even
+# when ownership/control or country eligibility changed while it was queued.
+country_event = {
+  id = stellarai_commitment.906
+  hide_window = yes
+  is_triggered_only = yes
+  immediate = {
+    if = {
+      limit = {
+        is_variable_set = stellarai_research_due_day
+      }
+      if = {
+        limit = {
+          check_variable = { which = stellarai_research_due_day value = trigger:days_passed }
+        }
+        clear_variable = stellarai_research_due_day
+        if = {
+          limit = {
+            stellarai_managed_empire = yes
+          }
+          stellarai_plan_research_worlds = yes
+          stellarai_refresh_strategic_facts = yes
+          stellarai_run_monthly_aid = yes
+          stellarai_run_monthly_market = yes
+        }
+      }
+    }
+  }
+}
+
+# Lifecycle hooks dispatch the colony carrier (planet or ship). Managed AI colonies
+# refresh locally; a colony that left StellarAI management drops its stale flags.
+carrier_event = {
+  id = stellarai_commitment.920
+  hide_window = yes
+  is_triggered_only = yes
+  trigger = {
+    is_scope_type = planet
+    exists = owner
+  }
+  immediate = {
+    if = {
+      limit = {
+        owner = {
+          stellarai_managed_empire = yes
+        }
+      }
+      stellarai_refresh_planet_state = yes
+    }
+    else = {
+      stellarai_clear_planet_state = yes
+    }
+  }
+}
+
+carrier_event = {
+  id = stellarai_commitment.921
+  hide_window = yes
+  is_triggered_only = yes
+  immediate = {
+    carrier_event = { id = stellarai_commitment.920 }
+    if = {
+      limit = {
+        is_scope_type = planet
+        exists = owner
+        is_capital = yes
+        owner = {
+          stellarai_managed_empire = yes
+        }
+      }
+      owner = {
+        country_event = { id = stellarai_commitment.905 }
+      }
+    }
+    if = {
+      # First capital assignment has no valid FROM. A moved capital normally
+      # supplies the old colony, while a carrier-scoped caller may supply a planet.
+      limit = {
+        exists = from
+      }
+      from = {
+        if = {
+          limit = {
+            is_scope_type = colony
+          }
+          if = {
+            limit = {
+              exists = planet
+            }
+            planet = {
+              carrier_event = { id = stellarai_commitment.920 }
+            }
+          }
+        }
+        else_if = {
+          limit = {
+            is_scope_type = planet
+          }
+          carrier_event = { id = stellarai_commitment.920 }
+        }
+      }
+    }
+  }
+}

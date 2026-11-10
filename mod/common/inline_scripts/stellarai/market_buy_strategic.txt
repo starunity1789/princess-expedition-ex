@@ -1,0 +1,44 @@
+# One bounded batch after ALL essential recovery. Current country scope.
+if = {
+ limit = {
+  check_variable = { which = stellarai_market_purchase_count value < 2 }
+  NOT = { check_variable = { which = stellarai_market_strategic_done value = 1 } }
+  NOT = { check_variable = { which = stellarai_market_sold_$RESOURCE$ value = 1 } }
+  NOT = { check_variable = { which = stellarai_market_bought_$RESOURCE$ value = 1 } }
+  can_buy_on_market = $RESOURCE$
+  check_variable = { which = stellarai_market_gap value >= $AMOUNT$ }
+  check_variable = { which = stellarai_market_batch_cap value >= $AMOUNT$ }
+ }
+ set_variable = {
+  which = stellarai_market_trade_value
+  value = value:stellarai_market_buy_cost|RESOURCE|$RESOURCE$|AMOUNT|$AMOUNT$|MARKUP|1|
+ }
+ # Ceiling uses native 4.5.2 normal resource price including 30% fee, times two.
+ set_variable = { which = stellarai_market_price_ceiling value = $AMOUNT$ }
+ multiply_variable = { which = stellarai_market_price_ceiling value = $MAX_UNIT_PRICE$ }
+ export_resource_stockpile_to_variable = { resource = trade variable = stellarai_market_currency_stockpile }
+ set_variable = { which = stellarai_market_spend_limit value = stellarai_market_currency_stockpile }
+ subtract_variable = { which = stellarai_market_spend_limit value = @stellarai_strategic_trade_floor }
+ multiply_variable = { which = stellarai_market_spend_limit value = @stellarai_strategic_trade_share }
+ if = {
+  limit = {
+   check_variable = { which = stellarai_market_trade_value value > 0 }
+   check_variable = { which = stellarai_market_trade_value value <= stellarai_market_price_ceiling }
+   check_variable = { which = stellarai_market_trade_value value <= stellarai_market_spend_limit }
+   check_variable_arithmetic = {
+    which = stellarai_market_currency_stockpile
+    subtract = stellarai_market_trade_value
+    value >= @stellarai_strategic_trade_floor
+   }
+  }
+  add_resource = { trade = -1 mult = stellarai_market_trade_value }
+  add_resource = { $RESOURCE$ = $AMOUNT$ }
+  change_variable = { which = stellarai_market_purchase_count value = 1 }
+  set_variable = { which = stellarai_market_bought_$RESOURCE$ value = 1 }
+  set_variable = { which = stellarai_market_strategic_done value = 1 }
+ }
+ clear_variable = stellarai_market_price_ceiling
+ clear_variable = stellarai_market_spend_limit
+ clear_variable = stellarai_market_currency_stockpile
+ clear_variable = stellarai_market_trade_value
+}

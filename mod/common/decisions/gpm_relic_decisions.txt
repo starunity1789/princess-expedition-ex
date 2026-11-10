@@ -1,0 +1,78 @@
+# [merge_upstream] 已删除 decision_gpm_machine_world_core_relic
+
+# [merge_upstream] 已删除 decision_gpm_shield_generator_arrays
+
+decision_gpm_Floating_Island_Housing = {
+	important = yes
+    owned_planets_only = yes
+	sound = event_administrative_work
+	icon = gpm_decision_floating_islands
+	# enactment_time = 0
+
+    # resources = {
+	# 	category = decisions
+	# 	cost = {
+	# 		minerals = 1000
+	# 	}
+	# }
+
+    potential = {
+		exists = from
+		from = {
+			check_variable = {
+				which = "gpm_r_gravity_engine_decision_count"
+				value > 0
+			}
+		}
+		exists = space_owner
+		space_owner = { is_same_value = from }
+		NOT = { has_deposit = gpm_d_floating_islands_housing }
+		OR = {
+			gpm_is_planet_class_habitable_natural = yes
+			gpm_is_planet_class_nuked = yes
+			gpm_is_planet_class_city = yes
+			gpm_is_planet_class_machine = yes
+			gpm_is_planet_class_hive = yes
+		}
+	}
+	
+	allow = {
+	}
+
+    effect = {
+		add_deposit = gpm_d_floating_islands_housing
+		# custom_tooltip = decision_gpm_Floating_Island_Housing_effects
+		hidden_effect = {
+			owner = {
+				change_variable = {
+					which = "gpm_r_gravity_engine_decision_count"
+					value = -1
+				}
+			}
+		}
+	}
+	
+	ai_weight = {
+		weight = 100
+		modifier = {
+			factor = 50
+			owner = {
+				resource_stockpile_compare = {
+					resource = minerals
+					value >= 2000
+				}
+			}
+		}
+		modifier = {
+			factor = 100
+			is_capital = yes
+		}
+		modifier = {
+			factor = 50
+			AND = {
+				pop_amount > 2000
+				free_district_slots < 3
+			}
+		}
+	}
+}

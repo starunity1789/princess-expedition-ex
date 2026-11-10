@@ -1,0 +1,841 @@
+###PD Base Classes
+# These are dummy classes and are not to be used, they are just for reference for the engine to turn them into the correct class.
+# Used in terraforming, and on game start.
+
+###Arctic
+#Cold Desert
+pc_pd_cold_desert = {
+	entity = "frozen_desert_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.50 0.2 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arid.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Glacial
+pc_pd_glacial = {
+	entity = "glacial_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Antarctic
+pc_pd_antarctic = {
+	entity = "antarctic_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Aeolian
+pc_pd_aeolian = {
+	entity = "aeolian_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = no
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Ice Spike
+pc_pd_ice_spike = {
+	entity = "ice_spike_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = no
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Crevasse
+pc_pd_crevasse = {
+	entity = "crevasse_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = no
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Ice Dune
+pc_pd_ice_dunes = {
+	entity = "ice_dunes_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = no
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Supraglacial Lakes
+pc_pd_supraglacial_lakes = {
+	entity = "supraglacial_lakes_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.50 0.2 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = no
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Ferrospring
+pc_pd_ferrospring = {
+	entity = "ferrospring_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = no
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Storm
+pc_pd_storm = {
+	entity = "storm_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	climate = "cold"
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.7 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_ocean.dds"
+	#planet defines
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Iceberg
+pc_pd_iceberg = {
+	entity = "pd_iceberg_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_arctic
+	icon_large = GFX_planet_type_arctic_big
+	climate = "cold"
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	colonizable = yes
+	initial = yes
+	starting_planet = no
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+###Alpine
+#Boreal
+pc_pd_boreal = {
+	entity = "boreal_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.5 0.9 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Snow
+pc_pd_snow = {
+	entity = "snow_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_arctic.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Highland
+pc_pd_highland = {
+	entity = "highland_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.5 0.9 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Dune Forest
+pc_pd_dune_forest = {
+	entity = "duneforest_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Fjord
+pc_pd_fjord = {
+	entity = "fjord_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Blossom
+pc_pd_blossom = {
+	entity = "blossom_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Taiga
+pc_pd_taiga = {
+	entity = "taiga_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	uses_alternative_skies_for_moons = yes
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Craton
+pc_pd_craton = {
+	entity = "craton_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Ravine
+pc_pd_ravine = {
+	entity = "ravine_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Glaciovolcanic
+pc_pd_glaciovolcanic = {
+	entity = "glacio_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	climate = "cold"
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_alpine.dds"
+	#planet defines
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Lanthanide
+pc_pd_lanthanide = {
+	entity = "lanthanide_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_alpine
+	icon_large = GFX_planet_type_alpine_big
+	climate = "cold"
+	#appearance
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_lanthanide.dds"
+	#planet defines
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	district_set = standard
+	can_be_moon = no
+	uses_alternative_skies_for_moons = no
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+###Tundra
+#Bog
+pc_pd_bog = {
+	entity = "swamp_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Mycelium
+pc_pd_mycelium = {
+	entity = "mycelium_planet"
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	entity_scale = @planet_standard_scale
+	atmosphere_color 		= hsv { 0.48 0.15 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	colonizable = yes
+	climate = "cold"
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Mud
+pc_pd_mud = {
+	entity = "mud_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Basalt
+pc_pd_basalt = {
+	entity = "basalt_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Tuya
+pc_pd_tuya = {
+	entity = "tuya_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Cryovolcano
+pc_pd_cryovolcano = {
+	entity = "cryovolcano_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Treeline
+pc_pd_treeline = {
+	entity = "treeline_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Peatland
+pc_pd_peatland = {
+	entity = "peatland_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Travertine
+pc_pd_travertine = {
+	entity = "travertine_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.8 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	climate = "cold"
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	spawn_odds = 0
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+
+#Cryoflora
+pc_pd_cryoflora = {
+	entity = "cryoflora_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	climate = "cold"
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.7 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_cryoflora.dds"
+	#planet defines
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}
+
+#Lichen
+pc_pd_lichen = {
+	entity = "lichen_planet"
+	entity_scale = @planet_standard_scale
+	icon = GFX_planet_type_tundra
+	icon_large = GFX_planet_type_tundra_big
+	climate = "cold"
+	#appearance
+	atmosphere_color 		= hsv { 0.58 0.3 0.7 }
+	atmosphere_intensity 	= 1.0
+	atmosphere_width 		= 0.5
+	city_color_lut = "gfx/portraits/misc/colorcorrection_tundra.dds"
+	#planet defines
+	colonizable = yes
+	initial = yes
+	planet_size = { min = @habitable_planet_min_size max = @habitable_planet_max_size }
+	moon_size = { min = @habitable_moon_min_size max = @habitable_moon_max_size }
+	district_set = standard
+	carry_cap_per_free_district = @carry_cap_normal
+	modifier = {
+		pop_environment_tolerance = 1
+	}
+}

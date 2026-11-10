@@ -1,0 +1,362 @@
+@basicTypeCost = 2000
+@basicBiomassCost = 1000
+
+#########
+## Wet ##
+#########
+
+terraform_link = {
+	from = "pc_continental"
+	to = "pc_continental"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_ocean"
+	to = "pc_ocean"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_tropical"
+	to = "pc_tropical"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_desert"
+	to = "pc_desert"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_arid"
+	to = "pc_arid"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_savannah"
+	to = "pc_savannah"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_arctic"
+	to = "pc_arctic"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_alpine"
+	to = "pc_alpine"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_tundra"
+	to = "pc_tundra"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+terraform_link = {
+	from = "pc_gaia"
+	to = "pc_gaia"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+##############
+## Volcanic ##
+##############
+
+terraform_link = {
+	from = "pc_volcanic"
+	to = "pc_volcanic"
+
+	resources = {
+		category = terraforming
+		inline_script = {
+			script = terraform/triggered_costs
+			ENERGY_COST = @basicTypeCost
+			BIOMASS_COST = @basicBiomassCost
+		}
+	}
+
+	inline_script = {
+		script = terraform/wilderness_biomass
+	}
+
+	duration = 1800
+
+	potential = {
+		should_show_standard_terraforming = yes
+	}
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}

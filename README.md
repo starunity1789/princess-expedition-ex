@@ -115,16 +115,26 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - **银河规则**：所有帝国开局就有居住站科技（轨道居住站及其两级扩建）；必定生成天选民（固定在 8 点）和凯德斯（瓦格罗之子嗣）的坠毁点；巨型船坞的船坞数量改为 50；星海共同体的议程与休会时间减半；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
 - **内置肖像包**：已合并 Ancient Dragonkin（龙族）与 Kemonomimi（兽耳）两套动态肖像包——如果还订阅着这两个独立包，请停用它们
 
+**内置三个 MOD（2.8 起）**——由 `tools/merge_upstream.py` 合并、裁剪，**启动器里必须停用独立的这三个 MOD**，否则同一批定义会出现两份：
+- **Planetary Diversity**：113 个新行星类型与新气候宜居性特质，连同行星生成引擎、改造链路、行星类型界面。删去全部岗位与区域修改、飞升世界、穹顶殖民地、起源与公民覆盖等非行星类型内容
+- **Guilli's Planet Modifiers and Features**：635 个行星修正、216 个行星地貌与 21 个遗珍，连同修正调度引擎。删去遗珍战争/窃取/交易、前驱者考古、行星决议、游牧民族、内容事件、环境物件等其余全部内容；开局不再弹设置菜单，直接按默认设置运行
+- **Stellar AI**：原样内置
+- 新增玩家首都决议 **「探寻遗珍」**：花 10000 能量币随机获得一件尚未拥有的 GPM 遗珍，直到 21 件全部获得
+
 完整说明见工坊简介原文：[中文](docs/workshop_description_zh.txt) / [English](docs/workshop_description_en.txt)。
 
 ### 目录结构
 
 ```
 mod/      MOD 本体（上传工坊的就是这个文件夹）
-tools/    生成脚本，以及名称集的源数据 cgen_names_source.json
+tools/    生成脚本，以及名称集的源数据 cgen_names_source.json；upstream_manifest.json 记录合并进来的上游文件
 art/      立绘、列强帝国标识 LOGO、封面、遗珍原图
 docs/     工坊简介原文（中文、英文各一份），名称集总览与全部人名，三方整合方案
 ```
+
+合并进来的上游**二进制资源**（约 2 GB，几乎全是 PD 的行星贴图）**不进 git**：`.gitignore` 末尾有一段由
+`merge_upstream.py` 生成的精确文件清单。重新 clone 之后要先订阅那三个 MOD，再跑一次
+`python tools/merge_upstream.py ...` 把贴图拷回来，MOD 才完整。脚本与本地化照常进 git。
 
 `mod/` 通过目录联接（junction）挂到游戏的 MOD 目录：
 
@@ -160,6 +170,12 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 | `adpp_` | 合并进来的 Ancient Dragonkin 肖像包，原样保留，不要改 |
 | `kmpp_` | 合并进来的 Kemonomimi 肖像包，原样保留，不要改 |
 | `cgen_` / `CGEN_` | 名称集「苍神缘起帝国」（全部由 `tools/gen_names.py` 生成，不要手改；2.6 起由独立 MOD「苍神缘起帝国·名称集 0.1.0」并入） |
+| `gpm_` | 合并进来的 Guilli's Planet Modifiers（由 `tools/merge_upstream.py` 写入，不要手改，改 `KEEP` / `PATCHES` 后重跑） |
+| `pd_` / `pdengine` / `!vanilla_*_fix` | 合并进来的 Planetary Diversity（同上） |
+| `stellarai_` / `~stellarai_` / `111_stellarai` | 合并进来的 Stellar AI（同上） |
+| `atb_relic_quest_` | 决议「探寻遗珍」（由 `tools/gen_relic_quest.py` 生成，不要手改） |
+
+上游文件的完整清单与来源见 `tools/upstream_manifest.json`。除了上面这些前缀，上游还以原版同名路径覆盖了一批原版文件，见下文「覆盖的原版文件」。
 
 ### 开发
 
@@ -190,7 +206,14 @@ python tools/gen_portrait_sets.py "C:\Program Files (x86)\Steam\steamapps\common
 # 重新生成名称集「苍神缘起帝国」（改名字改 tools/cgen_names_source.json）
 python tools/gen_names.py mod docs
 
-# 静态自检：括号配对、本地化格式、贴图引用、原版 ID、本次改动点
+# 把 PD / GPM / Stellar AI 按保留清单合并进 mod/（需要三者都已订阅）
+# 校验没通过时什么都不写；上游改了结构会在这里报错，按提示调整脚本里的 KEEP / PATCHES
+python tools/merge_upstream.py "C:/Program Files (x86)/Steam/steamapps/workshop/content/281990" mod
+
+# 重新生成决议「探寻遗珍」（遗珍清单读合并后的 mod/common/relics/gpm_relics*.txt，合并之后跑）
+python tools/gen_relic_quest.py mod
+
+# 静态自检：括号配对、本地化格式、贴图引用、原版 ID、本次改动点、三方整合
 python tools/check_mod.py
 ```
 
@@ -207,6 +230,11 @@ python tools/check_mod.py
 - `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时，原版改了数值时对照调整）
 - `common/game_rules/atb_rules.txt` 里的 `can_be_part_of_galactic_community`、`can_dismiss_leader`（原版同名规则的副本）
 - `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）
+
+2.8 起合并进来的上游另外覆盖了 42 个原版文件（Stellar AI 27 个、Planetary Diversity 15 个；GPM 不覆盖原版路径），
+清单见 `docs/整合方案.md` §1.1。四方之间没有任何两家覆盖同一个原版文件。游戏更新后有两种做法：
+等上游作者更新、重新订阅后重跑 `merge_upstream.py`；或者自己对照新版原版改 `mod/` 里的这些文件
+（改完后重跑 `merge_upstream.py` 会把它们覆盖回上游版本，所以自维护时要把改动做进脚本的 `PATCHES`）。
 
 ### 发布到工坊
 

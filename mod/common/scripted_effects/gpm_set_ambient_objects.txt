@@ -1,0 +1,154 @@
+# scope = planet
+gpm_set_shipyards_objects = {
+	# [merge_upstream] 函数体已掏空：只生成已删除的内容
+}
+
+# scope = planet
+gpm_set_precursor_planetary_shields_machines = {
+	# [merge_upstream] 函数体已掏空：只生成已删除的内容
+}
+
+# scope = planet
+gpm_set_precursor_planetary_shields = {
+	# [merge_upstream] 函数体已掏空：只生成已删除的内容
+}
+# scope = planet
+gpm_set_fallen_empire_planetary_shields = {
+	# [merge_upstream] 函数体已掏空：只生成已删除的内容
+}
+
+gpm_set_precursor_energy_grid = {
+	# [merge_upstream] 函数体已掏空：只生成已删除的内容
+}
+
+# Duplicate asteroid 
+# scope = planet
+gpm_set_binary_asteroid = {
+	optimize_memory
+	save_event_target_as = gpm_double_asteroid
+	solar_system = {
+		spawn_planet = {
+			class = "pc_asteroid"
+			location = event_target:gpm_double_asteroid
+			orbit_location = no
+			orbit_angle_offset = 5
+			orbit_distance_offset = -4.0
+			size = 20
+			has_ring = no
+			
+			init_effect = {
+				set_name = gpm_binary_asteroids
+				set_planet_entity = {
+					entity = "asteroid_entity"
+				}
+				set_surveyed = { surveyed = no surveyor = event_target:gpm_host_country_event_target }
+				reroll_planet = yes
+				set_planet_flag = gpm_binary_asteroid
+				if = {
+					limit= { NOT = { has_modifier = gpm_binary_asteroids } }
+					add_modifier = { modifier = gpm_binary_asteroids days = -1 }
+				}
+			}
+		}
+	}
+}
+
+# gpm_metallic_ring
+# gpm_ice_ring
+
+# Planet flag = gpm_has_planet_rings
+# Ambient object flag = gpm_ambient_ring
+
+gpm_set_planetary_rings = {
+	# [merge_upstream] 函数体已掏空：只生成已删除的内容
+}
+
+# Set minor ambient objects in or around planets
+# planet scope
+gpm_set_space_ship_graveyard_ambient_objects = {
+	optimize_memory
+	if = {
+		limit = {
+			has_modifier = gpm_spaceship_graveyard
+			NOT = { has_planet_flag = has_spaceship_graveyard_ambient_objects }
+		}
+		set_planet_flag = has_spaceship_graveyard_ambient_objects
+
+		create_ambient_object = {
+			type = "ancient_battlefield_object"
+			entity_offset_height = { min = -5 max = -5 }
+			location = this
+		}
+		last_created_ambient_object = {
+			set_location = {
+				target = prev
+				distance = 0
+				angle = random
+			}
+		}
+		create_ambient_object = {
+			type = "ancient_battlefield_02_object"
+			entity_offset_height = { min = -20 max = -20 }
+			location = this
+		}
+		last_created_ambient_object = {
+			set_location = {
+				target = prev
+				distance = 0
+				angle = random
+			}
+		}
+		while = {
+			count = 5
+			create_ambient_object = {
+				type = "medium_debris_01_object"
+				entity_offset_height = { min = -10 max = -20 }
+				location = this
+			}
+			last_created_ambient_object = {
+				set_location = {
+					target = prev
+					distance = 15
+					angle = random
+				}
+			}
+		}
+		while = {
+			count = 5
+			create_ambient_object = {
+				type = "medium_debris_02_object"
+				entity_offset_height = { min = -10 max = -20 }
+				location = this
+			}
+			last_created_ambient_object = {
+				set_location = {
+					target = prev
+					distance = 15
+					angle = random
+				}
+			}
+		}
+		while = {
+			count = 30
+			create_ambient_object = {
+				type = "small_debris_object"
+				entity_offset_height = { min = -10 max = -20 }
+				location = this
+			}
+			last_created_ambient_object = {
+				set_location = {
+					target = prev
+					distance = 15
+					angle = random
+				}
+			}
+		}
+	}
+}
+
+# Ambient object list for precursor planets/systems. Bringing some (dead) life to the worlds!
+# planet scope
+# this = planet
+gpm_precursor_ambient_object_generator = {
+	# [merge_upstream] 函数体已掏空：只生成已删除的内容
+}

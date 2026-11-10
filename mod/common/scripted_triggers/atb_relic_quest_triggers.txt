@@ -1,0 +1,28 @@
+# 由 tools/gen_relic_quest.py 生成，请勿手改
+
+# 国家作用域：还有没拿到的 GPM 遗珍（21 个）
+atb_has_unclaimed_gpm_relic = {
+	NAND = {
+		has_relic = gpm_r_mars_rover
+		has_relic = gpm_r_encyclopedia_galactica
+		has_relic = gpm_r_zero_energy_generator
+		has_relic = gpm_r_quantum_sphere
+		has_relic = gpm_r_ai_architect
+		has_relic = gpm_r_encrypted_sct
+		has_relic = gpm_r_experimental_weapon
+		has_relic = gpm_r_fallout_emergency_replicator
+		has_relic = gpm_r_power_core
+		has_relic = gpm_r_gravity_engine
+		has_relic = gpm_r_codex_administratum
+		has_relic = gpm_r_enigmatic_advisor
+		has_relic = gpm_r_positronic_microchip
+		has_relic = gpm_r_sentinel_queen
+		has_relic = gpm_r_earthquake_engine
+		has_relic = gpm_r_manufactorium_ship
+		has_relic = gpm_r_datacube
+		has_relic = gpm_r_self_assembly_hub
+		has_relic = gpm_r_banner_of_the_fallen
+		has_relic = gpm_r_cloaking_device
+		has_relic = gpm_r_q_storage_compressor
+	}
+}

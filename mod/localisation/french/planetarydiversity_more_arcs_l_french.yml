@@ -1,0 +1,58 @@
+﻿l_french:
+#Decisions
+ decision_pd_ma_hive_overmind_project: "Projet Ruche - Sur-Esprit"
+ decision_pd_ma_hive_overmind_project_desc: "Ce monde-ruche sera remodelé en bastion de processus de pensée avancés pour l'esprit de la ruche."
+ decision_pd_ma_hive_overmind_project_effects: "Transforme la planète en §Y$pc_pd_hive_superhabitable$§!, augmentant £housing£ §Y$PLANET_HOUSING_TITLE$§!, la §YProduction de Ressources§! et la §YCroissance de Population§!, et débloquant des £district£ §YDistricts d'Arcologie§! spéciaux, au prix des ressources naturelles de la planète qui deviennent §Rinaccessibles§!, empêchant toute construction future de £district£ §YGénérateur§!, §YMinier§! et §YAgricole§!."
+ decision_pd_ma_hive_overmind_project_effects_short: "Augmente £housing£ §Y$PLANET_HOUSING_TITLE$§!, la §YProduction de Ressources§! et la §YCroissance de Population§!\nDébloque des £district£ §YDistricts d'Arcologie§!\nDésactive la construction de £district£ §YGénérateur§!, §YMinier§! et §YAgricole§!"
+
+ decision_pd_ma_machine_nexus_project: "Projet Machine - Nexus"
+ decision_pd_ma_machine_nexus_project_desc: "Ce monde-machine sera augmenté en bastion de sous-routines avancées."
+ decision_pd_ma_machine_nexus_project_effects: "Transforme la planète en §Y$pc_pd_hive_superhabitable$§!, augmentant £housing£ §Y$PLANET_HOUSING_TITLE$§!, la §YProduction de Ressources§! et la §YCroissance de Population§!, et débloquant des £district£ §YDistricts d'Arcologie§! spéciaux, au prix des ressources naturelles de la planète qui deviennent §Rinaccessibles§!, empêchant toute construction future de £district£ §YGénérateur§!, §YMinier§! et §YAgricole§!."
+ decision_pd_ma_machine_nexus_project_effects_short: "Augmente £housing£ §Y$PLANET_HOUSING_TITLE$§!, la §YProduction de Ressources§! et la §YCroissance de Population§!\nDébloque des £district£ §YDistricts d'Arcologie§!\nDésactive la construction de £district£ §YGénérateur§!, §YMinier§! et §YAgricole§!"
+
+#Planet Classes
+ #Hive
+ pc_pd_hive_superhabitable_arc: "Monde Superhabitable du Sur-Esprit"
+ pc_pd_hive_superhabitable_arc_desc: "Ce monde superhabitable est un organisme vivant colossal, intimement lié à l'Esprit de la Ruche qui l'a créé. Il a été sculpté comme un bastion de processus de pensée avancés et est fortement défendu. Son terrain est prêt à assaillir tout visiteur indésirable."
+ pc_pd_hive_superhabitable_arc_adj: "$pc_hive_adj$"
+ mod_pc_pd_hive_superhabitable_arc_habitability: "$mod_pc_hive_habitability$"
+ trait_pc_pd_hive_superhabitable_arc_preference: "$trait_pc_hive_preference$"
+ trait_pc_pd_hive_superhabitable_arc_preference_desc: "$trait_pc_hive_preference_desc$"
+ pc_pd_hive_tidally_locked_arc: "Monde Crépusculaire du Sur-Esprit"
+ pc_pd_hive_tidally_locked_arc_desc: "Ce monde verrouillé par la marée est un organisme vivant colossal, intimement lié à l'Esprit de la Ruche qui l'a créé. Il a été sculpté comme un bastion de processus de pensée avancés et est fortement défendu. Son terrain est prêt à assaillir tout visiteur indésirable."
+ pc_pd_hive_tidally_locked_arc_adj: "$pc_hive_adj$"
+ mod_pc_pd_hive_tidally_locked_arc_habitability: "$mod_pc_hive_habitability$"
+ trait_pc_pd_hive_tidally_locked_arc_preference: "$trait_pc_hive_preference$"
+ trait_pc_pd_hive_tidally_locked_arc_preference_desc: "$trait_pc_hive_preference_desc$"
+ pc_pd_hive_cave_arc: "Monde Caverneux du Sur-Esprit"
+ pc_pd_hive_cave_arc_desc: "Ce monde caverneux est un organisme vivant colossal, intimement lié à l'Esprit de la Ruche qui l'a créé. Il a été sculpté comme un bastion de processus de pensée avancés et est fortement défendu. Son terrain est prêt à assaillir tout visiteur indésirable."
+ pc_pd_hive_cave_arc_adj: "$pc_hive_adj$"
+ mod_pc_pd_hive_cave_arc_habitability: "$mod_pc_hive_habitability$"
+ trait_pc_pd_hive_cave_arc_preference: "$trait_pc_hive_preference$"
+ trait_pc_pd_hive_cave_arc_preference_desc: "$trait_pc_hive_preference_desc$"
+
+ #Machine
+ pc_pd_machine_superhabitable_arc: "Monde Superhabitable du Nexus"
+ pc_pd_machine_superhabitable_arc_desc: "Monde rocheux superhabitable recouvert de structures artificielles. L'atmosphère ténue se compose principalement de polluants industriels et n'est pas capable de soutenir la vie biologique."
+ pc_pd_machine_superhabitable_arc_adj: "machine"
+ mod_pc_pd_machine_superhabitable_arc_habitability: "Habitabilité Nexus Machine"
+ trait_pc_pd_machine_superhabitable_arc_preference: "Préférence Nexus Machine"
+ trait_pc_pd_machine_superhabitable_arc_preference_desc: "$trait_pc_arctic_preference_desc$"
+ pc_pd_machine_tidally_locked_arc: "Monde Crépusculaire du Nexus"
+ pc_pd_machine_tidally_locked_arc_desc: "Monde rocheux verrouillé par la marée, recouvert de structures artificielles. L'atmosphère ténue se compose principalement de polluants industriels et n'est pas capable de soutenir la vie biologique."
+ pc_pd_machine_tidally_locked_arc_adj: "machine"
+ mod_pc_pd_machine_tidally_locked_arc_habitability: "Habitabilité Nexus Machine"
+ trait_pc_pd_machine_tidally_locked_arc_preference: "Préférence Nexus Machine"
+ trait_pc_pd_machine_tidally_locked_arc_preference_desc: "$trait_pc_arctic_preference_desc$"
+ pc_pd_machine_cave_arc: "Nexus Machine Caverneux"
+ pc_pd_machine_cave_arc_desc: "Monde caverneux et rocheux, recouvert de structures artificielles. L'atmosphère ténue se compose principalement de polluants industriels et n'est pas capable de soutenir la vie biologique."
+ pc_pd_machine_cave_arc_adj: "machine"
+ mod_pc_pd_machine_cave_arc_habitability: "Habitabilité Nexus Machine"
+ trait_pc_pd_machine_cave_arc_preference: "Préférence Nexus Machine"
+ trait_pc_pd_machine_cave_arc_preference_desc: "$trait_pc_arctic_preference_desc$"
+
+ #Modifiers
+ pd_hive_military: "Monde du Sur-Esprit"
+ pd_hive_military_desc: "Ce monde est essentiel aux fonctions centrales de l'Esprit de la Ruche et est fortifié contre les menaces et influences extérieures. Un bouclier redoutable enveloppe la planète et des drones guerriers se tiennent prêts, assurant sa protection."
+ pd_machine_military: "Monde du Nexus"
+ pd_machine_military_desc: "Cette unité planétaire fait partie intégrante de la matrice opérationnelle de cette intelligence artificielle. Elle est protégée contre les interférences extérieures, enveloppée par un mécanisme de défense invulnérable. Les unités de combat sont en état de préparation permanent, préservant l'intégrité de l'unité."

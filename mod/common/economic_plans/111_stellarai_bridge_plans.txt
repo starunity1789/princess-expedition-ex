@@ -1,0 +1,76 @@
+# Carry StellarAI science and fleet priorities through the two new 4.5 tiers.
+# Additive subplans preserve native resource goals, bioships, and Nomads.
+
+intermediate_economy_plan = {
+	inline_script = "stellarai/basic_resource_recovery" # Stellar AI 0.14.1: energy, minerals, food and alloys recovery in every tier
+	subplan = {
+		optional = yes # Stellar AI 0.14.1: consumer-goods recovery between basic (12) and advanced (24)
+		scaling = yes
+		set_name = "Stellar AI bridge consumer goods recovery"
+		potential = {
+			stellarai_consumer_goods_pressure = yes
+		}
+		focus = { consumer_goods = 18 }
+	}
+
+	subplan = {
+		set_name = "Stellar AI bridge research focus"
+		potential = {
+			is_nomadic = no
+			stellarai_foundation_ready = yes
+		}
+		focus = {
+			physics_research = @stellarai_early_economic_plan_research_focus_target
+			society_research = @stellarai_early_economic_plan_research_focus_target
+			engineering_research = @stellarai_early_economic_plan_research_focus_target
+		}
+	}
+	subplan = {
+		optional = yes
+		scaling = yes
+		set_name = "Stellar AI fleet readiness focus"
+		potential = {
+				NOT = { stellarai_war_fleet_push = yes }
+				stellarai_fleet_readiness_focus = yes
+				stellarai_alloy_navy = yes
+			}
+		focus = { alloys = 28 }
+	}
+}
+
+mature_economy_plan = {
+	inline_script = "stellarai/basic_resource_recovery" # Stellar AI 0.14.1: energy, minerals, food and alloys recovery in every tier
+	subplan = {
+		optional = yes # Stellar AI 0.14.1: consumer-goods recovery between advanced (24) and endgame (90)
+		scaling = yes
+		set_name = "Stellar AI bridge consumer goods recovery"
+		potential = {
+			stellarai_consumer_goods_pressure = yes
+		}
+		focus = { consumer_goods = 36 }
+	}
+
+	subplan = {
+		set_name = "Stellar AI bridge research focus"
+		potential = {
+			is_nomadic = no
+			stellarai_foundation_ready = yes
+		}
+		focus = {
+			physics_research = @stellarai_midgame_economic_plan_advanced_research_focus_target
+			society_research = @stellarai_midgame_economic_plan_advanced_research_focus_target
+			engineering_research = @stellarai_midgame_economic_plan_advanced_research_focus_target
+		}
+	}
+	subplan = {
+		optional = yes
+		scaling = yes
+		set_name = "Stellar AI fleet readiness focus"
+		potential = {
+				NOT = { stellarai_war_fleet_push = yes }
+				stellarai_fleet_readiness_focus = yes
+				stellarai_alloy_navy = yes
+			}
+		focus = { alloys = 52 }
+	}
+}

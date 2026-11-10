@@ -1,0 +1,164 @@
+﻿l_polish:
+#Placeholder Text
+ pd_placeholder_tooltip: "Placeholder AP - DO NOT USE"
+
+###PD Tree of Life
+ #Deposits
+ d_pd_tree_of_life_uncommon: "Drzewo Życia"
+ d_pd_tree_of_life_uncommon_desc: "Pędz Wielkiego Drzewa, przeszczepione tutaj przez rój. Choć warunki sprzyjają Drzewu, rzadki ekosystem tej planety nie pozwala mu osiągnąć pełnych rozmiarów."
+ d_pd_tree_of_life_home: "Drzewo Życia"
+ d_pd_tree_of_life_home_desc: "Drzewo Życia dawało schronienie i wsparcie umysłowi zbiorowemu przez niezliczone pokolenia."
+ d_pd_tree_of_life_colony: "Sadzonka Drzewa Życia"
+ d_pd_tree_of_life_colony_desc: "Pęd Wielkiego Drzewa, przeszczepione tutaj przez rój. Potrzeba czasu, by osiągnął pełną dojrzałość."
+ d_pd_tree_of_life_bloomed: "Zakwitłe Drzewo Życia"
+ d_pd_tree_of_life_bloomed_desc: "Wielkie Drzewo od niezliczonych pokoleń dawało schronienie i wsparcie umysłowi zbiorowemu. Teraz, zakwitłe, roztacza swoje dobroczynne oddziaływanie na każdego drona."
+
+ #Decisions
+ decision_pd_replant_tree_of_life: "Przesadź Drzewo Życia"
+ decision_pd_replant_tree_of_life_desc: "Musimy zasadzić tutaj sadzonkę Wielkiego Drzewa Życia, aby nasz rój mógł się rozwijać."
+ decision_pd_bloom_tree_of_life: "Rozkwitanie Drzewa Życia"
+ decision_pd_bloom_tree_of_life_desc: "Skłonienie Wielkiego Drzewa Życia do rozkwitu wymaga znacznych zasobów i czasu, ale dzięki temu odblokujemy jego pełen potencjał."
+ decision_pd_bloom_tree_of_life_tooltip: "Ta planeta zostanie przekształcona w §YRozkwitły $pc_pd_megaflora_hive_bloomed$§!.\n\nPodwaja £pop£ §Ymiejsca pracy§! i liczbę £housing£ §Ymieszkania§! zapewnianych przez każdą dzielnicę."
+
+ #Modifiers
+ pd_tree_of_life_bloomed: "Świat Zakwitłego Drzewa Życia"
+ pd_tree_of_life_bloomed_desc: "Wielkie Drzewo na tej planecie w pełni dojrzało i rozkwitło. Jego ogromny system korzeniowy zapewnia dodatkową przestrzeń dla dronów-robotników i jest w stanie wytrzymać znaczne uszkodzenia."
+ pd_tree_of_life_growing: "Wzrastająca sadzonka Drzewa Życia"
+ pd_tree_of_life_growing_desc: "Drony na tej planecie skupiają się na zakorzenieniu sadzonki Wielkiego Drzewa Życia, którą tutaj zasadziliśmy."
+ pd_tree_of_life_home: "Świat Drzewa Życia"
+ pd_tree_of_life_home_desc: "Wielkie Drzewo na tej planecie jest w pełni wyrośnięte. Jego system korzeniowy zapewnia miejsce dla dronów-robotników i naturalnie opiera się uszkodzeniom."
+ pd_no_lifetree: "Brak Drzewa Życia"
+ pd_no_lifetree_desc: "Bez Wielkiego Drzewa Życia rój jest niekompletny."
+
+ #Origin
+ origin_pd_aw_tree_of_life: "Placeholder Origin - DO NOT USE"
+ origin_pd_aw_tree_of_life_desc: "This origin is a placeholder and will not work in Stellaris. Please remove it before starting  your game, as it will cause issues."
+
+###Wasteland
+ #Decisions
+ decision_pd_wasteland_planet: "Nieuregulowane standardy przemysłowe"
+ decision_pd_wasteland_planet_desc: "Troska o środowisko nie robi nic poza powstrzymywaniem nas. Ignorując stan naturalnego ekosystemu planety, odblokujemy jej prawdziwy przemysłowy potencjał."
+ decision_pd_wasteland_planet_effects_short: "Dodaje modyfikator §Y$pd_wasteland_planet$§!.\n\nZwiększa §Gprodukcję przemysłową§!, ale zmniejsza £mod_pop_environment_tolerance£ §RMożliwość zamieszkania§!."
+ decision_pd_wasteland_planet_cleanup: "Oczyszczenie środowiska"
+ decision_pd_wasteland_planet_cleanup_desc: "Poważna degradacja środowiska na tej planecie pozostawiła jej ekosystem w niepewnym stanie. Naprawimy szkody wyrządzone temu światu."
+ decision_pd_wasteland_planet_cleanup_tooltip: "Przywrócimy pierwotny ekosystem tej planety."
+
+ #Modifiers
+ pd_wasteland_planet: "Przemysłowe pustkowie"
+ pd_wasteland_planet_desc: "Kwestie środowiskowe tylko nas hamują. Ignorując stan naturalnego ekosystemu planety, odblokujemy jej prawdziwy potencjał przemysłowy."
+ pd_wasteland_planet_tooltip: "Odblokowuje £district£ §Ydzielnice produkujące energię§! i §Ygórnicze§!"
+ pd_aw_wasteland_planet: "Przemysłowe pustkowie"
+ pd_aw_wasteland_planet_desc: "$decision_pd_wasteland_planet_desc$"
+ pd_aw_wasteland_planet_tooltip: "Odblokowuje £district£ §Ydzielnice produkujące energię§! i §Ygórnicze§!"
+
+ #Notification Message
+ MESSAGE_PD_WASTELAND_DESC:1 "$PLANET|Y$ posiada teraz §Y$decision_pd_wasteland_planet$§!"
+ MESSAGE_PD_WASTELAND_MESSAGE_TYPE_TITLE: "Zniesiono regulacje środowiskowe"
+ MESSAGE_PD_WASTELAND_CLEANUP_DESC:1 "Ekosystem na $PLANET|Y$ został naprawiony."
+ MESSAGE_PD_WASTELAND_CLEANUP_MESSAGE_TYPE_TITLE: "Przywrócono regulacje środowiskowe"
+
+###Shroud
+ #Decisions
+ decision_pd_shroud_planet: "Fazowanie Woalu"
+ decision_pd_shroud_planet_desc: "Możemy osłabić barierę między tą planetą a Woalem, tworząc równowagę między światem materialnym a sferą psioniczną."
+ decision_pd_shroud_planet_effects_short: "Dodaje modyfikator §Y$pd_aw_shroud_planet$§!.\n\nZwiększa £pop£ §Gprzyrost populacji psionicznych§!, ale zmniejsza £pop£ §Yprzyrost populacji nie-psionicznych§!."
+ decision_pd_shroud_planet_cleanup: "Zablokuj fazowanie planety"
+ decision_pd_shroud_planet_cleanup_desc: "Nasi fizycy mogą wzmocnić barierę między tą planetą a Woalem, zakotwiczając ją w świecie materialnym."
+ decision_pd_shroud_planet_cleanup_tooltip: "\nUsuniemy wpływ psioniczny z tej planety."
+
+ #Modifier
+ pd_aw_shroud_planet: "Dotknięta Woalem"
+ pd_aw_shroud_planet_desc: "W tym miejscu celowo osłabiona bariera między światem materialnym a Woalem pozwoliła jednostkom obdarzonym zdolnościami psionicznymi w pewnym stopniu kształtować rzeczywistość. Jednak dla tych, którzy nie posiadają takich darów, granica między koszmarem a rzeczywistością zaciera się, rodząc nieskończoną mozaikę cierpienia i udręki."
+ pd_aw_shroud_planet_tooltip: "§GPsioniczne§! £pop£ Populacje:\n- $mod_planet_psionic_jobs_produces_mult$: §G10%§!\n- $MOD_POP_HAPPINESS$: §G10%§!\n\n§YNie-psioniczne§! £pop£ Populacje:\n- £mod_pop_environment_tolerance£ §YMożliwość zamieszkania planet§!: §R-50%§!\n- $MOD_POP_HAPPINESS$: §R-25%§!\n- $MOD_LOGISTIC_GROWTH_MULT$: §R-25%§!"
+
+ #Notification Message
+ MESSAGE_PD_SHROUD_DESC:1 "$PLANET|Y$ jest teraz §Y$pd_aw_shroud_planet$§!"
+ MESSAGE_PD_SHROUD_MESSAGE_TYPE_TITLE: "Planetarna komunia Woalu ukończona"
+ MESSAGE_PD_SHROUD_CLEANUP_DESC:1 "Wpływ Woalu został usunięty na $PLANET|Y$."
+ MESSAGE_PD_SHROUD_CLEANUP_MESSAGE_TYPE_TITLE: "Planeta odłączona od Woalu"
+
+###Necro
+ #Decisions
+ decision_pd_necro_planet: "Zbuduj planetarną nekropolię"
+ decision_pd_necro_planet_desc: "Ten świat pragnie stać się rozległą świątynią, w której rozbrzmiewają echa naszego dziedzictwa o wiecznym znaczeniu."
+ decision_pd_necro_planet_effects_short: "Dodaje modyfikator §Y$district_pd_aw_necro$§!.\nBudowa §Y$district_farming_plural$§! zostaje zastąpiona przez §G$district_pd_aw_necro_plural$§!"
+ decision_pd_necro_planet_cleanup: "Usuń planetarną nekropolię"
+ decision_pd_necro_planet_cleanup_desc: "Musimy usunąć świątynie i grobowce pozostawione przez poprzednich właścicieli tej planety."
+ decision_pd_necro_planet_cleanup_effects_short: "Modyfikator §Y$pd_aw_necro_planet$§! zostanie usunięty."
+ pd_aw_necro_planet: "Placeholder for OW"
+
+ #Notification Message
+ MESSAGE_PD_NECRO_DESC:1 "$PLANET|Y$ jest teraz §Y$pd_aw_necro_planet$§!"
+ MESSAGE_PD_NECRO_MESSAGE_TYPE_TITLE: "Planetarna nekropolia ukończona"
+ MESSAGE_PD_NECRO_CLEANUP_DESC:1 "Planetarna nekropolia na $PLANET|Y$ została usunięta."
+ MESSAGE_PD_NECRO_CLEANUP_MESSAGE_TYPE_TITLE: "Nekropolia usunięta"
+
+ #Tech for Uncommon World Hab
+ tech_pd_uncommon_necro_habitability: "Możliwość zamieszkania świata cmentarnego"
+ tech_pd_uncommon_necro_habitability_desc: "Opanowanie sztuki przetrwania w nekropolii jest łatwe dla tych, którzy podzielają ponadczasowy uścisk istot nieżywych."
+
+ #Tech Modifiers
+ mod_pc_pd_nuked_cave_habitability: "$pc_pd_nuked_cave$ Habitability"
+ mod_pc_pd_nuked_superhabitable_habitability: "$pc_pd_nuked_superhabitable$ Habitability"
+ mod_pc_pd_nuked_tidally_locked_habitability: "$pc_pd_nuked_tidally_locked$ Habitability"
+
+ #Modifiers
+ pd_necro_planet: "Nekropolia"
+ pd_necro_planet_tooltip: "£unity£ $unity$ z miejsc pracy [GetAdministratorPluralWithIcon]: §G+0.5§!\n$MOD_PLANET_ORBITAL_BOMBARDMENT_DAMAGE$ §G-25%§!\n$MOD_POP_GROWTH_SPEED_REDUCTION$ §R10%§!"
+ pd_necro_planet_desc: "Ten świat to rozległa świątynia, a jego powierzchnia rozbrzmiewa echami wiecznego znaczenia."
+ pd_aw_necro_city_planet: "$pd_aw_necro_planet$"
+ pd_aw_necro_city_planet_desc: "$pd_aw_necro_planet_desc$"
+ pd_aw_necro_city_planet_tooltip: "£unity£ $unity$ z miejsc pracy [GetAdministratorPluralWithIcon]: §G+0.5§!\n$MOD_PLANET_ORBITAL_BOMBARDMENT_DAMAGE$ §G-25%§!\n$MOD_POP_GROWTH_SPEED_REDUCTION$ §R10%§!"
+
+###Lithoid
+ #Decisions
+ decision_pd_lithoid_planet: "Stworzenie ekosystemu litotroficznego"
+ decision_pd_lithoid_planet_desc: "Ten świat czeka, by wyrzeźbić go w kryształ i kamień. Kruchy biologiczny ekosystem stoi nam na drodze."
+ decision_pd_lithoid_planet_effects_short: "Na tym świecie powstanie litotroficzny ekosystem, którego krystaliczne częstotliwości dostroimy do naszych potrzeb."
+ decision_pd_lithoid_planet_tooltip: "Po ukończeniu będziemy mogli wybrać częstotliwość kryształów litotroficznych tej planety."
+ decision_pd_lithoid_planet_cleanup: "Przywróć ekosystem biologiczny"
+ decision_pd_lithoid_planet_cleanup_desc: "Musimy przywrócić biologiczny ekosystem tej planety do dawnej świetności."
+ decision_pd_lithoid_planet_cleanup_effects_short: "Sztucznie stworzony ekosystem litotroficzny zostanie usunięty, a jego miejsce zajmie naturalny ekosystem biologiczny."
+ decision_pd_lithoid_planet_cleanup_tooltip: "Wszystkie modyfikatory litotroficzne zostaną usunięte, a planeta odzyska ekosystem biologiczny."
+ decision_pd_lithoid_change_frequency: "Zmień częstotliwość litotroficzną"
+ decision_pd_lithoid_change_frequency_desc: "Zmienimy częstotliwość kryształów ekosystemu litotroficznego, aby lepiej odpowiadała naszym potrzebom."
+ decision_pd_lithoid_change_frequency_effects_short: "Możemy zmienić częstotliwość kryształów tej planety."
+ decision_pd_lithoid_change_frequency_tooltip: "Obecny modyfikator litotroficzny zostanie usunięty, co umożliwi ustawienie innej częstotliwości."
+
+ #Choose Event
+ pdlithoidplanets.100.name: "Częstotliwość krystaliczna"
+ pdlithoidplanets.100.desc: "Na jaką częstotliwość dostroimy biom litotroficzny na §Y[This.GetName]§!?"
+ pdlithoidplanets.100.cyan: "Cyjan"
+ pdlithoidplanets.100.cyan.tooltip: "Ta rezonująca częstotliwość działa jak spoiwo, wzmacniając jedność naszego litotroficznego ludu i sprzyjając harmonijnemu wzrostowi populacji."
+ pdlithoidplanets.100.red: "Czerwień"
+ pdlithoidplanets.100.red.tooltip: "Ten rezonans doskonale współgra z pokładami minerałów, czyniąc je łatwiejszymi do wydobycia."
+ pdlithoidplanets.100.yellow: "Żółć"
+ pdlithoidplanets.100.yellow.tooltip: "Ta rezonująca częstotliwość płynnie integruje się z naszą siecią energetyczną, odblokowując dodatkowe zasoby mocy."
+
+ #Notification Message
+ MESSAGE_PD_LITHOID_DESC:1 "$PLANET|Y$ to teraz §Yświat litotroficzny§!"
+ MESSAGE_PD_LITHOID_MESSAGE_TYPE_TITLE: "Biom litotroficzny ukończony"
+ MESSAGE_PD_LITHOID_CLEANUP_DESC:1 "Biologiczny biom na $PLANET|Y$ został przywrócony."
+ MESSAGE_PD_LITHOID_CLEANUP_MESSAGE_TYPE_TITLE: "Biom litotroficzny usunięty"
+
+ #Modifiers
+ pd_aw_lithoid_planet_cyan: "Świat litotroficzny"
+ pd_aw_lithoid_planet_cyan_desc: "Częstotliwość: 500 nm\nRezonujące wibracje sprzyjają jedności i katalizują przyspieszony wzrost Litoidów."
+ pd_aw_lithoid_planet_red: "Świat litotroficzny"
+ pd_aw_lithoid_planet_red_desc: "Częstotliwość: 650 nm\nSilny rezonans krystaliczny doskonale współgra z pokładami minerałów, ułatwiając ich wydobycie."
+ pd_aw_lithoid_planet_yellow: "Świat litotroficzny"
+ pd_aw_lithoid_planet_yellow_desc: "Częstotliwość: 580 nm\nDynamiczne harmoniczne tego rezonansu krystalicznego płynnie integrują się z naszą siecią energetyczną, odblokowując jej pełną moc."
+
+###Infesting Hive
+ building_pd_planet_infester_1: "Węzeł infestacji I stadium"
+ building_pd_planet_infester_1_desc: "Ten węzeł, serce początkowej fazy infestacji, jest kluczowy dla obecności roju na tej planecie. Jego utrata rozluźniłaby więź roju z tym światem."
+ building_pd_planet_infester_2: "Węzeł infestacji II stadium"
+ building_pd_planet_infester_2_desc: "Ten ogromny węzeł, będący w pośrednim stadium infestacji, łączy się z rojem na tyle mocno, by wpływać na kluczowe procesy planetarne. Jego utrata rozluźniłaby więź roju z tym światem."
+ building_pd_planet_infester_3: "Planetarny węzeł infestacji"
+ building_pd_planet_infester_3_desc: "Osiągnąwszy swój szczyt, ten potężny węzeł sprawuje całkowitą kontrolę nad procesami planetarnymi. Jego utrata rozluźniłaby więź roju z tym światem."
+ building_pd_planet_infester_3_effect_desc: "Ta planeta zostanie przekształcona w §Y$pc_hive$§!."
+ pdplanetaryinfesters.120.name: "Planetarny węzeł roju ukończony"
+ pdplanetaryinfesters.120.desc: "Gdy węzeł osiąga pełnię swojego potencjału, ogarnia nas głębokie poczucie spełnienia.\n\nTen moment stanowi znaczący krok w przejęciu kontroli nad [Root.GetName], cementując władzę roju nad planetą."
+ pdplanetaryinfesters.120.a: "Kolejny dom dla roju."
+ civic_hive_pd_planetary_infesters: "Planetarni pasożytnicy"
+ civic_hive_pd_planetary_infesters_desc: "Ten umysł zbiorowy wnika w ekosystemy planetarne. Każdy świat staje się jego przedłużeniem, rozkwitając jako zjednoczona sieć pod jego przewodnictwem."

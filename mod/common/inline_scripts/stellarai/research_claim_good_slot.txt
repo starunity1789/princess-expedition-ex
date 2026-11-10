@@ -1,0 +1,39 @@
+# Country-scope helper: caller initializes and clears stellarai_research_claim_count.
+# More science worlds follow empire size and a working economy (planning snapshot), not the calendar.
+if = {
+	limit = {
+		has_country_flag = stellarai_planning_foundation
+		num_owned_planets > $PLANETS$
+		check_variable = { which = stellarai_research_claim_count value < $COUNT$ }
+		NOT = { has_country_flag = stellarai_good_candidates_exhausted }
+	}
+	# A failed selection exhausts this identical candidate set for this pass only.
+	set_country_flag = stellarai_good_candidates_exhausted
+	random_owned_planet = {
+		limit = {
+			planet = {
+				stellarai_research_claim_candidate = yes
+				stellarai_good_research_candidate = yes
+			}
+		}
+		weights = {
+			base = 10
+			modifier = {
+				factor = 0.25
+				planet = { has_planet_flag = stellarai_rural_commitment_soft }
+			}
+			modifier = {
+				factor = 0.10
+				planet = { has_planet_flag = stellarai_industry_commitment_soft }
+			}
+		}
+		planet = {
+			set_planet_flag = stellarai_research_plan_claimed
+			stellarai_refresh_planet_eligibility = yes
+			owner = {
+				change_variable = { which = stellarai_research_claim_count value = 1 }
+				remove_country_flag = stellarai_good_candidates_exhausted
+			}
+		}
+	}
+}

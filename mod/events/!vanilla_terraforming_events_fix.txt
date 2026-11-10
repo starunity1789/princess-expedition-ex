@@ -1,0 +1,54 @@
+namespace = terra
+
+country_event = {
+	id = terra.40
+	title = terra.40.name
+	desc = terra.40.desc
+	picture = GFX_evt_satellite_in_orbit
+	location = from
+
+	is_triggered_only = yes
+
+	option = {
+		name = terra.40.a
+	}
+	option = {
+		name = terra.40.b
+		from = { set_carrier_flag = tidally_locked_world }
+		custom_tooltip = terra.40.b.tooltip
+		from = {
+			if = {
+				limit = {
+					is_moon = no
+					is_wet = yes
+				}
+				change_pc = pc_pd_wet_tidally_locked
+			}
+			if = {
+				limit = {
+					is_moon = no
+					is_dry = yes
+				}
+				change_pc = pc_pd_dry_tidally_locked
+			}
+			if = {
+				limit = {
+					is_moon = no
+					is_cold = yes
+				}
+				change_pc = pc_pd_cold_tidally_locked
+			}
+			# Fallback only for worlds that did not change class (moons, and non-wet/dry/cold): the class change IS the tidal lock
+			if = {
+				limit = {
+					NOR = {
+						AND = { is_moon = no is_wet = yes }
+						AND = { is_moon = no is_dry = yes }
+						AND = { is_moon = no is_cold = yes }
+					}
+				}
+				add_modifier = { modifier = intentionally_tidally_locked }
+			}
+		}
+	}
+}

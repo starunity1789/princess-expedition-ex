@@ -1,0 +1,33 @@
+namespace = gpm_game_start
+
+# 皇女的远征军EX：GPM 原来在这里弹出设置菜单（gpm_start_menu.1），由菜单里的「开始游戏」选项
+# 启动引擎 gpm_engine.0。菜单已删，这里固定用默认设置直接启动。
+# 同时打开 GPM 自带的几个子系统关闭开关——对应内容（迷你巨构、前驱者、行星环装饰、事件掉落遗珍、
+# AI 偷遗珍）已经整个删掉，走作者自己设计的关闭路径最稳。
+# 起源相关的分支（死亡世界、前驱者世界、陨落帝国殖民地、后裔）与詹姆斯·韦伯彩蛋一并删除。
+event = {
+	id = gpm_game_start.0
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = gpm_initialisation_menu }
+		is_ai = no
+	}
+
+	immediate = {
+		set_global_flag = gpm_initialisation_menu
+		# 默认设置（原菜单的初始值）
+		set_global_flag = gpm_modifier_amount_normal
+		set_global_flag = gpm_galaxy_age_default
+		set_global_flag = gpm_scaling_base_modifier_option
+		# 已删子系统的关闭开关
+		set_global_flag = gpm_mini_megas_disabled
+		set_global_flag = gpm_modifiers_precursor_disabled
+		set_global_flag = gpm_planetary_rings_disabled
+		set_global_flag = gpm_relic_drops_disabled
+		set_global_flag = gpm_relic_heists_AI_disabled
+		# 原菜单「开始游戏」选项
+		country_event = { id = gpm_engine.0 days = 1 }
+	}
+}

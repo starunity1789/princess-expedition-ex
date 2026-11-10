@@ -1,0 +1,86 @@
+# Stellar AI: relations follow the odds. THIS = the empire holding the opinion, FROM = the empire it judges.
+# Attitudes follow opinion and most wars come from a hostile or domineering attitude, so conquest personalities
+# come to dislike what they can beat, peaceful ones what they clearly out-gun, and every AI grows careful around
+# what can beat it. The strength gate on war goals still blocks attacks on stronger fleets, whatever the opinion.
+# Partners are left out.
+
+# A conquest personality looks at a weaker fleet, once the peaceful expansion window is over (personalities, year 41).
+triggered_opinion_stellarai_we_can_win = {
+	trigger = {
+		is_ai = yes
+		is_country_type = default
+		years_passed > 40
+		stellarai_conquest_identity = yes
+		from = { is_country_type = default }
+		NOR = {
+			is_in_federation_with = from
+			is_overlord_to = from
+			from = { is_overlord_to = prev }
+			has_defensive_pact = from
+			has_non_aggression_pact = from
+		}
+		has_intel = { who = from intel = relative_fleet }
+		relative_power = { who = from category = fleet value >= superior }
+	}
+	opinion = {
+		base = -150
+		modifier = {
+			add = -150
+			relative_power = { who = from category = fleet value >= overwhelming }
+		}
+	}
+}
+
+# A peaceful personality takes a clear opportunity too, but its friends and allies are safe. Peaceful attackers lost
+# no planets in the 13 wars of 10 earlier campaigns.
+triggered_opinion_stellarai_we_can_win_peaceful = {
+	trigger = {
+		is_ai = yes
+		is_country_type = default
+		years_passed > 40
+		NOT = { stellarai_conquest_identity = yes }
+		from = { is_country_type = default }
+		NOR = {
+			is_in_federation_with = from
+			is_overlord_to = from
+			from = { is_overlord_to = prev }
+			has_defensive_pact = from
+			has_non_aggression_pact = from
+		}
+		has_intel = { who = from intel = relative_fleet }
+		relative_power = { who = from category = fleet value >= overwhelming }
+	}
+	opinion = {
+		base = -150
+	}
+}
+
+# Any AI looks at a stronger fleet. Friendly words don't save anyone from those who only want them gone.
+triggered_opinion_stellarai_not_to_be_provoked = {
+	trigger = {
+		is_ai = yes
+		is_country_type = default
+		from = {
+			is_country_type = default
+			NOR = {
+				has_valid_civic = civic_fanatic_purifiers
+				has_valid_civic = civic_hive_devouring_swarm
+				has_valid_civic = civic_machine_terminator
+			}
+		}
+		NOR = {
+			is_in_federation_with = from
+			is_overlord_to = from
+			from = { is_overlord_to = prev }
+		}
+		has_intel = { who = from intel = relative_fleet }
+		relative_power = { who = from category = fleet value <= inferior }
+	}
+	opinion = {
+		base = 150
+		modifier = {
+			add = 150
+			relative_power = { who = from category = fleet value <= pathetic }
+		}
+	}
+}

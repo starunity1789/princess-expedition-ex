@@ -1,0 +1,82 @@
+# Native potential has a prospective overlord FROM; subject_weight may not.
+# The partner-dependent bonus fails closed when that country scope is unavailable.
+# Fair-preset preference only. No unconditional diplomatic submission bonus.
+@protectorate_tech_threshold = 0.4
+preset_vassal_nice_01 = {
+	parent = preset_vassal
+	icon = "GFX_diplomacy_status_is_vassal"
+	hidden = yes
+	term_data = {
+  # Explicit zero taxes for this protective preset, not a generic acceptance boost.
+  resource_terms = {
+   { key = resource_subsidies_basic value = 0 }
+   { key = resource_subsidies_advanced value = 0 }
+   { key = resource_subsidies_research value = 0 }
+  }
+		discrete_terms = {
+			{
+				key = specialist_type
+				value = specialist_none
+			}
+			{
+				key = subject_integration
+				value = subject_can_not_be_integrated
+			}
+			{
+				key = subject_diplomacy
+				value = subject_can_do_diplomacy
+			}
+			{
+				key = subject_expand
+				value = subject_can_expand
+			}
+			{
+				key = joins_overlord_wars
+				value = joins_overlord_wars_defensive
+			}
+			{
+				key = joins_subject_wars
+				value = joins_subject_wars_defensive
+			}
+			{
+				key = subject_holdings_limit
+				value = subject_holdings_limit_1
+			}
+			{
+				key = subject_loyalty
+				value = subject_loyalty_effects
+			}
+			{
+				key = protectorate
+				value = subject_is_not_protectorate
+			}
+		}
+	}
+
+	overlord_weight = {
+		base = 75
+	}
+
+	subject_weight = {
+		base = 50
+  modifier = {
+   add = @stellarai_diplomatic_fallback_bonus
+   stellarai_fair_protection_preference = { OTHER = from }
+  }
+	}
+
+	potential = {
+		from = {
+			NOR = {
+				is_megacorp = yes
+				is_country_type = awakened_fallen_empire
+				has_civic = civic_inwards_perfection
+			}
+		}
+		NOT = { has_civic = civic_inwards_perfection }
+		tech_unlocked_ratio = {
+			who = from
+			ratio >= @protectorate_tech_threshold
+		}
+	}
+}

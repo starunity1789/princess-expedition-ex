@@ -1,0 +1,9 @@
+# Expand in the current country scope. Keep the native market quote and
+# resource checks in market_buy_shortage live for each transaction.
+if = {
+  limit = { is_at_war = no }
+  inline_script = { script = stellarai/market_buy_shortage RESOURCE = $RESOURCE$ AMOUNT = $AMOUNT$ MARKUP = 1 TRADE_FLOOR = 1000 }
+}
+else = {
+  inline_script = { script = stellarai/market_buy_shortage RESOURCE = $RESOURCE$ AMOUNT = $AMOUNT$ MARKUP = 1.05 TRADE_FLOOR = 500 }
+}

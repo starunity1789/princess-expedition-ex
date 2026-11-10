@@ -1,0 +1,2 @@
+# A country has claimed one or more systems. This = claimant, From = owner.
+on_claim_system = { events = { stellarai_strategy.5 } }

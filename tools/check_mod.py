@@ -6,7 +6,7 @@ from pathlib import Path
 # Windows 控制台默认 cp1252，打印中文会报 UnicodeEncodeError
 sys.stdout.reconfigure(encoding="utf-8")
 
-MOD = Path(r"C:\Users\sol3u\Documents\GitHub\princess-expedition-ex\mod")
+MOD = Path(__file__).resolve().parent.parent / "mod"   # 相对脚本位置：任何 clone / worktree 都对
 GAME = Path(r"C:\Program Files (x86)\Steam\steamapps\common\Stellaris")
 
 problems: list[str] = []
@@ -17,8 +17,10 @@ def read(p: Path) -> str:
     return p.read_text(encoding="utf-8-sig", errors="replace")
 
 
-def strip_noise(text: str) -> str:
-    """去掉注释和字符串，只留结构字符。"""
+def strip_noise(text: str, multiline: bool = False) -> str:
+    """去掉注释和字符串，只留结构字符。
+    本 MOD 自己的文件不用跨行字符串，按行重置能让单行内的引号笔误直接暴露；
+    上游文件（含原版拷贝）会把 inline_script 参数写成跨行字符串，要 multiline=True。"""
     out, in_str = [], False
     for line in text.splitlines():
         buf = []
@@ -39,15 +41,29 @@ def strip_noise(text: str) -> str:
             buf.append(c)
             i += 1
         out.append("".join(buf))
-        in_str = False  # 群星的字符串不跨行
+        if not multiline:
+            in_str = False
     return "\n".join(out)
 
 
-# ---------------------------------------------------------------- 1. 括号配对
-txts = sorted(p for p in MOD.rglob("*.txt"))
-gfxs = sorted(p for p in MOD.rglob("*.gfx"))
-for p in txts + gfxs:
-    s = strip_noise(read(p))
+# 合并进来的上游文件（tools/merge_upstream.py 写的）：只做括号配对等结构检查，
+# 不套本 MOD 自己的格式标准——上游自带的本地化瑕疵（缺 BOM、重复键……）独立运行时也一样
+import json
+_manifest = MOD.parent / "tools" / "upstream_manifest.json"
+UPSTREAM = set(json.loads(_manifest.read_text(encoding="utf-8"))["files"]) if _manifest.exists() else set()
+
+
+def is_upstream(p: Path) -> bool:
+    return p.relative_to(MOD).as_posix() in UPSTREAM
+
+
+# ---------------------------------------------------------------- 1. 括号配对（含上游文件）
+all_txts = sorted(p for p in MOD.rglob("*.txt"))
+all_gfxs = sorted(p for p in MOD.rglob("*.gfx"))
+txts = [p for p in all_txts if not is_upstream(p)]
+gfxs = [p for p in all_gfxs if not is_upstream(p)]
+for p in all_txts + all_gfxs:
+    s = strip_noise(read(p), multiline=is_upstream(p))
     depth, bad = 0, False
     for ch in s:
         if ch == "{":
@@ -59,10 +75,11 @@ for p in txts + gfxs:
                 break
     if bad or depth != 0:
         problems.append(f"括号不配对：{p.relative_to(MOD)}（收尾 depth={depth}）")
-notes.append(f"括号检查：{len(txts)} 个 .txt + {len(gfxs)} 个 .gfx 全部配对" if not problems else "")
+notes.append(f"括号检查：{len(all_txts)} 个 .txt + {len(all_gfxs)} 个 .gfx 全部配对"
+             f"（其中上游 {len(all_txts) - len(txts) + len(all_gfxs) - len(gfxs)} 个）" if not problems else "")
 
-# ---------------------------------------------------------------- 2. 本地化 yml
-for p in sorted(MOD.rglob("*.yml")):
+# ---------------------------------------------------------------- 2. 本地化 yml（只查本 MOD 自己的）
+for p in sorted(p for p in MOD.rglob("*.yml") if not is_upstream(p)):
     lines = read(p).splitlines()
     if not lines or not lines[0].strip().startswith("l_"):
         problems.append(f"本地化首行不是 l_xxx：{p.relative_to(MOD)}")
@@ -248,6 +265,50 @@ checks = [
     ("白鹿与远星母星系各一座 L 星门", init.count("type = lgate_base") == 2
      and init.count("lgate_enabled = yes") == 2),
 ]
+
+# ---------------------------------------------------------------- 2.8：三方整合（tools/merge_upstream.py）
+if UPSTREAM:
+    def exists(rel):
+        return (MOD / rel).exists()
+    relic_files = sorted((MOD / "common/relics").glob("gpm_relics*.txt"))
+    gpm_relics = set()
+    for p in relic_files:
+        gpm_relics |= set(re.findall(r"^(gpm_r_[A-Za-z0-9_]+)\s*=\s*\{", strip_noise(read(p), True), re.M))
+    quest = read(MOD / "common/scripted_effects/atb_relic_quest_effects.txt") if exists(
+        "common/scripted_effects/atb_relic_quest_effects.txt") else ""
+    gstart = read(MOD / "events/gpm_game_start.txt") if exists("events/gpm_game_start.txt") else ""
+    checks += [
+        ("上游清单里的文件都在盘上", all(exists(r) for r in UPSTREAM)),
+        ("GPM 保留 21 个遗珍、删掉 7 个空壳", len(gpm_relics) == 21 and not gpm_relics & {
+            "gpm_r_alien_eggs", "gpm_r_venerable_dreadnaught", "gpm_r_machine_world_core",
+            "gpm_r_self_repairing_obelisk", "gpm_r_time_displacer", "gpm_r_mysterious_shield_generator",
+            "gpm_r_soul_gem"}),
+        ("探寻遗珍覆盖全部 GPM 遗珍", gpm_relics and all(f"add_relic = {r}" in quest for r in gpm_relics)
+         and quest.count("add_relic =") == len(gpm_relics)
+         and "energy = 10000" in read(MOD / "common/decisions/atb_relic_quest_decisions.txt")),
+        ("GPM 遗珍战争/窃取/交易系统已删", not any(exists(r) for r in (
+            "common/war_goals/gpm_wargoals.txt", "common/casus_belli/gpm_casus_belli.txt",
+            "common/espionage_operation_types/gpm_operations.txt", "common/map_modes/gpm_map_modes.txt"))
+         and not list((MOD / "common").glob("tradable_actions/z_gpm_*"))
+         and "opinion_gpm_stolen_relic = {" not in read(MOD / "common/opinion_modifiers/gpm_opinions.txt")),
+        ("GPM 前驱者考古/内容事件已删", not any(exists(r) for r in (
+            "common/technology/gpm_discovery_techs.txt", "common/specimens/gpm_specimens.txt",
+            "events/gpm_survey_events.txt", "events/gpm_NOMADS_events.txt", "events/gpm_colony_events.txt",
+            "common/ambient_objects/gpm_ambient_objects.txt", "events/gpm_start_menu.txt"))),
+        ("GPM 引擎跳过设置菜单直接启动", "country_event = { id = gpm_engine.0 days = 1 }" in gstart
+         and "gpm_start_menu" not in strip_noise(gstart, True)
+         and "set_global_flag = gpm_planetary_rings_disabled" in gstart),
+        ("PD 岗位与区域已删、行星类型保留", not list((MOD / "common").glob("pop_jobs/zzz_pd_*"))
+         and not list((MOD / "common").glob("zones/pd_*"))
+         and exists("common/planet_classes/pd_superhabitable_planet_classes.txt")
+         and exists("common/traits/02_species_traits_habitability_dry.txt") and exists("events/pd_engine.txt")),
+        ("PD 改原版事件的兼容垫片保留", exists("events/!vanilla_colony_events_fix.txt")
+         and exists("events/!vanilla_terraforming_events_fix.txt")),
+        ("盖亚播种者以 Stellar AI 为准", not exists("common/buildings/pd_buildings_overwrites.txt")
+         and exists("common/buildings/~stellarai_government_buildings.txt")),
+        ("Stellar AI 原样（性格表 56 个）", len(re.findall(r"^([a-z_]+)\s*=\s*\{",
+            strip_noise(read(MOD / "common/personalities/00_personalities.txt"), True), re.M)) == 56),
+    ]
 for label, ok in checks:
     if not ok:
         problems.append(f"改动点未生效：{label}")

@@ -1,0 +1,105 @@
+@minor_artifact_decision_cost = 100
+@minor_artifact_decision_duration = 3600
+
+# Baol Organism Lifeseed
+decision_baol_life_seed = {
+	owned_planets_only = yes
+	sound = event_laboratory_sound
+	icon = decision_resort_colony
+
+	enactment_time = 720
+
+	potential = {
+		NOR = {
+			is_planet_class = pc_city
+			is_planet_class = pc_machine
+			is_planet_class = pc_relic
+			is_planet_class = pc_hive
+			is_planet_class = pc_gaia
+		}
+		is_artificial = no
+		exists = owner
+		owner = { has_country_flag = relic_last_baol_activated }
+		owner = {
+			has_country_flag = not_activated_baol
+		}
+		NOT = { has_designation = col_nanotech_world }
+	}
+
+	allow = { }
+
+	effect = {
+		# Convert to Gaia world, spawn Nu-Baol pops
+		custom_tooltip = decision_baol_life_seed_effects
+		hidden_effect = {
+			owner = { remove_country_flag = relic_last_baol_activated }
+			pd_make_all_gaia_worlds_effect = yes
+			if = {
+				limit = { NOT = { exists = event_target:nu_baol_species } }
+				if = {
+					limit = {
+						owner = {
+							is_hive_empire = yes
+						}
+					}
+					create_hive_nu_baol_effect = yes
+				}
+				else = {
+					create_nu_baol_effect = yes
+				}
+			}
+			create_pop_group = {
+				size = 400
+				species = event_target:nu_baol_species
+				ethos = {
+					ethic = "ethic_pacifist"
+				}
+			}
+			if = {
+				limit = {
+					has_planet_flag = planet_earth
+				}
+				set_planet_entity = {
+					entity = "gaia_planet_earth_entity"
+				}
+			}
+			if = {
+				limit = {
+					has_planet_flag = pdmars
+				}
+				set_planet_entity = {
+					picture = pc_wet_mars
+					entity = "gaiamars_planet_entity"
+				}
+			}
+			if = {
+				limit = {
+					has_planet_flag = pdvenus
+				}
+				set_planet_entity = {
+					picture = pc_wetvenus
+					entity = "gaiavenus_planet_entity"
+				}
+			}
+			pd_gaia_flooded_check = yes
+			carrier_event = { id = ancrel.2025 }		# Notification event
+			carrier_event = { id = shroud.10010 }	# Patron Objective Counter: po_terraform_planet
+		}
+	}
+
+	on_queued = {
+		owner = { remove_country_flag = not_activated_baol }
+	}
+
+	on_unqueued = {
+		owner = { set_country_flag = not_activated_baol }
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# [merge_upstream] 已删除 decision_tidal_lock_planet
+
+# [merge_upstream] 已删除 decision_cultivated_worldscaping

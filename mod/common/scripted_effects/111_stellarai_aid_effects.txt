@@ -1,0 +1,199 @@
+# Need-episode aid: direct subjects first, then federation or defensive-pact
+# partners. The recipient receives its exact first-buffer gap. DONOR_FLOOR is
+# the donor reserve plus the largest possible transfer, so the donor can never
+# fall below its own reserve. Alloys and strategic/research resources are absent.
+stellarai_aid_transfer_resource = {
+  export_resource_stockpile_to_variable = {
+    resource = $RESOURCE$
+    variable = stellarai_aid_recipient_stock
+  }
+  set_variable = { which = stellarai_aid_amount value = $BUFFER$ }
+  subtract_variable = { which = stellarai_aid_amount value = stellarai_aid_recipient_stock }
+  root = {
+    add_resource = {
+      $RESOURCE$ = -1
+      mult = prev.stellarai_aid_amount
+    }
+  }
+  add_resource = {
+    $RESOURCE$ = 1
+    mult = stellarai_aid_amount
+  }
+  set_country_flag = $MARKER$
+  add_trust = {
+    who = root
+    amount = 5
+  }
+  clear_variable = stellarai_aid_recipient_stock
+  clear_variable = stellarai_aid_amount
+}
+
+# Country ROOT is the donor; recipient scopes keep it when checking and transferring.
+# Never finance aid from a resource deficit; the caller excludes urgent war-fleet rebuilding.
+stellarai_aid_resource = {
+  if = {
+    limit = {
+      resource_income_compare = { resource = $RESOURCE$ value > 0 }
+      resource_stockpile_compare = { resource = $RESOURCE$ value > $DONOR_FLOOR$ }
+    }
+    remove_country_flag = stellarai_aid_subject_selected
+    random_subject = {
+      limit = {
+        $USAGE$ = yes
+        is_country_type = default
+        is_nomadic = no
+        NOT = {
+          is_at_war_with = root
+        }
+        NOT = {
+          has_country_flag = $MARKER$
+        }
+        resource_stockpile_compare = { resource = $RESOURCE$ value < $BUFFER$ }
+        root = {
+          resource_stockpile_compare = { resource = $RESOURCE$ value > $DONOR_FLOOR$ }
+        }
+      }
+      root = {
+        set_country_flag = stellarai_aid_subject_selected
+      }
+      stellarai_aid_transfer_resource = {
+        RESOURCE = $RESOURCE$
+        BUFFER = $BUFFER$
+        MARKER = $MARKER$
+      }
+    }
+    if = {
+      limit = {
+        NOT = {
+          has_country_flag = stellarai_aid_subject_selected
+        }
+      }
+      # Federation and defensive-pact partners are diplomatic relations.
+      random_relation = {
+        limit = {
+          NOT = {
+            is_same_value = root
+          }
+          OR = {
+            is_in_federation_with = root
+            has_defensive_pact = root
+          }
+          $USAGE$ = yes
+          is_country_type = default
+          is_nomadic = no
+          NOT = {
+            is_at_war_with = root
+          }
+          NOT = {
+            has_country_flag = $MARKER$
+          }
+          resource_stockpile_compare = { resource = $RESOURCE$ value < $BUFFER$ }
+          root = {
+            resource_stockpile_compare = { resource = $RESOURCE$ value > $DONOR_FLOOR$ }
+          }
+        }
+        stellarai_aid_transfer_resource = {
+          RESOURCE = $RESOURCE$
+          BUFFER = $BUFFER$
+          MARKER = $MARKER$
+        }
+      }
+    }
+    remove_country_flag = stellarai_aid_subject_selected
+  }
+}
+
+# Country ROOT, monthly worker. A stable donor helps exactly once per recipient/resource
+# shortage episode. Direct subjects win priority; federation and defensive-pact partners
+# are the fallback. Alloys and strategic/research resources are intentionally absent.
+stellarai_run_monthly_aid = {
+  if = {
+    limit = {
+      OR = {
+        is_overlord = yes
+        has_federation = yes
+        num_defensive_pacts > 0
+      }
+      stellarai_foundation_ready = yes
+      NOT = {
+        stellarai_war_fleet_push = yes
+      }
+    }
+    stellarai_aid_resource = {
+      RESOURCE = energy
+      BUFFER = @stellarai_aid_energy_buffer
+      DONOR_FLOOR = @stellarai_aid_energy_donor_floor
+      MARKER = stellarai_aid_energy_pending
+      USAGE = always
+    }
+    stellarai_aid_resource = {
+      RESOURCE = minerals
+      BUFFER = @stellarai_aid_minerals_buffer
+      DONOR_FLOOR = @stellarai_aid_minerals_donor_floor
+      MARKER = stellarai_aid_minerals_pending
+      USAGE = always
+    }
+    stellarai_aid_resource = {
+      RESOURCE = food
+      BUFFER = @stellarai_aid_food_buffer
+      DONOR_FLOOR = @stellarai_aid_food_donor_floor
+      MARKER = stellarai_aid_food_pending
+      USAGE = country_uses_food
+    }
+    stellarai_aid_resource = {
+      RESOURCE = consumer_goods
+      BUFFER = @stellarai_aid_consumer_goods_buffer
+      DONOR_FLOOR = @stellarai_aid_consumer_goods_donor_floor
+      MARKER = stellarai_aid_consumer_goods_pending
+      USAGE = country_uses_consumer_goods
+    }
+  }
+}
+
+# Recipient country scope. A transfer alone must not rearm an unresolved need episode.
+stellarai_reset_recovered_aid_episodes = {
+  # Aid markers are episode guards, not timers. Positive net income and
+  # twice the aid buffer establish recovery; the gift alone cannot rearm aid.
+  if = {
+    limit = {
+      has_country_flag = stellarai_aid_energy_pending
+      resource_income_compare = { resource = energy value > 0 }
+      resource_stockpile_compare = { resource = energy value >= @stellarai_aid_energy_rearmed_stock }
+    }
+    remove_country_flag = stellarai_aid_energy_pending
+  }
+  if = {
+    limit = {
+      has_country_flag = stellarai_aid_minerals_pending
+      resource_income_compare = { resource = minerals value > 0 }
+      resource_stockpile_compare = { resource = minerals value >= @stellarai_aid_minerals_rearmed_stock }
+    }
+    remove_country_flag = stellarai_aid_minerals_pending
+  }
+  if = {
+    limit = {
+      has_country_flag = stellarai_aid_food_pending
+      OR = {
+        country_uses_food = no
+        AND = {
+          resource_income_compare = { resource = food value > 0 }
+          resource_stockpile_compare = { resource = food value >= @stellarai_aid_food_rearmed_stock }
+        }
+      }
+    }
+    remove_country_flag = stellarai_aid_food_pending
+  }
+  if = {
+    limit = {
+      has_country_flag = stellarai_aid_consumer_goods_pending
+      OR = {
+        country_uses_consumer_goods = no
+        AND = {
+          resource_income_compare = { resource = consumer_goods value > 0 }
+          resource_stockpile_compare = { resource = consumer_goods value >= @stellarai_aid_consumer_goods_rearmed_stock }
+        }
+      }
+    }
+    remove_country_flag = stellarai_aid_consumer_goods_pending
+  }
+}

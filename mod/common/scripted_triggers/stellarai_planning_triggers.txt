@@ -1,0 +1,111 @@
+# Country scope. Scratch context is active only inside synchronous research planning.
+# Reactive planet events have no snapshot and must evaluate the live economy.
+stellarai_planning_economic_crisis = {
+  if = {
+    limit = {
+      has_country_flag = stellarai_planning_context
+    }
+    has_country_flag = stellarai_planning_crisis
+  }
+  else = {
+    stellarai_economic_crisis = yes
+  }
+}
+
+stellarai_planning_foundation_ready = {
+  if = {
+    limit = {
+      has_country_flag = stellarai_planning_context
+    }
+    has_country_flag = stellarai_planning_foundation
+  }
+  else = {
+    stellarai_foundation_ready = yes
+  }
+}
+
+# Country scope. Preserve the original settled AI eligibility set.
+stellarai_managed_empire = {
+  is_ai = yes
+  is_nomadic = no
+  OR = {
+    is_regular_empire = yes
+    is_gestalt = yes
+    is_hive_empire = yes
+    is_virtual_empire = yes
+    is_galvanic_empire = yes
+  }
+}
+
+# Planet scope zone families covering every district-set variant.
+# Physics, society and engineering use the native has_any_research_*_zone triggers.
+stellarai_has_generic_research_zone = {
+  OR = {
+    has_zone = { zone = zone_research }
+    has_zone = { zone = zone_research_arcology }
+    has_zone = { zone = zone_research_hive }
+    has_zone = { zone = zone_research_nexus }
+    has_zone = { zone = zone_research_ring_world }
+    has_zone = { zone = zone_research_wilderness }
+    has_zone = { zone = zone_habitat_research }
+  }
+}
+
+stellarai_has_research_unity_zone = {
+  OR = {
+    has_zone = { zone = zone_research_unity }
+    has_zone = { zone = zone_research_unity_wilderness }
+    has_zone = { zone = zone_habitat_research_unity }
+  }
+}
+
+# Two research zones of the same kind on one planet.
+stellarai_has_research_zone_pair = {
+  OR = {
+    num_zones = { type = zone_research value > 1 }
+    num_zones = { type = zone_research_arcology value > 1 }
+    num_zones = { type = zone_research_hive value > 1 }
+    num_zones = { type = zone_research_nexus value > 1 }
+    num_zones = { type = zone_research_ring_world value > 1 }
+    num_zones = { type = zone_research_wilderness value > 1 }
+    num_zones = { type = zone_habitat_research value > 1 }
+    num_zones = { type = zone_research_unity value > 1 }
+    num_zones = { type = zone_research_unity_wilderness value > 1 }
+    num_zones = { type = zone_habitat_research_unity value > 1 }
+    num_zones = { type = zone_research_physics value > 1 }
+    num_zones = { type = zone_research_physics_arcology value > 1 }
+    num_zones = { type = zone_research_physics_hive value > 1 }
+    num_zones = { type = zone_research_physics_nexus value > 1 }
+    num_zones = { type = zone_research_physics_ring_world value > 1 }
+    num_zones = { type = zone_research_society value > 1 }
+    num_zones = { type = zone_research_society_arcology value > 1 }
+    num_zones = { type = zone_research_society_hive value > 1 }
+    num_zones = { type = zone_research_society_nexus value > 1 }
+    num_zones = { type = zone_research_society_ring_world value > 1 }
+    num_zones = { type = zone_research_engineering value > 1 }
+    num_zones = { type = zone_research_engineering_arcology value > 1 }
+    num_zones = { type = zone_research_engineering_hive value > 1 }
+    num_zones = { type = zone_research_engineering_nexus value > 1 }
+    num_zones = { type = zone_research_engineering_ring_world value > 1 }
+  }
+}
+
+# Unity specializations only; research-unity zones count as research.
+stellarai_has_unity_zone = {
+  OR = {
+    has_zone = { zone = zone_unity }
+    has_zone = { zone = zone_unity_arcology }
+    has_zone = { zone = zone_unity_hive }
+    has_zone = { zone = zone_unity_nexus }
+    has_zone = { zone = zone_unity_ring_world }
+    has_zone = { zone = zone_unity_wilderness }
+    has_zone = { zone = zone_unity_spiritualist }
+    has_zone = { zone = zone_unity_spiritualist_arcology }
+    has_zone = { zone = zone_unity_spiritualist_nexus }
+    has_zone = { zone = zone_unity_spiritualist_ring_world }
+    has_zone = { zone = zone_unity_bio_trophy }
+    has_zone = { zone = zone_unity_bio_trophy_arcology }
+    has_zone = { zone = zone_unity_bio_trophy_nexus }
+    has_zone = { zone = zone_unity_bio_trophy_ring_world }
+  }
+}
