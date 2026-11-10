@@ -166,6 +166,11 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 > `portrait ... is not found in portrait set database` 这类下游症状，很难往这上面想。
 > 平时把它改名成 `atb_princess_expedition_ex.mod.disabled` 放在 MOD 目录外面即可。
 
+> ⚠️ **`mod/descriptor.mod` 里不要写 `remote_file_id`**（2.9 起已去掉）。启动器重新扫描本地 MOD 时
+> （例如取消再重新订阅之后）会把文件夹里 `descriptor.mod` 的内容抄进本地描述文件，连工坊编号一起抄，
+> 于是本地开发版和订阅版又撞号，游戏不加载这个 MOD。上传用 `tools/upload_workshop.py` 直接指定物品编号，
+> 不需要描述文件里的编号。
+
 **日常游玩本地版**用另一个描述文件 `atb_princess_expedition_ex_dev.mod`（名字「皇女的远征军EX（本地开发版）」）：
 内容同上但**不写 `remote_file_id`**，所以能和订阅版共存、不会撞号。在启动器里启用它，同时停用订阅版的
 皇女的远征军EX，以及已经内置进来的 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI
