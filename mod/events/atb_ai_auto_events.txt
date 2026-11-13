@@ -1,0 +1,129 @@
+namespace = atb_ai
+
+# 皇女的远征军EX 3.0：AI 自动星球
+# 常规 AI 帝国（含保底列强）只有自动星球：开局转母星，殖民成功、打下来的星球都转；
+# 玩家拿到自动星球时还原成新殖民地；AI 之间易手时产能保留。
+# 只用事件钩子与年脉冲，不挂月脚本（银河市场那条月检查只在提名期间生效）。
+
+# 开局（on_game_start）：所有适用的 AI 过一天再转，等开局的其它设置（列强、远征军搬家等）都做完
+event = {
+	id = atb_ai.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_playable_country = {
+			limit = { atb_ai_auto_country = yes }
+			country_event = { id = atb_ai.2 days = 1 }
+		}
+	}
+}
+
+# 国家作用域：把这个 AI 的全部殖民地转成自动星球
+country_event = {
+	id = atb_ai.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_ai_auto_country = yes
+	}
+
+	immediate = {
+		atb_ai_auto_convert_all = yes
+	}
+}
+
+# 殖民成功（on_colonized，星球作用域）
+carrier_event = {
+	id = atb_ai.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_ai_auto_convertible = yes
+	}
+
+	immediate = {
+		owner = { atb_ai_auto_country_setup = yes }
+		atb_ai_auto_convert = yes
+	}
+}
+
+# 星球易手（on_colony_transfer，星球作用域；From = 新主人）
+carrier_event = {
+	id = atb_ai.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = owner
+		is_colony = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				atb_is_ai_auto_planet = yes
+				owner = { atb_ai_auto_country = no }
+			}
+			atb_ai_auto_revert = yes
+		}
+		else_if = {
+			limit = {
+				atb_is_ai_auto_planet = yes
+				owner = { atb_ai_auto_country = yes }
+			}
+			owner = { atb_ai_auto_country_setup = yes }
+			atb_ai_auto_refresh = yes
+		}
+		else_if = {
+			limit = { atb_ai_auto_convertible = yes }
+			owner = { atb_ai_auto_country_setup = yes }
+			atb_ai_auto_convert = yes
+		}
+	}
+}
+
+# 每年（on_yearly_pulse_country）：补转漏掉的殖民地，所有自动星球产能增长
+country_event = {
+	id = atb_ai.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_ai_auto_country = yes
+	}
+
+	immediate = {
+		atb_ai_auto_convert_all = yes
+		every_owned_planet = {
+			limit = { atb_is_ai_auto_planet = yes }
+			atb_ai_auto_grow = yes
+		}
+	}
+}
+
+# 银河市场提名期间（on_monthly_pulse，只看一个全局旗标，平时零开销）：
+# 远征军帝国提名了自己的星球，就把它的市场评分拉到 100 万。
+# 原版选址按「1 + 市场评分 + 贸易收入」加权随机（choose_galactic_market_host），对手只有几百到几千，
+# 所以远征军帝国实际上必定拿到星系贸易中心；不覆盖原版效果。
+event = {
+	id = atb_ai.10
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = ongoing_market_nomination
+	}
+
+	immediate = {
+		every_playable_country = {
+			limit = {
+				has_country_flag = atb_princess_expedition
+				any_owned_planet = { is_market_nominee_planet = yes }
+			}
+			set_variable = { which = market_rating value = 1000000 }
+		}
+	}
+}

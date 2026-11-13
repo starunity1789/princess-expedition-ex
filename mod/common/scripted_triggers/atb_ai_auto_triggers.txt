@@ -1,0 +1,28 @@
+# 皇女的远征军EX 3.0：AI 自动星球的判断条件
+
+# 国家作用域：只有自动星球的国家——常规 AI 帝国（含保底列强），游牧与荒野帝国除外
+atb_ai_auto_country = {
+	is_ai = yes
+	is_country_type = default
+	is_nomadic = no
+	is_wilderness_empire = no
+}
+
+# 国家作用域：保底列强（开局就挂着 atbgp_power_base）
+atb_ai_auto_great_power = {
+	has_modifier = atbgp_power_base
+}
+
+# 星球作用域：已经是自动星球
+atb_is_ai_auto_planet = {
+	has_carrier_flag = atb_ai_auto
+}
+
+# 星球作用域：可以转成自动星球的殖民地（殖民已完成、主人适用、还没转过）
+atb_ai_auto_convertible = {
+	is_colony = yes
+	exists = owner
+	owner = { atb_ai_auto_country = yes }
+	NOT = { has_carrier_flag = atb_ai_auto }
+	pop_amount >= 100
+}

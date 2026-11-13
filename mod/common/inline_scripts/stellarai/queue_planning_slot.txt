@@ -1,4 +1,0 @@
-# Country ROOT. The literal delay expands to a native fixed-delay event call.
-set_variable = { which = stellarai_research_due_day value = trigger:days_passed }
-change_variable = { which = stellarai_research_due_day value = $RESEARCH_DELAY$ }
-country_event = { id = stellarai_commitment.906 days = $RESEARCH_DELAY$ }

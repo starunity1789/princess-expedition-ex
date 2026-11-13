@@ -1,5 +1,0 @@
-# Shared with players and AI. The modifier is applied idempotently from the
-# yearly/game-start commitment pass, including to empires created later.
-stellarai_diplomatic_capacity = {
-  envoys_add = 1
-}

@@ -1,0 +1,29 @@
+# 皇女的远征军EX 3.0：AI 自动星球上的岗位（由自治中枢按「每个人口一个」提供，见 building_atb_ai_core）
+# 岗位本身不产出，只是让固定的那 1000 人口有事做、永不失业；产出全由自动建筑按产能变量给出。
+# 写法照搬《星球大战：夸特的黎明》的 kuat_auto_machine_job / kuat_auto_machine_drone。
+
+atb_ai_auto_worker = {
+	category = ruler
+	possible_pre_triggers = { has_owner = yes }
+	swappable_data = {
+		default = {
+			condition_string = RULER_JOB_TRIGGER
+			building_icon = building_capital
+			icon = politician
+		}
+	}
+	weight = { weight = 30000 }
+}
+
+atb_ai_auto_drone = {
+	category = complex_drone
+	possible_pre_triggers = { has_owner = yes }
+	swappable_data = {
+		default = {
+			condition_string = DRONE_JOB_TRIGGER
+			building_icon = building_machine_capital
+			icon = coordinator
+		}
+	}
+	weight = { weight = 30000 }
+}

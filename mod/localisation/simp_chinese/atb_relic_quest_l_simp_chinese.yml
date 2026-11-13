@@ -2,4 +2,4 @@
  # 由 tools/gen_relic_quest.py 生成，请勿手改
  decision_atb_relic_quest:0 "探寻遗珍"
  decision_atb_relic_quest_desc:0 "银河各处散落着前人留下的奇物。只要舍得投入，我们的探险队终能把它们一件件带回来。"
- decision_atb_relic_quest_tt:0 "随机获得一件尚未拥有的§Y遗珍§!，直到 21 件全部获得：$gpm_r_mars_rover$、$gpm_r_encyclopedia_galactica$、$gpm_r_zero_energy_generator$、$gpm_r_quantum_sphere$、$gpm_r_ai_architect$、$gpm_r_encrypted_sct$、$gpm_r_experimental_weapon$、$gpm_r_fallout_emergency_replicator$、$gpm_r_power_core$、$gpm_r_gravity_engine$、$gpm_r_codex_administratum$、$gpm_r_enigmatic_advisor$、$gpm_r_positronic_microchip$、$gpm_r_sentinel_queen$、$gpm_r_earthquake_engine$、$gpm_r_manufactorium_ship$、$gpm_r_datacube$、$gpm_r_self_assembly_hub$、$gpm_r_banner_of_the_fallen$、$gpm_r_cloaking_device$、$gpm_r_q_storage_compressor$"
+ decision_atb_relic_quest_tt:0 "随机获得一件尚未拥有的§Y遗珍§!，直到全部获得。\n装了 Guilli's Planet Modifiers 时从它的 28 件遗珍中抽取，否则从原版的 58 件遗珍中抽取。"

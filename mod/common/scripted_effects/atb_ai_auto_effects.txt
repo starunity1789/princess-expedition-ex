@@ -1,0 +1,243 @@
+# 皇女的远征军EX 3.0：AI 自动星球
+# 写法借鉴《星球大战：夸特的黎明》的自动星球（产出 = 建筑系数 × 星球变量），但不改星球类型、
+# 不用专用区划集：每颗星只留一级城市区划，政府分区里放 6 座自动建筑。
+# 产能变量 atb_ai_auto_jobs = A（虚拟岗位数），见 common/scripted_variables/atb_ai_auto_variables.txt
+
+# 星球作用域：把实际人口调整到 $SIZE$（每次增减 100）
+atb_ai_auto_set_pops = {
+	while = {
+		count = 600
+		limit = { pop_amount > $SIZE$ }
+		random_owned_pop_group = {
+			limit = { pop_group_size > 0 }
+			kill_pop_group = { pop_group = this amount = 100 }
+		}
+	}
+	while = {
+		count = 20
+		limit = { pop_amount < $SIZE$ }
+		create_pop_group = { species = owner_main_species size = 100 }
+	}
+}
+
+# 星球作用域：在 $DISTRICT$ 的政府分区里放下 6 座自动建筑
+atb_ai_auto_place_buildings = {
+	add_building = { district = $DISTRICT$ zone = zone_default building = building_atb_ai_core }
+	add_building = { district = $DISTRICT$ zone = zone_default building = building_atb_ai_foundry }
+	add_building = { district = $DISTRICT$ zone = zone_default building = building_atb_ai_power }
+	add_building = { district = $DISTRICT$ zone = zone_default building = building_atb_ai_admin }
+	add_building = { district = $DISTRICT$ zone = zone_default building = building_atb_ai_industry }
+	add_building = { district = $DISTRICT$ zone = zone_default building = building_atb_ai_supply }
+}
+
+# 星球作用域：清空全部区划，只留一级城市区划（按区划集选对应的城市区划）
+# 已知区划集之外的星球（宇宙创生世界等）不动区划，建筑直接放进原有的政府分区
+atb_ai_auto_reset_districts = {
+	if = {
+		limit = { uses_district_set = habitat }
+		remove_all_districts = yes
+		add_district = district_hab_housing
+	}
+	else_if = {
+		limit = { uses_district_set = ring_world }
+		remove_all_districts = yes
+		if = {
+			limit = { owner = { is_hive_empire = yes } }
+			add_district = district_rw_hive
+		}
+		else_if = {
+			limit = { owner = { is_machine_empire = yes } }
+			add_district = district_rw_nexus
+		}
+		else = { add_district = district_rw_city }
+	}
+	else_if = {
+		limit = { uses_district_set = city_world }
+		remove_all_districts = yes
+		add_district = district_arcology_housing
+	}
+	else_if = {
+		limit = {
+			OR = {
+				uses_district_set = standard
+				uses_district_set = volcanic_world
+				uses_district_set = shattered_ring_world
+				uses_district_set = hive_world
+				uses_district_set = machine_world
+			}
+		}
+		remove_all_districts = yes
+		if = {
+			limit = { owner = { is_hive_empire = yes } }
+			add_district = district_hive
+		}
+		else_if = {
+			limit = { owner = { is_machine_empire = yes } }
+			add_district = district_nexus
+		}
+		else = { add_district = district_city }
+	}
+}
+
+# 星球作用域：放自动建筑，区划与上面的城市区划对应
+atb_ai_auto_build = {
+	if = {
+		limit = { uses_district_set = habitat }
+		atb_ai_auto_place_buildings = { DISTRICT = district_hab_housing }
+	}
+	else_if = {
+		limit = { uses_district_set = ring_world }
+		if = {
+			limit = { owner = { is_hive_empire = yes } }
+			atb_ai_auto_place_buildings = { DISTRICT = district_rw_hive }
+		}
+		else_if = {
+			limit = { owner = { is_machine_empire = yes } }
+			atb_ai_auto_place_buildings = { DISTRICT = district_rw_nexus }
+		}
+		else = { atb_ai_auto_place_buildings = { DISTRICT = district_rw_city } }
+	}
+	else_if = {
+		limit = { uses_district_set = city_world }
+		atb_ai_auto_place_buildings = { DISTRICT = district_arcology_housing }
+	}
+	else_if = {
+		limit = {
+			OR = {
+				uses_district_set = standard
+				uses_district_set = volcanic_world
+				uses_district_set = shattered_ring_world
+				uses_district_set = hive_world
+				uses_district_set = machine_world
+			}
+		}
+		if = {
+			limit = { owner = { is_hive_empire = yes } }
+			atb_ai_auto_place_buildings = { DISTRICT = district_hive }
+		}
+		else_if = {
+			limit = { owner = { is_machine_empire = yes } }
+			atb_ai_auto_place_buildings = { DISTRICT = district_nexus }
+		}
+		else = { atb_ai_auto_place_buildings = { DISTRICT = district_city } }
+	}
+	else = {
+		add_building = building_atb_ai_core
+		add_building = building_atb_ai_foundry
+		add_building = building_atb_ai_power
+		add_building = building_atb_ai_admin
+		add_building = building_atb_ai_industry
+		add_building = building_atb_ai_supply
+	}
+}
+
+# 星球作用域：人口冻结（自然增长、组装都停），原版换主人时会清掉 planet_population_control，所以每次易手都重挂
+atb_ai_auto_freeze_pops = {
+	if = {
+		limit = { NOT = { has_modifier = planet_population_control } }
+		add_modifier = { modifier = planet_population_control }
+	}
+	if = {
+		limit = { NOT = { has_modifier = planet_population_control_gestalt } }
+		add_modifier = { modifier = planet_population_control_gestalt }
+	}
+	if = {
+		limit = { NOT = { has_modifier = planet_robot_assembly_control } }
+		add_modifier = { modifier = planet_robot_assembly_control }
+	}
+}
+
+# 星球作用域：把普通殖民地转成自动星球
+# 产能：AI 之间易手时保留原值；否则取「人口 ÷ 100」，但不低于新殖民地起点
+atb_ai_auto_convert = {
+	optimize_memory
+	set_carrier_flag = atb_ai_auto
+	if = {
+		limit = { NOT = { is_variable_set = atb_ai_auto_jobs } }
+		set_variable = { which = atb_ai_auto_jobs value = value:atb_ai_auto_pop_jobs }
+		if = {
+			limit = { owner = { atb_ai_auto_great_power = yes } }
+			if = {
+				limit = { check_variable = { which = atb_ai_auto_jobs value < @atb_ai_auto_start_gp } }
+				set_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_start_gp }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { which = atb_ai_auto_jobs value < @atb_ai_auto_start } }
+			set_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_start }
+		}
+	}
+	remove_all_buildings = yes
+	atb_ai_auto_reset_districts = yes
+	atb_ai_auto_build = yes
+	atb_ai_auto_set_pops = { SIZE = @atb_ai_auto_pops }
+	atb_ai_auto_freeze_pops = yes
+}
+
+# 星球作用域：AI 之间易手（产能保留）后补回被原版清掉的修正，缺建筑时重建
+atb_ai_auto_refresh = {
+	atb_ai_auto_freeze_pops = yes
+	if = {
+		limit = { NOT = { has_building = building_atb_ai_core } }
+		remove_all_buildings = yes
+		atb_ai_auto_reset_districts = yes
+		atb_ai_auto_build = yes
+	}
+}
+
+# 星球作用域：玩家（或其他非自动国家）拿到自动星球——还原成刚殖民的新殖民地：
+# 拆掉全部建筑，区划只留一级城市区划，人口删到 100，补上殖民地首府
+atb_ai_auto_revert = {
+	optimize_memory
+	remove_carrier_flag = atb_ai_auto
+	clear_variable = atb_ai_auto_jobs
+	remove_modifier = planet_population_control
+	remove_modifier = planet_population_control_gestalt
+	remove_modifier = planet_robot_assembly_control
+	remove_all_buildings = yes
+	atb_ai_auto_reset_districts = yes
+	atb_ai_auto_set_pops = { SIZE = @atb_ai_auto_reverted_pops }
+	if = {
+		limit = { uses_habitat_capitals = yes }
+		add_building = building_hab_capital
+	}
+	else = {
+		add_building = building_colony_shelter
+	}
+}
+
+# 星球作用域：每年增长，封顶
+atb_ai_auto_grow = {
+	if = {
+		limit = { owner = { atb_ai_auto_great_power = yes } }
+		change_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_growth_gp }
+		if = {
+			limit = { check_variable = { which = atb_ai_auto_jobs value > @atb_ai_auto_cap_gp } }
+			set_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_cap_gp }
+		}
+	}
+	else = {
+		change_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_growth }
+		if = {
+			limit = { check_variable = { which = atb_ai_auto_jobs value > @atb_ai_auto_cap } }
+			set_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_cap }
+		}
+	}
+}
+
+# 国家作用域：AI 外交权重 ×3
+atb_ai_auto_country_setup = {
+	if = {
+		limit = { NOT = { has_modifier = atb_ai_diplomacy } }
+		add_modifier = { modifier = atb_ai_diplomacy }
+	}
+}
+
+# 国家作用域：把全部可转的殖民地转成自动星球
+atb_ai_auto_convert_all = {
+	atb_ai_auto_country_setup = yes
+	every_owned_planet = {
+		limit = { atb_ai_auto_convertible = yes }
+		atb_ai_auto_convert = yes
+	}
+}

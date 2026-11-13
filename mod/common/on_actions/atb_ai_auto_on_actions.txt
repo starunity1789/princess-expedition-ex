@@ -1,0 +1,32 @@
+# 皇女的远征军EX 3.0：AI 自动星球（同名 on_action 会与原版合并，事件排在原版之后）
+
+on_game_start = {
+	events = {
+		atb_ai.1
+	}
+}
+
+on_colonized = {
+	events = {
+		atb_ai.3
+	}
+}
+
+# 原版 action.89 会在这里清掉 planet_population_control，atb_ai.4 排在它后面重挂
+on_colony_transfer = {
+	events = {
+		atb_ai.4
+	}
+}
+
+on_yearly_pulse_country = {
+	events = {
+		atb_ai.5
+	}
+}
+
+on_monthly_pulse = {
+	events = {
+		atb_ai.10
+	}
+}

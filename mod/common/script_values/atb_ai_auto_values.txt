@@ -1,0 +1,8 @@
+# 皇女的远征军EX 3.0：AI 自动星球
+# 星球作用域：人口 ÷ 100（取整）——母星与打下来的星球转换时的产能起点
+atb_ai_auto_pop_jobs = {
+	base = 0
+	add = trigger:pop_amount
+	mult = 0.01
+	floor = yes
+}

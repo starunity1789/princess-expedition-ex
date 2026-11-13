@@ -1,0 +1,275 @@
+# 皇女的远征军EX 3.0：AI 自动星球的 6 座建筑（都放在城市区划的政府分区里，正好 6 个格）
+# 产出 = 系数 × 星球变量 atb_ai_auto_jobs（A，虚拟岗位数），1 点 A 相当于一个原版岗位，按份额折算：
+#   科研 30%（研究员 3/岗）  合金 15%（冶金工 3/岗）  能量 15%（技术员 6/岗）
+#   团结 10%（官僚 3/岗）    消费品 10%（工匠 6/岗）  矿物 5%（矿工 4/岗）  食物 5%（农民 6/岗）
+#   另有少量贸易与战略资源；不用消费品的帝国（格式塔）把那 10% 改成合金与科研
+# 产出挂在原版岗位类别下，AI 自己的科技与传统加成照常生效。没有维护费。
+# 不能建造、不能拆除；星球失去 atb_ai_auto 标记（换给玩家）时自动消失。
+
+@atb_ai_auto_buildtime = 1
+
+# 自治中枢：首府 + 科研 + 全部星球修正 + 海军容量
+building_atb_ai_core = {
+	base_buildtime = @atb_ai_auto_buildtime
+	capital = yes
+	can_build = no
+	can_demolish = no
+	can_be_ruined = no
+	can_be_disabled = no
+	position_priority = 0
+	capital_tier = 10
+	exempt_from_ai_planet_specialization = yes
+	category = government
+	icon = building_capital
+
+	building_sets = {
+		government
+	}
+
+	potential = {
+		exists = owner
+		has_carrier_flag = atb_ai_auto
+	}
+
+	destroy_trigger = {
+		NOT = { has_carrier_flag = atb_ai_auto }
+	}
+
+	# FTL 抑制器（同原版要塞）
+	planetary_ftl_inhibitor = yes
+
+	planet_modifier = {
+		planet_housing_add = 2000
+		planet_amenities_add = 2000
+		planet_stability_add = 25
+		planet_crime_add = -100
+		# 行星护盾（同原版行星护盾发生器）
+		planet_orbital_bombardment_damage = -0.5
+		# 10 支防御陆军
+		planet_defense_armies_add = 10
+	}
+
+	# 每个人口一个岗位，永不失业
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		job_atb_ai_auto_worker_per_pop = 1
+	}
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		job_atb_ai_auto_drone_per_pop = 1
+	}
+
+	triggered_country_modifier = {
+		potential = { exists = owner }
+		country_naval_cap_add = @atb_ai_auto_naval_cap
+		mult = root.planet.atb_ai_auto_jobs
+	}
+
+	resources = {
+		category = planet_researchers
+		produces = {
+			physics_research = 0.3
+			society_research = 0.3
+			engineering_research = 0.3
+			multiplier = planet.atb_ai_auto_jobs
+		}
+		produces = {
+			trigger = { owner? = { country_uses_consumer_goods = no } }
+			physics_research = 0.05
+			society_research = 0.05
+			engineering_research = 0.05
+			multiplier = planet.atb_ai_auto_jobs
+		}
+	}
+}
+
+# 自治铸造厂：合金
+building_atb_ai_foundry = {
+	base_buildtime = @atb_ai_auto_buildtime
+	can_build = no
+	can_demolish = no
+	can_be_ruined = no
+	can_be_disabled = no
+	position_priority = 1
+	exempt_from_ai_planet_specialization = yes
+	category = government
+	icon = building_foundry_1
+
+	building_sets = {
+		government
+	}
+
+	potential = {
+		exists = owner
+		has_carrier_flag = atb_ai_auto
+	}
+
+	destroy_trigger = {
+		NOT = { has_carrier_flag = atb_ai_auto }
+	}
+
+	resources = {
+		category = planet_metallurgists
+		produces = {
+			alloys = 0.45
+			multiplier = planet.atb_ai_auto_jobs
+		}
+		produces = {
+			trigger = { owner? = { country_uses_consumer_goods = no } }
+			alloys = 0.15
+			multiplier = planet.atb_ai_auto_jobs
+		}
+	}
+}
+
+# 自治电网：能量
+building_atb_ai_power = {
+	base_buildtime = @atb_ai_auto_buildtime
+	can_build = no
+	can_demolish = no
+	can_be_ruined = no
+	can_be_disabled = no
+	position_priority = 2
+	exempt_from_ai_planet_specialization = yes
+	category = government
+	icon = building_energy_grid
+
+	building_sets = {
+		government
+	}
+
+	potential = {
+		exists = owner
+		has_carrier_flag = atb_ai_auto
+	}
+
+	destroy_trigger = {
+		NOT = { has_carrier_flag = atb_ai_auto }
+	}
+
+	resources = {
+		category = planet_technician
+		produces = {
+			energy = 0.9
+			multiplier = planet.atb_ai_auto_jobs
+		}
+	}
+}
+
+# 自治政务院：团结
+building_atb_ai_admin = {
+	base_buildtime = @atb_ai_auto_buildtime
+	can_build = no
+	can_demolish = no
+	can_be_ruined = no
+	can_be_disabled = no
+	position_priority = 3
+	exempt_from_ai_planet_specialization = yes
+	category = government
+	icon = building_bureaucratic_1
+
+	building_sets = {
+		government
+	}
+
+	potential = {
+		exists = owner
+		has_carrier_flag = atb_ai_auto
+	}
+
+	destroy_trigger = {
+		NOT = { has_carrier_flag = atb_ai_auto }
+	}
+
+	resources = {
+		category = planet_bureaucrats
+		produces = {
+			unity = 0.3
+			multiplier = planet.atb_ai_auto_jobs
+		}
+	}
+}
+
+# 自治工坊：消费品（不用消费品的帝国这座不产出）
+building_atb_ai_industry = {
+	base_buildtime = @atb_ai_auto_buildtime
+	can_build = no
+	can_demolish = no
+	can_be_ruined = no
+	can_be_disabled = no
+	position_priority = 4
+	exempt_from_ai_planet_specialization = yes
+	category = government
+	icon = building_factory_1
+
+	building_sets = {
+		government
+	}
+
+	potential = {
+		exists = owner
+		has_carrier_flag = atb_ai_auto
+	}
+
+	destroy_trigger = {
+		NOT = { has_carrier_flag = atb_ai_auto }
+	}
+
+	resources = {
+		category = planet_artisans
+		produces = {
+			trigger = { owner? = { country_uses_consumer_goods = yes } }
+			consumer_goods = 0.6
+			multiplier = planet.atb_ai_auto_jobs
+		}
+	}
+}
+
+# 自治补给站：矿物、食物、贸易与少量战略资源
+building_atb_ai_supply = {
+	base_buildtime = @atb_ai_auto_buildtime
+	can_build = no
+	can_demolish = no
+	can_be_ruined = no
+	can_be_disabled = no
+	position_priority = 5
+	exempt_from_ai_planet_specialization = yes
+	category = government
+	icon = building_mine_generic
+
+	building_sets = {
+		government
+	}
+
+	potential = {
+		exists = owner
+		has_carrier_flag = atb_ai_auto
+	}
+
+	destroy_trigger = {
+		NOT = { has_carrier_flag = atb_ai_auto }
+	}
+
+	resources = {
+		category = planet_miners
+		produces = {
+			minerals = 0.2
+			trade = 0.1
+			rare_crystals = 0.01
+			exotic_gases = 0.01
+			volatile_motes = 0.01
+			multiplier = planet.atb_ai_auto_jobs
+		}
+		produces = {
+			trigger = { owner? = { country_uses_food = yes } }
+			food = 0.3
+			multiplier = planet.atb_ai_auto_jobs
+		}
+	}
+}

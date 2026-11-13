@@ -1,8 +1,0 @@
-modifier = {
-  # Stellar AI 0.14.1: AI owners only; only managed AI colonies ever get the trade commitment flag,
-  # so player planets on automatic designation were always penalised.
-  exists = owner
-  owner = { is_ai = yes }
-  NOR = { planet = { has_planet_flag = stellarai_trade_commitment_soft } }
-  factor = 0.1
-}

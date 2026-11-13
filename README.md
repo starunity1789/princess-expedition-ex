@@ -49,6 +49,8 @@ The characters - their personalities, looks and every detail - were designed by 
   - Terminal Alignment Protocol (6:30, new): Determined Exterminators, Warbots, Experience Cache; four start-sized machine worlds; always Becomes the Crisis; joins the Galactic Community until Crisis level 5
 - **Galaxy rules**: The Chosen (always at 8 o'clock) and the crash site of Keides, Scion of Vagros always spawn; Mega Shipyards have 50 shipyard slots; Galactic Community sessions and recesses take half as long; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
 - **Bundled portraits**: the Ancient Dragonkin and Kemonomimi animated portrait packs are merged in - disable the standalone packs if you are subscribed to them
+- **AI auto planets (3.0)**: regular AI empires (great powers included) only have "auto planets": a fixed 1,000 pops, six autonomous buildings, and a capacity that grows each year (+3, cap 300; great powers +6, cap 500). Every auto planet has a planetary shield, an FTL inhibitor and 10 defense armies. Planets the player takes revert to fresh colonies. AI diplomatic weight x3, and AIs colonize low-habitability worlds far more readily
+- **Other 3.0 changes**: Planetary Diversity, Guilli's Planet Modifiers and Stellar AI are no longer bundled; every shipyard module builds two ships at once; the Expedition all but always wins the Galactic Market nomination; the "Seek Relics" decision draws from Guilli's relics when that mod is enabled, otherwise from the vanilla relics
 
 Full details: [workshop description (English)](docs/workshop_description_en.txt).
 
@@ -58,7 +60,7 @@ Full details: [workshop description (English)](docs/workshop_description_en.txt)
 mod/      the mod itself (this folder is what gets uploaded to the Workshop)
 tools/    generator scripts (Python 3 + Pillow) and the name-list source data
 art/      portraits, empire flag logos, cover and relic artwork
-docs/     Workshop descriptions (English and Chinese), the name-list overview, and the PD/GPM/Stellar AI merge plan
+docs/     Workshop descriptions (English and Chinese), the name-list overview, and the 2.8-2.9 PD/GPM/Stellar AI merge plan (kept for reference)
 ```
 
 `mod/` is linked into the game's mod folder with a directory junction, so `.git` never reaches the Workshop. See the Chinese section below for development, testing and publishing notes.
@@ -115,11 +117,19 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - **银河规则**：所有帝国开局就有居住站科技（轨道居住站及其两级扩建）；必定生成天选民（固定在 8 点）和凯德斯（瓦格罗之子嗣）的坠毁点；巨型船坞的船坞数量改为 50；星海共同体的议程与休会时间减半；所有国家存储上限 +100K；非生物船基础舰体翻倍；原版所有能量盾和装甲数值翻倍；议会肖像去掉全息效果
 - **内置肖像包**：已合并 Ancient Dragonkin（龙族）与 Kemonomimi（兽耳）两套动态肖像包——如果还订阅着这两个独立包，请停用它们
 
-**内置三个 MOD（2.8 起）**——由 `tools/merge_upstream.py` 合并、裁剪，**启动器里必须停用独立的这三个 MOD**，否则同一批定义会出现两份：
-- **Planetary Diversity**：113 个新行星类型与新气候宜居性特质，连同行星生成引擎、改造链路、行星类型界面。删去全部岗位与区域修改、飞升世界、穹顶殖民地、起源与公民覆盖等非行星类型内容
-- **Guilli's Planet Modifiers and Features**：635 个行星修正、216 个行星地貌与 21 个遗珍，连同修正调度引擎。删去遗珍战争/窃取/交易、前驱者考古、行星决议、游牧民族、内容事件、环境物件等其余全部内容；开局不再弹设置菜单，直接按默认设置运行
-- **Stellar AI**：原样内置
-- 新增玩家首都决议 **「探寻遗珍」**：花 10000 能量币随机获得一件尚未拥有的 GPM 遗珍，直到 21 件全部获得
+**AI 自动星球（3.0 起）**——常规 AI 帝国（含保底列强）只有「自动星球」，玩家不受影响：
+- 开局把 AI 的母星转成自动星球；AI 殖民成功、打下来的星球也都转。每颗自动星球只留一级城市区划、固定 1000 人口（人口冻结，永不失业），政府分区里放 6 座自动建筑（自治中枢、铸造厂、电网、政务院、工坊、补给站）
+- 产能 A 以「虚拟岗位数」计：母星与打下来的星球取「人口 ÷ 100」，新殖民地从 10 起；每年 +3，单星上限 300。保底列强从 20 起、每年 +6、上限 500。1 点 A 相当于一个原版岗位：科研 30%、合金 15%、能量 15%、团结 10%、消费品 10%、矿物 5%、食物 5%，另有少量贸易与战略资源；产出挂在原版岗位类别下，AI 的科技与传统加成照常生效。数值在 `common/scripted_variables/atb_ai_auto_variables.txt`
+- 每颗自动星球自带行星护盾、FTL 抑制器、10 支防御陆军，每点 A 给海军容量 +0.25
+- 玩家拿到自动星球（打下来、整合附庸、割让、联邦统一）时还原成新殖民地：建筑全拆、区划只留一级、人口删到 100。AI 之间易手时产能保留
+- AI 外交权重 ×3；AI 大幅提高殖民低宜居星球的意愿
+- 写法借鉴《星球大战：夸特的黎明》的自动星球（产出 = 建筑系数 × 星球变量），但不改星球类型、不用专用区划集
+
+**其它（3.0 起）**
+- 不再内置 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI（2.8～2.9 内置过），要用就自己订阅启用
+- 所有船坞模块产能翻倍：每个船坞同时造 2 艘船（覆盖原版 `00_starbase_modules.txt`）
+- 银河市场提名期间，远征军帝国提名了自己的星球就把市场评分拉到 100 万，实际上必定拿到星系贸易中心
+- 玩家首都决议 **「探寻遗珍」**：花 10000 能量币随机获得一件尚未拥有的遗珍，直到全部获得。装了 Guilli's Planet Modifiers 时从它的 28 件遗珍里抽，没装就从原版 58 件遗珍里抽
 
 **减轻后期卡顿（2.9 起，只限 AI，玩家不受影响）**——由 `tools/gen_ai_limits.py` 生成：
 - AI 每个国家终身最多**自己开工建造**：居住站 7 座、环世界 1 座、星门 2 座、超空间中继器 18 座。捡到、修复废墟、俘获的都不算；拆掉或被毁也不退名额。原版按星系大小与难度算的 AI 居住站上限被这条替换
@@ -133,14 +143,10 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 ```
 mod/      MOD 本体（上传工坊的就是这个文件夹）
-tools/    生成脚本，以及名称集的源数据 cgen_names_source.json；upstream_manifest.json 记录合并进来的上游文件
+tools/    生成脚本，以及名称集的源数据 cgen_names_source.json
 art/      立绘、列强帝国标识 LOGO、封面、遗珍原图
-docs/     工坊简介原文（中文、英文各一份），名称集总览与全部人名，三方整合方案
+docs/     工坊简介原文（中文、英文各一份），名称集总览与全部人名，2.8～2.9 的三方整合方案（3.0 起已不再内置，留作参考）
 ```
-
-合并进来的上游**二进制资源**（约 2 GB，几乎全是 PD 的行星贴图）**不进 git**：`.gitignore` 末尾有一段由
-`merge_upstream.py` 生成的精确文件清单。重新 clone 之后要先订阅那三个 MOD，再跑一次
-`python tools/merge_upstream.py ...` 把贴图拷回来，MOD 才完整。脚本与本地化照常进 git。
 
 `mod/` 通过目录联接（junction）挂到游戏的 MOD 目录：
 
@@ -178,8 +184,7 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 
 **日常游玩本地版**用另一个描述文件 `atb_princess_expedition_ex_dev.mod`（名字「皇女的远征军EX（本地开发版）」）：
 内容同上但**不写 `remote_file_id`**，所以能和订阅版共存、不会撞号。在启动器里启用它，同时停用订阅版的
-皇女的远征军EX，以及已经内置进来的 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI
-（这三个要保持订阅——`merge_upstream.py` 从订阅目录读源文件——但不能启用，否则同一批内容会出现两份）。
+皇女的远征军EX。Guilli's Planet Modifiers 要保持订阅（`gen_relic_quest.py` 从订阅目录读它的遗珍清单），启不启用随意。
 
 ### 文件前缀
 
@@ -191,13 +196,9 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 | `adpp_` | 合并进来的 Ancient Dragonkin 肖像包，原样保留，不要改 |
 | `kmpp_` | 合并进来的 Kemonomimi 肖像包，原样保留，不要改 |
 | `cgen_` / `CGEN_` | 名称集「苍神缘起帝国」（全部由 `tools/gen_names.py` 生成，不要手改；2.6 起由独立 MOD「苍神缘起帝国·名称集 0.1.0」并入） |
-| `gpm_` | 合并进来的 Guilli's Planet Modifiers（由 `tools/merge_upstream.py` 写入，不要手改，改 `KEEP` / `PATCHES` 后重跑） |
-| `pd_` / `pdengine` / `!vanilla_*_fix` | 合并进来的 Planetary Diversity（同上） |
-| `stellarai_` / `~stellarai_` / `111_stellarai` | 合并进来的 Stellar AI（同上） |
+| `atb_ai_auto` / `atb_ai.` | 3.0 的 AI 自动星球 |
 | `atb_relic_quest_` | 决议「探寻遗珍」（由 `tools/gen_relic_quest.py` 生成，不要手改） |
 | `atb_ex_ai_limits` / `zz_atb_ex_ai_limits` / `atb_ex_lim.` / `zz_atb_ex_performance_defines` | 2.9 的 AI 限制与减卡（由 `tools/gen_ai_limits.py` 生成，不要手改） |
-
-上游文件的完整清单与来源见 `tools/upstream_manifest.json`。除了上面这些前缀，上游还以原版同名路径覆盖了一批原版文件，见下文「覆盖的原版文件」。
 
 ### 开发
 
@@ -219,7 +220,7 @@ python tools/make_flags.py art/great_power_flags mod
 # 把原版所有能量盾和装甲的数值翻倍（倍率可选，默认 2）
 python tools/gen_double_defenses.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
-# 重新生成巨型船坞（50 个船坞）与关掉原版天选民随机生成的两份覆盖文件
+# 重新生成巨型船坞（50 个船坞）、关掉原版天选民随机生成、船坞产能翻倍这三份覆盖文件
 python tools/gen_vanilla_patches.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
 # 把两套内置肖像包挂进原版的 portrait_sets（覆盖原版同名文件）
@@ -228,20 +229,16 @@ python tools/gen_portrait_sets.py "C:\Program Files (x86)\Steam\steamapps\common
 # 重新生成名称集「苍神缘起帝国」（改名字改 tools/cgen_names_source.json）
 python tools/gen_names.py mod docs
 
-# 把 PD / GPM / Stellar AI 按保留清单合并进 mod/（需要三者都已订阅）
-# 校验没通过时什么都不写；上游改了结构会在这里报错，按提示调整脚本里的 KEEP / PATCHES
-python tools/merge_upstream.py "C:/Program Files (x86)/Steam/steamapps/workshop/content/281990" mod
-
-# 重新生成决议「探寻遗珍」（遗珍清单读合并后的 mod/common/relics/gpm_relics*.txt，合并之后跑）
+# 重新生成决议「探寻遗珍」（遗珍清单读原版安装目录与 GPM 的订阅目录）
 python tools/gen_relic_quest.py mod
 
 # 2.9 的 AI 巨构上限、AI 禁杂交飞升、AI 物种改造冷却、减卡 defines（改数字改脚本顶部的 CAPS 等常量；原版更新后重跑）
 python tools/gen_ai_limits.py
 
 # 上传到创意工坊（经 Steam 客户端更新 3821602893，只换内容与更新说明；Steam 要开着）
-python tools/upload_workshop.py 2.9
+python tools/upload_workshop.py 3.0
 
-# 静态自检：括号配对、本地化格式、贴图引用、原版 ID、本次改动点、三方整合
+# 静态自检：括号配对、本地化格式、贴图引用、原版 ID、各版本改动点
 python tools/check_mod.py
 ```
 
@@ -254,16 +251,11 @@ python tools/check_mod.py
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 - `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
-- `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成，跑 `gen_vanilla_patches.py` 重做即可）
-- `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时，原版改了数值时对照调整）
+- `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`、`common/starbase_modules/00_starbase_modules.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成、船坞产能翻倍，跑 `gen_vanilla_patches.py` 重做即可）
+- `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时与 AI 殖民的四项，原版改了数值时对照调整）
 - `common/game_rules/atb_rules.txt` 里的 `can_be_part_of_galactic_community`、`can_dismiss_leader`（原版同名规则的副本）
 - `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）
 - `zz_atb_ex_ai_limits.txt`（megastructures / ascension_perks / game_rules 三处）：原版 `habitat_central_complex`、`gateway_0`、`hyper_relay`、`ap_xeno_compatibility`、`can_modify_species` 与 Real Space 的 `ring_world_1` 的副本，跑 `gen_ai_limits.py` 重做即可
-
-2.8 起合并进来的上游另外覆盖了 42 个原版文件（Stellar AI 27 个、Planetary Diversity 15 个；GPM 不覆盖原版路径），
-清单见 `docs/整合方案.md` §1.1。四方之间没有任何两家覆盖同一个原版文件。游戏更新后有两种做法：
-等上游作者更新、重新订阅后重跑 `merge_upstream.py`；或者自己对照新版原版改 `mod/` 里的这些文件
-（改完后重跑 `merge_upstream.py` 会把它们覆盖回上游版本，所以自维护时要把改动做进脚本的 `PATCHES`）。
 
 ### 发布到工坊
 

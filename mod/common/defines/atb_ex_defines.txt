@@ -5,3 +5,11 @@ NGameplay = {
 	RESOLUTION_VOTE_PREMATURE_TIMER = 360	# 原版 720：守护者/皇帝可以提前结束表决的天数
 	SENATE_RECESS_TIMER = 360				# 原版 720：表决结束后到下一项议案上会的休会天数
 }
+
+# 3.0：AI 大幅提高殖民低宜居星球的意愿（AI 星球都是自动星球，产出与宜居度、星球类型无关）
+NAI = {
+	AI_MIN_HABITABILITY_TO_COLONIZE = 0.01		# 原版 0.35：宜居度低于此值的星球 AI 不殖民
+	UNDERDEVELOPED_PLANET_LIMIT = 999			# 原版 3：AI 不想同时有太多「未开发」殖民地——自动星球没有区划，会被当成未开发
+	AI_FEW_PLANETS_COLONIZATION_THRESHOLD = 40	# 原版 5：星球数低于此值时殖民权重加成
+	AI_FEW_PLANETS_COLONIZATION_BOOST = 0.5		# 原版 0.25：每少一颗星球的殖民权重加成
+}

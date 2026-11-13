@@ -1,10 +1,13 @@
-"""首都决议「探寻遗珍」：花 10000 能量币，随机获得一个还没有的 GPM 遗珍，直到全部获得。
+"""首都决议「探寻遗珍」：花 10000 能量币，随机获得一个还没有的遗珍，直到全部获得。
 
-用法（在仓库根目录，先跑 merge_upstream.py）：
+3.0 起本 MOD 不再内置 Guilli's Planet Modifiers（GPM），遗珍池按是否装了 GPM 分流：
+- 装了 GPM（它开局会设全局旗标 has_guillis_planet_modifiers_mod）：从 GPM 的遗珍里抽
+- 没装：从原版遗珍里抽（去掉天球星图碎片、虫洞钥匙碎片这类任务链零件）
+
+用法（在仓库根目录）：
     python tools/gen_relic_quest.py mod
 
-遗珍清单直接读合并后的 mod/common/relics/gpm_relics*.txt，所以上游增删遗珍时
-重跑 merge_upstream.py 再重跑本脚本即可，不用手改。
+遗珍清单直接读原版安装目录与 GPM 的订阅目录（GPM 只用来读清单，不需要启用）。
 只对玩家开放（决议在玩家首都上），AI 看不到。
 """
 import re
@@ -13,46 +16,90 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 MOD = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("mod")
+GAME = Path(r"C:\Program Files (x86)\Steam\steamapps\common\Stellaris")
+GPM = Path(r"C:\Program Files (x86)\Steam\steamapps\workshop\content\281990\865040033")
+GPM_FLAG = "has_guillis_planet_modifiers_mod"
 COST = 10000
 
-relics = []
-for f in sorted((MOD / "common" / "relics").glob("gpm_relics*.txt")):
-    text = re.sub(r"#[^\n]*", "", f.read_text(encoding="utf-8-sig"))
-    relics += re.findall(r"^(gpm_r_[A-Za-z0-9_]+)\s*=\s*\{", text, re.M)
-if not relics:
-    raise SystemExit("mod/common/relics/ 里没有 gpm_r_* 遗珍——先跑 tools/merge_upstream.py")
-n = len(relics)
+# 原版里不适合单独发放的任务链零件
+VANILLA_EXCLUDE = {
+    "r_celestial_chart_0", "r_celestial_chart_1", "r_celestial_chart_2",
+    "r_celestial_chart_3", "r_celestial_chart_4",
+    "r_wormhole_key_fragment_1", "r_wormhole_key_fragment_2",
+    "r_wormhole_key_fragment_3", "r_wormhole_key_fragment_4", "r_wormhole_key",
+}
+
+
+def relic_keys(folder: Path, prefix: str) -> list[str]:
+    keys = []
+    for f in sorted(folder.glob("*.txt")):
+        text = re.sub(r"#[^\n]*", "", f.read_text(encoding="utf-8-sig", errors="replace"))
+        keys += re.findall(rf"^({prefix}[A-Za-z0-9_]+)\s*=\s*\{{", text, re.M)
+    return keys
+
+
+vanilla = [r for r in relic_keys(GAME / "common" / "relics", "r_") if r not in VANILLA_EXCLUDE]
+gpm = relic_keys(GPM / "common" / "relics", "gpm_r_")
+if not vanilla:
+    raise SystemExit(f"{GAME}/common/relics 里没有找到原版遗珍")
+if not gpm:
+    raise SystemExit(f"{GPM}/common/relics 里没有找到 GPM 遗珍（GPM 需要保持订阅，用来读清单）")
 HEAD = "# 由 tools/gen_relic_quest.py 生成，请勿手改\n"
 
+
+def nand(relics: list[str], indent: str) -> str:
+    return "\n".join(f"{indent}has_relic = {r}" for r in relics)
+
+
+def entries(relics: list[str], indent: str) -> str:
+    return "\n".join(f"""{indent}10 = {{
+{indent}\tmodifier = {{ factor = 0 has_relic = {r} }}
+{indent}\tadd_relic = {r}
+{indent}}}""" for r in relics)
+
+
 # ---------------------------------------------------------------- 触发器
-nand = "\n".join(f"\t\thas_relic = {r}" for r in relics)
 trig = f"""{HEAD}
-# 国家作用域：还有没拿到的 GPM 遗珍（{n} 个）
-atb_has_unclaimed_gpm_relic = {{
-\tNAND = {{
-{nand}
+# 国家作用域：当前遗珍池里还有没拿到的遗珍
+# 装了 GPM：GPM 遗珍（{len(gpm)} 个）；没装：原版遗珍（{len(vanilla)} 个）
+atb_has_unclaimed_quest_relic = {{
+\tif = {{
+\t\tlimit = {{ has_global_flag = {GPM_FLAG} }}
+\t\tNAND = {{
+{nand(gpm, chr(9) * 3)}
+\t\t}}
+\t}}
+\telse = {{
+\t\tNAND = {{
+{nand(vanilla, chr(9) * 3)}
+\t\t}}
 \t}}
 }}
 """
 
 # ---------------------------------------------------------------- 效果
-entries = "\n".join(f"""\t\t10 = {{
-\t\t\tmodifier = {{ factor = 0 has_relic = {r} }}
-\t\t\tadd_relic = {r}
-\t\t}}""" for r in relics)
 eff = f"""{HEAD}
-# 国家作用域：随机获得一个还没有的 GPM 遗珍
-atb_grant_gpm_relic = {{
-\trandom_list = {{
-{entries}
+# 国家作用域：从当前遗珍池里随机获得一个还没有的遗珍
+atb_grant_quest_relic = {{
+\tif = {{
+\t\tlimit = {{ has_global_flag = {GPM_FLAG} }}
+\t\trandom_list = {{
+{entries(gpm, chr(9) * 3)}
+\t\t}}
+\t}}
+\telse = {{
+\t\trandom_list = {{
+{entries(vanilla, chr(9) * 3)}
+\t\t}}
 \t}}
 }}
 """
 
 # ---------------------------------------------------------------- 决议
 dec = f"""{HEAD}
-# 探寻遗珍：玩家首都决议，花 {COST} 能量币随机获得一个还没有的 GPM 遗珍，直到 {n} 个全部获得。
-# 拿齐之后决议自动消失（条件写在 potential 里）。
+# 探寻遗珍：玩家首都决议，花 {COST} 能量币随机获得一个还没有的遗珍，直到当前遗珍池全部获得。
+# 遗珍池：装了 GPM 用 GPM 的 {len(gpm)} 个遗珍，没装用原版的 {len(vanilla)} 个。
+# 拿齐之后决议自动消失（条件写在 potential 里）。AI 帝国看不到。
 decision_atb_relic_quest = {{
 \towned_planets_only = yes
 \tsound = event_activating_unknown_technology
@@ -69,7 +116,7 @@ decision_atb_relic_quest = {{
 \t\tis_capital = yes
 \t\towner = {{
 \t\t\tis_ai = no
-\t\t\tatb_has_unclaimed_gpm_relic = yes
+\t\t\tatb_has_unclaimed_quest_relic = yes
 \t\t}}
 \t}}
 
@@ -77,7 +124,7 @@ decision_atb_relic_quest = {{
 \t\tcustom_tooltip = decision_atb_relic_quest_tt
 \t\thidden_effect = {{
 \t\t\towner = {{
-\t\t\t\tatb_grant_gpm_relic = yes
+\t\t\t\tatb_grant_quest_relic = yes
 \t\t\t}}
 \t\t}}
 \t}}
@@ -89,19 +136,17 @@ decision_atb_relic_quest = {{
 """
 
 # ---------------------------------------------------------------- 本地化（必须带 BOM）
-names_zh = "、".join(f"${r}$" for r in relics)
-names_en = ", ".join(f"${r}$" for r in relics)
 loc_zh = f"""l_simp_chinese:
  # 由 tools/gen_relic_quest.py 生成，请勿手改
  decision_atb_relic_quest:0 "探寻遗珍"
  decision_atb_relic_quest_desc:0 "银河各处散落着前人留下的奇物。只要舍得投入，我们的探险队终能把它们一件件带回来。"
- decision_atb_relic_quest_tt:0 "随机获得一件尚未拥有的§Y遗珍§!，直到 {n} 件全部获得：{names_zh}"
+ decision_atb_relic_quest_tt:0 "随机获得一件尚未拥有的§Y遗珍§!，直到全部获得。\\n装了 Guilli's Planet Modifiers 时从它的 {len(gpm)} 件遗珍中抽取，否则从原版的 {len(vanilla)} 件遗珍中抽取。"
 """
 loc_en = f"""l_english:
  # Generated by tools/gen_relic_quest.py - do not edit
  decision_atb_relic_quest:0 "Seek Relics"
  decision_atb_relic_quest_desc:0 "Wonders left behind by those who came before lie scattered across the galaxy. Given enough funding, our expeditions can bring them home one by one."
- decision_atb_relic_quest_tt:0 "Gain a random §YRelic§! not yet owned, until all {n} are owned: {names_en}"
+ decision_atb_relic_quest_tt:0 "Gain a random §YRelic§! not yet owned, until all are owned.\\nWith Guilli's Planet Modifiers enabled, draws from its {len(gpm)} relics; otherwise from the {len(vanilla)} vanilla relics."
 """
 
 out = {
@@ -118,4 +163,4 @@ for rel, text in out.items():
     if rel.endswith(".yml"):
         data = b"\xef\xbb\xbf" + data
     p.write_bytes(data)
-print(f"探寻遗珍：{n} 个遗珍，花费 {COST} 能量币，写出 {len(out)} 个文件")
+print(f"探寻遗珍：原版 {len(vanilla)} 个、GPM {len(gpm)} 个，花费 {COST} 能量币，写出 {len(out)} 个文件")

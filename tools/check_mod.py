@@ -46,15 +46,12 @@ def strip_noise(text: str, multiline: bool = False) -> str:
     return "\n".join(out)
 
 
-# 合并进来的上游文件（tools/merge_upstream.py 写的）：只做括号配对等结构检查，
-# 不套本 MOD 自己的格式标准——上游自带的本地化瑕疵（缺 BOM、重复键……）独立运行时也一样
-import json
-_manifest = MOD.parent / "tools" / "upstream_manifest.json"
-UPSTREAM = set(json.loads(_manifest.read_text(encoding="utf-8"))["files"]) if _manifest.exists() else set()
+# 3.0 起不再内置任何上游 MOD，MOD 里全部是本 MOD 自己的文件（含少量整文件覆盖的原版文件）
+UPSTREAM: set[str] = set()
 
 
 def is_upstream(p: Path) -> bool:
-    return p.relative_to(MOD).as_posix() in UPSTREAM
+    return False
 
 
 # ---------------------------------------------------------------- 1. 括号配对（含上游文件）
@@ -284,59 +281,41 @@ checks += [
      and "POP_ETHOS_DIVERGENCE_INTERVAL = 30" in d)(read(MOD / "common/defines/zz_atb_ex_performance_defines.txt"))),
 ]
 
-# ---------------------------------------------------------------- 2.8：三方整合（tools/merge_upstream.py）
-if UPSTREAM:
-    def exists(rel):
-        return (MOD / rel).exists()
-    relic_files = sorted((MOD / "common/relics").glob("gpm_relics*.txt"))
-    gpm_relics = set()
-    for p in relic_files:
-        gpm_relics |= set(re.findall(r"^(gpm_r_[A-Za-z0-9_]+)\s*=\s*\{", strip_noise(read(p), True), re.M))
-    quest = read(MOD / "common/scripted_effects/atb_relic_quest_effects.txt") if exists(
-        "common/scripted_effects/atb_relic_quest_effects.txt") else ""
-    gstart = read(MOD / "events/gpm_game_start.txt") if exists("events/gpm_game_start.txt") else ""
-    checks += [
-        ("上游清单里的文件都在盘上", all(exists(r) for r in UPSTREAM)),
-        ("GPM 保留 21 个遗珍、删掉 7 个空壳", len(gpm_relics) == 21 and not gpm_relics & {
-            "gpm_r_alien_eggs", "gpm_r_venerable_dreadnaught", "gpm_r_machine_world_core",
-            "gpm_r_self_repairing_obelisk", "gpm_r_time_displacer", "gpm_r_mysterious_shield_generator",
-            "gpm_r_soul_gem"}),
-        ("探寻遗珍覆盖全部 GPM 遗珍", gpm_relics and all(f"add_relic = {r}" in quest for r in gpm_relics)
-         and quest.count("add_relic =") == len(gpm_relics)
-         and "energy = 10000" in read(MOD / "common/decisions/atb_relic_quest_decisions.txt")),
-        ("GPM 遗珍战争/窃取/交易系统已删", not any(exists(r) for r in (
-            "common/war_goals/gpm_wargoals.txt", "common/casus_belli/gpm_casus_belli.txt",
-            "common/espionage_operation_types/gpm_operations.txt", "common/map_modes/gpm_map_modes.txt"))
-         and not list((MOD / "common").glob("tradable_actions/z_gpm_*"))
-         and "opinion_gpm_stolen_relic = {" not in read(MOD / "common/opinion_modifiers/gpm_opinions.txt")),
-        ("GPM 前驱者考古/内容事件已删", not any(exists(r) for r in (
-            "common/technology/gpm_discovery_techs.txt", "common/specimens/gpm_specimens.txt",
-            "events/gpm_survey_events.txt", "events/gpm_NOMADS_events.txt", "events/gpm_colony_events.txt",
-            "common/ambient_objects/gpm_ambient_objects.txt", "events/gpm_start_menu.txt"))),
-        ("GPM 引擎跳过设置菜单直接启动", "country_event = { id = gpm_engine.0 days = 1 }" in gstart
-         and "gpm_start_menu" not in strip_noise(gstart, True)
-         and "set_global_flag = gpm_mini_megas_disabled" in gstart
-         and "set_global_flag = gpm_modifiers_precursor_disabled" in gstart),
-        # 这个旗标会连金属环/冰环修正一起关掉（游戏存档实测发现）
-        ("GPM 行星环修正没有被关掉", "gpm_planetary_rings_disabled" not in strip_noise(gstart, True)),
-        # PD 的赛博特质覆盖缺原版 4.5.3 的火山气候适应，原版断开连接局势与同化事件会报错
-        ("PD 赛博特质补回原版火山气候适应", (lambda cy: re.search(
-            r"^trait_cyborg_climate_adjustment_volcanic\s*=\s*\{", cy, re.M) is not None
-            # 另外三个气候适应特质的互斥列表里各有一次（strip_noise 会去掉字符串，所以用原文数）
-            and cy.count('"trait_cyborg_climate_adjustment_volcanic"') == 3)(
-                read(MOD / "common/traits/10_species_traits_cyborg.txt")) if exists(
-                "common/traits/10_species_traits_cyborg.txt") else False),
-        ("PD 岗位与区域已删、行星类型保留", not list((MOD / "common").glob("pop_jobs/zzz_pd_*"))
-         and not list((MOD / "common").glob("zones/pd_*"))
-         and exists("common/planet_classes/pd_superhabitable_planet_classes.txt")
-         and exists("common/traits/02_species_traits_habitability_dry.txt") and exists("events/pd_engine.txt")),
-        ("PD 改原版事件的兼容垫片保留", exists("events/!vanilla_colony_events_fix.txt")
-         and exists("events/!vanilla_terraforming_events_fix.txt")),
-        ("盖亚播种者以 Stellar AI 为准", not exists("common/buildings/pd_buildings_overwrites.txt")
-         and exists("common/buildings/~stellarai_government_buildings.txt")),
-        ("Stellar AI 原样（性格表 56 个）", len(re.findall(r"^([a-z_]+)\s*=\s*\{",
-            strip_noise(read(MOD / "common/personalities/00_personalities.txt"), True), re.M)) == 56),
-    ]
+# ---------------------------------------------------------------- 3.0：AI 自动星球、去掉三方内置
+def exists(rel):
+    return (MOD / rel).exists()
+
+
+auto_eff = read(MOD / "common/scripted_effects/atb_ai_auto_effects.txt") if exists("common/scripted_effects/atb_ai_auto_effects.txt") else ""
+auto_bld = read(MOD / "common/buildings/atb_ai_auto_buildings.txt") if exists("common/buildings/atb_ai_auto_buildings.txt") else ""
+auto_ev = read(MOD / "events/atb_ai_auto_events.txt") if exists("events/atb_ai_auto_events.txt") else ""
+auto_oa = read(MOD / "common/on_actions/atb_ai_auto_on_actions.txt") if exists("common/on_actions/atb_ai_auto_on_actions.txt") else ""
+auto_var = read(MOD / "common/scripted_variables/atb_ai_auto_variables.txt") if exists("common/scripted_variables/atb_ai_auto_variables.txt") else ""
+quest = read(MOD / "common/scripted_effects/atb_relic_quest_effects.txt") if exists("common/scripted_effects/atb_relic_quest_effects.txt") else ""
+checks += [
+    ("PD / GPM / Stellar AI 已全部移出", not any(MOD.rglob("gpm_*")) and not any(MOD.rglob("pd_*"))
+     and not any(MOD.rglob("*stellarai*")) and not (MOD.parent / "tools/upstream_manifest.json").exists()),
+    ("自动星球 6 座建筑都定义了", all(f"{b} = {{" in auto_bld for b in (
+        "building_atb_ai_core", "building_atb_ai_foundry", "building_atb_ai_power",
+        "building_atb_ai_admin", "building_atb_ai_industry", "building_atb_ai_supply"))
+     and auto_bld.count("multiplier = planet.atb_ai_auto_jobs") >= 8),
+    ("自治中枢带护盾、FTL 抑制器、10 支防御陆军、海军容量", "planetary_ftl_inhibitor = yes" in auto_bld
+     and "planet_orbital_bombardment_damage = -0.5" in auto_bld and "planet_defense_armies_add = 10" in auto_bld
+     and "country_naval_cap_add = @atb_ai_auto_naval_cap" in auto_bld),
+    ("自动星球的转换、还原、增长、易手都接上了", all(x in auto_eff for x in (
+        "atb_ai_auto_convert = {", "atb_ai_auto_revert = {", "atb_ai_auto_grow = {", "atb_ai_auto_refresh = {"))
+     and all(f"atb_ai.{i}" in auto_oa for i in (1, 3, 4, 5, 10))
+     and all(f"on_{h} = {{" in auto_oa for h in ("game_start", "colonized", "colony_transfer", "yearly_pulse_country"))),
+    ("自动星球数值：普通 +3/年、列强 +6/年", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 6" in auto_var),
+    ("AI 外交权重 ×3", "diplo_weight_mult = 2" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")),
+    ("AI 殖民低宜居星球", (lambda d: "AI_MIN_HABITABILITY_TO_COLONIZE = 0.01" in d and "UNDERDEVELOPED_PLANET_LIMIT = 999" in d)(
+        read(MOD / "common/defines/atb_ex_defines.txt"))),
+    ("船坞产能翻倍", exists("common/starbase_modules/00_starbase_modules.txt")
+     and "starbase_shipyard_capacity_add = 1" in read(MOD / "common/starbase_modules/00_starbase_modules.txt")),
+    ("星系贸易中心：远征军帝国市场评分拉满", "value = 1000000" in auto_ev and "ongoing_market_nomination" in auto_ev),
+    ("探寻遗珍按是否装 GPM 分流", "has_global_flag = has_guillis_planet_modifiers_mod" in quest
+     and "add_relic = gpm_r_" in quest and "add_relic = r_" in quest),
+]
 for label, ok in checks:
     if not ok:
         problems.append(f"改动点未生效：{label}")

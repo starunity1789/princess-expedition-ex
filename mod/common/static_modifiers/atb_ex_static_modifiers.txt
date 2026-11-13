@@ -39,3 +39,8 @@ atb_ex_galaxy_rules = {
 	shipsize_ember_battleship_hull_add = 4800
 	shipsize_paladin_ship_hull_add = 1500
 }
+
+# 3.0：AI 外交权重 ×3（只挂给有自动星球的常规 AI 帝国）
+atb_ai_diplomacy = {
+	diplo_weight_mult = 2
+}
