@@ -8,6 +8,9 @@
   （其余权重不变；天选民改由本 MOD 的 atb_ex_spawn_chosen 固定在 8 点生成）
 - common/starbase_modules/00_starbase_modules.txt（3.0）：船坞模块的产能翻倍——每个船坞模块
   原本同时造 1 艘，加一条 starbase_shipyard_capacity_add = 1 变成 2 艘（对所有国家生效）
+- common/ai_budget/01_alloys_budget.txt（3.0.3）：AI 超出海军容量后造舰预算大幅降低——×0.75 → ×0.1；
+  「邻国成为天灾时 ×5」只在舰容 100% 以内生效（原版 150%）。AI 有了自动星球以后合金很多，原版规则下
+  会一直超容造舰，舰船数量翻倍拖慢游戏（系列 21 实测）
 """
 import sys
 from pathlib import Path
@@ -72,6 +75,30 @@ PATCHES = [
                   "\tstation_modifier = {\n"
                   "\t\tstarbase_shipyard_capacity_add = 1\n"
                   "\t}\n", 1)],
+    ),
+    dict(
+        path="common/ai_budget/01_alloys_budget.txt",
+        header=[
+            "皇女的远征军EX：覆盖原版 common/ai_budget/01_alloys_budget.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别只在 alloys_expenditure_ships：",
+            "超出海军容量后造舰预算 ×0.75 → ×0.1；「邻国成为天灾时 ×5」的门槛 150% → 100%。",
+            "群星更新后用新版原版重新生成。",
+        ],
+        replace=[
+            ("\t\t# spend less alloys on ships if over capacity\n"
+             "\t\tmodifier = {\n"
+             "\t\t\tfactor = 0.75\n"
+             "\t\t\tused_naval_capacity_percent >= 1.0\n",
+             "\t\t# spend less alloys on ships if over capacity\n"
+             "\t\t# 皇女的远征军EX：原版 0.75，超容后几乎照造；改成 0.1\n"
+             "\t\tmodifier = {\n"
+             "\t\t\tfactor = 0.1\n"
+             "\t\t\tused_naval_capacity_percent >= 1.0\n", 1),
+            ("\t\t\tfactor = 5\n"
+             "\t\t\tused_naval_capacity_percent < 1.5\n",
+             "\t\t\tfactor = 5\n"
+             "\t\t\tused_naval_capacity_percent < 1.0\t# 皇女的远征军EX：原版 1.5\n", 1),
+        ],
     ),
 ]
 

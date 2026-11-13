@@ -1624,8 +1624,9 @@ atbgp_btc_bonus = {
 }
 
 # 2.7：所有列强开局就有的国家修正。AI 造舰被海军容量卡住，光给资源只会囤在仓库里
+# 3.0.3：海军容量 +1000 → +500（自动星球让 AI 富起来后舰船太多，拖慢游戏）
 atbgp_power_base = {
-	country_naval_cap_add = 1000
+	country_naval_cap_add = 500
 	country_starbase_capacity_add = 10
 }
 

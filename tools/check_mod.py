@@ -187,8 +187,11 @@ checks = [
     ("多母星都走原版开局流程", init.count("generate_start_pops = yes") == 7),
     ("大君主与终端对齐协议加入星海共同体", init.count("set_country_flag = atbgp_gc_member") == 2
      and "has_country_flag = atbgp_gc_member" in rules and "can_be_part_of_galactic_community = {" in rules),
-    ("2.7：五个列强开局海军容量 +1000、恒星基地上限 +10", init.count("modifier = atbgp_power_base") == 5
-     and "country_naval_cap_add = 1000\n\tcountry_starbase_capacity_add = 10" in gpmod),
+    ("五个列强开局海军容量 +500（3.0.3）、恒星基地上限 +10", init.count("modifier = atbgp_power_base") == 5
+     and "country_naval_cap_add = 500\n\tcountry_starbase_capacity_add = 10" in gpmod),
+    ("3.0.3：AI 超容造舰预算 ×0.1、天灾邻国 ×5 只到 100%", (lambda b: "factor = 0.1\n\t\t\tused_naval_capacity_percent >= 1.0" in b
+     and "used_naval_capacity_percent < 1.0\t# 皇女的远征军EX：原版 1.5" in b)(
+        read(MOD / "common/ai_budget/01_alloys_budget.txt") if (MOD / "common/ai_budget/01_alloys_budget.txt").exists() else "")),
     ("2.7：10 颗开局母星人口增长翻倍 20 年", init.count("modifier = atbgp_growth_boost") == 10
      and "days = 7200" in init and "logistic_growth_mult = 1.0" in gpmod and "planet_pop_assembly_mult = 1.0" in gpmod),
     ("2.7：开局舰队带 10 级永生舰队司令", "class = commander" in eff and "skill = 10" in eff
