@@ -597,7 +597,7 @@ atbgp_home_2 = {
 				name = "atbgp_country_2"
 				adjective = "atbgp_country_2_adj"
 				authority = auth_corporate
-				civics = { civic = civic_private_prospectors civic = civic_corporate_crafters civic = civic_naval_contractors }
+				civics = { civic = civic_gospel_of_the_masses civic = civic_corporate_crafters civic = civic_naval_contractors }
 				ethos = { ethic = ethic_fanatic_militarist ethic = ethic_spiritualist }
 				species = event_target:atbgp_species_2
 				origin = "origin_default"

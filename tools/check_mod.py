@@ -151,8 +151,8 @@ checks = [
      "civic = civic_machine_ascensionists civic = civic_machine_replication civic = civic_machine_ota_updates" in init),
     ("白鹿母星系有 L 星门", init.count("type = lgate_base") == 2),
     ("远星政体 = 巨型企业", "authority = auth_corporate" in init),
-    ("远星国民 = 民营勘探者 + 巧手公司 + 舰队承包商",
-     "civic = civic_private_prospectors civic = civic_corporate_crafters civic = civic_naval_contractors" in init),
+    ("远星国民 = 群众福音 + 巧手公司 + 舰队承包商",
+     "civic = civic_gospel_of_the_masses civic = civic_corporate_crafters civic = civic_naval_contractors" in init),
     ("专属立绘元首永不下台", "id = atbgp.14" in ev and "on_ruler_set = {" in read(MOD / "common/on_actions/atbgp_on_actions.txt")),
     ("远星开局获得灵能档案", "add_relic = r_zro_crystal" in ev),
     ("远星思潮 = 极端军国 + 唯心", "ethic = ethic_fanatic_militarist ethic = ethic_spiritualist" in init),
@@ -346,7 +346,7 @@ vanilla = [
     ("ethic_fanatic_militarist", r"^ethic_fanatic_militarist\s*=\s*\{", "common/ethics/*.txt"),
     ("lgate_base", r"^lgate_base\s*=\s*\{", "common/megastructures/*.txt"),
     *[(c, rf"^{c}\s*=\s*\{{", "common/governments/civics/*.txt") for c in (
-        "civic_private_prospectors", "civic_corporate_crafters", "civic_naval_contractors")],
+        "civic_gospel_of_the_masses", "civic_corporate_crafters", "civic_naval_contractors")],
     *[(t, rf"^{t}\s*=\s*\{{", "common/technology/*.txt") for t in (
         "tech_habitat_1", "tech_habitat_2", "tech_habitat_3")],
     ("civic_machine_ota_updates", r"^civic_machine_ota_updates\s*=\s*\{", "common/governments/civics/*.txt"),

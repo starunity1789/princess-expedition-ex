@@ -230,11 +230,37 @@ atb_ai_auto_grow = {
 	}
 }
 
-# 国家作用域：AI 外交权重 ×3
+# 国家作用域：AI 外交权重 ×3；换掉让 AI 不殖民的两个理念
 atb_ai_auto_country_setup = {
 	if = {
 		limit = { NOT = { has_modifier = atb_ai_diplomacy } }
 		add_modifier = { modifier = atb_ai_diplomacy }
+	}
+	# 3.0.2：原版 desired_colonizers 对「民营勘探者」「企业统治」恒为 0，AI 只能靠贸易值造赞助殖民船，
+	# 而这条路 AI 实际不走（远星同盟整局只有母星；系列 7 另一个民营勘探者 AI 到 2295 年只有 2 颗星）。
+	# 只对 AI 换：远星同盟换成群众福音（它唯心），其它巨企换成自由贸易者，寡头的企业统治换成采矿行会。
+	if = {
+		limit = { has_civic = civic_private_prospectors }
+		force_remove_civic = civic_private_prospectors
+		if = {
+			limit = {
+				has_country_flag = atbgp_power_2
+				NOT = { has_civic = civic_gospel_of_the_masses }
+			}
+			force_add_civic = civic_gospel_of_the_masses
+		}
+		else_if = {
+			limit = { NOT = { has_civic = civic_free_traders } }
+			force_add_civic = civic_free_traders
+		}
+	}
+	if = {
+		limit = { has_civic = civic_corporate_dominion }
+		force_remove_civic = civic_corporate_dominion
+		if = {
+			limit = { NOT = { has_civic = civic_mining_guilds } }
+			force_add_civic = civic_mining_guilds
+		}
 	}
 }
 

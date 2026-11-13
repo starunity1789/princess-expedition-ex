@@ -100,7 +100,9 @@ EMPIRES = [
         # 2.8：极端军国 + 唯心主义（要走灵能飞升）。2.4-2.7 是极端排外 + 唯心。
         ethics=["ethic_fanatic_militarist", "ethic_spiritualist"],
         # 2.8：民营勘探者 + 巧手公司 + 舰队承包商（三个都只要求 auth_corporate，没有伦理限制）
-        civics=["civic_private_prospectors", "civic_corporate_crafters", "civic_naval_contractors"],
+        # 3.0.2：民营勘探者 → 群众福音（要求唯心，远星本来就唯心）。原版 desired_colonizers 对民营勘探者
+        #        恒为 0，AI 只能靠贸易值造「赞助殖民船」，而这条路 AI 实际不走——远星整局只有母星一颗星
+        civics=["civic_gospel_of_the_masses", "civic_corporate_crafters", "civic_naval_contractors"],
         extra_income=dict(alloys=33, research=33, influence=2, sr_dark_matter=20, nanites=1, sr_zro=2),
         # 2.5：开局获得遗珍「灵能档案」
         start_relics=["r_zro_crystal"],
