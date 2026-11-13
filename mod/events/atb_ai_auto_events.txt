@@ -100,6 +100,9 @@ country_event = {
 		every_owned_planet = {
 			limit = { atb_is_ai_auto_planet = yes }
 			atb_ai_auto_grow = yes
+			# 自愈：重挂人口冻结修正、人口拉回 1000（也修好 3.0 首版存档里没挂上修正的星球）
+			atb_ai_auto_freeze_pops = yes
+			atb_ai_auto_set_pops = { SIZE = @atb_ai_auto_pops }
 		}
 	}
 }

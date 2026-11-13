@@ -36,25 +36,27 @@ atb_ai_auto_reset_districts = {
 	if = {
 		limit = { uses_district_set = habitat }
 		remove_all_districts = yes
-		add_district = district_hab_housing
+		if = { limit = { free_district_slots > 0 } add_district = district_hab_housing }
 	}
 	else_if = {
 		limit = { uses_district_set = ring_world }
 		remove_all_districts = yes
 		if = {
 			limit = { owner = { is_hive_empire = yes } }
-			add_district = district_rw_hive
+			if = { limit = { free_district_slots > 0 } add_district = district_rw_hive }
 		}
 		else_if = {
 			limit = { owner = { is_machine_empire = yes } }
-			add_district = district_rw_nexus
+			if = { limit = { free_district_slots > 0 } add_district = district_rw_nexus }
 		}
-		else = { add_district = district_rw_city }
+		else = {
+			if = { limit = { free_district_slots > 0 } add_district = district_rw_city }
+		}
 	}
 	else_if = {
 		limit = { uses_district_set = city_world }
 		remove_all_districts = yes
-		add_district = district_arcology_housing
+		if = { limit = { free_district_slots > 0 } add_district = district_arcology_housing }
 	}
 	else_if = {
 		limit = {
@@ -69,13 +71,15 @@ atb_ai_auto_reset_districts = {
 		remove_all_districts = yes
 		if = {
 			limit = { owner = { is_hive_empire = yes } }
-			add_district = district_hive
+			if = { limit = { free_district_slots > 0 } add_district = district_hive }
 		}
 		else_if = {
 			limit = { owner = { is_machine_empire = yes } }
-			add_district = district_nexus
+			if = { limit = { free_district_slots > 0 } add_district = district_nexus }
 		}
-		else = { add_district = district_city }
+		else = {
+			if = { limit = { free_district_slots > 0 } add_district = district_city }
+		}
 	}
 }
 
@@ -131,19 +135,20 @@ atb_ai_auto_build = {
 	}
 }
 
-# 星球作用域：人口冻结（自然增长、组装都停），原版换主人时会清掉 planet_population_control，所以每次易手都重挂
+# 星球作用域：人口冻结（自然增长、组装都停），原版换主人时会清掉 planet_population_control，所以每次易手都重挂；
+# 必须写 days = -1（同原版决议），不写的话修正挂不上（3.0 首个存档实测：57 颗只挂上 1 颗）
 atb_ai_auto_freeze_pops = {
 	if = {
 		limit = { NOT = { has_modifier = planet_population_control } }
-		add_modifier = { modifier = planet_population_control }
+		add_modifier = { modifier = planet_population_control days = -1 }
 	}
 	if = {
 		limit = { NOT = { has_modifier = planet_population_control_gestalt } }
-		add_modifier = { modifier = planet_population_control_gestalt }
+		add_modifier = { modifier = planet_population_control_gestalt days = -1 }
 	}
 	if = {
 		limit = { NOT = { has_modifier = planet_robot_assembly_control } }
-		add_modifier = { modifier = planet_robot_assembly_control }
+		add_modifier = { modifier = planet_robot_assembly_control days = -1 }
 	}
 }
 
