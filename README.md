@@ -128,6 +128,8 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 **其它（3.0 起）**
 - 不再内置 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI（2.8～2.9 内置过），要用就自己订阅启用
 - 所有船坞模块产能翻倍：每个船坞同时造 2 艘船（覆盖原版 `00_starbase_modules.txt`）
+- 帝国能造的 X 槽位武器伤害 ×2、射程 ×1.33（3.2 起；整文件覆盖原版 `weapon_components.csv` 与 `mutation_weapon_components.csv`，由 `tools/gen_x_weapons.py` 生成。Real Space - Ships in Scaling 也带这两份 CSV，同时启用时只有一份生效）
+- 战列舰舰体值再 ×2（3.2 起，银河规则）
 - 启用 Real Space - Ships in Scaling 时，所有国家亚光速 ×12（3.1 起；抵消它把亚光速降到原版 1/6，停用它就自动去掉）
 - AI 超出海军容量后造舰预算大幅降低（原版 ×0.75 → ×0.1，「邻国成为天灾时 ×5」只到舰容 100%）；列强开局海军容量 +300（3.1 起；3.0.3 为 +500，更早为 +1000）
 - 银河市场提名期间，远征军帝国提名了自己的星球就把市场评分拉到 100 万，实际上必定拿到星系贸易中心
@@ -221,6 +223,9 @@ python tools/make_flags.py art/great_power_flags mod
 
 # 把原版所有能量盾和装甲的数值翻倍（倍率可选，默认 2）
 python tools/gen_double_defenses.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
+
+# 重新生成 X 槽位武器加强（伤害 ×2、射程 ×1.33）的两份 CSV 覆盖
+python tools/gen_x_weapons.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
 # 重新生成巨型船坞（50 个船坞）、关掉原版天选民随机生成、船坞产能翻倍这三份覆盖文件
 python tools/gen_vanilla_patches.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod

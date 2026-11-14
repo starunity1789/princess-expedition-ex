@@ -11,6 +11,8 @@ atb_ex_galaxy_rules = {
 	shipsize_destroyer_hull_add = 650
 	shipsize_cruiser_hull_add = 1400
 	shipsize_battleship_hull_add = 4800
+	# 3.2：战列舰舰体值再翻倍（在上面的 +4800 基础上整体 ×2）
+	shipsize_battleship_hull_mult = 1.0
 	shipsize_atb_dreadnought_hull_add = 6000
 	shipsize_titan_hull_add = 20000
 	shipsize_colossus_hull_add = 30000
