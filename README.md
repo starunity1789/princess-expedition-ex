@@ -41,7 +41,7 @@ The characters - their personalities, looks and every detail - were designed by 
 
 **New in EX**
 - **Rim cluster**: at game start the expedition moves to 7 systems beyond the galaxy rim at 12 o'clock (Origin's Reach, the L-Gate at Starsea Firefly, a pre-FTL world at Formless Link, a black hole, a neutron star, a pulsar, and the Relic World of the Great Inheritor), linked to the galaxy by a single hyperlane. Origin's Reach itself holds a second L-Gate and a Ruined Mega Shipyard, and the capital gains the High Elemental Sealing Institute (+1,000,000 storage, +2 minor artifacts per month)
-- **Five guaranteed great powers**, each beyond the rim with a fixed empire flag and a fixed monthly supply; all start with +500 naval capacity, +10 starbase capacity, a level-10 immortal admiral, doubled pop growth on their homeworlds for 20 years, and 10 extra agriculture, generator and mining districts each on every non-machine homeworld:
+- **Five guaranteed great powers**, each beyond the rim with a fixed empire flag and a fixed monthly supply; all start with +300 naval capacity, +10 starbase capacity, a level-10 immortal admiral, doubled pop growth on their homeworlds for 20 years, and 10 extra agriculture, generator and mining districts each on every non-machine homeworld:
   - Burning White Stag Legion (10:30): Ascensionists, Rapid Replicators, OTA Updates; an L-Gate in the home system
   - Far Star Alliance (5 o'clock): MegaCorp, Fanatic Militarist + Spiritualist; Gospel of the Masses, Corporate Crafters, Naval Contractors; Psionic Ascension; starts with the Psionic Archive relic; an L-Gate in the home system
   - Grand Suzerain Allied Fief (3 o'clock): Fanatic Purifiers, Feudal Realm, Distinguished Admiralty; +12% research speed; its six tomb worlds carry a +55% habitability floor; Genetic Ascension (Purity); AI full rights; always takes Cosmogenesis; joins the Galactic Community
@@ -108,7 +108,7 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **EX 新增**
 - **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
-- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +500、恒星基地上限 +10，初始 30 艘护卫舰一支舰队、带一位 10 级永生舰队司令，母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
+- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +300、恒星基地上限 +10，初始 30 艘护卫舰一支舰队、带一位 10 级永生舰队司令，母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
   - 燃烧白鹿军团（10 点半）：升格假设、快速复制者、空中下载升级；母星系一座 L 星门
   - 远星同盟组织（5 点）：巨型企业，极端军国 + 唯心；群众福音、巧手公司、舰队承包商；灵能飞升；开局获得遗珍「灵能档案」；母星系一座 L 星门
   - 大君主同盟领地（3 点）：种族洁癖、封建社会、卓越海军；研究速度 +12%；星团里 6 颗死寂星球的宜居度下限 +55%；基因飞升（纯净）；人工智能公民权；必选宇宙创生；加入星海共同体
@@ -119,8 +119,8 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **AI 自动星球（3.0 起）**——常规 AI 帝国（含保底列强）只有「自动星球」，玩家不受影响：
 - 开局把 AI 的母星转成自动星球；AI 殖民成功、打下来的星球也都转。每颗自动星球只留一级城市区划、固定 1000 人口（人口冻结，永不失业），政府分区里放 6 座自动建筑（自治中枢、铸造厂、电网、政务院、工坊、补给站）
-- 产能 A 以「虚拟岗位数」计：母星与打下来的星球取「人口 ÷ 100」，新殖民地从 10 起；每年 +3，单星上限 300。保底列强从 20 起、每年 +6、上限 500。1 点 A 相当于一个原版岗位：科研 30%、合金 15%、能量 15%、团结 10%、消费品 10%、矿物 5%、食物 5%，另有少量贸易与战略资源；产出挂在原版岗位类别下，AI 的科技与传统加成照常生效。数值在 `common/scripted_variables/atb_ai_auto_variables.txt`
-- 每颗自动星球自带行星护盾、FTL 抑制器、10 支防御陆军，每点 A 给海军容量 +0.25
+- 产能 A 以「虚拟岗位数」计：母星与打下来的星球取「人口 ÷ 100」，新殖民地从 10 起；每年 +3，单星上限 300。保底列强从 20 起、每年 +6、上限 500。3.0 的基准是 1 点 A 相当于一个原版岗位：科研 30%、合金 15%、能量 15%、团结 10%、消费品 10%、矿物 5%、食物 5%，另有少量贸易与战略资源；3.1 起全部产出 ×1.3，合金再 ×0.9、科研再 ×1.15。产出挂在原版岗位类别下，AI 的科技与传统加成照常生效。数值在 `common/scripted_variables/atb_ai_auto_variables.txt`
+- 每颗自动星球自带行星护盾、FTL 抑制器、10 支防御陆军，每点 A 给海军容量 +0.1（3.0 为 +0.25）
 - 玩家拿到自动星球（打下来、整合附庸、割让、联邦统一）时还原成新殖民地：建筑全拆、区划只留一级、人口删到 100。AI 之间易手时产能保留
 - AI 外交权重 ×3；AI 大幅提高殖民低宜居星球的意愿
 - 写法借鉴《星球大战：夸特的黎明》的自动星球（产出 = 建筑系数 × 星球变量），但不改星球类型、不用专用区划集
@@ -128,7 +128,8 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 **其它（3.0 起）**
 - 不再内置 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI（2.8～2.9 内置过），要用就自己订阅启用
 - 所有船坞模块产能翻倍：每个船坞同时造 2 艘船（覆盖原版 `00_starbase_modules.txt`）
-- AI 超出海军容量后造舰预算大幅降低（原版 ×0.75 → ×0.1，「邻国成为天灾时 ×5」只到舰容 100%）；列强开局海军容量 +500（3.0.3 起，原来 +1000）
+- 启用 Real Space - Ships in Scaling 时，所有国家亚光速 ×12（3.1 起；抵消它把亚光速降到原版 1/6，停用它就自动去掉）
+- AI 超出海军容量后造舰预算大幅降低（原版 ×0.75 → ×0.1，「邻国成为天灾时 ×5」只到舰容 100%）；列强开局海军容量 +300（3.1 起；3.0.3 为 +500，更早为 +1000）
 - 银河市场提名期间，远征军帝国提名了自己的星球就把市场评分拉到 100 万，实际上必定拿到星系贸易中心
 - 玩家首都决议 **「探寻遗珍」**：花 10000 能量币随机获得一件尚未拥有的遗珍，直到全部获得。装了 Guilli's Planet Modifiers 时从它的 28 件遗珍里抽，没装就从原版 58 件遗珍里抽
 

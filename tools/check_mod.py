@@ -187,8 +187,8 @@ checks = [
     ("多母星都走原版开局流程", init.count("generate_start_pops = yes") == 7),
     ("大君主与终端对齐协议加入星海共同体", init.count("set_country_flag = atbgp_gc_member") == 2
      and "has_country_flag = atbgp_gc_member" in rules and "can_be_part_of_galactic_community = {" in rules),
-    ("五个列强开局海军容量 +500（3.0.3）、恒星基地上限 +10", init.count("modifier = atbgp_power_base") == 5
-     and "country_naval_cap_add = 500\n\tcountry_starbase_capacity_add = 10" in gpmod),
+    ("五个列强开局海军容量 +300（3.1）、恒星基地上限 +10", init.count("modifier = atbgp_power_base") == 5
+     and "country_naval_cap_add = 300\n\tcountry_starbase_capacity_add = 10" in gpmod),
     ("3.0.3：AI 超容造舰预算 ×0.1、天灾邻国 ×5 只到 100%", (lambda b: "factor = 0.1\n\t\t\tused_naval_capacity_percent >= 1.0" in b
      and "used_naval_capacity_percent < 1.0\t# 皇女的远征军EX：原版 1.5" in b)(
         read(MOD / "common/ai_budget/01_alloys_budget.txt") if (MOD / "common/ai_budget/01_alloys_budget.txt").exists() else "")),
@@ -310,6 +310,12 @@ checks += [
      and all(f"atb_ai.{i}" in auto_oa for i in (1, 3, 4, 5, 10))
      and all(f"on_{h} = {{" in auto_oa for h in ("game_start", "colonized", "colony_transfer", "yearly_pulse_country"))),
     ("自动星球数值：普通 +3/年、列强 +6/年", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 6" in auto_var),
+    ("3.1：自动星球产出系数（×1.3，合金 ×0.9、科研 ×1.15）与海军容量 0.1", "@atb_ai_auto_out_research = 0.4485" in auto_var
+     and "@atb_ai_auto_out_alloys = 0.5265" in auto_var and "@atb_ai_auto_out_energy = 1.17" in auto_var
+     and "@atb_ai_auto_naval_cap = 0.1" in auto_var and auto_bld.count("@atb_ai_auto_out_") >= 17),
+    ("3.1：启用 Ships in Scaling 时亚光速 ×12", "ship_speed_mult = 11" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")
+     and "has_global_flag = has_shipsinscaling" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "id = atb_ex.5" in read(MOD / "events/atb_ex_events.txt")),
     ("AI 外交权重 ×3", "diplo_weight_mult = 2" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")),
     ("AI 殖民低宜居星球", (lambda d: "AI_MIN_HABITABILITY_TO_COLONIZE = 0.01" in d and "UNDERDEVELOPED_PLANET_LIMIT = 999" in d)(
         read(MOD / "common/defines/atb_ex_defines.txt"))),

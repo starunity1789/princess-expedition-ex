@@ -40,6 +40,11 @@ atb_ex_galaxy_rules = {
 	shipsize_paladin_ship_hull_add = 1500
 }
 
+# 3.1：亚光速 ×12（只在启用 Real Space - Ships in Scaling 时挂给所有国家）
+atb_ex_sublight_rs = {
+	ship_speed_mult = 11
+}
+
 # 3.0：AI 外交权重 ×3（只挂给有自动星球的常规 AI 帝国）
 atb_ai_diplomacy = {
 	diplo_weight_mult = 2

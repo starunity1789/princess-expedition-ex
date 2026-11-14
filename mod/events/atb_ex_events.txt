@@ -9,6 +9,8 @@ event = {
 	immediate = {
 		atb_ex_apply_galaxy_rules = yes
 		atb_ex_grant_habitat_techs = yes
+		# 3.1：第二天再补一次银河规则——Ships in Scaling 的开局旗标可能排在本事件之后才设
+		random_country = { country_event = { id = atb_ex.5 days = 1 } }
 
 		# 远征军整体搬到银河边缘外的星团（首都是起源要塞的国家，每个银河最多一个）
 		random_playable_country = {
@@ -87,5 +89,16 @@ country_event = {
 	immediate = {
 		atb_ex_give_galaxy_rules = yes
 		atb_ex_give_habitat_techs = yes
+	}
+}
+
+# 3.1：开局第二天补一次银河规则（国家作用域触发，效果作用于全体国家）
+country_event = {
+	id = atb_ex.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		atb_ex_apply_galaxy_rules = yes
 	}
 }

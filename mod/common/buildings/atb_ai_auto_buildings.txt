@@ -1,5 +1,6 @@
 # 皇女的远征军EX 3.0：AI 自动星球的 6 座建筑（都放在城市区划的政府分区里，正好 6 个格）
-# 产出 = 系数 × 星球变量 atb_ai_auto_jobs（A，虚拟岗位数），1 点 A 相当于一个原版岗位，按份额折算：
+# 产出 = 系数 × 星球变量 atb_ai_auto_jobs（A，虚拟岗位数）。系数见 common/scripted_variables/atb_ai_auto_variables.txt。
+# 3.0 起的基准：1 点 A 相当于一个原版岗位，按份额折算：
 #   科研 30%（研究员 3/岗）  合金 15%（冶金工 3/岗）  能量 15%（技术员 6/岗）
 #   团结 10%（官僚 3/岗）    消费品 10%（工匠 6/岗）  矿物 5%（矿工 4/岗）  食物 5%（农民 6/岗）
 #   另有少量贸易与战略资源；不用消费品的帝国（格式塔）把那 10% 改成合金与科研
@@ -74,16 +75,16 @@ building_atb_ai_core = {
 	resources = {
 		category = planet_researchers
 		produces = {
-			physics_research = 0.3
-			society_research = 0.3
-			engineering_research = 0.3
+			physics_research = @atb_ai_auto_out_research
+			society_research = @atb_ai_auto_out_research
+			engineering_research = @atb_ai_auto_out_research
 			multiplier = planet.atb_ai_auto_jobs
 		}
 		produces = {
 			trigger = { owner? = { country_uses_consumer_goods = no } }
-			physics_research = 0.05
-			society_research = 0.05
-			engineering_research = 0.05
+			physics_research = @atb_ai_auto_out_research_gestalt
+			society_research = @atb_ai_auto_out_research_gestalt
+			engineering_research = @atb_ai_auto_out_research_gestalt
 			multiplier = planet.atb_ai_auto_jobs
 		}
 	}
@@ -117,12 +118,12 @@ building_atb_ai_foundry = {
 	resources = {
 		category = planet_metallurgists
 		produces = {
-			alloys = 0.45
+			alloys = @atb_ai_auto_out_alloys
 			multiplier = planet.atb_ai_auto_jobs
 		}
 		produces = {
 			trigger = { owner? = { country_uses_consumer_goods = no } }
-			alloys = 0.15
+			alloys = @atb_ai_auto_out_alloys_gestalt
 			multiplier = planet.atb_ai_auto_jobs
 		}
 	}
@@ -156,7 +157,7 @@ building_atb_ai_power = {
 	resources = {
 		category = planet_technician
 		produces = {
-			energy = 0.9
+			energy = @atb_ai_auto_out_energy
 			multiplier = planet.atb_ai_auto_jobs
 		}
 	}
@@ -190,7 +191,7 @@ building_atb_ai_admin = {
 	resources = {
 		category = planet_bureaucrats
 		produces = {
-			unity = 0.3
+			unity = @atb_ai_auto_out_unity
 			multiplier = planet.atb_ai_auto_jobs
 		}
 	}
@@ -225,7 +226,7 @@ building_atb_ai_industry = {
 		category = planet_artisans
 		produces = {
 			trigger = { owner? = { country_uses_consumer_goods = yes } }
-			consumer_goods = 0.6
+			consumer_goods = @atb_ai_auto_out_consumer_goods
 			multiplier = planet.atb_ai_auto_jobs
 		}
 	}
@@ -259,16 +260,16 @@ building_atb_ai_supply = {
 	resources = {
 		category = planet_miners
 		produces = {
-			minerals = 0.2
-			trade = 0.1
-			rare_crystals = 0.01
-			exotic_gases = 0.01
-			volatile_motes = 0.01
+			minerals = @atb_ai_auto_out_minerals
+			trade = @atb_ai_auto_out_trade
+			rare_crystals = @atb_ai_auto_out_strategic
+			exotic_gases = @atb_ai_auto_out_strategic
+			volatile_motes = @atb_ai_auto_out_strategic
 			multiplier = planet.atb_ai_auto_jobs
 		}
 		produces = {
 			trigger = { owner? = { country_uses_food = yes } }
-			food = 0.3
+			food = @atb_ai_auto_out_food
 			multiplier = planet.atb_ai_auto_jobs
 		}
 	}
