@@ -50,5 +50,5 @@
  mod_job_atb_ai_auto_drone_per_pop:0 "$job_atb_ai_auto_drone$岗位（每个人口）"
  atb_ai_diplomacy:0 "银河强权"
  atb_ai_diplomacy_desc:0 "这个帝国在银河外交舞台上的分量远超它的人口规模。"
- atb_ex_sublight_rs:0 "真实尺度航行"
- atb_ex_sublight_rs_desc:0 "启用 Real Space - Ships in Scaling 时，所有舰船的亚光速 ×12。"
+ atb_ex_sublight_rs:0 "银河航速规则"
+ atb_ex_sublight_rs_desc:0 "所有舰船的亚光速 ×1.2。"

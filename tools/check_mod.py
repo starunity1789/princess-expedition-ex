@@ -319,8 +319,9 @@ checks += [
      and "MASS_ACCELERATOR_1;250.00;-200.00;1400.00;4000.00" in read(MOD / "common/component_templates/weapon_components.csv")
      and ";199.50;" in read(MOD / "common/component_templates/weapon_components.csv")),
     ("3.2：战列舰舰体值 ×2", "shipsize_battleship_hull_mult = 1.0" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")),
-    ("3.1：启用 Ships in Scaling 时亚光速 ×12", "ship_speed_mult = 11" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")
-     and "has_global_flag = has_shipsinscaling" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+    ("3.3：所有国家亚光速 ×1.2（不看其它 MOD）", "ship_speed_mult = 0.2" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")
+     and "has_shipsinscaling" not in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "modifier = atb_ex_sublight_rs" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
      and "id = atb_ex.5" in read(MOD / "events/atb_ex_events.txt")),
     ("AI 外交权重 ×3", "diplo_weight_mult = 2" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")),
     ("AI 殖民低宜居星球", (lambda d: "AI_MIN_HABITABILITY_TO_COLONIZE = 0.01" in d and "UNDERDEVELOPED_PLANET_LIMIT = 999" in d)(

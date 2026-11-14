@@ -50,5 +50,5 @@
  mod_job_atb_ai_auto_drone_per_pop:0 "$job_atb_ai_auto_drone$ Jobs (per pop)"
  atb_ai_diplomacy:0 "Galactic Power"
  atb_ai_diplomacy_desc:0 "This empire carries far more weight on the galactic stage than its population would suggest."
- atb_ex_sublight_rs:0 "Real-Scale Navigation"
- atb_ex_sublight_rs_desc:0 "With Real Space - Ships in Scaling enabled, every ship's sublight speed is multiplied by 12."
+ atb_ex_sublight_rs:0 "Galactic Speed Rule"
+ atb_ex_sublight_rs_desc:0 "Every ship's sublight speed is multiplied by 1.2."
