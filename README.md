@@ -119,10 +119,12 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **AI 自动星球（3.0 起）**——常规 AI 帝国（含保底列强）只有「自动星球」，玩家不受影响：
 - 开局把 AI 的母星转成自动星球；AI 殖民成功、打下来的星球也都转。每颗自动星球只留一级城市区划、固定 1000 人口（人口冻结，永不失业），政府分区里放 6 座自动建筑（自治中枢、铸造厂、电网、政务院、工坊、补给站）
-- 产能 A 以「虚拟岗位数」计：母星与打下来的星球取「人口 ÷ 100」，新殖民地从 10 起；每年 +3，单星上限 300。保底列强从 20 起、每年 +6、上限 500。3.0 的基准是 1 点 A 相当于一个原版岗位：科研 30%、合金 15%、能量 15%、团结 10%、消费品 10%、矿物 5%、食物 5%，另有少量贸易与战略资源；3.1 起全部产出 ×1.3，合金再 ×0.9、科研再 ×1.15。产出挂在原版岗位类别下，AI 的科技与传统加成照常生效。数值在 `common/scripted_variables/atb_ai_auto_variables.txt`
+- 产能 A 以「虚拟岗位数」计：母星与打下来的星球取「人口 ÷ 100」，新殖民地从 10 起；每年 +3，单星上限 300。保底列强从 20 起、每年 +6、上限 500。3.0 的基准是 1 点 A 相当于一个原版岗位：科研 30%、合金 15%、能量 15%、团结 10%、消费品 10%、矿物 5%、食物 5%，另有少量贸易与战略资源；3.1 起全部产出 ×1.3；合金几经下调，相对 3.0 累计 ×0.737，科研累计 ×1.944（3.4：合金 ×0.7、科研 ×1.3）。产出挂在原版岗位类别下，AI 的科技与传统加成照常生效。数值在 `common/scripted_variables/atb_ai_auto_variables.txt`
 - 每颗自动星球自带行星护盾、FTL 抑制器、10 支防御陆军，每点 A 给海军容量 +0.1（3.0 为 +0.25）
 - 玩家拿到自动星球（打下来、整合附庸、割让、联邦统一）时还原成新殖民地：建筑全拆、区划只留一级、人口删到 100。AI 之间易手时产能保留
-- AI 外交权重 ×3；AI 大幅提高殖民低宜居星球的意愿
+- 每年自检：自治中枢被别的首府建筑顶掉时重建；星球变成宇宙创生世界等放不下自动建筑的特殊星球时，放回普通 AI 星球（3.4）
+- AI 外交权重 ×3；AI 更愿意殖民（宜居度门槛 3.0～3.3 曾降到 1%，3.4 退回原版 35%）
+- AI 宣战基础概率 ×4（3.4 起；3.0～3.3 的 AI 一个世纪几乎不打仗）
 - 写法借鉴《星球大战：夸特的黎明》的自动星球（产出 = 建筑系数 × 星球变量），但不改星球类型、不用专用区划集
 
 **其它（3.0 起）**
@@ -259,7 +261,7 @@ python tools/check_mod.py
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 - `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
 - `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`、`common/starbase_modules/00_starbase_modules.txt`、`common/ai_budget/01_alloys_budget.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成、船坞产能翻倍、AI 超容造舰预算 ×0.1，跑 `gen_vanilla_patches.py` 重做即可）
-- `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时与 AI 殖民的四项，原版改了数值时对照调整）
+- `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时、AI 宣战基础概率与 AI 殖民的三项，原版改了数值时对照调整）
 - `common/game_rules/atb_rules.txt` 里的 `can_be_part_of_galactic_community`、`can_dismiss_leader`（原版同名规则的副本）
 - `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）
 - `zz_atb_ex_ai_limits.txt`（megastructures / ascension_perks / game_rules 三处）：原版 `habitat_central_complex`、`gateway_0`、`hyper_relay`、`ap_xeno_compatibility`、`can_modify_species` 与 Real Space 的 `ring_world_1` 的副本，跑 `gen_ai_limits.py` 重做即可

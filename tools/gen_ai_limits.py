@@ -210,10 +210,15 @@ write("events/atb_ex_ai_limits_events.txt", HEADER + f"""
 namespace = atb_ex_lim
 
 # 开工：root = 国家，from = 星系。给本国在这个星系里新出现、还没记过的工地计数
+# 3.4：原版偶尔传一个空星系（id 4294967295），先判断存在；这种情况在完工（atb_ex_lim.2）时补记
 country_event = {{
 	id = atb_ex_lim.1
 	hide_window = yes
 	is_triggered_only = yes
+
+	trigger = {{
+		exists = from
+	}}
 
 	immediate = {{
 		from = {{

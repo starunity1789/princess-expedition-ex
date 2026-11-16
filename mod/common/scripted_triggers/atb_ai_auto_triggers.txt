@@ -25,4 +25,20 @@ atb_ai_auto_convertible = {
 	owner = { atb_ai_auto_country = yes }
 	NOT = { has_carrier_flag = atb_ai_auto }
 	pop_amount >= 100
+	atb_ai_auto_supported_planet = yes
+}
+
+# 星球作用域：自动星球能放建筑的区划集（3.4）。宇宙创生世界、游牧等特殊区划集没有对应的城市区划，
+# 6 座自动建筑放不进去，这类星球不转（已经转了的每年自检时放回普通星球）
+atb_ai_auto_supported_planet = {
+	OR = {
+		uses_district_set = standard
+		uses_district_set = habitat
+		uses_district_set = ring_world
+		uses_district_set = city_world
+		uses_district_set = hive_world
+		uses_district_set = machine_world
+		uses_district_set = shattered_ring_world
+		uses_district_set = volcanic_world
+	}
 }

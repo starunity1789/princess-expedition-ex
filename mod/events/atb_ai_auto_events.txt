@@ -99,10 +99,14 @@ country_event = {
 		atb_ai_auto_convert_all = yes
 		every_owned_planet = {
 			limit = { atb_is_ai_auto_planet = yes }
-			atb_ai_auto_grow = yes
-			# 自愈：重挂人口冻结修正、人口拉回 1000（也修好 3.0 首版存档里没挂上修正的星球）
-			atb_ai_auto_freeze_pops = yes
-			atb_ai_auto_set_pops = { SIZE = @atb_ai_auto_pops }
+			# 自愈：重挂人口冻结修正、缺自治中枢时重建（3.4）、区划集不支持时放回普通星球（3.4）
+			atb_ai_auto_refresh = yes
+			if = {
+				limit = { atb_is_ai_auto_planet = yes }
+				atb_ai_auto_grow = yes
+				# 人口拉回 1000（也修好 3.0 首版存档里没挂上修正的星球）
+				atb_ai_auto_set_pops = { SIZE = @atb_ai_auto_pops }
+			}
 		}
 	}
 }

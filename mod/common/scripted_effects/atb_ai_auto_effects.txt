@@ -179,15 +179,33 @@ atb_ai_auto_convert = {
 	atb_ai_auto_freeze_pops = yes
 }
 
-# 星球作用域：AI 之间易手（产能保留）后补回被原版清掉的修正，缺建筑时重建
+# 星球作用域：AI 之间易手（产能保留）后、以及每年自检时，补回被原版清掉的修正，缺自治中枢时重建
+# 3.4：每年自检也走这里——机械帝国的首府建筑会把自治中枢顶掉（系列 23 实测 3 颗），在这里拆掉重建；
+# 星球变成不支持的区划集（宇宙创生世界等）时放回普通星球
 atb_ai_auto_refresh = {
-	atb_ai_auto_freeze_pops = yes
 	if = {
-		limit = { NOT = { has_building = building_atb_ai_core } }
-		remove_all_buildings = yes
-		atb_ai_auto_reset_districts = yes
-		atb_ai_auto_build = yes
+		limit = { atb_ai_auto_supported_planet = no }
+		atb_ai_auto_release = yes
 	}
+	else = {
+		atb_ai_auto_freeze_pops = yes
+		if = {
+			limit = { NOT = { has_building = building_atb_ai_core } }
+			remove_all_buildings = yes
+			atb_ai_auto_reset_districts = yes
+			atb_ai_auto_build = yes
+		}
+	}
+}
+
+# 星球作用域：放回普通 AI 星球（3.4，用于区划集变了、放不下自动建筑的星球）：
+# 去掉标记、产能变量与人口冻结；自动建筑的 destroy_trigger 会自己拆掉，区划与原版建筑不动
+atb_ai_auto_release = {
+	remove_carrier_flag = atb_ai_auto
+	clear_variable = atb_ai_auto_jobs
+	remove_modifier = planet_population_control
+	remove_modifier = planet_population_control_gestalt
+	remove_modifier = planet_robot_assembly_control
 }
 
 # 星球作用域：玩家（或其他非自动国家）拿到自动星球——还原成刚殖民的新殖民地：

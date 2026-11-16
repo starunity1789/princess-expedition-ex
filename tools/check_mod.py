@@ -310,10 +310,11 @@ checks += [
      and all(f"atb_ai.{i}" in auto_oa for i in (1, 3, 4, 5, 10))
      and all(f"on_{h} = {{" in auto_oa for h in ("game_start", "colonized", "colony_transfer", "yearly_pulse_country"))),
     ("自动星球数值：普通 +3/年、列强 +6/年", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 6" in auto_var),
-    ("3.1：自动星球产出系数（×1.3，合金 ×0.9、科研 ×1.15）与海军容量 0.1", "@atb_ai_auto_out_research = 0.4485" in auto_var
+    ("3.1：自动星球产出系数（×1.3）与海军容量 0.1", "@atb_ai_auto_out_consumer_goods = 0.78" in auto_var
      and "@atb_ai_auto_out_energy = 1.17" in auto_var
      and "@atb_ai_auto_naval_cap = 0.1" in auto_var and auto_bld.count("@atb_ai_auto_out_") >= 17),
-    ("3.2：合金产出再 ×0.9", "@atb_ai_auto_out_alloys = 0.4739" in auto_var),
+    ("3.4：自动星球合金 ×0.7、科研 ×1.3", "@atb_ai_auto_out_alloys = 0.3317" in auto_var
+     and "@atb_ai_auto_out_research = 0.5831" in auto_var),
     ("3.2：X 槽位武器伤害 ×2、射程 ×1.33", exists("common/component_templates/weapon_components.csv")
      and exists("common/component_templates/mutation_weapon_components.csv")
      and "MASS_ACCELERATOR_1;250.00;-200.00;1400.00;4000.00" in read(MOD / "common/component_templates/weapon_components.csv")
@@ -324,8 +325,12 @@ checks += [
      and "modifier = atb_ex_sublight_rs" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
      and "id = atb_ex.5" in read(MOD / "events/atb_ex_events.txt")),
     ("AI 外交权重 ×3", "diplo_weight_mult = 2" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")),
-    ("AI 殖民低宜居星球", (lambda d: "AI_MIN_HABITABILITY_TO_COLONIZE = 0.01" in d and "UNDERDEVELOPED_PLANET_LIMIT = 999" in d)(
+    ("3.4：AI 宣战基础概率 ×4、殖民宜居度门槛回原版", (lambda d: "AI_AGGRESSIVENESS_BASE = 100" in d
+     and "AI_MIN_HABITABILITY_TO_COLONIZE" not in d and "UNDERDEVELOPED_PLANET_LIMIT = 999" in d)(
         read(MOD / "common/defines/atb_ex_defines.txt"))),
+    ("3.4：自动星球每年自检（缺中枢重建、特殊区划集放回普通星球）", "atb_ai_auto_release = {" in auto_eff
+     and "atb_ai_auto_supported_planet = no" in auto_eff and "atb_ai_auto_refresh = yes" in auto_ev),
+    ("3.4：巨构开工计数事件先判断星系存在", "exists = from" in read(MOD / "events/atb_ex_ai_limits_events.txt")),
     ("船坞产能翻倍", exists("common/starbase_modules/00_starbase_modules.txt")
      and "starbase_shipyard_capacity_add = 1" in read(MOD / "common/starbase_modules/00_starbase_modules.txt")),
     ("星系贸易中心：远征军帝国市场评分拉满", "value = 1000000" in auto_ev and "ongoing_market_nomination" in auto_ev),
