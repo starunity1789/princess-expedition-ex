@@ -1,0 +1,9 @@
+# 由 tools/gen_gpm_relics.py 从 Guilli's Planet Modifiers 抽取生成，请勿手改
+
+# 新领袖出现（scope: country, from: leader）
+on_leader_spawned = {
+	events = {
+		gpm_relics.2	# 有隐形装置：新海军将领 25% 获得隐形战术家
+		gpm_relics.21	# 有陨落者旗帜：新海军将领获得陨落者纹章
+	}
+}

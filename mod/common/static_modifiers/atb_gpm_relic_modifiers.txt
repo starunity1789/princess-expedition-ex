@@ -1,0 +1,105 @@
+# 由 tools/gen_gpm_relics.py 从 Guilli's Planet Modifiers 抽取生成，请勿手改
+# 来源：GPM gpm_static_modifiers_relics.txt（全部）、gpm_static_modifiers_events.txt（方舟加成）
+
+##########################################################################
+# Icon Frames
+##########################################################################
+# 1 = Good (green)
+# 2 = Mixed (yellow)
+# 3 = Bad (red)
+# 4 = Neutral/flavor (White)
+# 5 = Precursor (Light Blue special)
+# 6 = Event (Purple)
+# 7 = Terraforming (Leaves green)
+# 8 = Machine Worlds(Orange)
+# 9 = Fallen Empires (Pink-Purple)
+# 10= gold
+# 11= Habitats (cogwheel grey)
+# 12= pink 
+
+##########################################################################
+# Relic Modifiers
+##########################################################################
+
+gpm_time_displacer_relic_bonus = {
+	ship_interstellar_speed_mult = 0.50
+	ship_jumpdrive_cooldown_mult = -0.50
+}
+gpm_r_zero_energy_generator_active_effect = {
+	country_energy_produces_mult = 0.30
+}
+gpm_r_quantum_sphere_active_effect = {
+	spy_network_daily_value_mult = 2.0
+	# spy stuff
+}
+gpm_r_ai_architect_active_effect = {
+	planet_building_build_speed_mult = 1.00
+}
+gpm_r_encrypted_sct_active_effect = {
+	starbase_shipyard_build_speed_mult = 1.00
+	ship_military_alloys_cost_mult = 0.10
+}
+gpm_r_experimental_weapon_active_effect = {
+	ship_weapon_range_mult = 0.25
+	ship_engagement_range_mult = 0.25
+}
+gpm_r_codex_administratum_active_effect = {
+	faction_approval = 0.25
+	planet_crime_mult = -0.25
+}
+gpm_r_enigmatic_advisor_active_effect = {
+	diplo_weight_mult = 0.50
+	country_trust_cap_add = -50
+}
+gpm_r_positronic_nervious_system_active_effect = {
+	modify_species_cost_mult = -0.5
+}
+gpm_r_power_core_active_effect = {
+	ship_ftl_jumpdrive_range_mult = 5.00
+	ship_jumpdrive_cooldown_mult = 1.00
+}
+gpm_r_sentinel_queen_active_effect = {
+	army_attack_damage_mult = 0.30
+}
+gpm_r_self_assembly_hub_active_effect = {
+	megastructure_build_speed_mult = 1.00
+}
+gpm_r_banner_of_the_fallen_active_effect = {
+	country_claim_influence_cost_mult = -0.25
+}
+gpm_r_cloaking_device_active_effect = {
+	espionage_operation_difficulty_mult = -0.75
+}
+gpm_r_self_repairing_obelisk_active_effect = {
+	starbase_upgrade_speed_mult = 1.00
+	starbase_building_build_speed_mult = 1.00
+	starbase_module_build_speed_mult = 1.00
+}
+
+gpm_machine_world_core_ark_bonus = {
+	planet_stability_add = 5
+	planet_jobs_produces_mult = 0.15
+	planet_building_build_speed_mult = 0.5
+	planet_building_capacity_add = 1
+	icon = "gfx/interface/icons/planet_modifiers/pm_arkship_harvested_resources.dds"
+	icon_frame = 11
+}
+
+# ---- 本 MOD 新增：改写后的遗珍决议用（原来是 GPM 的矿藏 + 行星修正，数值照搬）----
+# 护盾阵列（神秘护盾发生器）：GPM 的 gpm_precursor_planetary_shield_on，另把矿藏的 +10 物理改成研究员产出 +5%
+atb_gpm_planetary_shield_array = {
+	planet_orbital_bombardment_damage = -0.50
+	pop_happiness = 0.05
+	planet_resettlement_unemployed_destination_mult = 0.40
+	planet_researchers_produces_mult = 0.05
+	icon = "gfx/interface/icons/planet_modifiers/gpm_planet_shield.dds"
+	icon_frame = 11
+}
+
+# 浮岛住房（重力引擎）：GPM 矿藏 gpm_d_floating_islands_housing 的效果
+atb_gpm_floating_islands_housing = {
+	planet_max_districts_add = 4
+	planet_housing_add = 4000
+	icon = "gfx/interface/icons/planet_modifiers/gpm_floating_islands.dds"
+	icon_frame = 11
+}

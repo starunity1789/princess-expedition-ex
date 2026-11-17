@@ -1,0 +1,126 @@
+# 由 tools/gen_gpm_relics.py 从 Guilli's Planet Modifiers 抽取生成，请勿手改
+# 隐形装置（gpm_r_cloaking_device）→ 海军将领「隐形战术家」；陨落者旗帜 → 「陨落者纹章」
+# gpm_relics.1 / .20 在拿到遗珍时触发（atb_grant_quest_relic），.2 / .21 在新领袖出现时补发
+# 原版 leader_class = admiral 在 4.x 叫 commander，已改
+
+namespace = gpm_relics
+
+country_event = {
+	id = gpm_relics.1
+	hide_window = yes
+
+	is_triggered_only = yes
+
+
+	trigger = {
+
+	}
+
+
+	immediate = {
+		
+		every_pool_leader = {
+			if = {
+				limit = {
+					leader_class = commander
+					NOT= { has_trait = leader_trait_gpm_stealth_tactician
+					}
+				}
+				random_list = {
+					75 = { }
+					25 = { add_trait = leader_trait_gpm_stealth_tactician }
+				}
+			}
+		}
+		every_owned_leader = {
+			if = {
+				limit = {
+					leader_class = commander
+					NOT= { has_trait = leader_trait_gpm_stealth_tactician
+					}
+				}
+				add_trait = leader_trait_gpm_stealth_tactician
+			}
+		}
+	}
+}
+
+country_event = {
+	id = gpm_relics.2
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_relic = gpm_r_cloaking_device
+	}
+
+	immediate = {
+		
+		from = {
+			if = {
+				limit = { leader_class = commander }
+				random_list = {
+					75 = { }
+					25 = { add_trait = leader_trait_gpm_stealth_tactician }
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = gpm_relics.20
+	hide_window = yes
+
+	is_triggered_only = yes
+
+
+	trigger = {
+
+	}
+
+
+	immediate = {
+		
+		every_pool_leader = {
+			if = {
+				limit = {
+					leader_class = commander
+					NOT= { has_trait = leader_trait_gpm_fallen_heraldry
+					}
+				}
+				add_trait = leader_trait_gpm_fallen_heraldry
+			}
+		}
+		every_owned_leader = {
+			if = {
+				limit = {
+					leader_class = commander
+					NOT= { has_trait = leader_trait_gpm_fallen_heraldry
+					}
+				}
+				add_trait = leader_trait_gpm_fallen_heraldry
+			}
+		}
+	}
+}
+
+country_event = {
+	id = gpm_relics.21
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_country_flag = gpm_fallen_heraldry_trait_rewarded
+	}
+
+	immediate = {
+		
+		from = {
+			if = {
+				limit = { leader_class = commander }
+				add_trait = leader_trait_gpm_fallen_heraldry
+			}
+		}
+	}
+}

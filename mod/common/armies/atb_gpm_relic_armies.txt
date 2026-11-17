@@ -1,0 +1,53 @@
+# 由 tools/gen_gpm_relics.py 从 Guilli's Planet Modifiers 抽取生成，请勿手改
+# 外星卵、古老无畏舰两个遗珍召唤的陆军（只用原版图标）
+
+gpm_xenomorph_army_no_upkeep = {
+	damage = 1.75
+	morale_damage = 2.0
+	collateral_damage = 5.0
+	war_exhaustion = 1.0
+	health = 1.2
+	has_morale = no
+	time = 100
+	icon = GFX_army_type_xenomorph
+	has_species = no
+
+	potential = {
+		always = no
+	}
+}
+
+gpm_venerable_dreadnaught_army = {
+	damage = 12.00
+	health = 20.00
+	morale_damage = 6.00
+	collateral_damage = 6.00
+	war_exhaustion = 1.00
+	has_morale = no
+
+	time = 360
+
+	has_species = no
+	icon = GFX_army_type_machine_assault
+
+	resources = {
+		category = armies
+		cost = {
+			alloys = 1000000
+		}
+		upkeep = {
+			energy = 10
+			alloys = 5
+		}
+	}
+	
+
+	potential = {
+		always = no
+	}
+
+	
+	allow = {
+		always = no
+	}
+}

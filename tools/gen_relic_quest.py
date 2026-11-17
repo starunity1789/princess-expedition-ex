@@ -1,13 +1,14 @@
 """首都决议「探寻遗珍」：花 10000 能量币，随机获得一个还没有的遗珍，直到全部获得。
 
-3.0 起本 MOD 不再内置 Guilli's Planet Modifiers（GPM），遗珍池按是否装了 GPM 分流：
-- 装了 GPM（它开局会设全局旗标 has_guillis_planet_modifiers_mod）：从 GPM 的遗珍里抽
-- 没装：从原版遗珍里抽（去掉天球星图碎片、虫洞钥匙碎片这类任务链零件）
+3.5 起 GPM 的遗珍已整合进本 MOD（tools/gen_gpm_relics.py 生成 common/relics/atb_gpm_*.txt），
+遗珍池就是这些内置的 GPM 遗珍，不再看是否装了 GPM。
+（3.0～3.4：装了 GPM 抽 GPM 遗珍，没装抽原版遗珍。）
 
-用法（在仓库根目录）：
+拿到隐形装置、陨落者旗帜时，顺带触发它们给海军将领发特质的事件（GPM 原来在偷取/交易/挖掘时触发）。
+
+用法（在仓库根目录，先跑 gen_gpm_relics.py）：
     python tools/gen_relic_quest.py mod
 
-遗珍清单直接读原版安装目录与 GPM 的订阅目录（GPM 只用来读清单，不需要启用）。
 只对玩家开放（决议在玩家首都上），AI 看不到。
 """
 import re
@@ -16,122 +17,97 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 MOD = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("mod")
-GAME = Path(r"C:\Program Files (x86)\Steam\steamapps\common\Stellaris")
-GPM = Path(r"C:\Program Files (x86)\Steam\steamapps\workshop\content\281990\865040033")
-GPM_FLAG = "has_guillis_planet_modifiers_mod"
 COST = 10000
+T = "\t"
 
-# 原版里不适合单独发放的任务链零件
-VANILLA_EXCLUDE = {
-    "r_celestial_chart_0", "r_celestial_chart_1", "r_celestial_chart_2",
-    "r_celestial_chart_3", "r_celestial_chart_4",
-    "r_wormhole_key_fragment_1", "r_wormhole_key_fragment_2",
-    "r_wormhole_key_fragment_3", "r_wormhole_key_fragment_4", "r_wormhole_key",
-}
-
-
-def relic_keys(folder: Path, prefix: str) -> list[str]:
-    keys = []
-    for f in sorted(folder.glob("*.txt")):
-        text = re.sub(r"#[^\n]*", "", f.read_text(encoding="utf-8-sig", errors="replace"))
-        keys += re.findall(rf"^({prefix}[A-Za-z0-9_]+)\s*=\s*\{{", text, re.M)
-    return keys
-
-
-vanilla = [r for r in relic_keys(GAME / "common" / "relics", "r_") if r not in VANILLA_EXCLUDE]
-gpm = relic_keys(GPM / "common" / "relics", "gpm_r_")
-if not vanilla:
-    raise SystemExit(f"{GAME}/common/relics 里没有找到原版遗珍")
-if not gpm:
-    raise SystemExit(f"{GPM}/common/relics 里没有找到 GPM 遗珍（GPM 需要保持订阅，用来读清单）")
+pool = []
+for f in sorted((MOD / "common" / "relics").glob("atb_gpm_*.txt")):
+    text = re.sub(r"#[^\n]*", "", f.read_text(encoding="utf-8-sig", errors="replace"))
+    pool += re.findall(r"^(gpm_r_[A-Za-z0-9_]+)\s*=\s*\{", text, re.M)
+if not pool:
+    raise SystemExit(f"{MOD}/common/relics 里没有内置的 GPM 遗珍，先跑 tools/gen_gpm_relics.py")
 HEAD = "# 由 tools/gen_relic_quest.py 生成，请勿手改\n"
 
-
-def nand(relics: list[str], indent: str) -> str:
-    return "\n".join(f"{indent}has_relic = {r}" for r in relics)
-
-
-def entries(relics: list[str], indent: str) -> str:
-    return "\n".join(f"""{indent}10 = {{
-{indent}\tmodifier = {{ factor = 0 has_relic = {r} }}
-{indent}\tadd_relic = {r}
-{indent}}}""" for r in relics)
-
+nand = "\n".join(f"{T * 2}has_relic = {r}" for r in pool)
+entries = "\n".join(
+    f"{T * 2}10 = {{\n{T * 3}modifier = {{ factor = 0 has_relic = {r} }}\n{T * 3}add_relic = {r}\n{T * 2}}}"
+    for r in pool)
 
 # ---------------------------------------------------------------- 触发器
 trig = f"""{HEAD}
-# 国家作用域：当前遗珍池里还有没拿到的遗珍
-# 装了 GPM：GPM 遗珍（{len(gpm)} 个）；没装：原版遗珍（{len(vanilla)} 个）
+# 国家作用域：内置的 GPM 遗珍（{len(pool)} 个）里还有没拿到的
 atb_has_unclaimed_quest_relic = {{
-\tif = {{
-\t\tlimit = {{ has_global_flag = {GPM_FLAG} }}
-\t\tNAND = {{
-{nand(gpm, chr(9) * 3)}
-\t\t}}
-\t}}
-\telse = {{
-\t\tNAND = {{
-{nand(vanilla, chr(9) * 3)}
-\t\t}}
-\t}}
+	NAND = {{
+{nand}
+	}}
 }}
 """
 
 # ---------------------------------------------------------------- 效果
 eff = f"""{HEAD}
-# 国家作用域：从当前遗珍池里随机获得一个还没有的遗珍
+# 国家作用域：从内置的 GPM 遗珍里随机获得一个还没有的遗珍
 atb_grant_quest_relic = {{
-\tif = {{
-\t\tlimit = {{ has_global_flag = {GPM_FLAG} }}
-\t\trandom_list = {{
-{entries(gpm, chr(9) * 3)}
-\t\t}}
-\t}}
-\telse = {{
-\t\trandom_list = {{
-{entries(vanilla, chr(9) * 3)}
-\t\t}}
-\t}}
+	random_list = {{
+{entries}
+	}}
+	# 隐形装置：海军将领「隐形战术家」（gpm_relics.1；之后的新将领由 gpm_relics.2 补发）
+	if = {{
+		limit = {{
+			has_relic = gpm_r_cloaking_device
+			NOT = {{ has_country_flag = atb_gpm_stealth_tactician_given }}
+		}}
+		set_country_flag = atb_gpm_stealth_tactician_given
+		country_event = {{ id = gpm_relics.1 }}
+	}}
+	# 陨落者旗帜：海军将领「陨落者纹章」（gpm_relics.20；之后的新将领由 gpm_relics.21 按旗标补发）
+	if = {{
+		limit = {{
+			has_relic = gpm_r_banner_of_the_fallen
+			NOT = {{ has_country_flag = gpm_fallen_heraldry_trait_rewarded }}
+		}}
+		set_country_flag = gpm_fallen_heraldry_trait_rewarded
+		country_event = {{ id = gpm_relics.20 }}
+	}}
 }}
 """
 
 # ---------------------------------------------------------------- 决议
 dec = f"""{HEAD}
-# 探寻遗珍：玩家首都决议，花 {COST} 能量币随机获得一个还没有的遗珍，直到当前遗珍池全部获得。
-# 遗珍池：装了 GPM 用 GPM 的 {len(gpm)} 个遗珍，没装用原版的 {len(vanilla)} 个。
+# 探寻遗珍：玩家首都决议，花 {COST} 能量币随机获得一个还没有的遗珍，直到全部获得。
+# 遗珍池：内置的 GPM 遗珍 {len(pool)} 个（3.5 起）。
 # 拿齐之后决议自动消失（条件写在 potential 里）。AI 帝国看不到。
 decision_atb_relic_quest = {{
-\towned_planets_only = yes
-\tsound = event_activating_unknown_technology
-\ticon = decision_museum
+	owned_planets_only = yes
+	sound = event_activating_unknown_technology
+	icon = decision_museum
 
-\tresources = {{
-\t\tcategory = decisions
-\t\tcost = {{
-\t\t\tenergy = {COST}
-\t\t}}
-\t}}
+	resources = {{
+		category = decisions
+		cost = {{
+			energy = {COST}
+		}}
+	}}
 
-\tpotential = {{
-\t\tis_capital = yes
-\t\towner = {{
-\t\t\tis_ai = no
-\t\t\tatb_has_unclaimed_quest_relic = yes
-\t\t}}
-\t}}
+	potential = {{
+		is_capital = yes
+		owner = {{
+			is_ai = no
+			atb_has_unclaimed_quest_relic = yes
+		}}
+	}}
 
-\teffect = {{
-\t\tcustom_tooltip = decision_atb_relic_quest_tt
-\t\thidden_effect = {{
-\t\t\towner = {{
-\t\t\t\tatb_grant_quest_relic = yes
-\t\t\t}}
-\t\t}}
-\t}}
+	effect = {{
+		custom_tooltip = decision_atb_relic_quest_tt
+		hidden_effect = {{
+			owner = {{
+				atb_grant_quest_relic = yes
+			}}
+		}}
+	}}
 
-\tai_weight = {{
-\t\tweight = 0
-\t}}
+	ai_weight = {{
+		weight = 0
+	}}
 }}
 """
 
@@ -140,13 +116,13 @@ loc_zh = f"""l_simp_chinese:
  # 由 tools/gen_relic_quest.py 生成，请勿手改
  decision_atb_relic_quest:0 "探寻遗珍"
  decision_atb_relic_quest_desc:0 "银河各处散落着前人留下的奇物。只要舍得投入，我们的探险队终能把它们一件件带回来。"
- decision_atb_relic_quest_tt:0 "随机获得一件尚未拥有的§Y遗珍§!，直到全部获得。\\n装了 Guilli's Planet Modifiers 时从它的 {len(gpm)} 件遗珍中抽取，否则从原版的 {len(vanilla)} 件遗珍中抽取。"
+ decision_atb_relic_quest_tt:0 "从 {len(pool)} 件先驱者与异星遗珍中，随机获得一件尚未拥有的§Y遗珍§!，直到全部获得。"
 """
 loc_en = f"""l_english:
  # Generated by tools/gen_relic_quest.py - do not edit
  decision_atb_relic_quest:0 "Seek Relics"
  decision_atb_relic_quest_desc:0 "Wonders left behind by those who came before lie scattered across the galaxy. Given enough funding, our expeditions can bring them home one by one."
- decision_atb_relic_quest_tt:0 "Gain a random §YRelic§! not yet owned, until all are owned.\\nWith Guilli's Planet Modifiers enabled, draws from its {len(gpm)} relics; otherwise from the {len(vanilla)} vanilla relics."
+ decision_atb_relic_quest_tt:0 "Gain a random §YRelic§! not yet owned from {len(pool)} precursor and alien relics, until all are owned."
 """
 
 out = {
@@ -163,4 +139,4 @@ for rel, text in out.items():
     if rel.endswith(".yml"):
         data = b"\xef\xbb\xbf" + data
     p.write_bytes(data)
-print(f"探寻遗珍：原版 {len(vanilla)} 个、GPM {len(gpm)} 个，花费 {COST} 能量币，写出 {len(out)} 个文件")
+print(f"探寻遗珍：内置 GPM 遗珍 {len(pool)} 个，花费 {COST} 能量币，写出 {len(out)} 个文件")

@@ -50,7 +50,7 @@ The characters - their personalities, looks and every detail - were designed by 
 - **Galaxy rules**: The Chosen (always at 8 o'clock) and the crash site of Keides, Scion of Vagros always spawn; Mega Shipyards have 50 shipyard slots; Galactic Community sessions and recesses take half as long; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
 - **Bundled portraits**: the Ancient Dragonkin and Kemonomimi animated portrait packs are merged in - disable the standalone packs if you are subscribed to them
 - **AI auto planets (3.0)**: regular AI empires (great powers included) only have "auto planets": a fixed 1,000 pops, six autonomous buildings, and a capacity that grows each year (+3, cap 300; great powers +6, cap 500). Every auto planet has a planetary shield, an FTL inhibitor and 10 defense armies. Planets the player takes revert to fresh colonies. AI diplomatic weight x3, and AIs colonize low-habitability worlds far more readily
-- **Other 3.0 changes**: Planetary Diversity, Guilli's Planet Modifiers and Stellar AI are no longer bundled; every shipyard module builds two ships at once; the Expedition all but always wins the Galactic Market nomination; the "Seek Relics" decision draws from Guilli's relics when that mod is enabled, otherwise from the vanilla relics
+- **Other 3.0 changes**: Planetary Diversity, Guilli's Planet Modifiers and Stellar AI are no longer bundled; every shipyard module builds two ships at once; the Expedition all but always wins the Galactic Market nomination; the "Seek Relics" decision draws from the 28 relics of Guilli's Planet Modifiers, which are bundled since 3.5 (only the relics - the rest of that mod, including its relic war goals, is not; unsubscribe it)
 
 Full details: [workshop description (English)](docs/workshop_description_en.txt).
 
@@ -129,13 +129,14 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **其它（3.0 起）**
 - 不再内置 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI（2.8～2.9 内置过），要用就自己订阅启用
+- **3.5 起内置 Guilli's Planet Modifiers 的 28 件遗珍**（只有遗珍：遗珍定义、修正、两种召唤陆军、三个将领特质、三个遗珍决议、图标和本地化；GPM 其余内容和它的遗珍战争目标都不要）。单独启用 GPM 的几局 AI 几乎不打仗，所以建议退订 GPM。三个遗珍决议改成只用原版条件，护盾阵列、浮岛住房改成本 MOD 的行星修正。由 `tools/gen_gpm_relics.py` 从 GPM 抽取生成
 - 所有船坞模块产能翻倍：每个船坞同时造 2 艘船（覆盖原版 `00_starbase_modules.txt`）
 - 帝国能造的 X 槽位武器伤害 ×2、射程 ×1.33（3.2 起；整文件覆盖原版 `weapon_components.csv` 与 `mutation_weapon_components.csv`，由 `tools/gen_x_weapons.py` 生成。Real Space - Ships in Scaling 也带这两份 CSV，同时启用时只有加载在后的一份生效）
 - 战列舰舰体值再 ×2（3.2 起，银河规则）
 - 所有国家亚光速 ×1.2（3.3 起，银河规则，不论启用了哪些 MOD；3.1～3.2 是启用 Ships in Scaling 时 ×12）
 - AI 超出海军容量后造舰预算大幅降低（原版 ×0.75 → ×0.1，「邻国成为天灾时 ×5」只到舰容 100%）；列强开局海军容量 +300（3.1 起；3.0.3 为 +500，更早为 +1000）
 - 银河市场提名期间，远征军帝国提名了自己的星球就把市场评分拉到 100 万，实际上必定拿到星系贸易中心
-- 玩家首都决议 **「探寻遗珍」**：花 10000 能量币随机获得一件尚未拥有的遗珍，直到全部获得。装了 Guilli's Planet Modifiers 时从它的 28 件遗珍里抽，没装就从原版 58 件遗珍里抽
+- 玩家首都决议 **「探寻遗珍」**：花 10000 能量币随机获得一件尚未拥有的遗珍，直到全部获得。3.5 起从内置的 28 件 GPM 遗珍里抽（3.0～3.4：装了 GPM 抽它的遗珍，没装抽原版 58 件）
 
 **减轻后期卡顿（2.9 起，只限 AI，玩家不受影响）**——由 `tools/gen_ai_limits.py` 生成：
 - AI 每个国家终身最多**自己开工建造**：居住站 7 座、环世界 1 座、星门 2 座、超空间中继器 18 座。捡到、修复废墟、俘获的都不算；拆掉或被毁也不退名额。原版按星系大小与难度算的 AI 居住站上限被这条替换
@@ -190,7 +191,7 @@ mklink /J "%USERPROFILE%\Documents\Paradox Interactive\Stellaris\mod\atb_princes
 
 **日常游玩本地版**用另一个描述文件 `atb_princess_expedition_ex_dev.mod`（名字「皇女的远征军EX（本地开发版）」）：
 内容同上但**不写 `remote_file_id`**，所以能和订阅版共存、不会撞号。在启动器里启用它，同时停用订阅版的
-皇女的远征军EX。Guilli's Planet Modifiers 要保持订阅（`gen_relic_quest.py` 从订阅目录读它的遗珍清单），启不启用随意。
+皇女的远征军EX。3.5 起不再需要 Guilli's Planet Modifiers（遗珍已内置）。
 
 ### 文件前缀
 
@@ -238,7 +239,10 @@ python tools/gen_portrait_sets.py "C:\Program Files (x86)\Steam\steamapps\common
 # 重新生成名称集「苍神缘起帝国」（改名字改 tools/cgen_names_source.json）
 python tools/gen_names.py mod docs
 
-# 重新生成决议「探寻遗珍」（遗珍清单读原版安装目录与 GPM 的订阅目录）
+# 3.5：从 GPM 抽取遗珍（需要 GPM 还在订阅目录里；退订后不用再跑）
+python tools/gen_gpm_relics.py
+
+# 重新生成决议「探寻遗珍」（遗珍清单读本 MOD 内置的 GPM 遗珍）
 python tools/gen_relic_quest.py mod
 
 # 2.9 的 AI 巨构上限、AI 禁杂交飞升、AI 物种改造冷却、减卡 defines（改数字改脚本顶部的 CAPS 等常量；原版更新后重跑）

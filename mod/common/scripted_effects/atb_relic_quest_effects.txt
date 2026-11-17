@@ -1,358 +1,137 @@
 # 由 tools/gen_relic_quest.py 生成，请勿手改
 
-# 国家作用域：从当前遗珍池里随机获得一个还没有的遗珍
+# 国家作用域：从内置的 GPM 遗珍里随机获得一个还没有的遗珍
 atb_grant_quest_relic = {
-	if = {
-		limit = { has_global_flag = has_guillis_planet_modifiers_mod }
-		random_list = {
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_time_displacer }
-				add_relic = gpm_r_time_displacer
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_alien_eggs }
-				add_relic = gpm_r_alien_eggs
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_machine_world_core }
-				add_relic = gpm_r_machine_world_core
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_mars_rover }
-				add_relic = gpm_r_mars_rover
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_encyclopedia_galactica }
-				add_relic = gpm_r_encyclopedia_galactica
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_zero_energy_generator }
-				add_relic = gpm_r_zero_energy_generator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_quantum_sphere }
-				add_relic = gpm_r_quantum_sphere
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_ai_architect }
-				add_relic = gpm_r_ai_architect
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_encrypted_sct }
-				add_relic = gpm_r_encrypted_sct
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_experimental_weapon }
-				add_relic = gpm_r_experimental_weapon
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_fallout_emergency_replicator }
-				add_relic = gpm_r_fallout_emergency_replicator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_power_core }
-				add_relic = gpm_r_power_core
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_mysterious_shield_generator }
-				add_relic = gpm_r_mysterious_shield_generator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_gravity_engine }
-				add_relic = gpm_r_gravity_engine
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_codex_administratum }
-				add_relic = gpm_r_codex_administratum
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_enigmatic_advisor }
-				add_relic = gpm_r_enigmatic_advisor
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_positronic_microchip }
-				add_relic = gpm_r_positronic_microchip
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_venerable_dreadnaught }
-				add_relic = gpm_r_venerable_dreadnaught
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_sentinel_queen }
-				add_relic = gpm_r_sentinel_queen
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_earthquake_engine }
-				add_relic = gpm_r_earthquake_engine
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_manufactorium_ship }
-				add_relic = gpm_r_manufactorium_ship
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_datacube }
-				add_relic = gpm_r_datacube
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_self_assembly_hub }
-				add_relic = gpm_r_self_assembly_hub
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_banner_of_the_fallen }
-				add_relic = gpm_r_banner_of_the_fallen
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_cloaking_device }
-				add_relic = gpm_r_cloaking_device
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_q_storage_compressor }
-				add_relic = gpm_r_q_storage_compressor
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_soul_gem }
-				add_relic = gpm_r_soul_gem
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = gpm_r_self_repairing_obelisk }
-				add_relic = gpm_r_self_repairing_obelisk
-			}
+	random_list = {
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_time_displacer }
+			add_relic = gpm_r_time_displacer
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_alien_eggs }
+			add_relic = gpm_r_alien_eggs
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_machine_world_core }
+			add_relic = gpm_r_machine_world_core
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_mars_rover }
+			add_relic = gpm_r_mars_rover
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_encyclopedia_galactica }
+			add_relic = gpm_r_encyclopedia_galactica
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_zero_energy_generator }
+			add_relic = gpm_r_zero_energy_generator
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_quantum_sphere }
+			add_relic = gpm_r_quantum_sphere
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_ai_architect }
+			add_relic = gpm_r_ai_architect
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_encrypted_sct }
+			add_relic = gpm_r_encrypted_sct
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_experimental_weapon }
+			add_relic = gpm_r_experimental_weapon
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_fallout_emergency_replicator }
+			add_relic = gpm_r_fallout_emergency_replicator
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_power_core }
+			add_relic = gpm_r_power_core
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_mysterious_shield_generator }
+			add_relic = gpm_r_mysterious_shield_generator
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_gravity_engine }
+			add_relic = gpm_r_gravity_engine
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_codex_administratum }
+			add_relic = gpm_r_codex_administratum
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_enigmatic_advisor }
+			add_relic = gpm_r_enigmatic_advisor
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_positronic_microchip }
+			add_relic = gpm_r_positronic_microchip
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_venerable_dreadnaught }
+			add_relic = gpm_r_venerable_dreadnaught
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_sentinel_queen }
+			add_relic = gpm_r_sentinel_queen
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_earthquake_engine }
+			add_relic = gpm_r_earthquake_engine
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_manufactorium_ship }
+			add_relic = gpm_r_manufactorium_ship
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_datacube }
+			add_relic = gpm_r_datacube
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_self_assembly_hub }
+			add_relic = gpm_r_self_assembly_hub
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_banner_of_the_fallen }
+			add_relic = gpm_r_banner_of_the_fallen
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_cloaking_device }
+			add_relic = gpm_r_cloaking_device
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_q_storage_compressor }
+			add_relic = gpm_r_q_storage_compressor
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_soul_gem }
+			add_relic = gpm_r_soul_gem
+		}
+		10 = {
+			modifier = { factor = 0 has_relic = gpm_r_self_repairing_obelisk }
+			add_relic = gpm_r_self_repairing_obelisk
 		}
 	}
-	else = {
-		random_list = {
-			10 = {
-				modifier = { factor = 0 has_relic = r_the_modularium }
-				add_relic = r_the_modularium
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_flowmetal_alloy }
-				add_relic = r_flowmetal_alloy
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_crystallinus_diffuser }
-				add_relic = r_crystallinus_diffuser
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_everchanging_stone }
-				add_relic = r_everchanging_stone
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_pulsestone }
-				add_relic = r_pulsestone
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_gavel_of_the_tribunal }
-				add_relic = r_gavel_of_the_tribunal
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_entangled_relay }
-				add_relic = r_entangled_relay
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_prototype_vir_core }
-				add_relic = r_prototype_vir_core
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_propagandosphere }
-				add_relic = r_propagandosphere
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_executus_compendium }
-				add_relic = r_executus_compendium
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_the_pattern_maker }
-				add_relic = r_the_pattern_maker
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_vaporous_mega_orchid }
-				add_relic = r_vaporous_mega_orchid
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_tiyanki_matriarch_nerve_core }
-				add_relic = r_tiyanki_matriarch_nerve_core
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_preservation_chamber }
-				add_relic = r_preservation_chamber
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_celestial_resonator }
-				add_relic = r_celestial_resonator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_mutated_voidworm_nest }
-				add_relic = r_mutated_voidworm_nest
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_dragon_trophy }
-				add_relic = r_dragon_trophy
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_khans_throne }
-				add_relic = r_khans_throne
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_worm_scales }
-				add_relic = r_worm_scales
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_rubricator }
-				add_relic = r_rubricator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_galaxy }
-				add_relic = r_galaxy
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_omnicodex }
-				add_relic = r_omnicodex
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_surveyor }
-				add_relic = r_surveyor
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_galatron }
-				add_relic = r_galatron
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_ancient_sword }
-				add_relic = r_ancient_sword
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_severed_head }
-				add_relic = r_severed_head
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_odryskan_crystal }
-				add_relic = r_odryskan_crystal
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_the_rulerchip }
-				add_relic = r_the_rulerchip
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_voidspawn_myocardium }
-				add_relic = r_voidspawn_myocardium
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_prethoryn_queen }
-				add_relic = r_prethoryn_queen
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_unbidden_warlock }
-				add_relic = r_unbidden_warlock
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_contingency_core }
-				add_relic = r_contingency_core
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_cetanas_heart }
-				add_relic = r_cetanas_heart
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_zro_crystal }
-				add_relic = r_zro_crystal
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_the_last_baol }
-				add_relic = r_the_last_baol
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_the_defragmentor }
-				add_relic = r_the_defragmentor
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_reality_perforator }
-				add_relic = r_reality_perforator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_pox_sample }
-				add_relic = r_pox_sample
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_cryo_core }
-				add_relic = r_cryo_core
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_war_forge }
-				add_relic = r_war_forge
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_vacuum_flower }
-				add_relic = r_vacuum_flower
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_toxic_god }
-				add_relic = r_toxic_god
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_core_of_the_reckoning }
-				add_relic = r_core_of_the_reckoning
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_ever_spinning_top }
-				add_relic = r_ever_spinning_top
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_celestial_tear }
-				add_relic = r_celestial_tear
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_plasmic_core }
-				add_relic = r_plasmic_core
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_infinity_root }
-				add_relic = r_infinity_root
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_time_crystal }
-				add_relic = r_time_crystal
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_daedalus_seal }
-				add_relic = r_daedalus_seal
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_the_lost_patron }
-				add_relic = r_the_lost_patron
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_continuum }
-				add_relic = r_continuum
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_eternal_throne }
-				add_relic = r_eternal_throne
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_weather_manipulator }
-				add_relic = r_weather_manipulator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_the_tempest_invocator }
-				add_relic = r_the_tempest_invocator
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_pyroglyphic_codex }
-				add_relic = r_pyroglyphic_codex
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_crystallized_singularity }
-				add_relic = r_crystallized_singularity
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_cfl_trophy }
-				add_relic = r_cfl_trophy
-			}
-			10 = {
-				modifier = { factor = 0 has_relic = r_tarnished_cfl_trophy }
-				add_relic = r_tarnished_cfl_trophy
-			}
+	# 隐形装置：海军将领「隐形战术家」（gpm_relics.1；之后的新将领由 gpm_relics.2 补发）
+	if = {
+		limit = {
+			has_relic = gpm_r_cloaking_device
+			NOT = { has_country_flag = atb_gpm_stealth_tactician_given }
 		}
+		set_country_flag = atb_gpm_stealth_tactician_given
+		country_event = { id = gpm_relics.1 }
+	}
+	# 陨落者旗帜：海军将领「陨落者纹章」（gpm_relics.20；之后的新将领由 gpm_relics.21 按旗标补发）
+	if = {
+		limit = {
+			has_relic = gpm_r_banner_of_the_fallen
+			NOT = { has_country_flag = gpm_fallen_heraldry_trait_rewarded }
+		}
+		set_country_flag = gpm_fallen_heraldry_trait_rewarded
+		country_event = { id = gpm_relics.20 }
 	}
 }

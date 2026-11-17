@@ -296,8 +296,15 @@ auto_oa = read(MOD / "common/on_actions/atb_ai_auto_on_actions.txt") if exists("
 auto_var = read(MOD / "common/scripted_variables/atb_ai_auto_variables.txt") if exists("common/scripted_variables/atb_ai_auto_variables.txt") else ""
 quest = read(MOD / "common/scripted_effects/atb_relic_quest_effects.txt") if exists("common/scripted_effects/atb_relic_quest_effects.txt") else ""
 checks += [
-    ("PD / GPM / Stellar AI 已全部移出", not any(MOD.rglob("gpm_*")) and not any(MOD.rglob("pd_*"))
-     and not any(MOD.rglob("*stellarai*")) and not (MOD.parent / "tools/upstream_manifest.json").exists()),
+    # 3.5：GPM 的遗珍整合回来了（脚本文件都叫 atb_gpm_*，图标沿用 GPM 原名 gpm_*.dds），其余 GPM 内容仍不要
+    ("PD / GPM / Stellar AI 已移出（GPM 只留遗珍）", not any(p for p in MOD.rglob("gpm_*") if p.suffix != ".dds")
+     and not any(MOD.rglob("pd_*")) and not any(MOD.rglob("*stellarai*"))
+     and not (MOD.parent / "tools/upstream_manifest.json").exists()
+     and not any(MOD.rglob("*wargoal*")) and not any(MOD.rglob("*casus_belli*"))),
+    ("3.5：GPM 遗珍内置（28 个，不带遗珍战争目标）", sum(len(re.findall(r"(?m)^gpm_r_\w+ = \{", read(p))) for p in (MOD / "common/relics").glob("atb_gpm_*.txt")) >= 28
+     and exists("common/armies/atb_gpm_relic_armies.txt") and exists("common/traits/atb_gpm_relic_traits.txt")
+     and exists("interface/atb_gpm_relics.gfx") and exists("localisation/simp_chinese/atb_gpm_relics_l_simp_chinese.yml")
+     and not exists("common/war_goals") and not exists("common/casus_belli")),
     ("自动星球 6 座建筑都定义了", all(f"{b} = {{" in auto_bld for b in (
         "building_atb_ai_core", "building_atb_ai_foundry", "building_atb_ai_power",
         "building_atb_ai_admin", "building_atb_ai_industry", "building_atb_ai_supply"))
@@ -334,8 +341,9 @@ checks += [
     ("船坞产能翻倍", exists("common/starbase_modules/00_starbase_modules.txt")
      and "starbase_shipyard_capacity_add = 1" in read(MOD / "common/starbase_modules/00_starbase_modules.txt")),
     ("星系贸易中心：远征军帝国市场评分拉满", "value = 1000000" in auto_ev and "ongoing_market_nomination" in auto_ev),
-    ("探寻遗珍按是否装 GPM 分流", "has_global_flag = has_guillis_planet_modifiers_mod" in quest
-     and "add_relic = gpm_r_" in quest and "add_relic = r_" in quest),
+    ("3.5：探寻遗珍只抽内置的 GPM 遗珍，并补发隐形装置、陨落者旗帜的将领特质", "has_guillis_planet_modifiers_mod" not in quest
+     and quest.count("add_relic = gpm_r_") >= 28 and "add_relic = r_" not in quest
+     and "id = gpm_relics.1 }" in quest and "id = gpm_relics.20 }" in quest),
 ]
 for label, ok in checks:
     if not ok:
