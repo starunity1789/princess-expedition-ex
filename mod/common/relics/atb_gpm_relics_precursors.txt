@@ -1273,7 +1273,7 @@ gpm_r_self_assembly_hub = {
 		potential = {
 			always = yes
 		}
-		megastructure_build_cost_mult = -0.20
+		megastructures_cost_mult = -0.20
 		country_megastructure_build_cap_add = 1
 	}
 

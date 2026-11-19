@@ -1,0 +1,38 @@
+# 皇女的远征军EX：覆盖原版 common/tradition_categories/01_psionics_shroud.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：开启了灵能之路
+# （国家旗标 atb_psionic_path_open）的国家不因已合成飞升而隐藏这棵传统树。群星更新后用新版原版重新生成。
+
+tradition_psionics_shroud = {
+	tree_template = "tree_11_12_21"
+	adoption_bonus = "tr_psionics_shroud_adopt"
+	finish_bonus = "tr_psionics_shroud_finish"
+
+	potential = {
+		has_shroud_dlc = yes
+		NOR = {
+			has_cybernetic_ascension = yes
+			has_genetic_ascension = yes
+			AND = {	# 皇女的远征军EX：开启了灵能之路的国家例外
+				has_synthetic_ascension = yes
+				NOT = { has_country_flag = atb_psionic_path_open }
+			}
+			is_natural_design_empire = yes
+			has_purity_ascension = yes
+			has_cloning_ascension = yes
+			has_mutation_ascension = yes
+			has_origin = origin_mindwardens
+		}
+	}
+
+	traditions = {
+		"tr_psionics_shroud_psi_corps"
+		"tr_psionics_shroud_great_awakening"
+		"tr_psionics_shroud_telekinesis"
+		"tr_psionics_shroud_clairvoyance"
+		"tr_psionics_shroud_psychometry"
+	}
+
+	ai_weight = {
+		factor = 1000
+	}
+}

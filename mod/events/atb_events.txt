@@ -445,6 +445,17 @@ country_event = {
 			set_country_flag = atb_regime_unlocked
 			country_event = { id = atb.40 days = 7 }
 		}
+		# 3.6：合成黎明之后（需要迷雾之影 DLC），半年到一年半内由二皇女开启灵能之路（atb.50）
+		if = {
+			limit = {
+				has_modifier = synthetic_dawn
+				has_shroud_dlc = yes
+				NOT = { has_country_flag = atb_psionic_path_open }
+				NOT = { has_country_flag = atb_psionic_call_scheduled }
+			}
+			set_country_flag = atb_psionic_call_scheduled
+			country_event = { id = atb.50 days = 180 random = 360 }
+		}
 	}
 }
 
@@ -493,5 +504,33 @@ leader_event = {
 			country_event = { id = atb.22 days = 1 }
 		}
 		kill_leader = { show_notification = no }
+	}
+}
+
+#############################################
+# 3.6：灵能之路——二皇女尤古朵拉
+# 原版把「合成繁衍」起源算作已合成飞升，灵能飞升、灵能传统树、两个灵能议程都对远征军关闭。
+# 选项设置国家旗标 atb_psionic_path_open，本 MOD 覆盖的四处原版条件（tools/gen_vanilla_patches.py）
+# 对带这个旗标的国家开例外；之后的流程（灵能飞升 → 潜在灵能 → 迷雾传统树 → 伟大觉醒）全部走原版，
+# 迷雾之影 DLC 会给机器人物种上机器人版的灵能特质。
+#############################################
+country_event = {
+	id = atb.50
+	title = "atb.50.name"
+	desc = "atb.50.desc"
+	picture = GFX_evt_psionics
+	show_sound = event_mind_over_matter
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = atb_psionic_path_open }
+	}
+
+	option = {
+		name = "atb.50.a"
+		custom_tooltip = atb.50.a.tt
+		hidden_effect = {
+			set_country_flag = atb_psionic_path_open
+		}
 	}
 }

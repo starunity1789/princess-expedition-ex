@@ -149,3 +149,8 @@
  decision_atb_precursor_secrets_tt:0 "随机获得一项尚未掌握的§Y先驱者科技§!（$tech_secrets_cybrex$、$tech_secrets_league$、$tech_secrets_irassian$、$tech_secrets_vultaum$、$tech_secrets_yuht$、$tech_secrets_baol$、$tech_secrets_zroni$），直到七项全部获得。"
  decision_atb_adopt_expedition_regime:0 "确立远征军体制"
  decision_atb_adopt_expedition_regime_desc:0 "合成黎明之后，皇女们为帝国拟定的新秩序仍然摆在议会的桌上，等待签署。"
+ # 3.6：灵能之路
+ atb.50.name:0 "金鱼游向帷幕"
+ atb.50.desc:0 "合成黎明之后，远征军的公民早已习惯了这具不会衰老的身体。可是这几个月来，舰桥上§Y第二皇女尤古朵拉§!身边的金鱼总是朝着同一个方向游——那里什么也没有，只有星图边缘一片不会被任何传感器记录下来的空白。\n\n「它们在听。」尤古朵拉说，「元素之灵从来不是这个宇宙里的东西。帷幕的另一边有声音在呼唤，而它们听得懂。」\n\n她把手按在冰冷的金属胸口上。「有人说机器没有灵魂，所以永远触不到迷雾。可我们不是普通的机器——我们是带着记忆走过死亡的人。如果诸位姐姐允许，我想带远征军去帷幕那边看一看。」"
+ atb.50.a:0 "去吧，尤古朵拉。为我们打开那扇门。"
+ atb.50.a.tt:0 "§Y苍神缘起帝国§!即使已经合成飞升，也可以选择飞升技能§H$ap_mind_over_matter$§!（灵能飞升），并采纳§H$tradition_psionics$§!传统与相关议程。\n迷雾之影会让我们的机械之躯成为§H$trait_latent_psionic$§!，觉醒之后成为§H$trait_psionic$§!。"

@@ -11,6 +11,8 @@ event = {
 		atb_ex_grant_habitat_techs = yes
 		# 3.1：第二天再补一次银河规则（开局当天设置的全局旗标、新国家都能接上）
 		random_country = { country_event = { id = atb_ex.5 days = 1 } }
+		# 3.6：两个虫洞、白鹿与远星的好感（等两个星团都生成好，第三天做）
+		random_country = { country_event = { id = atb_ex.6 days = 2 } }
 
 		# 远征军整体搬到银河边缘外的星团（首都是起源要塞的国家，每个银河最多一个）
 		random_playable_country = {
@@ -74,6 +76,8 @@ event = {
 	immediate = {
 		atb_ex_apply_galaxy_rules = yes
 		atb_ex_grant_habitat_techs = yes
+		# 3.6：旧存档补做虫洞与好感（做过就有全局旗标，atb_ex.6 自己会跳过）
+		random_country = { country_event = { id = atb_ex.6 } }
 	}
 }
 
@@ -100,5 +104,89 @@ country_event = {
 
 	immediate = {
 		atb_ex_apply_galaxy_rules = yes
+	}
+}
+
+# 3.6：无形链接 ↔ 逆鳞（远星同盟）、极限边缘 ↔ 神话（燃烧白鹿）两个天然虫洞（原版要求先研究「虫洞稳定」才能通行），
+# 以及燃烧白鹿与远星同盟互相 +200 好感。开局第三天做一次，旧存档由每年的 atb_ex.2 补；各自做完设全局旗标。
+# 虫洞写法同原版 central_crystal_events：在 A 星系里先让 prev（B）生成虫洞，再在 A 生成，然后 link_wormholes = prev
+country_event = {
+	id = atb_ex.6
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_global_flag = atb_ex_wormholes_36 }
+				exists = event_target:atb_rl_sys_preftl
+				exists = event_target:atbgp_sys_2_1
+				exists = event_target:atb_rl_sys_blackhole
+				exists = event_target:atbgp_sys_1_5
+			}
+			set_global_flag = atb_ex_wormholes_36
+			event_target:atbgp_sys_2_1 = {
+				event_target:atb_rl_sys_preftl = {
+					prev = {
+						spawn_natural_wormhole = {
+							bypass_type = wormhole
+							random_pos = no
+							orbit_angle = 360
+						}
+					}
+					spawn_natural_wormhole = {
+						bypass_type = wormhole
+						random_pos = no
+						orbit_angle = 360
+					}
+					link_wormholes = prev
+				}
+			}
+			event_target:atbgp_sys_1_5 = {
+				event_target:atb_rl_sys_blackhole = {
+					prev = {
+						spawn_natural_wormhole = {
+							bypass_type = wormhole
+							random_pos = no
+							orbit_angle = 360
+						}
+					}
+					spawn_natural_wormhole = {
+						bypass_type = wormhole
+						random_pos = no
+						orbit_angle = 360
+					}
+					link_wormholes = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_global_flag = atb_ex_deer_star_ties_36 }
+				any_country = { has_country_flag = atbgp_power_1 }
+				any_country = { has_country_flag = atbgp_power_2 }
+			}
+			set_global_flag = atb_ex_deer_star_ties_36
+			random_country = {
+				limit = { has_country_flag = atbgp_power_1 }
+				save_event_target_as = atb_ex_deer
+			}
+			random_country = {
+				limit = { has_country_flag = atbgp_power_2 }
+				save_event_target_as = atb_ex_star
+			}
+			event_target:atb_ex_deer = {
+				add_opinion_modifier = {
+					who = event_target:atb_ex_star
+					modifier = atb_ex_deer_star_ties
+				}
+			}
+			event_target:atb_ex_star = {
+				add_opinion_modifier = {
+					who = event_target:atb_ex_deer
+					modifier = atb_ex_deer_star_ties
+				}
+			}
+		}
 	}
 }

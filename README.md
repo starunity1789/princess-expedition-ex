@@ -49,7 +49,7 @@ The characters - their personalities, looks and every detail - were designed by 
   - Terminal Alignment Protocol (6:30, new): Determined Exterminators, Warbots, Experience Cache; four start-sized machine worlds; always Becomes the Crisis; joins the Galactic Community until Crisis level 5
 - **Galaxy rules**: The Chosen (always at 8 o'clock) and the crash site of Keides, Scion of Vagros always spawn; Mega Shipyards have 50 shipyard slots; Galactic Community sessions and recesses take half as long; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
 - **Bundled portraits**: the Ancient Dragonkin and Kemonomimi animated portrait packs are merged in - disable the standalone packs if you are subscribed to them
-- **AI auto planets (3.0)**: regular AI empires (great powers included) only have "auto planets": a fixed 1,000 pops, six autonomous buildings, and a capacity that grows each year (+3, cap 300; great powers +6, cap 500). Every auto planet has a planetary shield, an FTL inhibitor and 10 defense armies. Planets the player takes revert to fresh colonies. AI diplomatic weight x3, and AIs colonize low-habitability worlds far more readily
+- **AI auto planets (3.0)**: regular AI empires (great powers included) only have "auto planets": a fixed 1,000 pops, six autonomous buildings, and a capacity that grows each year (+3, cap 300; since 3.6 great powers follow the same rule). Every auto planet has a planetary shield, an FTL inhibitor and 10 defense armies. Planets the player takes revert to fresh colonies. AI diplomatic weight x3, and AIs colonize low-habitability worlds far more readily
 - **Other 3.0 changes**: Planetary Diversity, Guilli's Planet Modifiers and Stellar AI are no longer bundled; every shipyard module builds two ships at once; the Expedition all but always wins the Galactic Market nomination; the "Seek Relics" decision draws from the 28 relics of Guilli's Planet Modifiers, which are bundled since 3.5 (only the relics - the rest of that mod, including its relic war goals, is not; unsubscribe it)
 
 Full details: [workshop description (English)](docs/workshop_description_en.txt).
@@ -100,16 +100,18 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 ### 主要内容
 
 **起源：皇女的远征军**
-- 融合原版合成繁衍的全部机制，只能走机械飞升
+- 融合原版合成繁衍的全部机制，先走机械飞升；3.6 起合成黎明之后，二皇女尤古朵拉的事件「金鱼游向帷幕」会开启**灵能之路**（需要迷雾之影 DLC）：之后可以照原版选灵能飞升、采纳迷雾灵能传统、经历伟大觉醒，机械之躯会得到迷雾之影的机器人版灵能特质（原版把合成繁衍起源当作已合成飞升、关掉整条灵能线，本 MOD 只对开启了灵能之路的国家开例外）
+- 三皇女幽妃丽娜的命定特质额外给全国科研船异常现象发现几率 +50%（3.6）；起源要塞的「要塞核心」特殊地形工程学 +30（共 60，3.6）
 - 首都是规模 25 的超大型移动居住站「起源要塞」，四位皇女担任统治者和议会要职
 - 决议「确立远征军体制」「探索先驱者文明的秘密」，科技「无畏舰」，遗珍「皇女亲卫队印章」
 - **名称集「苍神缘起帝国」**：24 个部落姓，人名为「部落姓=个人名=长名」（共 2304 个）；原版每种舰体都有专属舰名与舰级，舰队、陆军编号为「帝国第N舰队/军团」。任何帝国都能选用，10 种界面语言都显示中文
 - **预设帝国「苍神缘起帝国」**：皇女的远征军起源 + 上面的名称集，狂热威权 + 唯物，哲人王 + 技术官僚，开局界面直接可选
 
 **EX 新增**
-- **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
+- **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。3.6 起另有两个天然虫洞：无形链接 ↔ 远星同盟的「逆鳞」、极限边缘 ↔ 燃烧白鹿的「神话」（原版规则：要先研究「虫洞稳定」才能通行）。无形链接的土著固定为「龙族」，特质 Nivlac + 强健 + 灵能 + 观星者（3.6）。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
 - **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +300、恒星基地上限 +10，初始 30 艘护卫舰一支舰队、带一位 10 级永生舰队司令，母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
   - 燃烧白鹿军团（10 点半）：升格假设、快速复制者、空中下载升级；母星系一座 L 星门
+  - 燃烧白鹿军团与远星同盟组织互相 +200 好感（3.6，旧谊）
   - 远星同盟组织（5 点）：巨型企业，极端军国 + 唯心；群众福音、巧手公司、舰队承包商；灵能飞升；开局获得遗珍「灵能档案」；母星系一座 L 星门
   - 大君主同盟领地（3 点）：种族洁癖、封建社会、卓越海军；研究速度 +12%；星团里 6 颗死寂星球的宜居度下限 +55%；基因飞升（纯净）；人工智能公民权；必选宇宙创生；加入星海共同体
   - 恐惧之潮（9 点，新增）：噬杀蜂群、唯一意志、亚空间突触；三颗开局规格的母星，母星系有一座损坏的以太相引擎；必选星海天罚
@@ -119,7 +121,7 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 
 **AI 自动星球（3.0 起）**——常规 AI 帝国（含保底列强）只有「自动星球」，玩家不受影响：
 - 开局把 AI 的母星转成自动星球；AI 殖民成功、打下来的星球也都转。每颗自动星球只留一级城市区划、固定 1000 人口（人口冻结，永不失业），政府分区里放 6 座自动建筑（自治中枢、铸造厂、电网、政务院、工坊、补给站）
-- 产能 A 以「虚拟岗位数」计：母星与打下来的星球取「人口 ÷ 100」，新殖民地从 10 起；每年 +3，单星上限 300。保底列强从 20 起、每年 +6、上限 500。3.0 的基准是 1 点 A 相当于一个原版岗位：科研 30%、合金 15%、能量 15%、团结 10%、消费品 10%、矿物 5%、食物 5%，另有少量贸易与战略资源；3.1 起全部产出 ×1.3；合金几经下调，相对 3.0 累计 ×0.737，科研累计 ×1.944（3.4：合金 ×0.7、科研 ×1.3）。产出挂在原版岗位类别下，AI 的科技与传统加成照常生效。数值在 `common/scripted_variables/atb_ai_auto_variables.txt`
+- 产能 A 以「虚拟岗位数」计：母星与打下来的星球取「人口 ÷ 100」，新殖民地从 10 起；每年 +3，单星上限 300。保底列强 3.6 起与普通 AI 相同（之前从 20 起、每年 +6、上限 500；旧存档里超过 300 的列强星球在下一次年度结算时降到 300）。3.0 的基准是 1 点 A 相当于一个原版岗位：科研 30%、合金 15%、能量 15%、团结 10%、消费品 10%、矿物 5%、食物 5%，另有少量贸易与战略资源；3.1 起全部产出 ×1.3；合金几经下调，相对 3.0 累计 ×0.737，科研累计 ×1.944（3.4：合金 ×0.7、科研 ×1.3）；3.6 再全部 ×1.5、合金只 ×1.25（海军容量不变）。产出挂在原版岗位类别下，AI 的科技与传统加成照常生效。数值在 `common/scripted_variables/atb_ai_auto_variables.txt`
 - 每颗自动星球自带行星护盾、FTL 抑制器、10 支防御陆军，每点 A 给海军容量 +0.1（3.0 为 +0.25）
 - 玩家拿到自动星球（打下来、整合附庸、割让、联邦统一）时还原成新殖民地：建筑全拆、区划只留一级、人口删到 100。AI 之间易手时产能保留
 - 每年自检：自治中枢被别的首府建筑顶掉时重建；星球变成宇宙创生世界等放不下自动建筑的特殊星球时，放回普通 AI 星球（3.4）
@@ -264,7 +266,7 @@ python tools/check_mod.py
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 - `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
-- `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`、`common/starbase_modules/00_starbase_modules.txt`、`common/ai_budget/01_alloys_budget.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成、船坞产能翻倍、AI 超容造舰预算 ×0.1，跑 `gen_vanilla_patches.py` 重做即可）
+- `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`、`common/starbase_modules/00_starbase_modules.txt`、`common/ai_budget/01_alloys_budget.txt`、`common/ascension_perks/00_ascension_paths.txt`、`common/tradition_categories/01_psionics_shroud.txt`、`common/council_agendas/02_council_agendas_ascensions.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成、船坞产能翻倍、AI 超容造舰预算 ×0.1、3.6 起灵能之路的四处例外，跑 `gen_vanilla_patches.py` 重做即可）
 - `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时、AI 宣战基础概率与 AI 殖民的三项，原版改了数值时对照调整）
 - `common/game_rules/atb_rules.txt` 里的 `can_be_part_of_galactic_community`、`can_dismiss_leader`（原版同名规则的副本）
 - `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）

@@ -361,13 +361,21 @@ atb_ex_relocate_expedition = {
 #   只认具体肖像、不认肖像组，而且物种类仍是随机的，和龙族肖像对不上。）
 atb_ex_generate_dragonkin_preftl = {
 	select_pre_ftl_origin = yes
+	# 3.6：种族名固定为「龙族」，特质固定为 Nivlac + Robust + Psionic + Stargazer（直接指定，不受点数限制）；
+	# 气候偏好取母星类型（ideal_planet_class = this，同原版写法）
 	create_species = {
-		name = random
+		name = atb_species_rl_dragonkin
+		plural = atb_species_rl_dragonkin
+		adjective = atb_species_rl_dragonkin
 		class = REP
 		portrait = adpp_ancient_dragonkin
 		homeworld = THIS
 		traits = {
-			trait = random_traits
+			ideal_planet_class = this
+			trait = trait_nivlac
+			trait = trait_robust
+			trait = trait_psionic
+			trait = trait_stargazer
 		}
 	}
 	create_pre_ftl_empire = yes

@@ -316,12 +316,25 @@ checks += [
         "atb_ai_auto_convert = {", "atb_ai_auto_revert = {", "atb_ai_auto_grow = {", "atb_ai_auto_refresh = {"))
      and all(f"atb_ai.{i}" in auto_oa for i in (1, 3, 4, 5, 10))
      and all(f"on_{h} = {{" in auto_oa for h in ("game_start", "colonized", "colony_transfer", "yearly_pulse_country"))),
-    ("自动星球数值：普通 +3/年、列强 +6/年", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 6" in auto_var),
-    ("3.1：自动星球产出系数（×1.3）与海军容量 0.1", "@atb_ai_auto_out_consumer_goods = 0.78" in auto_var
-     and "@atb_ai_auto_out_energy = 1.17" in auto_var
+    ("3.6：自动星球数值列强与普通相同（+3/年、起点 10、上限 300）", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 3" in auto_var
+     and "@atb_ai_auto_start_gp = 10" in auto_var and "@atb_ai_auto_cap_gp = 300" in auto_var),
+    ("3.6：自动星球产出 ×1.5（合金 ×1.25），海军容量仍 0.1", "@atb_ai_auto_out_consumer_goods = 1.17" in auto_var
+     and "@atb_ai_auto_out_energy = 1.755" in auto_var
      and "@atb_ai_auto_naval_cap = 0.1" in auto_var and auto_bld.count("@atb_ai_auto_out_") >= 17),
-    ("3.4：自动星球合金 ×0.7、科研 ×1.3", "@atb_ai_auto_out_alloys = 0.3317" in auto_var
-     and "@atb_ai_auto_out_research = 0.5831" in auto_var),
+    ("3.6：自动星球合金 0.4146、科研 0.8747", "@atb_ai_auto_out_alloys = 0.4146" in auto_var
+     and "@atb_ai_auto_out_research = 0.8747" in auto_var),
+    ("3.6：无形链接↔逆鳞、极限边缘↔神话两个虫洞，白鹿与远星互相 +200 好感", "id = atb_ex.6" in read(MOD / "events/atb_ex_events.txt")
+     and re.sub(r"#.*", "", read(MOD / "events/atb_ex_events.txt")).count("link_wormholes = prev") == 2
+     and "base = 200" in read(MOD / "common/opinion_modifiers/atb_ex_opinion_modifiers.txt")),
+    ("3.6：无形链接土著固定为龙族（Nivlac/Robust/Psionic/Stargazer）", all(x in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     for x in ("name = atb_species_rl_dragonkin", "trait = trait_nivlac", "trait = trait_robust", "trait = trait_psionic", "trait = trait_stargazer"))),
+    ("3.6：三皇女异常发现 +50%、要塞工程学 +30", "ship_anomaly_generation_chance_mult = 0.5" in read(MOD / "common/traits/atb_leader_traits.txt")
+     and "engineering_research = 60" in read(MOD / "common/deposits/atb_deposits.txt")),
+    ("3.6：灵能之路（二皇女事件 + 四处原版条件开例外）", "id = atb.50" in read(MOD / "events/atb_events.txt")
+     and all(exists(f) and "atb_psionic_path_open" in read(MOD / f) for f in (
+         "common/ascension_perks/00_ascension_paths.txt", "common/tradition_categories/01_psionics_shroud.txt",
+         "common/council_agendas/02_council_agendas_ascensions.txt"))
+     and re.sub(r"#.*", "", read(MOD / "common/council_agendas/02_council_agendas_ascensions.txt")).count("atb_psionic_path_open") == 2),
     ("3.2：X 槽位武器伤害 ×2、射程 ×1.33", exists("common/component_templates/weapon_components.csv")
      and exists("common/component_templates/mutation_weapon_components.csv")
      and "MASS_ACCELERATOR_1;250.00;-200.00;1400.00;4000.00" in read(MOD / "common/component_templates/weapon_components.csv")

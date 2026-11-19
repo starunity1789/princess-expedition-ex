@@ -100,6 +100,126 @@ PATCHES = [
              "\t\t\tused_naval_capacity_percent < 1.0\t# 皇女的远征军EX：原版 1.5\n", 1),
         ],
     ),
+    # ---- 3.6：苍神缘起帝国（远征军）的灵能飞升路线 ----
+    # 原版把「合成繁衍」起源本身算作已合成飞升（has_synthetic_ascension），灵能飞升、灵能传统树、
+    # 两个灵能议程一律关闭。迷雾之影 DLC 已经有机器人专用的灵能特质（trait_robot_(latent_)psionic），
+    # 所以只给开启了灵能之路的国家（国家旗标 atb_psionic_path_open，由二皇女的事件 atb.50 设置）开例外，
+    # 其余条件、与基因/赛博/合成飞升技能的互斥都不动；不改 has_synthetic_ascension 本身（原版几十处合成内容在用）。
+    dict(
+        path="common/ascension_perks/00_ascension_paths.txt",
+        header=[
+            "皇女的远征军EX：覆盖原版 common/ascension_perks/00_ascension_paths.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别只在灵能飞升 ap_mind_over_matter：",
+            "开启了灵能之路（国家旗标 atb_psionic_path_open）的国家不因「合成繁衍」起源而隐藏、不因主物种是机械而禁止。",
+            "群星更新后用新版原版重新生成。",
+        ],
+        replace=[
+            # 锚点从 ratling_country 起，只有 ap_mind_over_matter 的 potential 是这样开头
+            ("\t\t\thas_country_flag = ratling_country\n"
+             "\t\t\thas_ascension_perk = ap_engineered_evolution\n"
+             "\t\t\thas_ascension_perk = ap_the_flesh_is_weak \n"
+             "\t\t\thas_ascension_perk = ap_organo_machine_interfacing\n"
+             "\t\t\thas_ascension_perk = ap_organo_machine_interfacing_assimilator\n"
+             "\t\t\thas_ascension_perk = ap_synthetic_evolution\n"
+             "\t\t\thas_ascension_perk = ap_mind_over_matter\n"
+             "\t\t\thas_ascension_perk = ap_synthetic_age\n"
+             "\t\t\thas_origin = origin_shroudwalker_apprentice\n"
+             "\t\t\thas_origin = origin_cybernetic_creed\n"
+             "\t\t\thas_origin = origin_synthetic_fertility\n",
+             "\t\t\thas_country_flag = ratling_country\n"
+             "\t\t\thas_ascension_perk = ap_engineered_evolution\n"
+             "\t\t\thas_ascension_perk = ap_the_flesh_is_weak \n"
+             "\t\t\thas_ascension_perk = ap_organo_machine_interfacing\n"
+             "\t\t\thas_ascension_perk = ap_organo_machine_interfacing_assimilator\n"
+             "\t\t\thas_ascension_perk = ap_synthetic_evolution\n"
+             "\t\t\thas_ascension_perk = ap_mind_over_matter\n"
+             "\t\t\thas_ascension_perk = ap_synthetic_age\n"
+             "\t\t\thas_origin = origin_shroudwalker_apprentice\n"
+             "\t\t\thas_origin = origin_cybernetic_creed\n"
+             "\t\t\t# 皇女的远征军EX：开启了灵能之路的合成繁衍帝国例外\n"
+             "\t\t\tAND = {\n"
+             "\t\t\t\thas_origin = origin_synthetic_fertility\n"
+             "\t\t\t\tNOT = { has_country_flag = atb_psionic_path_open }\n"
+             "\t\t\t}\n", 1),
+            ("\t\tcustom_tooltip = {\n"
+             "\t\t\tfail_text = \"synthetic_empire_psionic_ascension\"\n"
+             "\t\t\tNOT = { has_trait = trait_mechanical }\n"
+             "\t\t}\n",
+             "\t\tcustom_tooltip = {\n"
+             "\t\t\tfail_text = \"synthetic_empire_psionic_ascension\"\n"
+             "\t\t\tOR = {\n"
+             "\t\t\t\tNOT = { has_trait = trait_mechanical }\n"
+             "\t\t\t\thas_country_flag = atb_psionic_path_open\t# 皇女的远征军EX\n"
+             "\t\t\t}\n"
+             "\t\t}\n", 1),
+        ],
+    ),
+    dict(
+        path="common/tradition_categories/01_psionics_shroud.txt",
+        header=[
+            "皇女的远征军EX：覆盖原版 common/tradition_categories/01_psionics_shroud.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：开启了灵能之路",
+            "（国家旗标 atb_psionic_path_open）的国家不因已合成飞升而隐藏这棵传统树。群星更新后用新版原版重新生成。",
+        ],
+        replace=[("\t\t\thas_synthetic_ascension = yes\n",
+                  "\t\t\tAND = {\t# 皇女的远征军EX：开启了灵能之路的国家例外\n"
+                  "\t\t\t\thas_synthetic_ascension = yes\n"
+                  "\t\t\t\tNOT = { has_country_flag = atb_psionic_path_open }\n"
+                  "\t\t\t}\n", 1)],
+    ),
+    dict(
+        path="common/council_agendas/02_council_agendas_ascensions.txt",
+        header=[
+            "皇女的远征军EX：覆盖原版 common/council_agendas/02_council_agendas_ascensions.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别只在 agenda_mind_over_matter 与",
+            "agenda_psionic_supremacy_shroud：开启了灵能之路（国家旗标 atb_psionic_path_open）的国家不因已合成飞升而隐藏。",
+            "群星更新后用新版原版重新生成。",
+        ],
+        replace=[
+            ("\t\tNAND = {\n"
+             "\t\t\thas_technology = tech_psionic_theory\n",
+             "\t\tNAND = {\n"
+             "\t\t\thas_technology = tech_psionic_theory\n", 1),  # 只用来确认 agenda_mind_over_matter 的写法没变
+            ("\t\t\thas_synthetic_ascension = yes\n"
+             "\t\t\tis_natural_design_empire = yes\n"
+             "\t\t\thas_purity_ascension = yes\n"
+             "\t\t\thas_cloning_ascension = yes\n"
+             "\t\t\thas_mutation_ascension = yes\n"
+             "\t\t}\n"
+             "\t\tNAND = {\n"
+             "\t\t\thas_technology = tech_psionic_theory\n",
+             "\t\t\tAND = {\t# 皇女的远征军EX：开启了灵能之路的国家例外\n"
+             "\t\t\t\thas_synthetic_ascension = yes\n"
+             "\t\t\t\tNOT = { has_country_flag = atb_psionic_path_open }\n"
+             "\t\t\t}\n"
+             "\t\t\tis_natural_design_empire = yes\n"
+             "\t\t\thas_purity_ascension = yes\n"
+             "\t\t\thas_cloning_ascension = yes\n"
+             "\t\t\thas_mutation_ascension = yes\n"
+             "\t\t}\n"
+             "\t\tNAND = {\n"
+             "\t\t\thas_technology = tech_psionic_theory\n", 1),
+            ("\t\thas_shroud_dlc = yes\n"
+             "\t\tNOR = {\n"
+             "\t\t\thas_cybernetic_ascension = yes\n"
+             "\t\t\thas_genetic_ascension = yes\n"
+             "\t\t\thas_synthetic_ascension = yes\n"
+             "\t\t\tis_natural_design_empire = yes\n"
+             "\t\t\tis_individual_machine = yes\n"
+             "\t\t}\n",
+             "\t\thas_shroud_dlc = yes\n"
+             "\t\tNOR = {\n"
+             "\t\t\thas_cybernetic_ascension = yes\n"
+             "\t\t\thas_genetic_ascension = yes\n"
+             "\t\t\tAND = {\t# 皇女的远征军EX：开启了灵能之路的国家例外\n"
+             "\t\t\t\thas_synthetic_ascension = yes\n"
+             "\t\t\t\tNOT = { has_country_flag = atb_psionic_path_open }\n"
+             "\t\t\t}\n"
+             "\t\t\tis_natural_design_empire = yes\n"
+             "\t\t\tis_individual_machine = yes\n"
+             "\t\t}\n", 1),
+        ],
+    ),
 ]
 
 for patch in PATCHES:

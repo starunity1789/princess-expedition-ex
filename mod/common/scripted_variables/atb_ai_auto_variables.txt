@@ -3,17 +3,17 @@
 # 推演依据（旧存档 18/19 系列，按 AI 现有殖民地数量 ×1.5 估算）：
 #   普通 AI 后期约为玩家岗位数的 1.7～2.0 倍，列强约 2～11 倍
 
-# 每年增长（每颗自动星球）
+# 每年增长（每颗自动星球）。3.6 起列强（_gp）与普通 AI 完全相同，变量保留只为少改代码
 @atb_ai_auto_growth = 3
-@atb_ai_auto_growth_gp = 6
+@atb_ai_auto_growth_gp = 3	# 3.6：与普通 AI 相同（原 6）
 
 # 新殖民地的起点（母星与打下来的星球取「人口 ÷ 100」，但不低于这个值）
 @atb_ai_auto_start = 10
-@atb_ai_auto_start_gp = 20
+@atb_ai_auto_start_gp = 10	# 3.6：与普通 AI 相同（原 20）
 
 # 单颗星球的上限
 @atb_ai_auto_cap = 300
-@atb_ai_auto_cap_gp = 500
+@atb_ai_auto_cap_gp = 300	# 3.6：与普通 AI 相同（原 500）
 
 # 自动星球上保留的实际人口（10 个岗位）；玩家打下来后还原成新殖民地的人口
 @atb_ai_auto_pops = 1000
@@ -26,14 +26,15 @@
 # 3.0 基准 → 3.1：全部 ×1.3；合金再 ×0.9、科研再 ×1.15（即合金 ×1.17、科研 ×1.495）
 # 3.2：合金再 ×0.9（合计 ×1.053）
 # 3.4：合金 ×0.7、科研 ×1.3（相对 3.0：合金 ×0.737、科研 ×1.944）
-@atb_ai_auto_out_research = 0.5831	# 3.0：0.3
-@atb_ai_auto_out_research_gestalt = 0.0971	# 3.0：0.05
-@atb_ai_auto_out_alloys = 0.3317	# 3.0：0.45
-@atb_ai_auto_out_alloys_gestalt = 0.1106	# 3.0：0.15
-@atb_ai_auto_out_energy = 1.17	# 3.0：0.9
-@atb_ai_auto_out_unity = 0.39	# 3.0：0.3
-@atb_ai_auto_out_consumer_goods = 0.78	# 3.0：0.6
-@atb_ai_auto_out_minerals = 0.26	# 3.0：0.2
-@atb_ai_auto_out_trade = 0.13	# 3.0：0.1
-@atb_ai_auto_out_strategic = 0.013	# 3.0：0.01
-@atb_ai_auto_out_food = 0.39	# 3.0：0.3
+# 3.6：全部 ×1.5，合金只 ×1.25（海军容量不变）
+@atb_ai_auto_out_research = 0.8747	# 3.0：0.3
+@atb_ai_auto_out_research_gestalt = 0.1457	# 3.0：0.05
+@atb_ai_auto_out_alloys = 0.4146	# 3.0：0.45
+@atb_ai_auto_out_alloys_gestalt = 0.1383	# 3.0：0.15
+@atb_ai_auto_out_energy = 1.755	# 3.0：0.9
+@atb_ai_auto_out_unity = 0.585	# 3.0：0.3
+@atb_ai_auto_out_consumer_goods = 1.17	# 3.0：0.6
+@atb_ai_auto_out_minerals = 0.39	# 3.0：0.2
+@atb_ai_auto_out_trade = 0.195	# 3.0：0.1
+@atb_ai_auto_out_strategic = 0.0195	# 3.0：0.01
+@atb_ai_auto_out_food = 0.585	# 3.0：0.3

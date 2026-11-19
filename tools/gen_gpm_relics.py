@@ -81,8 +81,14 @@ def write(rel: str, text: str, bom: bool = False):
 # ---------------------------------------------------------------- 遗珍定义：原样照搬
 relic_src = {"gpm_relics.txt": "atb_gpm_relics.txt", "gpm_relics_precursors.txt": "atb_gpm_relics_precursors.txt"}
 relic_ids = []
+# GPM 里 4.x 已经改名或删掉的修正（error.log 会报 Invalid modifier），抽取时换成现名
+MODIFIER_RENAMES = {
+    "megastructure_build_cost_mult": "megastructures_cost_mult",  # 3.5.1：自组装枢纽
+}
 for src, dst in relic_src.items():
     text = read(f"common/relics/{src}")
+    for old, new in MODIFIER_RENAMES.items():
+        text = re.sub(rf"\b{old}\b", new, text)
     relic_ids += re.findall(r"(?m)^(gpm_r_\w+)\s*=\s*\{", re.sub(r"#[^\n]*", "", text))
     write(f"common/relics/{dst}", HEAD + f"# 来源：GPM common/relics/{src}\n\n" + text)
 

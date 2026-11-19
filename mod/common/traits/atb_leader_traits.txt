@@ -83,6 +83,7 @@ leader_trait_atb_grand_ascendant = {
 		all_technology_research_speed = 0.15
 		num_tech_alternatives_add = 2
 		leader_trait_selection_options_add = 3
+		ship_anomaly_generation_chance_mult = 0.5	# 3.6：异常现象发现几率 +50%（她坐科研议员位，全国科研船都生效）
 		negative_traits_country = -2
 		# 物种修饰点按原型给，原型名和游戏里显示的名字对不上，容易写错：
 		#   BIOLOGICAL = 有机（LITHOID 岩石种 inherit_trait_points_from = BIOLOGICAL，自动跟着一起加）

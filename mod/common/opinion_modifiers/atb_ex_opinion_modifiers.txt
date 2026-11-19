@@ -1,0 +1,6 @@
+# 皇女的远征军EX 3.6：燃烧白鹿军团与远星同盟组织的旧谊（双方互相挂，由 atb_ex.6 添加，不衰减）
+atb_ex_deer_star_ties = {
+	opinion = {
+		base = 200
+	}
+}

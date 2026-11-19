@@ -52,3 +52,6 @@
  atb_ai_diplomacy_desc:0 "这个帝国在银河外交舞台上的分量远超它的人口规模。"
  atb_ex_sublight_rs:0 "银河航速规则"
  atb_ex_sublight_rs_desc:0 "所有舰船的亚光速 ×1.2。"
+ # 3.6
+ atb_species_rl_dragonkin:0 "龙族"
+ atb_ex_deer_star_ties:0 "白鹿与远星的旧谊"
