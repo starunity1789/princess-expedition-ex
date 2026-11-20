@@ -26,6 +26,7 @@ atb_swap_origin = {
 atb_create_princess = {
 	create_leader = {
 		class = $CLASS$
+		tier = leader_tier_legendary	# 四位皇女都是传奇典范（金色底框）
 		species = owner_main_species
 		name = atb_leader_name_$ID$
 		custom_description = atb_leader_desc_$ID$

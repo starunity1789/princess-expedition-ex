@@ -1,0 +1,7 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」抽取
+spriteTypes = {
+	spriteType = {
+		name = "GFX_ship_part_master_spark"
+		texturefile = "gfx/interface/icons/ship_parts/ship_part_master_spark.dds"
+	}
+}

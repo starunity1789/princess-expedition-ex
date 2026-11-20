@@ -261,6 +261,15 @@ atb_ex_relocate_expedition = {
 			initializer = atb_rl_pulsar
 			hyperlane = no
 		}
+		# 3.7：河童飞地（东方project领袖），紧挨大传承者、避开星团其它星系
+		spawn_system = {
+			min_distance >= 80
+			max_distance <= 86
+			min_orientation_angle = 243
+			max_orientation_angle = 247
+			initializer = kappa_enclave_init
+			hyperlane = no
+		}
 	}
 	set_spawn_system_batch = end
 
@@ -273,6 +282,11 @@ atb_ex_relocate_expedition = {
 	event_target:atb_rl_sys_preftl = { add_hyperlane = { from = this to = event_target:atb_rl_sys_neutron } }
 	event_target:atb_rl_sys_blackhole = { add_hyperlane = { from = this to = event_target:atb_rl_sys_pulsar } }
 	event_target:atb_rl_sys_neutron = { add_hyperlane = { from = this to = event_target:atb_rl_sys_pulsar } }
+	# 3.7：河童飞地只有一条航道，连到大传承者
+	if = {
+		limit = { exists = event_target:atb_th_kappa_sys }
+		event_target:atb_rl_sys_gateway = { add_hyperlane = { from = this to = event_target:atb_th_kappa_sys } }
+	}
 	# 唯一的出口
 	atbgp_link_to_galaxy = { SYSTEM = atb_rl_sys_gateway }
 

@@ -1,0 +1,75 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
+
+# 原作只有拥有魔理沙的国家才能研究；改成普通科技，接在粒子光矛之后，所有国家（含 AI）都能研究
+
+# Master Spark：X 槽能量武器，粒子光矛 II 之后
+tech_master_spark = {
+	area = physics
+	cost = @tier4cost3
+	tier = 4
+	category = { particles }
+	prerequisites = { "tech_energy_lance_2" }
+	weight = @tier4weight3
+
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_ethic = ethic_militarist
+		}
+		modifier = {
+			factor = 1.5
+			has_ethic = ethic_fanatic_militarist
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			has_ethic = ethic_militarist
+		}
+		modifier = {
+			factor = 1.5
+			has_ethic = ethic_fanatic_militarist
+		}
+		inline_script = {
+			script = ai/weapon_preference_weight
+			WEAPON_TYPE = weapon_type_energy
+		}
+	}
+}
+
+# Final Spark：泰坦级（T 槽）能量武器，Master Spark 与泰坦之后
+tech_final_spark = {
+	area = physics
+	cost = @tier5cost3
+	tier = 5
+	category = { particles }
+	prerequisites = { "tech_master_spark" "tech_titans" }
+	weight = @tier5weight3
+
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_ethic = ethic_militarist
+		}
+		modifier = {
+			factor = 1.5
+			has_ethic = ethic_fanatic_militarist
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			has_ethic = ethic_militarist
+		}
+		modifier = {
+			factor = 1.5
+			has_ethic = ethic_fanatic_militarist
+		}
+		inline_script = {
+			script = ai/weapon_preference_weight
+			WEAPON_TYPE = weapon_type_energy
+		}
+	}
+}

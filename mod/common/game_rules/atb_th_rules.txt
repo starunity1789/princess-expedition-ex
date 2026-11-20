@@ -1,0 +1,29 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
+
+# 覆盖原版 should_count_towards_leader_cap（common/game_rules/00_rules.txt）：东方领袖不计入领袖上限。
+# This = leader
+should_count_towards_leader_cap = {
+	NOR = {
+		has_leader_flag = atb_th_leader	# 东方领袖
+		leader_class = envoy
+		is_hidden = yes
+		has_leader_flag = hired_admiral_merc_leader
+		is_leader_tier = leader_tier_legendary
+		has_trait = leader_trait_rift_warped
+		AND = {
+			has_trait = leader_trait_eager
+			has_base_skill < 4
+		}
+		AND = {
+			is_ruler = yes
+			OR = {
+				has_trait = leader_trait_ruler_machine_intelligence
+				has_trait = leader_trait_ruler_hive_mind
+			}
+		}
+		has_trait = leader_trait_paladin
+		has_trait = leader_trait_nomadic_sage
+		has_leader_flag = temp_contestant_admiral
+	}
+}
+

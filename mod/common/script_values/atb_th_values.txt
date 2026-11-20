@@ -1,0 +1,7 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
+
+touhou_value_reimu_excessive_amount = {
+	base = 5
+	add = touhou_variable_reimu_excessive_amount
+	max = 600
+}

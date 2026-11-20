@@ -1,0 +1,37 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
+
+# 招募幻想乡来客：玩家首都决议，花 2000 食物随机招募一位还没有的东方角色，直到全部招到。
+# 这是东方国策之外唯一的获得途径；AI 看不到。
+decision_atb_th_recruit = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_luxuries
+
+	resources = {
+		category = decisions
+		cost = {
+			food = 2000
+		}
+	}
+
+	potential = {
+		is_capital = yes
+		owner = {
+			is_ai = no
+			atb_th_has_unrecruited = yes
+		}
+	}
+
+	effect = {
+		custom_tooltip = decision_atb_th_recruit_tt
+		hidden_effect = {
+			owner = {
+				atb_th_recruit_random = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}

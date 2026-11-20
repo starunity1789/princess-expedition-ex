@@ -1,0 +1,28 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
+
+on_game_start_country = {
+	events = {
+		atb_th.1
+	}
+}
+
+# 东方领袖死后重生
+on_leader_death = {
+	events = {
+		atb_th.2
+	}
+}
+
+# 河童飞地的外交界面
+on_custom_diplomacy = {
+	events = {
+		touhou_paragon_enclave.300
+	}
+}
+
+# 河童飞地的首次接触
+on_first_contact_stage_1_no_path = {
+	events = {
+		touhou_paragon_enclave.301
+	}
+}

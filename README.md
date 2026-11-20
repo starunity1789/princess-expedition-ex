@@ -50,7 +50,7 @@ The characters - their personalities, looks and every detail - were designed by 
 - **Galaxy rules**: The Chosen (always at 8 o'clock) and the crash site of Keides, Scion of Vagros always spawn; Mega Shipyards have 50 shipyard slots; Galactic Community sessions and recesses take half as long; +100K storage for all empires; doubled base hull for non-bio ships; every vanilla shield and armor value doubled; no hologram effect on council portraits
 - **Bundled portraits**: the Ancient Dragonkin and Kemonomimi animated portrait packs are merged in - disable the standalone packs if you are subscribed to them
 - **AI auto planets (3.0)**: regular AI empires (great powers included) only have "auto planets": a fixed 1,000 pops, six autonomous buildings, and a capacity that grows each year (+3, cap 300; since 3.6 great powers follow the same rule). Every auto planet has a planetary shield, an FTL inhibitor and 10 defense armies. Planets the player takes revert to fresh colonies. AI diplomatic weight x3, and AIs colonize low-habitability worlds far more readily
-- **Other 3.0 changes**: Planetary Diversity, Guilli's Planet Modifiers and Stellar AI are no longer bundled; every shipyard module builds two ships at once; the Expedition all but always wins the Galactic Market nomination; the "Seek Relics" decision draws from the 28 relics of Guilli's Planet Modifiers, which are bundled since 3.5 (only the relics - the rest of that mod, including its relic war goals, is not; unsubscribe it)
+- **Other 3.0 changes**: Planetary Diversity, Guilli's Planet Modifiers and Stellar AI are no longer bundled; the Expedition all but always wins the Galactic Market nomination; the "Seek Relics" decision draws from the 28 relics of Guilli's Planet Modifiers, which are bundled since 3.5 (only the relics - the rest of that mod, including its relic war goals, is not; unsubscribe it)
 
 Full details: [workshop description (English)](docs/workshop_description_en.txt).
 
@@ -129,10 +129,20 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - AI 宣战基础概率 ×4（3.4 起；3.0～3.3 的 AI 一个世纪几乎不打仗）
 - 写法借鉴《星球大战：夸特的黎明》的自动星球（产出 = 建筑系数 × 星球变量），但不改星球类型、不用专用区划集
 
+**东方project领袖（3.7 起整合，原作者已停更）**——由 `tools/gen_touhou.py` 从原 MOD（创意工坊 2983419228）抽取改写：
+- 13 个东方国策（博丽神道、守矢神道、雾雨之友、红魔眷族、忘川冥域/无寿就业、蓬莱科技/蓬莱药企、秘封少女俱乐部）与对应议员；选了国策开局就有对应角色
+- 34 位东方角色（灵梦、魔理沙、早苗、蕾米莉亚、咲夜、幽幽子、映姬、恋恋、荷取……）及其全部领袖特质。除国策外唯一的获得途径是玩家首都决议 **「招募幻想乡来客」**：花 2000 食物随机招募一位还没有的角色，直到招完
+- 东方角色都是英杰典范（紫框）；原作在 4.5 加不上的几个原版特质换成同职业里效果相近的
+- 东方角色不占领袖上限，不会死于意外事件；因寿命、舰队覆灭等死亡后，会按初始等级和状态重新出现（稗田阿求天生短命，大约每二十岁转生一次）
+- 武器 Master Spark（X 槽）与 Final Spark（T 槽）：普通科技，分别接在粒子光矛 II、Master Spark + 泰坦之后，所有国家都能研究
+- 河童飞地（河童轨道开发集团）：固定在大传承者旁边，一条航道相连；提供技术移民、科学家派遣、建造援助、机器人生产线
+- 原作的符卡、建筑与岗位、特殊地形、事件链、局势、议程、领袖抽奖与来访事件、特殊舰船、陆军等都没有搬；角色特质里依赖它们的部分已删掉
+- 角色肖像、图标、武器特效与音效从原 MOD 搬来；原作只有中文，英文界面也显示中文
+
 **其它（3.0 起）**
 - 不再内置 Planetary Diversity、Guilli's Planet Modifiers、Stellar AI（2.8～2.9 内置过），要用就自己订阅启用
 - **3.5 起内置 Guilli's Planet Modifiers 的 28 件遗珍**（只有遗珍：遗珍定义、修正、两种召唤陆军、三个将领特质、三个遗珍决议、图标和本地化；GPM 其余内容和它的遗珍战争目标都不要）。单独启用 GPM 的几局 AI 几乎不打仗，所以建议退订 GPM。三个遗珍决议改成只用原版条件，护盾阵列、浮岛住房改成本 MOD 的行星修正。由 `tools/gen_gpm_relics.py` 从 GPM 抽取生成
-- 所有船坞模块产能翻倍：每个船坞同时造 2 艘船（覆盖原版 `00_starbase_modules.txt`）
+- 船坞模块：3.0～3.6 产能翻倍，3.7 起恢复原版（巨型船坞 50 个船坞不变）
 - 帝国能造的 X 槽位武器伤害 ×2、射程 ×1.33（3.2 起；整文件覆盖原版 `weapon_components.csv` 与 `mutation_weapon_components.csv`，由 `tools/gen_x_weapons.py` 生成。Real Space - Ships in Scaling 也带这两份 CSV，同时启用时只有加载在后的一份生效）
 - 战列舰舰体值再 ×2（3.2 起，银河规则）
 - 所有国家亚光速 ×1.2（3.3 起，银河规则，不论启用了哪些 MOD；3.1～3.2 是启用 Ships in Scaling 时 ×12）
@@ -232,7 +242,7 @@ python tools/gen_double_defenses.py "C:\Program Files (x86)\Steam\steamapps\comm
 # 重新生成 X 槽位武器加强（伤害 ×2、射程 ×1.33）的两份 CSV 覆盖
 python tools/gen_x_weapons.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
-# 重新生成巨型船坞（50 个船坞）、关掉原版天选民随机生成、船坞产能翻倍这三份覆盖文件
+# 重新生成原版覆盖文件（巨型船坞 50 个船坞、关掉原版天选民随机生成、AI 超容造舰预算、灵能之路的例外）
 python tools/gen_vanilla_patches.py "C:\Program Files (x86)\Steam\steamapps\common\Stellaris" mod
 
 # 把两套内置肖像包挂进原版的 portrait_sets（覆盖原版同名文件）
@@ -266,7 +276,7 @@ python tools/check_mod.py
 - `gfx/FX/buttonstate_rendertarget_hologram.shader`
 - `common/solar_system_initializers/atb_ex_initializers.txt`（原版传奇领袖坠毁点的副本）
 - `common/scripted_variables/02_scripted_variables_component_cost.txt`（护盾装甲翻倍，跑 `gen_double_defenses.py` 重做即可）
-- `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`、`common/starbase_modules/00_starbase_modules.txt`、`common/ai_budget/01_alloys_budget.txt`、`common/ascension_perks/00_ascension_paths.txt`、`common/tradition_categories/01_psionics_shroud.txt`、`common/council_agendas/02_council_agendas_ascensions.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成、船坞产能翻倍、AI 超容造舰预算 ×0.1、3.6 起灵能之路的四处例外，跑 `gen_vanilla_patches.py` 重做即可）
+- `common/megastructures/11_mega_shipyard.txt`、`events/ancient_relics_arcsite_events_2.txt`、`common/ai_budget/01_alloys_budget.txt`、`common/ascension_perks/00_ascension_paths.txt`、`common/tradition_categories/01_psionics_shroud.txt`、`common/council_agendas/02_council_agendas_ascensions.txt`（巨型船坞 50 个船坞、关掉原版天选民随机生成、船坞产能翻倍、AI 超容造舰预算 ×0.1、3.6 起灵能之路的四处例外，跑 `gen_vanilla_patches.py` 重做即可）
 - `common/defines/atb_ex_defines.txt`（只覆盖星海共同体的三项计时、AI 宣战基础概率与 AI 殖民的三项，原版改了数值时对照调整）
 - `common/game_rules/atb_rules.txt` 里的 `can_be_part_of_galactic_community`、`can_dismiss_leader`（原版同名规则的副本）
 - `common/portrait_sets/00_portrait_sets.txt`（把两套肖像包挂进原版集合，跑 `gen_portrait_sets.py` 重做即可）

@@ -351,8 +351,29 @@ checks += [
     ("3.4：自动星球每年自检（缺中枢重建、特殊区划集放回普通星球）", "atb_ai_auto_release = {" in auto_eff
      and "atb_ai_auto_supported_planet = no" in auto_eff and "atb_ai_auto_refresh = yes" in auto_ev),
     ("3.4：巨构开工计数事件先判断星系存在", "exists = from" in read(MOD / "events/atb_ex_ai_limits_events.txt")),
-    ("船坞产能翻倍", exists("common/starbase_modules/00_starbase_modules.txt")
-     and "starbase_shipyard_capacity_add = 1" in read(MOD / "common/starbase_modules/00_starbase_modules.txt")),
+    ("3.7：船坞模块恢复原版（不再覆盖 00_starbase_modules.txt）", not exists("common/starbase_modules/00_starbase_modules.txt")),
+    ("3.7：东方project领袖——13 国策、13 议员、34 位角色、招募决议、两件武器、河童飞地",
+     len(re.findall(r"(?m)^civic_\w+ = \{", read(MOD / "common/governments/civics/atb_th_civics.txt"))) == 13
+     and read(MOD / "common/scripted_effects/atb_th_recruit_effects.txt").count("set_country_flag = atb_th_got_") == 34
+     and "food = 2000" in read(MOD / "common/decisions/atb_th_decisions.txt")
+     and all(x in read(MOD / "common/technology/atb_th_tech.txt") for x in ('"tech_energy_lance_2"', '"tech_master_spark" "tech_titans"'))
+     and "marisa_leader" not in read(MOD / "common/technology/atb_th_tech.txt")
+     and "initializer = kappa_enclave_init" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "to = event_target:atb_th_kappa_sys" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "usage_odds" not in read(MOD / "common/solar_system_initializers/atb_th_kappa.txt")
+     and all(f"touhou_paragon_enclave.{e}" not in read(MOD / "events/atb_th_events.txt") for e in ("330", "360", "370"))),
+    ("3.7：东方领袖不占领袖上限、免疫意外死亡、死后按初始状态重生",
+     read(MOD / "common/scripted_effects/atb_th_leader_effects.txt").count("set_leader_flag = leader_death_events_blocked") >= 40
+     and read(MOD / "events/atb_th_events.txt").count("has_leader_flag = atb_th_rc_") >= 40
+     and "atb_th.2" in read(MOD / "common/on_actions/atb_th_on_actions.txt")
+     and "has_leader_flag = atb_th_leader\t# 东方领袖" in read(MOD / "common/game_rules/atb_th_rules.txt")
+     and "is_leader_tier = leader_tier_legendary" in read(MOD / "common/game_rules/atb_th_rules.txt")),
+    ("3.7：四位皇女是传奇典范，东方角色是英杰典范，原作加不上的原版特质已替换",
+     "tier = leader_tier_legendary" in read(MOD / "common/scripted_effects/atb_effects.txt").split("atb_create_princess = {", 1)[1].split("\n}", 1)[0]
+     and "tier = leader_tier_renowned" in read(MOD / "common/scripted_effects/atb_th_leader_effects.txt")
+     and not any(x in read(MOD / "common/scripted_effects/atb_th_leader_effects.txt") for x in (
+         "leader_trait_farming_focus ", "leader_trait_enlister ", "leader_trait_generator_focus_3 ",
+         "trait_ruler_deep_connections ", "leader_trait_insider_trading "))),
     ("星系贸易中心：远征军帝国市场评分拉满", "value = 1000000" in auto_ev and "ongoing_market_nomination" in auto_ev),
     ("3.5：探寻遗珍只抽内置的 GPM 遗珍，并补发隐形装置、陨落者旗帜的将领特质", "has_guillis_planet_modifiers_mod" not in quest
      and quest.count("add_relic = gpm_r_") >= 28 and "add_relic = r_" not in quest

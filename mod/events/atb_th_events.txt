@@ -1,0 +1,1090 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
+
+namespace = atb_th
+
+# 开局（on_game_start_country）：选了东方国策的国家得到对应角色（原作的 touhou_paragon.1，
+# 只保留角色、命定特质与原版科技；神社、舰船、幽灵人口等依赖已删内容的部分去掉）
+country_event = {
+	id = atb_th.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				OR = {
+					has_civic = civic_hakurei_shinto
+					has_civic = civic_hakurei_shinto_corp
+				}
+			}
+			create_civic_reimu_leader = yes
+			set_country_flag = atb_th_got_reimu
+		}
+		if = {
+			limit = {
+				OR = {
+					has_civic = civic_moriya_shinto
+					has_civic = civic_moriya_shinto_corp
+				}
+			}
+			create_civic_sanae_leader = yes
+			set_country_flag = atb_th_got_sanae
+			give_technology = { tech = tech_storm_prediction_1 message = no }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_civic = civic_kirisame_magic
+					has_civic = civic_kirisame_magic_corp
+				}
+			}
+			create_civic_marisa_leader = yes
+			set_country_flag = atb_th_got_marisa
+		}
+		if = {
+			limit = {
+				OR = {
+					has_civic = civic_scarlet_allience
+					has_civic = civic_scarlet_allience_corp
+				}
+			}
+			create_civic_sakuya_leader = yes
+			set_country_flag = atb_th_got_sakuya
+		}
+		if = {
+			limit = {
+				OR = {
+					has_civic = civic_nether_world
+					has_civic = civic_nether_world_corp
+				}
+			}
+			create_civic_youmu_leader = yes
+			set_country_flag = atb_th_got_youmu
+		}
+		if = {
+			limit = {
+				OR = {
+					has_civic = civic_penglai_medcine
+					has_civic = civic_penglai_medcine_corp
+				}
+			}
+			create_civic_reisen_leader = yes
+			set_country_flag = atb_th_got_reisen
+			give_technology = { tech = tech_genome_mapping message = no }
+			give_technology = { tech = tech_gene_tailoring message = no }
+			give_technology = { tech = tech_frontier_health message = no }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_civic = civic_hifuu
+				}
+			}
+			create_civic_merry_leader = yes
+			set_country_flag = atb_th_got_merry
+			create_civic_renko_leader = yes
+			set_country_flag = atb_th_got_renko
+		}
+	}
+}
+
+# 东方领袖死亡（on_leader_death，From = 死去的领袖）：按初始等级和状态重新生成同一角色
+country_event = {
+	id = atb_th.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		from = { has_leader_flag = atb_th_leader }
+	}
+
+	immediate = {
+		if = {
+			limit = { from = { has_leader_flag = atb_th_rc_tenshi } }
+			create_tenshi_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_suika } }
+			create_suika_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_sanae } }
+			create_civic_sanae_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_sanae } }
+			create_sanae_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_cirno } }
+			create_cirno_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_meiling } }
+			create_meiling_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_reimu } }
+			create_civic_reimu_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_reimu } }
+			create_reimu_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_marisa } }
+			create_civic_marisa_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_marisa } }
+			create_marisa_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_reisen } }
+			create_civic_reisen_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_reisen } }
+			create_reisen_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_youmu } }
+			create_civic_youmu_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_youmu } }
+			create_youmu_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_sakuya } }
+			create_civic_sakuya_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_sakuya } }
+			create_sakuya_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_merry } }
+			create_civic_merry_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_merry } }
+			create_merry_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_civic_renko } }
+			create_civic_renko_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_renko } }
+			create_renko_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_satori } }
+			create_satori_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_koishi } }
+			create_koishi_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_aya } }
+			create_aya_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_shikieiki } }
+			create_shikieiki_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_onoduka } }
+			create_onoduka_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_patchouli } }
+			create_patchouli_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_remilia } }
+			create_remilia_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_alice } }
+			create_alice_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_yuyuko } }
+			create_yuyuko_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_yuka } }
+			create_yuka_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_kosuzu } }
+			create_kosuzu_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_akyuu } }
+			create_akyuu_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_rin } }
+			create_rin_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_utsuho } }
+			create_utsuho_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_nitori } }
+			create_nitori_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_sizuha } }
+			create_sizuha_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_minoriko } }
+			create_minoriko_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_hina } }
+			create_hina_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_mystia } }
+			create_mystia_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_tewi } }
+			create_tewi_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_kanako } }
+			create_kanako_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_suwako } }
+			create_suwako_leader = yes
+		}
+		else_if = {
+			limit = { from = { has_leader_flag = atb_th_rc_suwako_commander } }
+			create_suwako_commander_leader = yes
+		}
+	}
+}
+
+# ---------------------------------------------------------------- 河童飞地（原作 touhou_paragon_enclave.*）
+# 菜单里的扩展船坞、非想天则、雇佣河城荷取三项与被摧毁后重建不搬
+namespace = touhou_paragon_enclave
+
+country_event = {
+    id = touhou_paragon_enclave.300
+    hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+        from = {
+            is_country_type = kappa_enclave
+            has_country_flag = kappa_enclave
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = { exists = event_target:kappa_enclave_country }
+            }
+            from = {
+                save_global_event_target_as = kappa_enclave_country
+            }
+        }
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+}
+
+first_contact_event = {
+    id = touhou_paragon_enclave.301
+    hide_window = yes
+    trigger = {
+        contact_country = {
+            is_country_type = kappa_enclave
+        }
+    }
+    is_triggered_only = yes
+    first_contact = yes
+    immediate = {
+        set_site_progress_locked = yes
+    }
+    after = {
+        set_site_progress_locked = no
+        set_first_contact_stage = kappa_enclave_stage_1
+    }
+}
+
+first_contact_event = {
+    id = touhou_paragon_enclave.302
+    title = first_contact_critters.1.name
+    desc = first_contact_critters.1.desc
+    picture = GFX_evt_satellite_in_orbit
+    inline_script = first_contact_event_sounds
+
+    is_triggered_only = yes
+    first_contact = yes
+
+    immediate = {
+        set_site_progress_locked = yes
+    }
+
+    after = {
+        set_site_progress_locked = no
+    }
+
+    option = {
+        name = first_contact_critters.1.A
+        set_first_contact_stage = kappa_enclave_stage_2
+    }
+}
+
+first_contact_event = {
+    id = touhou_paragon_enclave.303
+    title = first_contact_critters.5.name
+    desc = first_contact_critters.5.desc
+    picture = GFX_evt_space_station
+
+    inline_script = first_contact_event_sounds
+    is_triggered_only = yes
+    first_contact = yes
+
+    immediate = {
+        set_site_progress_locked = yes
+    }
+
+    option = {
+        name = SCUM
+        trigger = {
+            owner = { has_valid_civic = civic_fanatic_purifiers }
+        }
+    }
+
+    option = {
+        name = TASTY
+        trigger = {
+            owner = { has_valid_civic = civic_hive_devouring_swarm }
+        }
+    }
+
+    option = {
+        name = EXTERMINATE
+        trigger = {
+            owner = { has_valid_civic = civic_machine_terminator }
+        }
+    }
+
+    option = {
+        name = first_contact_critters.5.A
+        trigger = {
+            owner = {
+                NOR = {
+                    has_valid_civic = civic_fanatic_purifiers
+                    has_valid_civic = civic_hive_devouring_swarm
+                    has_valid_civic = civic_machine_terminator
+                }
+            }
+        }
+        owner = {
+            country_event = { id = touhou_paragon_enclave.305 }
+        }
+    }
+    after = {
+        set_site_progress_locked = no
+        finish_first_contact_effect = yes
+    }
+}
+
+country_event = {
+    id = touhou_paragon_enclave.305
+    title = touhou_paragon_enclave.305.name
+    is_triggered_only = yes
+    diplomatic = yes
+    custom_gui = "enclave_salvager_window"
+    custom_gui_option = "enclave_salvager_option"
+    picture_event_data = {
+        portrait = event_target:kappa_enclave_country
+        room = salvagers_room
+    }
+    location = event_target:kappa_enclave_system
+
+    desc = {
+        trigger = {
+            NOR = {
+                has_country_flag = kappa_enclave_diplomacy_engaged
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.305.desc.scavenger_first
+    }
+
+    desc = {
+        trigger = {
+            has_country_flag = kappa_enclave_diplomacy_engaged
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.305.desc.scavenger_visit
+    }
+
+    desc = {
+        trigger = {
+            OR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.305.desc.hostile
+    }
+    option = {
+        name = touhou_paragon_enclave.305.a
+        custom_tooltip = kappa_enclave_migration
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        allow = {
+            custom_tooltip = {
+                fail_text = kappa_enclave_recently_migration_cooldown
+                NOT = { has_country_flag = kappa_enclave_recently_migration }
+            }
+        }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.310 }
+        }
+    }
+    option = {
+        name = touhou_paragon_enclave.305.b
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        allow = {
+            custom_tooltip = {
+                fail_text = kappa_enclave_recently_recruition_cooldown
+                NOT = { has_country_flag = kappa_enclave_recently_recruition }
+            }
+        }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.320 }
+        }
+    }
+    option = {
+        name = touhou_paragon_enclave.305.d
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.340 }
+        }
+    }
+    option = {
+        name = touhou_paragon_enclave.305.e
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        allow = {
+            not = {
+                is_gestalt = yes
+            }
+        }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.350 }
+        }
+    }
+    after = {
+        set_country_flag = kappa_enclave_diplomacy_engaged
+    }
+    option = {
+        name = GOODBYE
+        trigger = {
+            NOT = {
+                is_hostile = event_target:kappa_enclave_country
+            }
+        }
+        default_hide_option = yes
+        set_country_flag = kappa_enclave_diplomacy_engaged
+    }
+    immediate = {
+
+        if = {
+            limit = {
+                pop_amount <= 6000
+            }
+            set_variable = {
+                which = kappa_enclave_cost
+                value = -1000
+            }
+        }
+        else_if = {
+            limit = {
+                pop_amount > 6000
+                pop_amount <= 12000
+            }
+            set_variable = {
+                which = kappa_enclave_cost
+                value = -2000
+            }
+        }
+        else_if = {
+            limit = {
+                pop_amount > 12000
+                pop_amount <= 18000
+            }
+            set_variable = {
+                which = kappa_enclave_cost
+                value = -3000
+            }
+        }
+        else_if = {
+            limit = {
+                pop_amount > 18000
+                pop_amount <= 24000
+            }
+            set_variable = {
+                which = kappa_enclave_cost
+                value = -4000
+            }
+        }
+        else = {
+            set_variable = {
+                which = kappa_enclave_cost
+                value = -5000
+            }
+        }
+    }
+}
+
+country_event = {
+    id = touhou_paragon_enclave.310
+    title = touhou_paragon_enclave.310.name
+    is_triggered_only = yes
+    diplomatic = yes
+    custom_gui = "enclave_salvager_window"
+    custom_gui_option = "enclave_salvager_option"
+    picture_event_data = {
+        portrait = event_target:kappa_enclave_country
+        room = salvagers_room
+    }
+    location = event_target:kappa_enclave_system
+    desc = {
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+            allows_slavery = no
+        }
+        text = touhou_paragon_enclave.310.desc.no.slave
+    }
+    desc = {
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+            allows_slavery = yes
+        }
+        text = touhou_paragon_enclave.310.desc.slave
+    }
+    option = {
+        name = touhou_paragon_enclave.310.a
+        allow = {
+            allows_slavery = no
+            has_country_resource = {
+                type = alloys
+                amount >= 1000
+            }
+        }
+        capital_scope = {
+            while = {
+                count = 3
+                create_pop_group = {
+                    species = event_target:kappa_enclave_species
+                }
+            }
+            custom_tooltip = kappa_enclave_migration_2
+        }
+        add_resource = {
+            alloys = -1000
+        }
+        set_timed_country_flag = {
+            flag = kappa_enclave_recently_migration
+            days = 1800
+        }
+        event_target:kappa_enclave_country = {
+            add_trust = {
+                who = root
+                amount = 10
+            }
+        }
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+    option = {
+        name = touhou_paragon_enclave.310.b
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+}
+
+country_event = {
+    id = touhou_paragon_enclave.320
+    title = touhou_paragon_enclave.320.name
+    is_triggered_only = yes
+    diplomatic = yes
+    custom_gui = "enclave_salvager_window"
+    custom_gui_option = "enclave_salvager_option"
+    picture_event_data = {
+        portrait = event_target:kappa_enclave_country
+        room = salvagers_room
+    }
+    location = event_target:kappa_enclave_system
+    desc = {
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.320.desc
+    }
+    option = {
+        name = touhou_paragon_enclave.320.a
+        allow = {
+            resource_stockpile_compare = {
+                resource = energy
+                value >= -1
+                mult = kappa_enclave_cost
+            }
+            custom_tooltip_fail = {
+                text = kappa_enclave_achivist_already
+                not = {
+                    any_owned_leader = {
+                        has_leader_flag = kappa_archivist
+                    }
+                }
+            }
+        }
+        create_leader = {
+            class = scientist
+            species = event_target:kappa_enclave_species
+            name = random
+            skill = 3
+            event_leader = yes
+            background_ethic = ethic_materialist
+            skip_background_generation = yes
+            custom_description = kappa_archivist_desc
+            custom_catch_phrase = curator_archivist_catch_phrase
+            randomize_traits = yes
+            traits = {
+                0 = leader_trait_expertise_industry_2
+                1 = subclass_scientist_scholar
+            }
+            effect = {
+                set_leader_flag = kappa_archivist
+                set_leader_flag = renowned_leader
+            }
+        }
+        last_created_leader = {
+            fire_on_action = {
+                on_action = on_leader_hired
+            }
+        }
+        add_resource = {
+            energy = 1
+            mult = kappa_enclave_cost
+        }
+        set_timed_country_flag = {
+            flag = kappa_enclave_recently_recruition
+            days = 3600
+        }
+        event_target:kappa_enclave_country = {
+            add_trust = {
+                who = root
+                amount = 10
+            }
+        }
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+    option = {
+        name = touhou_paragon_enclave.310.b
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+}
+
+country_event = {
+    id = touhou_paragon_enclave.340
+    title = touhou_paragon_enclave.340.name
+    is_triggered_only = yes
+    diplomatic = yes
+    custom_gui = "enclave_salvager_window"
+    custom_gui_option = "enclave_salvager_option"
+    picture_event_data = {
+        portrait = event_target:kappa_enclave_country
+        room = salvagers_room
+    }
+    location = event_target:kappa_enclave_system
+    desc = {
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.340.desc
+    }
+    immediate = {
+        if = {
+            limit = {
+                or = {
+                    check_variable = {
+                        which = kappa_construction_count
+                        value <= 0
+                    }
+                    check_variable = {
+                        which = kappa_construction_count
+                        value >= 31
+                    }
+                }
+            }
+            set_variable = {
+                which = kappa_construction_count
+                value = 1
+            }
+        }
+    }
+    option = {
+        name = touhou_paragon_enclave.340.a
+        allow = {
+            custom_tooltip_fail = {
+                text = kappa_enclave_construction_already
+                not = {
+                    has_country_flag = modifier_kappa_construction_cooldown
+                }
+            }
+            resource_stockpile_compare = {
+                resource = energy
+                value >= 200
+                mult = kappa_construction_count
+            }
+        }
+        add_modifier = {
+            modifier = modifier_kappa_construction
+            days = 240
+            multiplier = kappa_construction_count
+        }
+        set_timed_country_flag = {
+            flag = modifier_kappa_construction_cooldown
+            days = 720
+        }
+        add_resource = {
+            energy = -200
+            multiplier = kappa_construction_count
+        }
+        event_target:kappa_enclave_country = {
+            add_trust = {
+                who = root
+                amount = 2
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    check_variable = {
+                        which = kappa_construction_count
+                        value <= 29
+                    }
+                }
+                change_variable = {
+                    which = kappa_construction_count
+                    value = 1
+                }
+            }
+        }
+        country_event = { id = touhou_paragon_enclave.305 }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.341 days = 720 }
+        }
+        ai_chance = {
+            factor = 0
+        }
+    }
+    option = {
+        name = touhou_paragon_enclave.310.b
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+}
+
+country_event = {
+    id = touhou_paragon_enclave.341
+    title = touhou_paragon_enclave.340.name
+    is_triggered_only = yes
+    diplomatic = yes
+    custom_gui = "enclave_salvager_window"
+    custom_gui_option = "enclave_salvager_option"
+    picture_event_data = {
+        portrait = event_target:kappa_enclave_country
+        room = salvagers_room
+    }
+    location = event_target:kappa_enclave_system
+    desc = {
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.341.desc
+    }
+    option = {
+        name = touhou_paragon_enclave.341.a
+        default_hide_option = yes
+        allow = {
+            resource_stockpile_compare = {
+                resource = energy
+                value >= 200
+                mult = kappa_construction_count
+            }
+        }
+        add_modifier = {
+            modifier = modifier_kappa_construction
+            days = 240
+            multiplier = kappa_construction_count
+        }
+        set_timed_country_flag = {
+            flag = modifier_kappa_construction_cooldown
+            days = 720
+        }
+        add_resource = {
+            energy = -200
+            multiplier = kappa_construction_count
+        }
+        event_target:kappa_enclave_country = {
+            add_trust = {
+                who = root
+                amount = 2
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    check_variable = {
+                        which = kappa_construction_count
+                        value <= 29
+                    }
+                }
+                change_variable = {
+                    which = kappa_construction_count
+                    value = 1
+                }
+            }
+        }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.341 days = 360 }
+        }
+        ai_chance = {
+            factor = 0
+        }
+    }
+    option = {
+        name = touhou_paragon_enclave.341.b
+    }
+}
+
+country_event = {
+    id = touhou_paragon_enclave.350
+    title = touhou_paragon_enclave.350.name
+    is_triggered_only = yes
+    diplomatic = yes
+    custom_gui = "enclave_salvager_window"
+    custom_gui_option = "enclave_salvager_option"
+    picture_event_data = {
+        portrait = event_target:kappa_enclave_country
+        room = salvagers_room
+    }
+    location = event_target:kappa_enclave_system
+    desc = {
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.350.desc
+    }
+    option = {
+        name = touhou_paragon_enclave.350.a
+        allow = {
+            custom_tooltip_fail = {
+                text = kappa_enclave_robot_sample_already
+                not = {
+                    has_country_flag = kappa_robot_sample
+                }
+            }
+            resource_stockpile_compare = {
+                resource = energy
+                value >= -1
+                mult = kappa_enclave_cost
+            }
+        }
+        set_timed_country_flag = {
+            flag = kappa_robot_sample
+            days = 360
+        }
+        add_resource = {
+            energy = 1
+            mult = kappa_enclave_cost
+        }
+        capital_scope = {
+            create_pop_group = {
+                species = event_target:kappa_robot_worker_species
+                size = 1000
+            }
+            if = {
+                limit = {
+                    mid_game_years_passed > 0
+                }
+                create_pop_group = {
+                    species = event_target:kappa_robot_worker_species
+                    size = 1000
+                }
+            }
+            if = {
+                limit = {
+                    end_game_years_passed > 0
+                }
+                create_pop_group = {
+                    species = event_target:kappa_robot_worker_species
+                    size = 1000
+                }
+            }
+        }
+        event_target:kappa_enclave_country = {
+            add_trust = {
+                who = root
+                amount = 2
+            }
+        }
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+    option = {
+        name = touhou_paragon_enclave.350.b
+        allow = {
+            custom_tooltip_fail = {
+                text = kappa_enclave_robot_line_already
+                not = {
+                    has_modifier = modifier_kappa_robot
+                }
+            }
+            resource_stockpile_compare = {
+                resource = energy
+                value >= -3
+                mult = kappa_enclave_cost
+            }
+            event_target:kappa_enclave_country = {
+                trust = {
+                    who = root
+                    value >= 20
+                }
+            }
+        }
+        add_modifier = {
+            modifier = modifier_kappa_robot
+            days = 3600
+        }
+        add_resource = {
+            energy = 3
+            mult = kappa_enclave_cost
+        }
+        event_target:kappa_enclave_country = {
+            add_trust = {
+                who = root
+                amount = 10
+            }
+        }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.351 days = 3600}
+        }
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+    option = {
+        name = touhou_paragon_enclave.310.b
+        country_event = { id = touhou_paragon_enclave.305 }
+    }
+}
+
+country_event = {
+    id = touhou_paragon_enclave.351
+    title = touhou_paragon_enclave.350.name
+    is_triggered_only = yes
+    diplomatic = yes
+    custom_gui = "enclave_salvager_window"
+    custom_gui_option = "enclave_salvager_option"
+    picture_event_data = {
+        portrait = event_target:kappa_enclave_country
+        room = salvagers_room
+    }
+    location = event_target:kappa_enclave_system
+    desc = {
+        trigger = {
+            NOR = {
+                is_hostile = event_target:kappa_enclave_country
+                is_homicidal = yes
+            }
+        }
+        text = touhou_paragon_enclave.351.desc
+    }
+    option = {
+        name = touhou_paragon_enclave.351.a
+        allow = {
+            resource_stockpile_compare = {
+                resource = energy
+                value >= -3
+                mult = kappa_enclave_cost
+            }
+            event_target:kappa_enclave_country = {
+                trust = {
+                    who = root
+                    value >= 20
+                }
+            }
+        }
+        add_modifier = {
+            modifier = modifier_kappa_robot
+            days = 3600
+        }
+        add_resource = {
+            energy = 3
+            mult = kappa_enclave_cost
+        }
+        event_target:kappa_enclave_country = {
+            add_trust = {
+                who = root
+                amount = 10
+            }
+        }
+        hidden_effect = {
+            country_event = { id = touhou_paragon_enclave.351 days = 3600}
+        }
+    }
+    option = {
+        name = touhou_paragon_enclave.351.b
+    }
+}

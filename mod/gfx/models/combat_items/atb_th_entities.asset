@@ -1,0 +1,97 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」抽取
+entity = {
+	name = "Masterspark_hit_entity"
+	pdxmesh = "Masterspark_mesh"
+
+	state = { name = "explode_med_hp" state_time = 4.0 looping = no animation = "idle" animation_blend_time = 0
+		event = { time = 0.0 particle = "adv_kinetic_artillery_hit_effect" sound = { soundeffect = adv_kinectic_hit } }
+		event = { trigger_once = yes sound = { soundeffect = "distance_adv_kinectic_hit" } }
+	}
+	default_state = "explode_med_hp"
+
+
+	attach = { bullet_locator_1 = "Masterspark_ring_small_entity" }
+	attach = { bullet_locator_2 = "Masterspark_ring_medium_entity" }
+	attach = { bullet_locator_3 = "Masterspark_ring_large_entity" }
+	attach = { bullet_locator_4 = "Masterspark_ring_small_entity" }
+	attach = { bullet_locator_5 = "Masterspark_ring_medium_entity" }
+	attach = { bullet_locator_6 = "Masterspark_ring_large_entity" }
+	attach = { bullet_locator_7 = "Masterspark_ring_small_entity" }
+	attach = { bullet_locator_8 = "Masterspark_ring_medium_entity" }
+	attach = { bullet_locator_9 = "Masterspark_ring_large_entity" }
+	attach = { bullet_locator_10 = "Masterspark_ring_small_entity" }
+
+
+	scale = 5.0
+}
+entity = {
+	name = "Masterspark_muzzle_entity"
+	cull_radius = 1.0
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5.0 looping = no
+		event = { time = 0 particle = "perdition_beam_muzzle_effect" keep_particle = yes }
+
+		event = { trigger_once = yes sound = { soundeffect = "Masterspark" } }
+		event = { trigger_once = yes sound = { soundeffect = "distance_Masterspark" } }
+	}
+}
+entity = {
+	name = "Masterspark_ring_large_entity"
+	pdxmesh = "Masterspark_ring_mesh"
+
+
+	default_state = idle
+
+
+	state = { name = "idle"	 animation = "idle" animation_blend_time = 0 looping = yes next_state = "idle"
+
+	}
+	erosion_out = 1.0
+	scale = 2.0
+	game_data = {
+		bloom_factor			= 3.0
+	}
+}
+entity = {
+	name = "Masterspark_ring_medium_entity"
+	pdxmesh = "Masterspark_ring_mesh"
+
+
+	default_state = idle
+
+
+	state = { name = "idle"	 animation = "idle" animation_blend_time = 0 looping = yes next_state = "idle"
+
+	}
+	erosion_out = 1.0
+	scale = 1.7
+	game_data = {
+		bloom_factor			= 3.0
+	}
+}
+entity = {
+	name = "Masterspark_ring_small_entity"
+	pdxmesh = "Masterspark_ring_mesh"
+
+
+	default_state = idle
+
+
+	state = { name = "idle"	 animation = "idle" animation_blend_time = 0 looping = yes next_state = "idle"
+
+	}
+	erosion_out = 1.0
+	scale = 1.4
+	game_data = {
+		bloom_factor			= 3.0
+	}
+}
+animation = {
+	name = "Masterspark_idle_animation"
+	file = "Masterspark_idle.anim"
+}
+animation = {
+	name = "Masterspark_ring_idle_animation"
+	file = "Masterspark_ring_idle.anim"
+}

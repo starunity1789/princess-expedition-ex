@@ -1,0 +1,95 @@
+portraits = {
+	x1 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img1.dds"}
+	x2 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img2.dds"}
+	x3 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img3.dds"}
+	x6 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img6.dds"}
+	x9 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img9.dds"}
+	x10 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img10.dds"}
+	x16 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img16.dds"}
+	x48 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img48.dds"}
+	x49 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img49.dds"}
+	x53 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img53.dds"}
+	x54 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img54.dds"}
+	x63 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img63.dds"}
+	x72 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img72.dds"}
+	x73 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img73.dds"}
+	x74 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img74.dds"}
+	x76 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img76.dds"}
+	x77 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img77.dds"}
+	x81 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img81.dds"}
+	x82 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img82.dds"}
+	x88 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img88.dds"}
+	x89 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img89.dds"}
+	x91 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img91.dds"}
+	x98 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img98.dds"}
+	x105 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img105.dds"}
+	x107 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img107.dds"}
+	x108 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img108.dds"}
+	x110 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img110.dds"}
+	x112 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img112.dds"}
+	x117 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img117.dds"}
+	x119 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img119.dds"}
+	x121 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img121.dds"}
+	x124 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img124.dds"}
+	x125 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img125.dds"}
+	x150 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/img150.dds"}
+	tpop7 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/tpop7.dds"}
+	tpop8 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/tpop8.dds"}
+	tpop9 = {greeting_sound = "human_male_greetings_01" texturefile = "gfx/models/portraits/mammalian/tpop9.dds"}
+}
+portrait_groups = {
+	kappa = {
+		default = tpop7
+		game_setup = {
+			add = {
+				portraits = {
+					tpop7
+					tpop8
+					tpop9
+				}
+			}
+		}
+
+		leader = {
+			add = {
+				portraits = {
+					tpop7
+					tpop8
+					tpop9
+				}
+			}
+		}
+
+		ruler = {
+			add = {
+				portraits = {
+					tpop7
+					tpop8
+					tpop9
+				}
+			}
+		}
+
+
+		species = {
+			add = {
+				portraits = {
+					tpop7
+					tpop8
+					tpop9
+				}
+			}
+		}
+
+
+		pop = {
+			add = {
+				portraits = {
+					tpop7
+					tpop8
+					tpop9
+				}
+			}
+		}
+	}
+}

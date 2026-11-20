@@ -6,8 +6,7 @@
 - common/megastructures/11_mega_shipyard.txt：巨型船坞（自建完成、修复完成）的船坞数量 20 → 50
 - events/ancient_relics_arcsite_events_2.txt：关掉 ancrel.12050 里 1/4 概率随机生成天选民的那一支
   （其余权重不变；天选民改由本 MOD 的 atb_ex_spawn_chosen 固定在 8 点生成）
-- common/starbase_modules/00_starbase_modules.txt（3.0）：船坞模块的产能翻倍——每个船坞模块
-  原本同时造 1 艘，加一条 starbase_shipyard_capacity_add = 1 变成 2 艘（对所有国家生效）
+- （3.0～3.6 还覆盖过 common/starbase_modules/00_starbase_modules.txt 让船坞产能翻倍，3.7 起恢复原版）
 - common/ai_budget/01_alloys_budget.txt（3.0.3）：AI 超出海军容量后造舰预算大幅降低——×0.75 → ×0.1；
   「邻国成为天灾时 ×5」只在舰容 100% 以内生效（原版 150%）。AI 有了自动星球以后合金很多，原版规则下
   会一直超容造舰，舰船数量翻倍拖慢游戏（系列 21 实测）
@@ -49,32 +48,6 @@ PATCHES = [
                   "\t\t\t\t# \tlimit = { is_mindwardens_story_system = no }\n"
                   "\t\t\t\t# \tsystem_event = { id = fircon.3500 }\n"
                   "\t\t\t\t# }\n", 1)],
-    ),
-    dict(
-        path="common/starbase_modules/00_starbase_modules.txt",
-        header=[
-            "皇女的远征军EX：覆盖原版 common/starbase_modules/00_starbase_modules.txt。",
-            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：船坞模块（shipyard）",
-            "加了 station_modifier = { starbase_shipyard_capacity_add = 1 }，每个船坞模块同时造 2 艘船。",
-            "群星更新后用新版原版重新生成。",
-        ],
-        replace=[("shipyard = {\n"
-                  "\ticon = \"GFX_starbase_shipyard\"\n"
-                  "\tsection = \"ASSEMBLYYARD_STARBASE_SECTION\"\n"
-                  "\tconstruction_days = 180\n"
-                  "\tcategory = sm_naval_support_cat\n"
-                  "\tinitial = yes\n",
-                  "shipyard = {\n"
-                  "\ticon = \"GFX_starbase_shipyard\"\n"
-                  "\tsection = \"ASSEMBLYYARD_STARBASE_SECTION\"\n"
-                  "\tconstruction_days = 180\n"
-                  "\tcategory = sm_naval_support_cat\n"
-                  "\tinitial = yes\n"
-                  "\n"
-                  "\t# 皇女的远征军EX：船坞产能翻倍（每个模块同时造 2 艘）\n"
-                  "\tstation_modifier = {\n"
-                  "\t\tstarbase_shipyard_capacity_add = 1\n"
-                  "\t}\n", 1)],
     ),
     dict(
         path="common/ai_budget/01_alloys_budget.txt",

@@ -1,0 +1,1499 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
+
+# 东方角色：thl_leader_creator_core 建一个专属物种和一位领袖，add_<角色>_traits 加特质组。
+# 原作的领袖抽奖（thl_ethic_leader_creator）不搬；角色只能由国策开局获得，或用首都决议招募。
+# 每位东方领袖都带原版旗标 leader_death_events_blocked（不会死于意外事件）；
+# 仍会因寿命、舰队覆灭等死亡，死后由 atb_th.2 按初始等级和状态重新生成同一角色。
+# 东方领袖不计入领袖上限：游戏规则 should_count_towards_leader_cap 认 atb_th_leader 旗标（atb_th_rules.txt）。
+
+thl_leader_creator_core = {
+	create_species = {
+		name = UNKNOWN
+		class = $SPECIES_CLASS$
+		portrait = $LEADER_PORTRAIT$
+		name_list = $NAME_LIST|random_class$
+		immortal = $IMMORTAL_SPECIES|no$
+		traits = {
+			trait = "trait_enduring"
+		}
+		allow_negative_traits = no
+		effect = {
+			save_event_target_as = leader_species
+		}
+	}
+	create_leader = {
+		class = $CLASS$
+		tier = leader_tier_renowned
+		species = event_target:leader_species
+		name = $NAME$
+		skill = $LEVEL$
+		gender = $GENDER$
+		event_leader = no
+		background_ethic = ethic_$ETHIC$
+		skip_background_generation = yes
+		custom_description = $DESC$
+		custom_catch_phrase = $CATCH_PHRASE$
+		immortal = $IMMORTAL$
+		hide_age = $HIDEAGE|IMMORTAL$
+
+		randomize_traits = no
+		effect = {
+			set_skill = $LEVEL$
+			save_event_target_as = ethic_leader
+			set_leader_flag = renowned_leader
+			set_leader_flag = is_in_recruit_window
+			set_variable = { which = leader_pending_negative_traits_unmodified value = 1 }
+		}
+	}
+	last_created_leader = {
+		add_$TRAIT_GROUP$_traits = yes
+	}
+}
+
+create_tenshi_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x121
+		CLASS = commander
+		NAME = NAME_Tenshi
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = egalitarian
+		DESC = tenshi1
+		CATCH_PHRASE = tenshi1_catch_phrase
+		TRAIT_GROUP = tenshi
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_tenshi
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_suika_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x98
+		CLASS = commander
+		NAME = NAME_Suika
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = suika1
+		CATCH_PHRASE = suika1_catch_phrase
+		TRAIT_GROUP = suika
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_suika
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_sanae_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x72
+		CLASS = commander
+		NAME = NAME_Sanae
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = spiritualist
+		DESC = sanae1
+		CATCH_PHRASE = sanae1_catch_phrase
+		TRAIT_GROUP = sanae
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_sanae
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_sanae_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x72
+		CLASS = commander
+		NAME = NAME_Sanae
+		LEVEL = 5
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = spiritualist
+		DESC = sanae1
+		CATCH_PHRASE = sanae1_catch_phrase
+		TRAIT_GROUP = sanae
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_sanae
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_cirno_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x117
+		CLASS = commander
+		NAME = NAME_Cirno
+		LEVEL = 2
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = militarist
+		DESC = cirno1
+		CATCH_PHRASE = cirno1_catch_phrase
+		TRAIT_GROUP = cirno
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_cirno
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_meiling_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x89
+		CLASS = commander
+		NAME = NAME_Meiling
+		LEVEL = 3
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = militarist
+		DESC = meiling1
+		CATCH_PHRASE = meiling1_catch_phrase
+		TRAIT_GROUP = meiling
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_meiling
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_reimu_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x1
+		CLASS = commander
+		NAME = NAME_Reimu
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = egalitarian
+		DESC = reimu1
+		CATCH_PHRASE = reimu1_catch_phrase
+		TRAIT_GROUP = reimu
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_reimu
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_reimu_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x1
+		CLASS = commander
+		NAME = NAME_Reimu
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = egalitarian
+		DESC = reimu1
+		CATCH_PHRASE = reimu1_catch_phrase
+		TRAIT_GROUP = reimu
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_reimu
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_marisa_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x2
+		CLASS = commander
+		NAME = NAME_Marisa
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = militarist
+		DESC = marisa1
+		CATCH_PHRASE = marisa1_catch_phrase
+		TRAIT_GROUP = marisa
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_marisa
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_marisa_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x2
+		CLASS = commander
+		NAME = NAME_Marisa
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = militarist
+		DESC = marisa1
+		CATCH_PHRASE = marisa1_catch_phrase
+		TRAIT_GROUP = marisa
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_marisa
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_reisen_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x6
+		CLASS = commander
+		NAME = NAME_Reisen
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = pacifist
+		DESC = reisen1
+		CATCH_PHRASE = reisen1_catch_phrase
+		TRAIT_GROUP = reisen
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_reisen
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_reisen_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x6
+		CLASS = commander
+		NAME = NAME_Reisen
+		LEVEL = 5
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = pacifist
+		DESC = reisen1
+		CATCH_PHRASE = reisen1_catch_phrase
+		TRAIT_GROUP = reisen
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_reisen
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_youmu_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x150
+		CLASS = commander
+		NAME = NAME_Youmu
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = youmu1
+		CATCH_PHRASE = youmu1_catch_phrase
+		TRAIT_GROUP = youmu
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_youmu
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_youmu_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x150
+		CLASS = commander
+		NAME = NAME_Youmu
+		LEVEL = 5
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = youmu1
+		CATCH_PHRASE = youmu1_catch_phrase
+		TRAIT_GROUP = youmu
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_youmu
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_sakuya_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x88
+		CLASS = commander
+		NAME = NAME_Sakuya
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = authoritarian
+		DESC = sakuya1
+		CATCH_PHRASE = sakuya1_catch_phrase
+		TRAIT_GROUP = sakuya
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_sakuya
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_sakuya_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x88
+		CLASS = commander
+		NAME = NAME_Sakuya
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = authoritarian
+		DESC = sakuya1
+		CATCH_PHRASE = sakuya1_catch_phrase
+		TRAIT_GROUP = sakuya
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_sakuya
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_merry_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x48
+		CLASS = scientist
+		NAME = NAME_Merry
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = merry1
+		CATCH_PHRASE = merry1_catch_phrase
+		TRAIT_GROUP = merry
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_merry
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_merry_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x48
+		CLASS = scientist
+		NAME = NAME_Merry
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = merry1
+		CATCH_PHRASE = merry1_catch_phrase
+		TRAIT_GROUP = merry
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_merry
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_civic_renko_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x49
+		CLASS = scientist
+		NAME = NAME_Renko
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = renko1
+		CATCH_PHRASE = renko1_catch_phrase
+		TRAIT_GROUP = renko
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_civic_renko
+		set_leader_flag = leader_death_events_blocked
+		add_trait = { trait = thl_leader_trait_destined }
+	}
+}
+
+create_renko_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x49
+		CLASS = scientist
+		NAME = NAME_Renko
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = renko1
+		CATCH_PHRASE = renko1_catch_phrase
+		TRAIT_GROUP = renko
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_renko
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_satori_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x81
+		CLASS = official
+		NAME = NAME_Satori
+		LEVEL = 4
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = satori1
+		CATCH_PHRASE = satori1_catch_phrase
+		TRAIT_GROUP = satori
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_satori
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_koishi_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x82
+		CLASS = commander
+		NAME = NAME_Koishi
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = gestalt_consciousness
+		DESC = koishi1
+		CATCH_PHRASE = koishi1_catch_phrase
+		TRAIT_GROUP = koishi
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_koishi
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_aya_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x105
+		CLASS = official
+		NAME = NAME_Aya
+		LEVEL = 4
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = egalitarian
+		DESC = aya1
+		CATCH_PHRASE = aya1_catch_phrase
+		TRAIT_GROUP = aya
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_aya
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_shikieiki_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x110
+		CLASS = official
+		NAME = NAME_Shikieiki
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = authoritarian
+		DESC = shikieiki1
+		CATCH_PHRASE = shikieiki1_catch_phrase
+		TRAIT_GROUP = shikieiki
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_shikieiki
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_onoduka_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x108
+		CLASS = commander
+		NAME = NAME_Onoduka
+		LEVEL = 5
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = onoduka1
+		CATCH_PHRASE = onoduka1_catch_phrase
+		TRAIT_GROUP = onoduka
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_onoduka
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_patchouli_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x91
+		CLASS = scientist
+		NAME = NAME_Patchouli
+		LEVEL = 4
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = patchouli1
+		CATCH_PHRASE = patchouli1_catch_phrase
+		TRAIT_GROUP = patchouli
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_patchouli
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_remilia_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x63
+		CLASS = commander
+		NAME = NAME_Remilia
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = authoritarian
+		DESC = remilia1
+		CATCH_PHRASE = remilia1_catch_phrase
+		TRAIT_GROUP = remilia
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_remilia
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_alice_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x10
+		CLASS = official
+		NAME = NAME_Alice
+		LEVEL = 3
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = alice1
+		CATCH_PHRASE = alice1_catch_phrase
+		TRAIT_GROUP = alice
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_alice
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_yuyuko_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x16
+		CLASS = official
+		NAME = NAME_Yuyuko
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = spiritualist
+		DESC = yuyuko1
+		CATCH_PHRASE = yuyuko1_catch_phrase
+		TRAIT_GROUP = yuyuko
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_yuyuko
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_yuka_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x119
+		CLASS = official
+		NAME = NAME_Yuka
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = pacifist
+		DESC = yuka1
+		CATCH_PHRASE = yuka1_catch_phrase
+		TRAIT_GROUP = yuka
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_yuka
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_kosuzu_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x54
+		CLASS = scientist
+		NAME = NAME_Kosuzu
+		LEVEL = 4
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = kosuzu1
+		CATCH_PHRASE = kosuzu1_catch_phrase
+		TRAIT_GROUP = kosuzu
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_kosuzu
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_akyuu_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x53
+		CLASS = scientist
+		NAME = NAME_Akyuu
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = akyuu1
+		CATCH_PHRASE = akyuu1_catch_phrase
+		TRAIT_GROUP = akyuu
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_akyuu
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_rin_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x112
+		CLASS = official
+		NAME = NAME_Rin
+		LEVEL = 5
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = rin1
+		CATCH_PHRASE = rin1_catch_phrase
+		TRAIT_GROUP = rin
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_rin
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_utsuho_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x77
+		CLASS = commander
+		NAME = NAME_Utsuho
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = militarist
+		DESC = utsuho1
+		CATCH_PHRASE = utsuho1_catch_phrase
+		TRAIT_GROUP = utsuho
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_utsuho
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_nitori_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x125
+		CLASS = scientist
+		NAME = NAME_Nitori
+		LEVEL = 3
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = nitori1
+		CATCH_PHRASE =  nitori1_catch_phrase
+		TRAIT_GROUP = nitori
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_nitori
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_sizuha_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x73
+		CLASS = scientist
+		NAME = NAME_Sizuha
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = pacifist
+		DESC = sizuha1
+		CATCH_PHRASE =  sizuha1_catch_phrase
+		TRAIT_GROUP = sizuha
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_sizuha
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_minoriko_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x74
+		CLASS = official
+		NAME = NAME_Minoriko
+		LEVEL = 1
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = pacifist
+		DESC = minoriko1
+		CATCH_PHRASE =  minoriko1_catch_phrase
+		TRAIT_GROUP = minoriko
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_minoriko
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_hina_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x107
+		CLASS = commander
+		NAME = NAME_Hina
+		LEVEL = 2
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = hina1
+		CATCH_PHRASE =  hina1_catch_phrase
+		TRAIT_GROUP = hina
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_hina
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_mystia_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x3
+		CLASS = commander
+		NAME = NAME_Mystia
+		LEVEL = 2
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = mystia1
+		CATCH_PHRASE =  mystia1_catch_phrase
+		TRAIT_GROUP = mystia
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_mystia
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_tewi_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x9
+		CLASS = official
+		NAME = NAME_Tewi
+		LEVEL = 4
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = xenophile
+		DESC = tewi1
+		CATCH_PHRASE =  tewi1_catch_phrase
+		TRAIT_GROUP = tewi
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_tewi
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_kanako_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x124
+		CLASS = commander
+		NAME = NAME_Kanako
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = materialist
+		DESC = kanako1
+		CATCH_PHRASE =  kanako1_catch_phrase
+		TRAIT_GROUP = kanako
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_kanako
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_suwako_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x76
+		CLASS = official
+		NAME = NAME_Suwako
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = spiritualist
+		DESC = suwako1
+		CATCH_PHRASE =  suwako1_catch_phrase
+		TRAIT_GROUP = suwako
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_suwako
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+create_suwako_commander_leader = {
+	thl_leader_creator_core = {
+		SPECIES_CLASS = random_non_machine
+		LEADER_PORTRAIT = x76
+		CLASS = commander
+		NAME = NAME_Suwako
+		LEVEL = 6
+		GENDER = female
+		IMMORTAL = no
+		ETHIC = spiritualist
+		DESC = suwako1
+		CATCH_PHRASE =  suwako1_catch_phrase
+		TRAIT_GROUP = suwako_commander
+	}
+	last_created_leader = {
+		set_leader_flag = atb_th_leader
+		set_leader_flag = atb_th_rc_suwako_commander
+		set_leader_flag = leader_death_events_blocked
+	}
+}
+
+add_tenshi_traits = {
+	add_trait = { trait = subclass_commander_general show_message = no }
+	add_trait = { trait = leader_trait_fortress_cracker show_message = no }
+	add_trait = { trait = thl_leader_trait_crimson_sword show_message = no }
+	add_trait = { trait = leader_trait_unyielding show_message = no }
+	add_trait = { trait = leader_trait_hardy_2 show_message = no }
+	add_trait = { trait = leader_trait_commanding_presence show_message = no }
+	add_trait = { trait = leader_trait_lethargic show_message = no }
+	add_trait = { trait = leader_trait_volatile show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_earthquake show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = tenshi_leader
+	set_age = 17
+}
+
+add_suika_traits = {
+	add_trait = { trait = subclass_commander_lord show_message = no }
+	add_trait = { trait = subclass_commander_councilor show_message = no }
+	add_trait = { trait = subclass_commander_general show_message = no }
+	add_trait = { trait = thl_leader_trait_oni_power show_message = no }
+	add_trait = { trait = leader_trait_trickster show_message = no }
+	add_trait = { trait = leader_trait_thl_cultural_focus_2 show_message = no }
+	add_trait = { trait = leader_trait_dreaded show_message = no }
+	add_trait = { trait = leader_trait_venerated show_message = no }
+	add_trait = { trait = leader_trait_profligate show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_density show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = suika_leader
+	set_age = 17
+}
+
+add_sanae_traits = {
+	add_trait = { trait = subclass_commander_thl_miko show_message = no }
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_common_sense_killer show_message = no }
+	add_trait = { trait = thl_leader_trait_theurgist show_message = no }
+	add_trait = { trait = thl_leader_trait_robotist_sanae show_message = no }
+	add_trait = { trait = leader_trait_gullible show_message = no }
+	add_trait = { trait = leader_trait_unyielding show_message = no }
+	add_trait = { trait = leader_trait_crusader show_message = no }
+	add_trait = { trait = leader_trait_reckless_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_miracle show_message = no }
+	add_trait = { trait = thl_leader_trait_sanae_phase0 show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = sanae_leader
+	set_age = 17
+}
+
+add_cirno_traits = {
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = leader_trait_guerilla_tactics show_message = no }
+	add_trait = { trait = leader_trait_wrecker_2 show_message = no }
+	add_trait = { trait = leader_trait_reckless show_message = no }
+	add_trait = { trait = thl_leader_trait_bird_brain show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_3 show_message = no }
+	add_trait = { trait = thl_leader_trait_ice show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = cirno_leader
+	set_age = 17
+}
+
+add_meiling_traits = {
+	add_trait = { trait = subclass_commander_general show_message = no }
+	add_trait = { trait = leader_trait_survivalist show_message = no }
+	add_trait = { trait = leader_trait_home_guard show_message = no }
+	add_trait = { trait = leader_trait_warden show_message = no }
+	add_trait = { trait = leader_trait_reinforcer show_message = no }
+	add_trait = { trait = leader_trait_guardian show_message = no }
+	add_trait = { trait = leader_trait_lethargic_2 show_message = no }
+	add_trait = { trait = leader_trait_disorganized show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_kongfu show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = meiling_leader
+	set_age = 17
+}
+
+add_reimu_traits = {
+	add_trait = { trait = subclass_commander_thl_miko show_message = no }
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_invincible show_message = no }
+	add_trait = { trait = thl_leader_trait_like_cloud_and_water show_message = no }
+	add_trait = { trait = thl_leader_trait_theurgist show_message = no }
+	add_trait = { trait = thl_leader_trait_tracker show_message = no }
+	add_trait = { trait = thl_leader_exorcism_roud show_message = no }
+	add_trait = { trait = leader_trait_rocketry_specialization show_message = no }
+	add_trait = { trait = leader_trait_gifted_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_excessive_reimu show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_fly show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = reimu_leader
+	set_age = 17
+}
+
+add_marisa_traits = {
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_like_storm_and_wave show_message = no }
+	add_trait = { trait = thl_leader_trait_master_sacker show_message = no }
+	add_trait = { trait = thl_leader_trait_personal_relationship_genius show_message = no }
+	add_trait = { trait = leader_trait_reverse_engineer show_message = no }
+	add_trait = { trait = leader_trait_industrial_espionage_3 show_message = no }
+	add_trait = { trait = leader_trait_artillery_specialization show_message = no }
+	add_trait = { trait = thl_leader_trait_iron_ass show_message = no }
+	add_trait = { trait = leader_trait_slipshod show_message = no }
+	add_trait = { trait = leader_trait_embezzler_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_magician show_message = no }
+	add_trait = { trait = thl_leader_trait_magic show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = marisa_leader
+	set_age = 16
+}
+
+add_reisen_traits = {
+	add_trait = { trait = subclass_commander_servant show_message = no }
+	add_trait = { trait = subclass_commander_governor show_message = no }
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_penglai_medicine show_message = no }
+	add_trait = { trait = thl_leader_trait_prosperity_and_decline show_message = no }
+	add_trait = { trait = thl_leader_trait_moon_war_veteran show_message = no }
+	add_trait = { trait = leader_trait_academia_recruiter show_message = no }
+	add_trait = { trait = leader_trait_restrained show_message = no }
+	add_trait = { trait = leader_trait_cautious show_message = no }
+	add_trait = { trait = leader_trait_archaeo_specialization show_message = no }
+	add_trait = { trait = leader_trait_passive show_message = no }
+	add_trait = { trait = leader_trait_reclusive show_message = no }
+	add_trait = { trait = leader_trait_melancholic show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_wave_length show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = reisen_leader
+	set_age = 17
+}
+
+add_youmu_traits = {
+	add_trait = { trait = subclass_commander_servant show_message = no }
+	add_trait = { trait = subclass_commander_governor show_message = no }
+	add_trait = { trait = subclass_commander_general show_message = no }
+	add_trait = { trait = leader_trait_wholehearted show_message = no }
+	add_trait = { trait = thl_leader_trait_gardener show_message = no }
+	add_trait = { trait = leader_trait_bellicose show_message = no }
+	add_trait = { trait = leader_trait_heavy_hitter_2 show_message = no }
+	add_trait = { trait = leader_trait_gale_speed show_message = no }
+	add_trait = { trait = leader_trait_passive show_message = no }
+	add_trait = { trait = leader_trait_gullible show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_kendo show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = youmu_leader
+	set_age = 17
+}
+
+add_sakuya_traits = {
+	add_trait = { trait = subclass_commander_servant show_message = no }
+	add_trait = { trait = subclass_commander_governor show_message = no }
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_year_round show_message = no }
+	add_trait = { trait = leader_trait_arbiter show_message = no }
+	add_trait = { trait = leader_trait_thl_pop_focused_3 show_message = no }
+	add_trait = { trait = leader_trait_iron_fist show_message = no }
+	add_trait = { trait = leader_trait_sadistic show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_time show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = sakuya_leader
+	set_age = 20
+}
+
+add_merry_traits = {
+	add_trait = { trait = subclass_scientist_councilor show_message = no }
+	add_trait = { trait = thl_leader_trait_hifuu show_message = no }
+	add_trait = { trait = thl_leader_trait_century_of_science show_message = no }
+	add_trait = { trait = leader_trait_truth_seeker show_message = no }
+	add_trait = { trait = thl_leader_trait_relativistic_psychiatry show_message = no }
+	add_trait = { trait = leader_trait_academic_astral_rift_expert_3 show_message = no }
+	add_trait = { trait = leader_trait_roamer show_message = no }
+	add_trait = { trait = leader_trait_gifted_2 show_message = no }
+	add_trait = { trait = leader_trait_opinionated_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_border_merry show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = merry_leader
+	set_age = 17
+}
+
+add_renko_traits = {
+	add_trait = { trait = subclass_scientist_explorer show_message = no }
+	add_trait = { trait = thl_leader_trait_hifuu show_message = no }
+	add_trait = { trait = thl_leader_trait_century_of_science show_message = no }
+	add_trait = { trait = thl_leader_trait_super_unified_physics show_message = no }
+	add_trait = { trait = leader_trait_midas_touch show_message = no }
+	add_trait = { trait = leader_trait_academic_astral_rift_expert_2 show_message = no }
+	add_trait = { trait = leader_trait_science_communicator show_message = no }
+	add_trait = { trait = leader_trait_archaeologist show_message = no }
+	add_trait = { trait = leader_trait_opinionated show_message = no }
+	add_trait = { trait = thl_leader_trait_star_located show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = renko_leader
+	set_age = 17
+}
+
+add_satori_traits = {
+	add_trait = { trait = subclass_official_economy_councilor show_message = no }
+	add_trait = { trait = thl_leader_trait_subterran_manager show_message = no }
+	add_trait = { trait = thl_leader_trait_satori_pets show_message = no }
+	add_trait = { trait = thl_leader_trait_detective show_message = no }
+	add_trait = { trait = leader_trait_supreme_organizer show_message = no }
+	add_trait = { trait = leader_trait_emotional_support_pet show_message = no }
+	add_trait = { trait = leader_trait_procrastinator show_message = no }
+	add_trait = { trait = leader_trait_irenic show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_mind_reader show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = satori_leader
+	set_age = 17
+}
+
+add_koishi_traits = {
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = leader_trait_fanatic show_message = no }
+	add_trait = { trait = leader_trait_annihilator_2 show_message = no }
+	add_trait = { trait = leader_trait_wrecker_2 show_message = no }
+	add_trait = { trait = leader_trait_skirmisher show_message = no }
+	add_trait = { trait = leader_trait_volatile show_message = no }
+	add_trait = { trait = leader_trait_passive show_message = no }
+	add_trait = { trait = leader_trait_emotional_support_pet show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_subconscious show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = koishi_leader
+	set_age = 17
+}
+
+add_aya_traits = {
+	add_trait = { trait = subclass_official_diplomacy_councilor show_message = no }
+	add_trait = { trait = leader_trait_master_diplomat show_message = no }
+	add_trait = { trait = thl_leader_trait_information_war show_message = no }
+	add_trait = { trait = leader_trait_ambassador_bully show_message = no }
+	add_trait = { trait = leader_trait_ambassador_ear_to_the_ground show_message = no }
+	add_trait = { trait = leader_trait_ambassador_favor_maker show_message = no }
+	add_trait = { trait = leader_trait_ambassador_whisper_networks show_message = no }
+	add_trait = { trait = leader_trait_lavish_lifestyle show_message = no }
+	add_trait = { trait = leader_trait_gullible_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_wind show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = aya_leader
+	set_age = 17
+}
+
+add_shikieiki_traits = {
+	add_trait = { trait = subclass_official_economy_councilor show_message = no }
+	add_trait = { trait = thl_leader_trait_mirror show_message = no }
+	add_trait = { trait = thl_leader_trait_sermon show_message = no }
+	add_trait = { trait = thl_thl_leader_trait_death_deal show_message = no }
+	add_trait = { trait = leader_trait_master_bureaucrat show_message = no }
+	add_trait = { trait = leader_trait_righteous_2 show_message = no }
+	add_trait = { trait = leader_trait_stubborn show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_trial show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = shikieiki_leader
+	set_age = 17
+}
+
+add_onoduka_traits = {
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_price_of_life show_message = no }
+	add_trait = { trait = thl_leader_trait_cost_for_work show_message = no }
+	add_trait = { trait = leader_trait_destiny_engineer show_message = no }
+	add_trait = { trait = leader_trait_corsair_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_distance show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = leader_trait_lethargic_2 show_message = no }
+	set_leader_flag = touhou_leader
+	set_leader_flag = legendary_leader
+	set_leader_flag = onoduka_leader
+	set_age = 17
+}
+
+add_patchouli_traits = {
+	add_trait = { trait = subclass_scientist_councilor show_message = no }
+	add_trait = { trait = leader_trait_great_researcher show_message = no }
+	add_trait = { trait = leader_trait_science_communicator_3 show_message = no }
+	add_trait = { trait = thl_leader_trait_elements show_message = no }
+	add_trait = { trait = thl_leader_trait_knowledge show_message = no }
+	add_trait = { trait = thl_leader_trait_summon_devils show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = leader_trait_neurotic_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_great_magician show_message = no }
+	add_trait = { trait = thl_leader_trait_sick show_message = no }
+	set_age = 100
+}
+
+add_remilia_traits = {
+	add_trait = { trait = subclass_commander_lord show_message = no }
+	add_trait = { trait = subclass_commander_councilor show_message = no }
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_blood_magic show_message = no }
+	add_trait = { trait = thl_leader_trait_bloody_charm show_message = no }
+	add_trait = { trait = thl_leader_trait_gungnir show_message = no }
+	add_trait = { trait = leader_trait_supreme_admiral show_message = no }
+	add_trait = { trait = leader_trait_carrier_specialization show_message = no }
+	add_trait = { trait = leader_trait_legendary_gunboat_diplomacy show_message = no }
+	add_trait = { trait = leader_trait_volatile show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_destiny_manipulation show_message = no }
+	set_age = 500
+}
+
+add_alice_traits = {
+	add_trait = { trait = subclass_official_governor show_message = no }
+	add_trait = { trait = leader_trait_automation_champion show_message = no }
+	add_trait = { trait = leader_trait_intellectual show_message = no }
+	add_trait = { trait = leader_trait_industrial_focus show_message = no }
+	add_trait = { trait = leader_trait_assembler show_message = no }
+	add_trait = { trait = thl_leader_trait_dolls show_message = no }
+	add_trait = { trait = thl_leader_trait_puppet_show show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = thl_leader_trait_great_magician show_message = no }
+	add_trait = { trait = leader_trait_intolerant show_message = no }
+	set_age = 20
+}
+
+add_yuyuko_traits = {
+	add_trait = { trait = subclass_official_economy_councilor show_message = no }
+	add_trait = { trait = leader_trait_efficient show_message = no }
+	add_trait = { trait = leader_trait_legendary_scientific_diplomacy show_message = no }
+	add_trait = { trait = trait_ruler_charismatic_2 show_message = no }
+	add_trait = { trait = leader_trait_cultural_focus show_message = no }
+	add_trait = { trait = thl_leader_trait_death show_message = no }
+	add_trait = { trait = thl_leader_trait_sakura show_message = no }
+	add_trait = { trait = thl_leader_trait_dance show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_yuyuko_eater show_message = no }
+	set_age = 1010
+}
+
+add_yuka_traits = {
+	add_trait = { trait = subclass_official_governor show_message = no }
+	add_trait = { trait = leader_trait_pop_focused_2 show_message = no }
+	add_trait = { trait = leader_trait_agrarian_upbringing show_message = no }
+	add_trait = { trait = leader_trait_naturalist_3 show_message = no }
+	add_trait = { trait = thl_leader_trait_flower show_message = no }
+	add_trait = { trait = thl_leader_trait_incarnation_of_nature show_message = no }
+	add_trait = { trait = thl_leader_trait_sleeping_terror show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	add_trait = { trait = leader_trait_sadistic_2 show_message = no }
+	add_trait = { trait = leader_trait_tyrannical show_message = no }
+	set_age = 728
+}
+
+add_kosuzu_traits = {
+	add_trait = { trait = subclass_scientist_scholar show_message = no }
+	add_trait = { trait = leader_trait_collective_wisdom show_message = no }
+	add_trait = { trait = leader_trait_science_communicator show_message = no }
+	add_trait = { trait = leader_trait_meticulous_2 show_message = no }
+	add_trait = { trait = leader_trait_archaeologist show_message = no }
+	add_trait = { trait = leader_trait_paranoid show_message = no }
+	add_trait = { trait = leader_trait_embezzler_2 show_message = no }
+	add_trait = { trait = thl_leader_trait_words show_message = no }
+	add_trait = { trait = thl_leader_trait_books show_message = no }
+	set_age = 11
+}
+
+add_akyuu_traits = {
+	add_trait = { trait = subclass_scientist_councilor show_message = no }
+	add_trait = { trait = leader_trait_xeno_cataloger show_message = no }
+	add_trait = { trait = leader_trait_society_focus show_message = no }
+	add_trait = { trait = leader_trait_science_communicator_3 show_message = no }
+	add_trait = { trait = thl_leader_trait_memory show_message = no }
+	add_trait = { trait = thl_leader_trait_the_ninth_savage show_message = no }
+	add_trait = { trait = thl_leader_trait_bridge_of_gensokyo show_message = no }
+	add_trait = { trait = thl_leader_trait_speculative_fiction show_message = no }
+	add_trait = { trait = thl_leader_trait_short_life show_message = no }
+	set_age = 12
+}
+
+add_rin_traits = {
+	add_trait = { trait = subclass_official_governor show_message = no }
+	add_trait = { trait = leader_trait_expert_survivalist show_message = no }
+	add_trait = { trait = leader_trait_distribution_lines_2 show_message = no }
+	add_trait = { trait = leader_trait_army_veteran show_message = no }
+	add_trait = { trait = leader_trait_forge_focus_3 show_message = no }
+	add_trait = { trait = thl_leader_trait_corpse_travel show_message = no }
+	add_trait = { trait = thl_leader_trait_corpse_manipulation show_message = no }
+	add_trait = { trait = leader_trait_polluter show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	set_age = 17
+}
+
+add_utsuho_traits = {
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = leader_trait_master_gunner show_message = no }
+	add_trait = { trait = leader_trait_legendary_foe_hammer show_message = no }
+	add_trait = { trait = leader_trait_annihilator_2 show_message = no }
+	add_trait = { trait = leader_trait_demolisher_2 show_message = no }
+	add_trait = { trait = leader_trait_legendary_dreamlike show_message = no }
+	add_trait = { trait = thl_leader_trait_nuclear show_message = no }
+	add_trait = { trait = thl_leader_trait_fusion_energy show_message = no }
+	add_trait = { trait = thl_leader_trait_bird_brain show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	set_age = 17
+}
+
+add_nitori_traits = {
+	add_trait = { trait = subclass_scientist_governor show_message = no }
+	add_trait = { trait = thl_leader_trait_water show_message = no }
+	add_trait = { trait = leader_trait_robotist show_message = no }
+	add_trait = { trait = thl_leader_trait_super_youkai_slug show_message = no }
+	add_trait = { trait = thl_leader_trait_convenience_house show_message = no }
+	add_trait = { trait = thl_leader_trait_engineer_in_water show_message = no }
+	add_trait = { trait = thl_leader_trait_optical_camouflage show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	add_trait = { trait = leader_trait_insider_trading_2 show_message = no }
+	add_trait = { trait = leader_trait_passive show_message = no }
+	set_age = 17
+}
+
+add_sizuha_traits = {
+	add_trait = { trait = subclass_scientist_explorer show_message = no }
+	add_trait = { trait = thl_leader_trait_fall show_message = no }
+	add_trait = { trait = leader_trait_surveyor show_message = no }
+	add_trait = { trait = leader_trait_prospector show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	add_trait = { trait = leader_trait_paranoid show_message = no }
+}
+
+add_minoriko_traits = {
+	add_trait = { trait = subclass_official_governor show_message = no }
+	add_trait = { trait = thl_leader_trait_harvest show_message = no }
+	add_trait = { trait = leader_trait_utopian_idealist show_message = no }
+	add_trait = { trait = trait_ruler_fertility_preacher show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	add_trait = { trait = leader_trait_profligate show_message = no }
+}
+
+add_hina_traits = {
+	add_trait = { trait = subclass_commander_governor show_message = no }
+	add_trait = { trait = thl_leader_trait_jinx show_message = no }
+	add_trait = { trait = leader_trait_mediator show_message = no }
+	add_trait = { trait = leader_trait_restrained show_message = no }
+	add_trait = { trait = leader_trait_dreaded show_message = no }
+	add_trait = { trait = leader_trait_uninspiring show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+}
+
+add_mystia_traits = {
+	add_trait = { trait = subclass_commander_governor show_message = no }
+	add_trait = { trait = thl_leader_trait_song show_message = no }
+	add_trait = { trait = leader_trait_bellicose show_message = no }
+	add_trait = { trait = thl_leader_trait_izakaya show_message = no }
+	add_trait = { trait = thl_leader_trait_youkai_punk show_message = no }
+	add_trait = { trait = leader_trait_micromanager show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+}
+
+add_tewi_traits = {
+	add_trait = { trait = subclass_official_governor show_message = no }
+	add_trait = { trait = leader_trait_totalitarian show_message = no }
+	add_trait = { trait = thl_leader_trait_luck show_message = no }
+	add_trait = { trait = thl_leader_trait_rabbit_leader show_message = no }
+	add_trait = { trait = thl_leader_trait_rabbit_spy show_message = no }
+	add_trait = { trait = leader_trait_consul_general show_message = no }
+	add_trait = { trait = leader_trait_trade_focus show_message = no }
+	add_trait = { trait = leader_trait_embezzler show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	set_age = 2100
+}
+
+add_kanako_traits = {
+	add_trait = { trait = subclass_commander_lord show_message = no }
+	add_trait = { trait = subclass_commander_councilor show_message = no }
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = leader_trait_master_gunner show_message = no }
+	add_trait = { trait = thl_leader_trait_heaven show_message = no }
+	add_trait = { trait = thl_leader_trait_godness_of_war show_message = no }
+	add_trait = { trait = leader_trait_fleet_logistician show_message = no }
+	add_trait = { trait = leader_trait_unyielding show_message = no }
+	add_trait = { trait = leader_trait_artillery_specialization show_message = no }
+	add_trait = { trait = leader_trait_lethargic_2 show_message = no }
+	add_trait = { trait = leader_trait_armchair_commander show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	set_age = 2000
+}
+
+add_suwako_traits = {
+	add_trait = { trait = subclass_official_governor show_message = no }
+	add_trait = { trait = leader_trait_shroud_preacher show_message = no }
+	add_trait = { trait = thl_leader_trait_earth show_message = no }
+	add_trait = { trait = thl_leader_trait_no_fear_of_storm show_message = no }
+	add_trait = { trait = leader_trait_forge_focus_3 show_message = no }
+	add_trait = { trait = leader_trait_distribution_lines_3 show_message = no }
+	add_trait = { trait = leader_trait_environmental_engineer show_message = no }
+	add_trait = { trait = leader_trait_settler_2 show_message = no }
+	add_trait = { trait = leader_trait_assembler show_message = no }
+	add_trait = { trait = leader_trait_sadistic show_message = no }
+	add_trait = { trait = leader_trait_gullible show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	set_age = 2300
+}
+
+add_suwako_commander_traits = {
+	add_trait = { trait = subclass_commander_admiral show_message = no }
+	add_trait = { trait = thl_leader_trait_future_and_past show_message = no }
+	add_trait = { trait = thl_leader_trait_earth show_message = no }
+	add_trait = { trait = thl_leader_trait_no_fear_of_storm show_message = no }
+	add_trait = { trait = leader_trait_rocketry_specialization_2 show_message = no }
+	add_trait = { trait = leader_trait_gunship_specialization_2 show_message = no }
+	add_trait = { trait = leader_trait_archaeo_specialization_2 show_message = no }
+	add_trait = { trait = leader_trait_commanding_presence_2 show_message = no }
+	add_trait = { trait = trait_ruler_corvette_focus show_message = no }
+	add_trait = { trait = leader_trait_sadistic show_message = no }
+	add_trait = { trait = leader_trait_gullible show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
+	set_age = 2300
+}

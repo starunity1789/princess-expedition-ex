@@ -1,0 +1,18 @@
+# 由 tools/gen_touhou.py 从「东方project领袖」抽取
+objectTypes = {
+	pdxmesh = {
+		name = "Masterspark_mesh"
+		file = "gfx/models/combat_items/fantasia_bullet_spellcard_effect.mesh"
+		scale = 1.6
+				animation = { id = "idle"			type = "Masterspark_idle_animation" }
+	}
+	pdxmesh = {
+		name = "Masterspark_ring_mesh"
+		file = "gfx/models/combat_items/Masterspark_ring.mesh"
+		scale = 1.0
+				animation = { id = "idle"			type = "Masterspark_ring_idle_animation" }
+		meshsettings = {
+			shader = "PdxMeshAlphaAdditive"
+		}
+	}
+}
