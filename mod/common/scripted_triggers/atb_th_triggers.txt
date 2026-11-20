@@ -1,40 +1,52 @@
 # 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
 
-# 国家作用域：还有没招募到的东方角色（34 位）
-atb_th_has_unrecruited = {
+# 国家作用域：还有没招募到的东方科学家（7 位：akyuu kosuzu merry nitori patchouli renko sizuha）
+atb_th_has_unrecruited_scientist = {
 	NAND = {
 		has_country_flag = atb_th_got_akyuu
-		has_country_flag = atb_th_got_alice
-		has_country_flag = atb_th_got_aya
+		has_country_flag = atb_th_got_kosuzu
+		has_country_flag = atb_th_got_merry
+		has_country_flag = atb_th_got_nitori
+		has_country_flag = atb_th_got_patchouli
+		has_country_flag = atb_th_got_renko
+		has_country_flag = atb_th_got_sizuha
+	}
+}
+
+# 国家作用域：还有没招募到的东方指挥官（17 位：cirno hina kanako koishi marisa meiling mystia onoduka reimu reisen remilia sakuya sanae suika tenshi utsuho youmu）
+atb_th_has_unrecruited_commander = {
+	NAND = {
 		has_country_flag = atb_th_got_cirno
 		has_country_flag = atb_th_got_hina
 		has_country_flag = atb_th_got_kanako
 		has_country_flag = atb_th_got_koishi
-		has_country_flag = atb_th_got_kosuzu
 		has_country_flag = atb_th_got_marisa
 		has_country_flag = atb_th_got_meiling
-		has_country_flag = atb_th_got_merry
-		has_country_flag = atb_th_got_minoriko
 		has_country_flag = atb_th_got_mystia
-		has_country_flag = atb_th_got_nitori
 		has_country_flag = atb_th_got_onoduka
-		has_country_flag = atb_th_got_patchouli
 		has_country_flag = atb_th_got_reimu
 		has_country_flag = atb_th_got_reisen
 		has_country_flag = atb_th_got_remilia
-		has_country_flag = atb_th_got_renko
-		has_country_flag = atb_th_got_rin
 		has_country_flag = atb_th_got_sakuya
 		has_country_flag = atb_th_got_sanae
-		has_country_flag = atb_th_got_satori
-		has_country_flag = atb_th_got_shikieiki
-		has_country_flag = atb_th_got_sizuha
 		has_country_flag = atb_th_got_suika
-		has_country_flag = atb_th_got_suwako
 		has_country_flag = atb_th_got_tenshi
-		has_country_flag = atb_th_got_tewi
 		has_country_flag = atb_th_got_utsuho
 		has_country_flag = atb_th_got_youmu
+	}
+}
+
+# 国家作用域：还有没招募到的东方行政官（10 位：alice aya minoriko rin satori shikieiki suwako tewi yuka yuyuko）
+atb_th_has_unrecruited_official = {
+	NAND = {
+		has_country_flag = atb_th_got_alice
+		has_country_flag = atb_th_got_aya
+		has_country_flag = atb_th_got_minoriko
+		has_country_flag = atb_th_got_rin
+		has_country_flag = atb_th_got_satori
+		has_country_flag = atb_th_got_shikieiki
+		has_country_flag = atb_th_got_suwako
+		has_country_flag = atb_th_got_tewi
 		has_country_flag = atb_th_got_yuka
 		has_country_flag = atb_th_got_yuyuko
 	}

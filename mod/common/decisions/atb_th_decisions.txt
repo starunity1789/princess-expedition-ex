@@ -1,8 +1,80 @@
 # 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
 
-# 招募幻想乡来客：玩家首都决议，花 2000 食物随机招募一位还没有的东方角色，直到全部招到。
+# 招募幻想乡来客：玩家首都决议，按职业分三个，花食物随机招募一位还没有的该职业东方角色，直到招完。
 # 这是东方国策之外唯一的获得途径；AI 看不到。
-decision_atb_th_recruit = {
+
+# 500 食物：随机招募一位还没有的东方科学家（7 位）
+decision_atb_th_recruit_scientist = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_luxuries
+
+	resources = {
+		category = decisions
+		cost = {
+			food = 500
+		}
+	}
+
+	potential = {
+		is_capital = yes
+		owner = {
+			is_ai = no
+			atb_th_has_unrecruited_scientist = yes
+		}
+	}
+
+	effect = {
+		custom_tooltip = decision_atb_th_recruit_scientist_tt
+		hidden_effect = {
+			owner = {
+				atb_th_recruit_scientist = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# 1000 食物：随机招募一位还没有的东方指挥官（17 位）
+decision_atb_th_recruit_commander = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_luxuries
+
+	resources = {
+		category = decisions
+		cost = {
+			food = 1000
+		}
+	}
+
+	potential = {
+		is_capital = yes
+		owner = {
+			is_ai = no
+			atb_th_has_unrecruited_commander = yes
+		}
+	}
+
+	effect = {
+		custom_tooltip = decision_atb_th_recruit_commander_tt
+		hidden_effect = {
+			owner = {
+				atb_th_recruit_commander = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# 2000 食物：随机招募一位还没有的东方行政官（10 位）
+decision_atb_th_recruit_official = {
 	owned_planets_only = yes
 	sound = event_administrative_work
 	icon = decision_luxuries
@@ -18,15 +90,15 @@ decision_atb_th_recruit = {
 		is_capital = yes
 		owner = {
 			is_ai = no
-			atb_th_has_unrecruited = yes
+			atb_th_has_unrecruited_official = yes
 		}
 	}
 
 	effect = {
-		custom_tooltip = decision_atb_th_recruit_tt
+		custom_tooltip = decision_atb_th_recruit_official_tt
 		hidden_effect = {
 			owner = {
-				atb_th_recruit_random = yes
+				atb_th_recruit_official = yes
 			}
 		}
 	}

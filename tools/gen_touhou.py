@@ -33,7 +33,8 @@ GAME = Path(r"C:\Program Files (x86)\Steam\steamapps\common\Stellaris")
 if not (TH / "common").exists():
     raise SystemExit(f"找不到东方project领袖：{TH}")
 HEAD = "# 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改\n"
-FOOD_COST = 2000
+RECRUIT_COST = {"scientist": 500, "commander": 1000, "official": 2000}   # 招募决议的食物花费
+CLASS_ZH = {"scientist": "科学家", "commander": "指挥官", "official": "行政官"}
 
 
 # ---------------------------------------------------------------- 解析工具
@@ -452,34 +453,37 @@ write("common/game_rules/atb_th_rules.txt", HEAD + """
 # This = leader
 """ + rule + "\n")
 
-# ---------------------------------------------------------------- 招募决议
-nand = "\n".join(f"\t\thas_country_flag = atb_th_got_{ch}" for ch in RECRUIT)
-entries = "\n".join(f"""		10 = {{
+# ---------------------------------------------------------------- 招募决议（按职业分三个）
+def char_class(fn):
+    blk = clean(DEFS[fn][1])
+    return re.search(r"(?<!\w)CLASS\s*=\s*(\w+)", blk).group(1)
+
+
+RCLASS = {ch: char_class(fn) for ch, fn in RECRUIT.items()}
+trig, effs, decs = [], [], []
+for cls, cost in RECRUIT_COST.items():
+    chars = [ch for ch in RECRUIT if RCLASS[ch] == cls]
+    assert chars, cls
+    nand = "\n".join(f"\t\thas_country_flag = atb_th_got_{ch}" for ch in chars)
+    entries = "\n".join(f"""		10 = {{
 			modifier = {{ factor = 0 has_country_flag = atb_th_got_{ch} }}
-			{fn} = yes
+			{RECRUIT[ch]} = yes
 			set_country_flag = atb_th_got_{ch}
-		}}""" for ch, fn in RECRUIT.items())
-write("common/scripted_triggers/atb_th_triggers.txt", HEAD + f"""
-# 国家作用域：还有没招募到的东方角色（{len(RECRUIT)} 位）
-atb_th_has_unrecruited = {{
+		}}""" for ch in chars)
+    trig.append(f"""# 国家作用域：还有没招募到的东方{CLASS_ZH[cls]}（{len(chars)} 位：{' '.join(chars)}）
+atb_th_has_unrecruited_{cls} = {{
 	NAND = {{
 {nand}
 	}}
-}}
-""")
-write("common/scripted_effects/atb_th_recruit_effects.txt", HEAD + f"""
-# 国家作用域：随机招募一位还没有的东方角色
-atb_th_recruit_random = {{
+}}""")
+    effs.append(f"""# 国家作用域：随机招募一位还没有的东方{CLASS_ZH[cls]}
+atb_th_recruit_{cls} = {{
 	random_list = {{
 {entries}
 	}}
-}}
-
-""")
-write("common/decisions/atb_th_decisions.txt", HEAD + f"""
-# 招募幻想乡来客：玩家首都决议，花 {FOOD_COST} 食物随机招募一位还没有的东方角色，直到全部招到。
-# 这是东方国策之外唯一的获得途径；AI 看不到。
-decision_atb_th_recruit = {{
+}}""")
+    decs.append(f"""# {cost} 食物：随机招募一位还没有的东方{CLASS_ZH[cls]}（{len(chars)} 位）
+decision_atb_th_recruit_{cls} = {{
 	owned_planets_only = yes
 	sound = event_administrative_work
 	icon = decision_luxuries
@@ -487,7 +491,7 @@ decision_atb_th_recruit = {{
 	resources = {{
 		category = decisions
 		cost = {{
-			food = {FOOD_COST}
+			food = {cost}
 		}}
 	}}
 
@@ -495,15 +499,15 @@ decision_atb_th_recruit = {{
 		is_capital = yes
 		owner = {{
 			is_ai = no
-			atb_th_has_unrecruited = yes
+			atb_th_has_unrecruited_{cls} = yes
 		}}
 	}}
 
 	effect = {{
-		custom_tooltip = decision_atb_th_recruit_tt
+		custom_tooltip = decision_atb_th_recruit_{cls}_tt
 		hidden_effect = {{
 			owner = {{
-				atb_th_recruit_random = yes
+				atb_th_recruit_{cls} = yes
 			}}
 		}}
 	}}
@@ -511,8 +515,14 @@ decision_atb_th_recruit = {{
 	ai_weight = {{
 		weight = 0
 	}}
-}}
-""")
+}}""")
+write("common/scripted_triggers/atb_th_triggers.txt", HEAD + "\n" + "\n\n".join(trig) + "\n")
+write("common/scripted_effects/atb_th_recruit_effects.txt", HEAD + "\n" + "\n\n".join(effs) + "\n")
+write("common/decisions/atb_th_decisions.txt", HEAD + """
+# 招募幻想乡来客：玩家首都决议，按职业分三个，花食物随机招募一位还没有的该职业东方角色，直到招完。
+# 这是东方国策之外唯一的获得途径；AI 看不到。
+
+""" + "\n\n".join(decs) + "\n")
 
 # ---------------------------------------------------------------- 武器：普通科技
 sets = "\n\n".join(keyed_block("component_sets", "component_set", k) for k in ("MASTER_SPARK", "FINAL_SPARK"))
@@ -767,9 +777,15 @@ while todo:
             keep_loc.add(ref)
             todo.append(ref)
 own = {
-    "decision_atb_th_recruit": "招募幻想乡来客",
-    "decision_atb_th_recruit_desc": "据说银河的某处连着一片被结界隔开的土地。只要备足宴席所需的食物，那里的少女们或许愿意前来做客，甚至留下来。",
-    "decision_atb_th_recruit_tt": "随机招募一位尚未加入的§Y东方角色§!，直到全部招到。",
+    "decision_atb_th_recruit_scientist": "招募幻想乡来客：科学家",
+    "decision_atb_th_recruit_scientist_desc": "据说银河的某处连着一片被结界隔开的土地。只要备足宴席所需的食物，那里的少女们或许愿意前来做客，甚至留下来。",
+    "decision_atb_th_recruit_scientist_tt": "随机招募一位尚未加入的§Y东方科学家§!，直到全部招到。",
+    "decision_atb_th_recruit_commander": "招募幻想乡来客：指挥官",
+    "decision_atb_th_recruit_commander_desc": "据说银河的某处连着一片被结界隔开的土地。只要备足宴席所需的食物，那里的少女们或许愿意前来做客，甚至留下来。",
+    "decision_atb_th_recruit_commander_tt": "随机招募一位尚未加入的§Y东方指挥官§!，直到全部招到。",
+    "decision_atb_th_recruit_official": "招募幻想乡来客：行政官",
+    "decision_atb_th_recruit_official_desc": "据说银河的某处连着一片被结界隔开的土地。只要备足宴席所需的食物，那里的少女们或许愿意前来做客，甚至留下来。",
+    "decision_atb_th_recruit_official_tt": "随机招募一位尚未加入的§Y东方行政官§!，直到全部招到。",
     "thl_leader_trait_regeneration_effect": "遭遇§R致命事故§!时不会死亡；超出预期寿命时仍会自然死亡。",
 }
 # 原作缺本地化的 II / III 级特质：名字用「基础名 II/III」，说明沿用基础特质

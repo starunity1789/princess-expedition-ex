@@ -24,7 +24,7 @@ d_atb_fortress_core = {
 	}
 }
 
-# 帝国星海纪念碑：凝聚力 +20/月
+# 帝国星海纪念碑：凝聚力 +66/月（3.8：原 +20）
 d_atb_star_sea_monument = {
 	is_for_colonizable = yes
 	category = deposit_cat_rare
@@ -33,7 +33,7 @@ d_atb_star_sea_monument = {
 	resources = {
 		category = planet_deposits
 		produces = {
-			unity = 20
+			unity = 66
 		}
 	}
 

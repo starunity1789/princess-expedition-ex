@@ -330,6 +330,7 @@ checks += [
      for x in ("name = atb_species_rl_dragonkin", "trait = trait_nivlac", "trait = trait_robust", "trait = trait_psionic", "trait = trait_stargazer"))),
     ("3.6：三皇女异常发现 +50%、要塞工程学 +30", "ship_anomaly_generation_chance_mult = 0.5" in read(MOD / "common/traits/atb_leader_traits.txt")
      and "engineering_research = 60" in read(MOD / "common/deposits/atb_deposits.txt")),
+    ("3.8：星海纪念碑凝聚力 +66", "unity = 66" in read(MOD / "common/deposits/atb_deposits.txt")),
     ("3.6：灵能之路（二皇女事件 + 四处原版条件开例外）", "id = atb.50" in read(MOD / "events/atb_events.txt")
      and all(exists(f) and "atb_psionic_path_open" in read(MOD / f) for f in (
          "common/ascension_perks/00_ascension_paths.txt", "common/tradition_categories/01_psionics_shroud.txt",
@@ -355,7 +356,8 @@ checks += [
     ("3.7：东方project领袖——13 国策、13 议员、34 位角色、招募决议、两件武器、河童飞地",
      len(re.findall(r"(?m)^civic_\w+ = \{", read(MOD / "common/governments/civics/atb_th_civics.txt"))) == 13
      and read(MOD / "common/scripted_effects/atb_th_recruit_effects.txt").count("set_country_flag = atb_th_got_") == 34
-     and "food = 2000" in read(MOD / "common/decisions/atb_th_decisions.txt")
+     and all(f"food = {c}" in read(MOD / "common/decisions/atb_th_decisions.txt") for c in (500, 1000, 2000))
+     and all(f"decision_atb_th_recruit_{c} = {{" in read(MOD / "common/decisions/atb_th_decisions.txt") for c in ("scientist", "commander", "official"))
      and all(x in read(MOD / "common/technology/atb_th_tech.txt") for x in ('"tech_energy_lance_2"', '"tech_master_spark" "tech_titans"'))
      and "marisa_leader" not in read(MOD / "common/technology/atb_th_tech.txt")
      and "initializer = kappa_enclave_init" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")

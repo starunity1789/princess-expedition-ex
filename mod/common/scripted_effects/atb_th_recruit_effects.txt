@@ -1,7 +1,7 @@
 # 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
 
-# 国家作用域：随机招募一位还没有的东方角色
-atb_th_recruit_random = {
+# 国家作用域：随机招募一位还没有的东方科学家
+atb_th_recruit_scientist = {
 	random_list = {
 		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_akyuu }
@@ -9,15 +9,41 @@ atb_th_recruit_random = {
 			set_country_flag = atb_th_got_akyuu
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_alice }
-			create_alice_leader = yes
-			set_country_flag = atb_th_got_alice
+			modifier = { factor = 0 has_country_flag = atb_th_got_kosuzu }
+			create_kosuzu_leader = yes
+			set_country_flag = atb_th_got_kosuzu
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_aya }
-			create_aya_leader = yes
-			set_country_flag = atb_th_got_aya
+			modifier = { factor = 0 has_country_flag = atb_th_got_merry }
+			create_merry_leader = yes
+			set_country_flag = atb_th_got_merry
 		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_nitori }
+			create_nitori_leader = yes
+			set_country_flag = atb_th_got_nitori
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_patchouli }
+			create_patchouli_leader = yes
+			set_country_flag = atb_th_got_patchouli
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_renko }
+			create_renko_leader = yes
+			set_country_flag = atb_th_got_renko
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_sizuha }
+			create_sizuha_leader = yes
+			set_country_flag = atb_th_got_sizuha
+		}
+	}
+}
+
+# 国家作用域：随机招募一位还没有的东方指挥官
+atb_th_recruit_commander = {
+	random_list = {
 		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_cirno }
 			create_cirno_leader = yes
@@ -39,11 +65,6 @@ atb_th_recruit_random = {
 			set_country_flag = atb_th_got_koishi
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_kosuzu }
-			create_kosuzu_leader = yes
-			set_country_flag = atb_th_got_kosuzu
-		}
-		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_marisa }
 			create_marisa_leader = yes
 			set_country_flag = atb_th_got_marisa
@@ -54,34 +75,14 @@ atb_th_recruit_random = {
 			set_country_flag = atb_th_got_meiling
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_merry }
-			create_merry_leader = yes
-			set_country_flag = atb_th_got_merry
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_minoriko }
-			create_minoriko_leader = yes
-			set_country_flag = atb_th_got_minoriko
-		}
-		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_mystia }
 			create_mystia_leader = yes
 			set_country_flag = atb_th_got_mystia
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_nitori }
-			create_nitori_leader = yes
-			set_country_flag = atb_th_got_nitori
-		}
-		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_onoduka }
 			create_onoduka_leader = yes
 			set_country_flag = atb_th_got_onoduka
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_patchouli }
-			create_patchouli_leader = yes
-			set_country_flag = atb_th_got_patchouli
 		}
 		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_reimu }
@@ -99,16 +100,6 @@ atb_th_recruit_random = {
 			set_country_flag = atb_th_got_remilia
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_renko }
-			create_renko_leader = yes
-			set_country_flag = atb_th_got_renko
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_rin }
-			create_rin_leader = yes
-			set_country_flag = atb_th_got_rin
-		}
-		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_sakuya }
 			create_sakuya_leader = yes
 			set_country_flag = atb_th_got_sakuya
@@ -117,6 +108,52 @@ atb_th_recruit_random = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_sanae }
 			create_sanae_leader = yes
 			set_country_flag = atb_th_got_sanae
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_suika }
+			create_suika_leader = yes
+			set_country_flag = atb_th_got_suika
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_tenshi }
+			create_tenshi_leader = yes
+			set_country_flag = atb_th_got_tenshi
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_utsuho }
+			create_utsuho_leader = yes
+			set_country_flag = atb_th_got_utsuho
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_youmu }
+			create_youmu_leader = yes
+			set_country_flag = atb_th_got_youmu
+		}
+	}
+}
+
+# 国家作用域：随机招募一位还没有的东方行政官
+atb_th_recruit_official = {
+	random_list = {
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_alice }
+			create_alice_leader = yes
+			set_country_flag = atb_th_got_alice
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_aya }
+			create_aya_leader = yes
+			set_country_flag = atb_th_got_aya
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_minoriko }
+			create_minoriko_leader = yes
+			set_country_flag = atb_th_got_minoriko
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_rin }
+			create_rin_leader = yes
+			set_country_flag = atb_th_got_rin
 		}
 		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_satori }
@@ -129,39 +166,14 @@ atb_th_recruit_random = {
 			set_country_flag = atb_th_got_shikieiki
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_sizuha }
-			create_sizuha_leader = yes
-			set_country_flag = atb_th_got_sizuha
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_suika }
-			create_suika_leader = yes
-			set_country_flag = atb_th_got_suika
-		}
-		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_suwako }
 			create_suwako_leader = yes
 			set_country_flag = atb_th_got_suwako
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_tenshi }
-			create_tenshi_leader = yes
-			set_country_flag = atb_th_got_tenshi
-		}
-		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_tewi }
 			create_tewi_leader = yes
 			set_country_flag = atb_th_got_tewi
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_utsuho }
-			create_utsuho_leader = yes
-			set_country_flag = atb_th_got_utsuho
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_youmu }
-			create_youmu_leader = yes
-			set_country_flag = atb_th_got_youmu
 		}
 		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_yuka }
@@ -175,4 +187,3 @@ atb_th_recruit_random = {
 		}
 	}
 }
-
