@@ -140,6 +140,9 @@ councilor_nether_world = {
 	}
 	civic = civic_nether_world
 	modifier = {
+		empire_size_districts_mult = -0.01
+		empire_size_pops_mult = -0.01
+		empire_size_colonies_mult = -0.01
 	}
 }
 
@@ -154,6 +157,9 @@ councilor_nether_world_corp = {
 	}
 	civic = civic_nether_world_corp
 	modifier = {
+		empire_size_districts_mult = -0.01
+		empire_size_pops_mult = -0.01
+		empire_size_colonies_mult = -0.01
 	}
 }
 

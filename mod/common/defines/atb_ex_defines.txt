@@ -4,6 +4,7 @@ NGameplay = {
 	RESOLUTION_VOTE_TIMER = 720				# 原版 1440：议案在议会上表决的天数
 	RESOLUTION_VOTE_PREMATURE_TIMER = 360	# 原版 720：守护者/皇帝可以提前结束表决的天数
 	SENATE_RECESS_TIMER = 360				# 原版 720：表决结束后到下一项议案上会的休会天数
+	GOVERNMENT_CIVIC_POINTS_BASE = 3		# 3.9，原版 2：国策点数基础值（开局能选 3 个国策；对所有国家生效，AI 也一样）
 }
 
 # 3.0：AI 更愿意殖民（AI 星球都是自动星球，产出与宜居度、星球类型无关）

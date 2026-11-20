@@ -228,7 +228,15 @@ def defs_text(keys) -> str:
 
 # ---------------------------------------------------------------- 国策、议员、特质、角色
 write("common/governments/civics/atb_th_civics.txt", HEAD + "# 13 个东方国策（AI 权重为 0，只有玩家会选）\n\n" + defs_text(CIVICS))
-write("common/governments/councilors/atb_th_councilors.txt", HEAD + "\n" + defs_text(COUNCILORS))
+# 忘川冥域的议员（原作效果依赖已删内容，搬过来是空的）→ 首席调停者：区划/人口/殖民地帝国规模各 -1%/级
+MEDIATOR = ("\tmodifier = {\n\t\tempire_size_districts_mult = -0.01\n"
+            "\t\tempire_size_pops_mult = -0.01\n\t\tempire_size_colonies_mult = -0.01\n\t}\n")
+councilors_txt = defs_text(COUNCILORS)
+for c in ("civic_nether_world\n", "civic_nether_world_corp\n"):
+    a = f"\tcivic = {c}\tmodifier = {{\n\t}}\n"
+    assert councilors_txt.count(a) == 1, c
+    councilors_txt = councilors_txt.replace(a, f"\tcivic = {c}" + MEDIATOR)
+write("common/governments/councilors/atb_th_councilors.txt", HEAD + "\n" + councilors_txt)
 # 特质说明（custom_tooltip）描述的机制如果实现在不搬的内容里（原作别处的事件/法令/建筑/决议引用了这个特质），
 # 机制已不存在，说明也删掉，特质只剩它本身的修正（变白板）。再生特质例外：改用原版旗标 leader_death_events_blocked
 # 实现「不会死于意外」，说明改写（见本地化 own）。
@@ -787,6 +795,8 @@ own = {
     "decision_atb_th_recruit_official_desc": "据说银河的某处连着一片被结界隔开的土地。只要备足宴席所需的食物，那里的少女们或许愿意前来做客，甚至留下来。",
     "decision_atb_th_recruit_official_tt": "随机招募一位尚未加入的§Y东方行政官§!，直到全部招到。",
     "thl_leader_trait_regeneration_effect": "遭遇§R致命事故§!时不会死亡；超出预期寿命时仍会自然死亡。",
+    "councilor_nether_world": "首席调停者",
+    "councilor_nether_world_desc": "$councilor_nether_world$在帝国各处奔走，调停生者与亡者之间的纷争，让日益庞大的帝国依旧井然有序。",
 }
 # 原作缺本地化的 II / III 级特质：名字用「基础名 II/III」，说明沿用基础特质
 for t in TRAITS:

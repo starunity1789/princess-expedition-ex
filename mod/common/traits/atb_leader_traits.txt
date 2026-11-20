@@ -37,6 +37,7 @@ leader_trait_atb_transcendent_life = {
 
 	councilor_modifier = {
 		empire_size_pops_mult = -0.33
+		leaders_upkeep_mult = -0.33	# 3.9：领袖维护费（主要是凝聚力）
 	}
 
 	leader_class = { commander scientist official }

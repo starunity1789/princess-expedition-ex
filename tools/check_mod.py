@@ -331,6 +331,11 @@ checks += [
     ("3.6：三皇女异常发现 +50%、要塞工程学 +30", "ship_anomaly_generation_chance_mult = 0.5" in read(MOD / "common/traits/atb_leader_traits.txt")
      and "engineering_research = 60" in read(MOD / "common/deposits/atb_deposits.txt")),
     ("3.8：星海纪念碑凝聚力 +66", "unity = 66" in read(MOD / "common/deposits/atb_deposits.txt")),
+    ("3.9：首席调停者、开局 3 个国策、第一皇女领袖维护费 -33%",
+     read(MOD / "common/governments/councilors/atb_th_councilors.txt").count("empire_size_colonies_mult = -0.01") == 2
+     and "GOVERNMENT_CIVIC_POINTS_BASE = 3" in read(MOD / "common/defines/atb_ex_defines.txt")
+     and "leaders_upkeep_mult = -0.33" in read(MOD / "common/traits/atb_leader_traits.txt")
+     and 'councilor_nether_world:0 "首席调停者"' in read(MOD / "localisation/simp_chinese/atb_th_l_simp_chinese.yml")),
     ("3.6：灵能之路（二皇女事件 + 四处原版条件开例外）", "id = atb.50" in read(MOD / "events/atb_events.txt")
      and all(exists(f) and "atb_psionic_path_open" in read(MOD / f) for f in (
          "common/ascension_perks/00_ascension_paths.txt", "common/tradition_categories/01_psionics_shroud.txt",
