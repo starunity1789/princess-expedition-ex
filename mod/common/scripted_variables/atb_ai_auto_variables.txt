@@ -27,14 +27,15 @@
 # 3.2：合金再 ×0.9（合计 ×1.053）
 # 3.4：合金 ×0.7、科研 ×1.3（相对 3.0：合金 ×0.737、科研 ×1.944）
 # 3.6：全部 ×1.5，合金只 ×1.25（海军容量不变）
-@atb_ai_auto_out_research = 0.8747	# 3.0：0.3
-@atb_ai_auto_out_research_gestalt = 0.1457	# 3.0：0.05
-@atb_ai_auto_out_alloys = 0.4146	# 3.0：0.45
-@atb_ai_auto_out_alloys_gestalt = 0.1383	# 3.0：0.15
-@atb_ai_auto_out_energy = 1.755	# 3.0：0.9
-@atb_ai_auto_out_unity = 0.585	# 3.0：0.3
-@atb_ai_auto_out_consumer_goods = 1.17	# 3.0：0.6
-@atb_ai_auto_out_minerals = 0.39	# 3.0：0.2
-@atb_ai_auto_out_trade = 0.195	# 3.0：0.1
-@atb_ai_auto_out_strategic = 0.0195	# 3.0：0.01
-@atb_ai_auto_out_food = 0.585	# 3.0：0.3
+# 3.10：全部（含合金）再 ×1.11（海军容量不变）。列强另有倍率，见 script_values 的 atb_ai_auto_output
+@atb_ai_auto_out_research = 0.9709	# 3.0：0.3
+@atb_ai_auto_out_research_gestalt = 0.1617	# 3.0：0.05
+@atb_ai_auto_out_alloys = 0.4602	# 3.0：0.45
+@atb_ai_auto_out_alloys_gestalt = 0.1535	# 3.0：0.15
+@atb_ai_auto_out_energy = 1.9481	# 3.0：0.9
+@atb_ai_auto_out_unity = 0.6493	# 3.0：0.3
+@atb_ai_auto_out_consumer_goods = 1.2987	# 3.0：0.6
+@atb_ai_auto_out_minerals = 0.4329	# 3.0：0.2
+@atb_ai_auto_out_trade = 0.2165	# 3.0：0.1
+@atb_ai_auto_out_strategic = 0.0216	# 3.0：0.01
+@atb_ai_auto_out_food = 0.6493	# 3.0：0.3

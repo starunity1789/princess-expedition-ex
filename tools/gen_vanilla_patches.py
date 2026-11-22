@@ -5,8 +5,9 @@
 
 - common/megastructures/11_mega_shipyard.txt：巨型船坞（自建完成、修复完成）的船坞数量 20 → 50
 - events/ancient_relics_arcsite_events_2.txt：关掉 ancrel.12050 里 1/4 概率随机生成天选民的那一支
-  （其余权重不变；天选民改由本 MOD 的 atb_ex_spawn_chosen 固定在 8 点生成）
+  （其余权重不变；天选民改由本 MOD 的 atb_ex_spawn_chosen 固定在 7 点半生成（3.10 前为 8 点））
 - （3.0～3.6 还覆盖过 common/starbase_modules/00_starbase_modules.txt 让船坞产能翻倍，3.7 起恢复原版）
+- common/event_chains/00_event_chains_distant_stars.txt（3.10）：L 星门线索 7 → 3
 - common/ai_budget/01_alloys_budget.txt（3.0.3）：AI 超出海军容量后造舰预算大幅降低——×0.75 → ×0.1；
   「邻国成为天灾时 ×5」只在舰容 100% 以内生效（原版 150%）。AI 有了自动星球以后合金很多，原版规则下
   会一直超容造舰，舰船数量翻倍拖慢游戏（系列 21 实测）
@@ -36,14 +37,14 @@ PATCHES = [
         header=[
             "皇女的远征军EX：覆盖原版 events/ancient_relics_arcsite_events_2.txt。",
             "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：ancrel.12050 不再随机生成天选民",
-            "（那一支的权重不变，抽中时什么也不做），天选民改由本 MOD 固定在 8 点生成。群星更新后用新版原版重新生成。",
+            "（那一支的权重不变，抽中时什么也不做），天选民改由本 MOD 固定在 7 点半生成（3.10 前为 8 点）。群星更新后用新版原版重新生成。",
         ],
         # 整段注释掉：只注释 system_event 会留下空的 random_rim_system，error.log 会报警告
         replace=[("\t\t\t\trandom_rim_system = {\n"
                   "\t\t\t\t\tlimit = { is_mindwardens_story_system = no }\n"
                   "\t\t\t\t\tsystem_event = { id = fircon.3500 }\n"
                   "\t\t\t\t}\n",
-                  "\t\t\t\t# 皇女的远征军EX：天选民改由 atb_ex_spawn_chosen 固定在 8 点生成\n"
+                  "\t\t\t\t# 皇女的远征军EX：天选民改由 atb_ex_spawn_chosen 固定在 7 点半生成（3.10 前为 8 点）\n"
                   "\t\t\t\t# random_rim_system = {\n"
                   "\t\t\t\t# \tlimit = { is_mindwardens_story_system = no }\n"
                   "\t\t\t\t# \tsystem_event = { id = fircon.3500 }\n"
@@ -192,6 +193,27 @@ PATCHES = [
              "\t\t\tis_individual_machine = yes\n"
              "\t\t}\n", 1),
         ],
+    ),
+    # ---- 3.10：L 星门线索 7 → 3 ----
+    dict(
+        path="common/event_chains/00_event_chains_distant_stars.txt",
+        header=[
+            "皇女的远征军EX：覆盖原版 common/event_chains/00_event_chains_distant_stars.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：L 星群事件链（l_cluster_chain）",
+            "需要的 L 星门线索 7 → 3（对所有国家生效）。群星更新后用新版原版重新生成。",
+        ],
+        replace=[("l_cluster_chain = {\n"
+                  "\ticon = \"gfx/interface/icons/situation_log/situation_log_main_quest.dds\"\n"
+                  "\tpicture = GFX_evt_surreal_visions\n"
+                  "\tcounter = {\n"
+                  "\t\tclues = {\n"
+                  "\t\t\tmax = 7\n",
+                  "l_cluster_chain = {\n"
+                  "\ticon = \"gfx/interface/icons/situation_log/situation_log_main_quest.dds\"\n"
+                  "\tpicture = GFX_evt_surreal_visions\n"
+                  "\tcounter = {\n"
+                  "\t\tclues = {\n"
+                  "\t\t\tmax = 3\t# 皇女的远征军EX：原版 7\n", 1)],
     ),
 ]
 

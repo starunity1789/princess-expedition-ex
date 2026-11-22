@@ -78,14 +78,14 @@ building_atb_ai_core = {
 			physics_research = @atb_ai_auto_out_research
 			society_research = @atb_ai_auto_out_research
 			engineering_research = @atb_ai_auto_out_research
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 		produces = {
 			trigger = { owner? = { country_uses_consumer_goods = no } }
 			physics_research = @atb_ai_auto_out_research_gestalt
 			society_research = @atb_ai_auto_out_research_gestalt
 			engineering_research = @atb_ai_auto_out_research_gestalt
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 	}
 }
@@ -119,12 +119,12 @@ building_atb_ai_foundry = {
 		category = planet_metallurgists
 		produces = {
 			alloys = @atb_ai_auto_out_alloys
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 		produces = {
 			trigger = { owner? = { country_uses_consumer_goods = no } }
 			alloys = @atb_ai_auto_out_alloys_gestalt
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 	}
 }
@@ -158,7 +158,7 @@ building_atb_ai_power = {
 		category = planet_technician
 		produces = {
 			energy = @atb_ai_auto_out_energy
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 	}
 }
@@ -192,7 +192,7 @@ building_atb_ai_admin = {
 		category = planet_bureaucrats
 		produces = {
 			unity = @atb_ai_auto_out_unity
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 	}
 }
@@ -227,7 +227,7 @@ building_atb_ai_industry = {
 		produces = {
 			trigger = { owner? = { country_uses_consumer_goods = yes } }
 			consumer_goods = @atb_ai_auto_out_consumer_goods
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 	}
 }
@@ -265,12 +265,12 @@ building_atb_ai_supply = {
 			rare_crystals = @atb_ai_auto_out_strategic
 			exotic_gases = @atb_ai_auto_out_strategic
 			volatile_motes = @atb_ai_auto_out_strategic
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 		produces = {
 			trigger = { owner? = { country_uses_food = yes } }
 			food = @atb_ai_auto_out_food
-			multiplier = planet.atb_ai_auto_jobs
+			multiplier = value:atb_ai_auto_output
 		}
 	}
 }

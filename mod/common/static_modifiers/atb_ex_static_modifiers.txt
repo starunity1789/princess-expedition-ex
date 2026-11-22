@@ -40,6 +40,34 @@ atb_ex_galaxy_rules = {
 	shipsize_ember_cruiser_hull_add = 1400
 	shipsize_ember_battleship_hull_add = 4800
 	shipsize_paladin_ship_hull_add = 1500
+
+	# 3.10：星堡（前哨站～城塞，以及深空城塞 1～3 级）舰体值 +300%、交战范围翻倍；建造与升级花费 -50%
+	shipsize_starbase_outpost_hull_mult = 3
+	shipsize_starbase_starport_hull_mult = 3
+	shipsize_starbase_starhold_hull_mult = 3
+	shipsize_starbase_starfortress_hull_mult = 3
+	shipsize_starbase_citadel_hull_mult = 3
+	shipsize_starbase_deep_space_citadel_1_hull_mult = 3
+	shipsize_starbase_deep_space_citadel_2_hull_mult = 3
+	shipsize_starbase_deep_space_citadel_3_hull_mult = 3
+	shipsize_starbase_outpost_engagement_range_mult = 1
+	shipsize_starbase_starport_engagement_range_mult = 1
+	shipsize_starbase_starhold_engagement_range_mult = 1
+	shipsize_starbase_starfortress_engagement_range_mult = 1
+	shipsize_starbase_citadel_engagement_range_mult = 1
+	shipsize_starbase_deep_space_citadel_1_engagement_range_mult = 1
+	shipsize_starbase_deep_space_citadel_2_engagement_range_mult = 1
+	shipsize_starbase_deep_space_citadel_3_engagement_range_mult = 1
+	starbase_outpost_cost_mult = -0.5
+	starbase_upgrade_cost_mult = -0.5
+	# 3.10：防御平台上限 +12
+	starbase_defense_platform_capacity_add = 12
+	# 3.10：防御平台与离子炮（军事空间站类）建造时间减半、建造花费减半、舰体值 +300%、维护费减半
+	shipclass_military_station_build_speed_mult = 1
+	shipclass_military_station_build_cost_mult = -0.5
+	shipclass_military_station_hull_mult = 3
+	ship_military_station_small_upkeep_mult = -0.5
+	ship_ion_cannon_upkeep_mult = -0.5
 }
 
 # 3.3：所有国家亚光速 ×1.2（银河规则，不论启用了哪些 MOD；3.1～3.2 是启用 Ships in Scaling 时 ×12）

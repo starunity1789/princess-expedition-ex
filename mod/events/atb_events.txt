@@ -14,6 +14,7 @@ country_event = {
 	trigger = {
 		OR = {
 			has_origin = origin_atb_princess_expedition
+			has_origin = origin_atb_distant_promise
 			has_country_flag = atb_princess_expedition
 		}
 	}
@@ -34,6 +35,7 @@ colony_event = {
 		owner = {
 			OR = {
 				has_origin = origin_atb_princess_expedition
+				has_origin = origin_atb_distant_promise
 				has_country_flag = atb_princess_expedition
 			}
 		}
@@ -110,13 +112,14 @@ country_event = {
 # 全局开局（on_game_start，排在原版 distar.8000 随机 L 星群结局之后）
 # 有远征军在场时：L 星群结局固定为灰色风暴，并保证能找到小灰。
 # 如果游戏规则屏蔽了破坏性内容（灰色风暴不会出现），则改为空星群结局，小灰按原版方式出现。
+# 3.10：起源「遥远之约定」固定为空星群结局（没有灰色风暴，小灰的异常现象由开局布置保证出现）；
+# 不再要求开启 L 星门（atb_ex_ensure_lgates 保证银河里至少 7 座）。
 event = {
 	id = atb.4
 	hide_window = yes
 	is_triggered_only = yes
 
 	trigger = {
-		lgate_enabled = yes
 		any_country = { has_country_flag = atb_princess_expedition }
 	}
 
@@ -124,6 +127,11 @@ event = {
 		remove_global_flag = dragon_season
 		remove_global_flag = gray_goo_empire_set
 		if = {
+			limit = { any_country = { has_country_flag = atb_distant_promise } }
+			remove_global_flag = gray_goo_crisis_set
+			remove_global_flag = active_gray_goo
+		}
+		else_if = {
 			limit = { blocks_disruptive_gameplay = no }
 			set_global_flag = gray_goo_crisis_set
 			set_global_flag = active_gray_goo

@@ -10,6 +10,10 @@ atbgp_btc_bonus = {
 # 3.0.3：海军容量 +1000 → +500；3.1：+500 → +300（自动星球让 AI 富起来后舰船太多，拖慢游戏）
 atbgp_power_base = {
 	country_naval_cap_add = 300
+}
+
+# 3.10：恒星基地上限 +10 从 atbgp_power_base 拆出来，大君主同盟领地不给（旧存档由 atb_ex.2 每年补发）
+atbgp_starbase_bonus = {
 	country_starbase_capacity_add = 10
 }
 

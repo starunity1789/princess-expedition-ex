@@ -1,6 +1,7 @@
 # 皇女的远征军EX
 
-# 无作用域：在银河 8 点方向的边缘外生成原版的天选民星系（原版 fircon.3500 用的同一个初始化器）。
+# 无作用域：在银河 7 点半方向的边缘外生成原版的天选民星系（原版 fircon.3500 用的同一个初始化器）。
+# 3.10：8 点 → 7 点半（角度 210 → 225）。由 atb_ex_spawn_chosen_fixed 调用（虫洞出口固定在大君主同盟领地母星）。
 # 原版 fircon.3500 是从随机一个边缘星系往外 30~75 生成，这里改为固定方位，距离照保底列强放在边缘外 40 处。
 # 原版 ancrel.12050 里 1/4 概率的随机生成已经在覆盖文件里关掉（tools/gen_vanilla_patches.py）。
 atb_ex_spawn_chosen = {
@@ -10,8 +11,8 @@ atb_ex_spawn_chosen = {
 			spawn_system = {
 				min_distance >= 240
 				max_distance <= 248
-				min_orientation_angle = 208
-				max_orientation_angle = 212
+				min_orientation_angle = 223
+				max_orientation_angle = 227
 				initializer = the_chosen_home_initializer
 				hyperlane = no
 			}
@@ -23,8 +24,8 @@ atb_ex_spawn_chosen = {
 			spawn_system = {
 				min_distance >= 340
 				max_distance <= 348
-				min_orientation_angle = 208
-				max_orientation_angle = 212
+				min_orientation_angle = 223
+				max_orientation_angle = 227
 				initializer = the_chosen_home_initializer
 				hyperlane = no
 			}
@@ -36,8 +37,8 @@ atb_ex_spawn_chosen = {
 			spawn_system = {
 				min_distance >= 440
 				max_distance <= 448
-				min_orientation_angle = 208
-				max_orientation_angle = 212
+				min_orientation_angle = 223
+				max_orientation_angle = 227
 				initializer = the_chosen_home_initializer
 				hyperlane = no
 			}
@@ -48,8 +49,8 @@ atb_ex_spawn_chosen = {
 			spawn_system = {
 				min_distance >= 490
 				max_distance <= 498
-				min_orientation_angle = 208
-				max_orientation_angle = 212
+				min_orientation_angle = 223
+				max_orientation_angle = 227
 				initializer = the_chosen_home_initializer
 				hyperlane = no
 			}
@@ -57,13 +58,154 @@ atb_ex_spawn_chosen = {
 	}
 }
 
-# 星系作用域：在旁边生成原版传奇领袖坠毁点（凯德斯事件链的起点），自动接上航道
-atb_ex_spawn_legendary_leader_site = {
-	spawn_system = {
-		min_distance >= 15
-		max_distance <= 30
-		initializer = atb_ex_legendary_leader_start_site
-		hyperlane = yes
+# 3.10 无作用域：生成天选民，并把伊索姆之门的虫洞出口固定在大君主同盟领地（保底列强 3）的母星系。
+# 原版 the_chosen_gate_initializer 用 random_system 随机挑出口，排除 empire_cluster 星系；
+# 生成前给其它所有星系临时挂上 empire_cluster，出口就只能落在大君主母星，生成完立刻摘掉。
+# 然后天选民改用大君主的主种族（两边的种族洁癖对彼此无效），并与大君主建立通讯：
+# 原版首次接触（fircon.3515）与出门（fircon.3505）的宣战都以「还没有通讯」为前提，就不会再对大君主宣战；
+# 开门（任一方第一次穿过伊索姆之门的虫洞）后由 atb_ex.8 让天选民与大君主结盟。
+atb_ex_spawn_chosen_fixed = {
+	random_country = {
+		limit = { has_country_flag = atbgp_power_3 exists = capital_scope }
+		save_global_event_target_as = atb_ex_overlord
+		capital_scope.solar_system = { save_global_event_target_as = atb_ex_overlord_home }
+		species = { save_global_event_target_as = atb_ex_overlord_species }
+	}
+	if = {
+		limit = { exists = event_target:atb_ex_overlord_home }
+		every_system = {
+			limit = {
+				NOT = { has_star_flag = empire_cluster }
+				NOT = { is_same_value = event_target:atb_ex_overlord_home }
+			}
+			set_star_flag = atb_ex_tmp_cluster
+			set_star_flag = empire_cluster
+		}
+	}
+	atb_ex_spawn_chosen = yes
+	every_system = {
+		limit = { has_star_flag = atb_ex_tmp_cluster }
+		remove_star_flag = empire_cluster
+		remove_star_flag = atb_ex_tmp_cluster
+	}
+	if = {
+		limit = {
+			exists = event_target:chosen_empire
+			exists = event_target:atb_ex_overlord
+		}
+		event_target:chosen_empire = {
+			change_dominant_species = {
+				species = event_target:atb_ex_overlord_species
+				change_all = yes
+			}
+			establish_communications_no_message = event_target:atb_ex_overlord
+		}
+		event_target:atb_ex_overlord = {
+			establish_communications_no_message = event_target:chosen_empire
+		}
+	}
+}
+
+# 3.10 国家作用域（天选民）：与大君主同盟领地结盟（同一个联邦）
+atb_ex_chosen_ally_overlord = {
+	if = {
+		limit = {
+			exists = event_target:atb_ex_overlord
+			NOT = { is_same_value = event_target:atb_ex_overlord }
+			NOT = { is_at_war_with = event_target:atb_ex_overlord }
+		}
+		establish_communications_no_message = event_target:atb_ex_overlord
+		if = {
+			limit = { event_target:atb_ex_overlord = { has_federation = yes } }
+			join_alliance = { who = event_target:atb_ex_overlord override_requirements = yes }
+		}
+		else = {
+			join_alliance = {
+				who = event_target:atb_ex_overlord
+				name = NAME_atb_ex_chosen_pact
+				override_requirements = yes
+			}
+		}
+	}
+}
+
+# 3.10 无作用域：银河里至少 7 座 L 星门。开局设置关掉 L 星门时原版一座都不生成，这里补足；
+# 在远征军星团、保底列强星团生成之前调用，只挑银河里无主、不在帝国开局星团、不在堕落帝国星团、
+# 邻近也没有 L 星门的星系，照原版 L 星门星系（distantstars_init_00）放一座 L 星门并挂 lgate 标记。
+atb_ex_ensure_lgates = {
+	while = {
+		count = 7
+		if = {
+			limit = {
+				count_megastructure = {
+					count < 7
+					limit = { is_megastructure_type = lgate_base }
+				}
+			}
+			random_system = {
+				limit = {
+					has_owner = no
+					is_fe_cluster = no
+					NOR = {
+						has_star_flag = empire_cluster
+						has_star_flag = empire_home_system
+						has_star_flag = lgate
+						has_star_flag = lcluster
+						has_star_flag = chosen_system
+						has_star_flag = atbgp_cluster
+						has_megastructure = lgate_base
+						any_neighbor_system = { has_megastructure = lgate_base }
+						any_system_planet = { is_colony = yes }
+					}
+				}
+				set_star_flag = lgate
+				set_star_flag = atb_ex_added_lgate
+				spawn_megastructure = {
+					type = lgate_base
+					orbit_angle = 225
+					orbit_distance = 30
+				}
+			}
+		}
+	}
+}
+
+# 3.10 国家作用域（远征军，遥远之约定）：在 L 星群的一颗纳米星球上放小灰的异常现象（原版 disco_gray_cat，
+# 只在空星群结局里出现），探索 L 星群就一定能找到小灰。优先放在与大传承者相连的那个 L 星群星系。
+atb_ex_place_gray_anomaly = {
+	if = {
+		limit = {
+			NOT = { has_global_flag = atb_ex_gray_anomaly_placed }
+			any_system = {
+				has_star_flag = lcluster
+				any_system_planet = { is_planet_class = pc_gray_goo }
+			}
+		}
+		set_global_flag = atb_ex_gray_anomaly_placed
+		if = {
+			limit = {
+				exists = event_target:lcluster4b
+				event_target:lcluster4b = { any_system_planet = { is_planet_class = pc_gray_goo } }
+			}
+			event_target:lcluster4b = {
+				random_system_planet = {
+					limit = { is_planet_class = pc_gray_goo }
+					add_anomaly = { category = disco_gray_cat target = event_target:atb_rl_country }
+				}
+			}
+		}
+		else = {
+			random_system = {
+				limit = {
+					has_star_flag = lcluster
+					any_system_planet = { is_planet_class = pc_gray_goo }
+				}
+				random_system_planet = {
+					limit = { is_planet_class = pc_gray_goo }
+					add_anomaly = { category = disco_gray_cat target = event_target:atb_rl_country }
+				}
+			}
+		}
 	}
 }
 
@@ -134,65 +276,22 @@ atb_ex_relocate_expedition = {
 	capital_star = { save_global_event_target_as = atb_rl_old_system }
 
 	# 1. 生成星团
+	# 3.10：起源「遥远之约定」——先生成 L 星群（原版 distar.11000，只会生成一次，日后开启 L 星门时不会再生成），
+	# 母星系放在 L 星群「最终出口」正上方 250 处，大传承者朝向 L 星群；其余星系的相对位置不变
+	if = {
+		limit = { has_country_flag = atb_distant_promise }
+		country_event = { id = distar.11000 }
+	}
 	set_spawn_system_batch = begin
 	if = {
-		limit = { galaxy_size = tiny }
-		no_scope = {
-			spawn_system = {
-				min_distance >= 295
-				max_distance <= 303
-				min_orientation_angle = 88
-				max_orientation_angle = 92
-				initializer = atb_rl_home
-				hyperlane = no
-			}
+		limit = {
+			has_country_flag = atb_distant_promise
+			exists = event_target:lcluster1
 		}
-	}
-	else_if = {
-		limit = { galaxy_size = small }
-		no_scope = {
+		event_target:lcluster1 = {
 			spawn_system = {
-				min_distance >= 395
-				max_distance <= 403
-				min_orientation_angle = 88
-				max_orientation_angle = 92
-				initializer = atb_rl_home
-				hyperlane = no
-			}
-		}
-	}
-	else_if = {
-		limit = { galaxy_size = medium }
-		no_scope = {
-			spawn_system = {
-				min_distance >= 495
-				max_distance <= 503
-				min_orientation_angle = 88
-				max_orientation_angle = 92
-				initializer = atb_rl_home
-				hyperlane = no
-			}
-		}
-	}
-	else_if = {
-		limit = { galaxy_size = large }
-		no_scope = {
-			spawn_system = {
-				min_distance >= 545
-				max_distance <= 553
-				min_orientation_angle = 88
-				max_orientation_angle = 92
-				initializer = atb_rl_home
-				hyperlane = no
-			}
-		}
-	}
-	else_if = {
-		limit = { galaxy_size = huge }
-		no_scope = {
-			spawn_system = {
-				min_distance >= 545
-				max_distance <= 553
+				min_distance >= 250
+				max_distance <= 258
 				min_orientation_angle = 88
 				max_orientation_angle = 92
 				initializer = atb_rl_home
@@ -201,14 +300,81 @@ atb_ex_relocate_expedition = {
 		}
 	}
 	else = {
-		no_scope = {
-			spawn_system = {
-				min_distance >= 545
-				max_distance <= 553
-				min_orientation_angle = 88
-				max_orientation_angle = 92
-				initializer = atb_rl_home
-				hyperlane = no
+		if = {
+			limit = { galaxy_size = tiny }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 295
+					max_distance <= 303
+					min_orientation_angle = 88
+					max_orientation_angle = 92
+					initializer = atb_rl_home
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = small }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 395
+					max_distance <= 403
+					min_orientation_angle = 88
+					max_orientation_angle = 92
+					initializer = atb_rl_home
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = medium }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 495
+					max_distance <= 503
+					min_orientation_angle = 88
+					max_orientation_angle = 92
+					initializer = atb_rl_home
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = large }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 545
+					max_distance <= 553
+					min_orientation_angle = 88
+					max_orientation_angle = 92
+					initializer = atb_rl_home
+					hyperlane = no
+				}
+			}
+		}
+		else_if = {
+			limit = { galaxy_size = huge }
+			no_scope = {
+				spawn_system = {
+					min_distance >= 545
+					max_distance <= 553
+					min_orientation_angle = 88
+					max_orientation_angle = 92
+					initializer = atb_rl_home
+					hyperlane = no
+				}
+			}
+		}
+		else = {
+			no_scope = {
+				spawn_system = {
+					min_distance >= 545
+					max_distance <= 553
+					min_orientation_angle = 88
+					max_orientation_angle = 92
+					initializer = atb_rl_home
+					hyperlane = no
+				}
 			}
 		}
 	}
@@ -287,8 +453,24 @@ atb_ex_relocate_expedition = {
 		limit = { exists = event_target:atb_th_kappa_sys }
 		event_target:atb_rl_sys_gateway = { add_hyperlane = { from = this to = event_target:atb_th_kappa_sys } }
 	}
-	# 唯一的出口
-	atbgp_link_to_galaxy = { SYSTEM = atb_rl_sys_gateway }
+	# 唯一的出口：通常连到银河；遥远之约定连到 L 星群（离大传承者最近的外缘星系），不连银河
+	if = {
+		limit = {
+			has_country_flag = atb_distant_promise
+			exists = event_target:lcluster1
+		}
+		if = {
+			limit = { exists = event_target:lcluster4b }
+			event_target:atb_rl_sys_gateway = { add_hyperlane = { from = this to = event_target:lcluster4b } }
+		}
+		else = {
+			event_target:atb_rl_sys_gateway = { add_hyperlane = { from = this to = event_target:lcluster1 } }
+		}
+		atb_ex_place_gray_anomaly = yes
+	}
+	else = {
+		atbgp_link_to_galaxy = { SYSTEM = atb_rl_sys_gateway }
+	}
 
 	# 2. 新起源要塞接管首都：人口逐组搬过去，建筑、区划、特殊地形按开局重新生成
 	event_target:atb_rl_new_capital = {

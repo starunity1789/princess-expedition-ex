@@ -1,0 +1,65 @@
+# 皇女的远征军EX：覆盖原版 common/event_chains/00_event_chains_distant_stars.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：L 星群事件链（l_cluster_chain）
+# 需要的 L 星门线索 7 → 3（对所有国家生效）。群星更新后用新版原版重新生成。
+
+# Event chains.
+
+# counter, counters that can be increased and checked from effects and triggers
+#
+# Localization needed:
+# event_chain_chainnkey_title, a title to show in the situation log.
+# event_chain_chainnkey_desc, a description to show in the situation log.
+
+living_planet_chain = {
+	icon = "gfx/interface/icons/situation_log/situation_log_scanning_beam.dds"
+	picture = GFX_evt_ocean
+
+	abort_trigger = {
+		NOT = { exists = event_target:living_planet_tar }
+	}
+	situation_log_category = anomalies
+}
+
+ketling_study_chain = {
+	icon = "gfx/interface/icons/situation_log/situation_log_society.dds"
+	picture = GFX_evt_city_ruins
+	situation_log_category = anomalies
+}
+
+l_cluster_chain = {
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	picture = GFX_evt_surreal_visions
+	counter = {
+		clues = {
+			max = 3	# 皇女的远征军EX：原版 7
+		}
+	}
+	situation_log_category = developments
+}
+
+generation_ship_chain = {
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	picture = GFX_evt_ship_in_orbit
+	counter = {
+		planet_found = {
+			max = 1
+		}
+	}
+	situation_log_category = anomalies
+}
+
+star_crazy_chain = {
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	picture = GFX_evt_ship_in_orbit
+	counter = {
+		corrupt_data_investigated = {
+			max = 3
+		}
+	}
+}
+
+negative_mass = {
+	icon = "gfx/interface/icons/situation_log/situation_log_extradimensional.dds"
+	picture = GFX_evt_physics_research
+	situation_log_category = urgent_matters
+}

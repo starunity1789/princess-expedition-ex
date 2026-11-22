@@ -32,6 +32,8 @@
  atbgp_btc_bonus_desc:0 "宗主终于允许这块乡村领地扩编舰队。对银河其他文明来说，这意味着灾难。"
  atbgp_power_base:0 "列强的底蕴"
  atbgp_power_base_desc:0 "这个文明背后站着远比银河诸国强大的力量，它的舰队与要塞规模不受寻常国力的限制。"
+ atbgp_starbase_bonus:0 "列强的要塞"
+ atbgp_starbase_bonus_desc:0 "列强的疆域由远多于寻常的星堡守护。"
  atbgp_homeworld_districts:0 "母星的开拓区"
  atbgp_homeworld_districts_desc:0 "列强在母星上早已规划好大片农田、电站与矿区，足以养活远超寻常的人口。"
  atbgp_growth_boost:0 "开拓者的繁荣"

@@ -13,6 +13,12 @@ atb_swap_origin = {
 			days = -1
 		}
 	}
+	# 3.10：遥远之约定也是远征军，另记一个标记（开局布置与 L 星群结局不同）
+	if = {
+		limit = { has_origin = origin_atb_distant_promise }
+		set_country_flag = atb_distant_promise
+		set_origin = origin_synthetic_fertility
+	}
 	if = {
 		limit = { has_origin = origin_atb_princess_expedition }
 		set_origin = origin_synthetic_fertility

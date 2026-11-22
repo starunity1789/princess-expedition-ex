@@ -23,3 +23,10 @@ on_country_type_changed = {
 		atb_ex.3
 	}
 }
+
+# 3.10：天选民开门（第一次穿过伊索姆之门的虫洞）后与大君主同盟领地结盟
+on_entering_wormhole = {
+	events = {
+		atb_ex.8
+	}
+}

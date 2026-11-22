@@ -1,0 +1,11 @@
+# 3.10：可编入舰队的主宰每个国家限 1 艘（与原版主宰的 juggernaut_ships_limit 相同）
+atb_juggernaut_ships_limit = {
+	ship_types = {
+		atb_juggernaut
+	}
+	base = 100 # 1 * atb_juggernaut 的 size_multiplier
+	show = {
+		is_scope_valid = yes
+		has_technology = tech_juggernaut
+	}
+}

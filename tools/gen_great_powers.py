@@ -142,6 +142,7 @@ EMPIRES = [
     ),
     dict(
         n=3, clock=3, research=56, pops=48,
+        starbase_bonus=False,	# 3.10：大君主同盟领地不给恒星基地上限 +10（改为产出 +33%）
         name="大君主同盟领地", adj="大君主", en="Grand Suzerain Allied Fief", en_adj="Suzerain",
         species=("君主裔", "君主裔", "君主裔"), species_en=("Suzerainite", "Suzerainites", "Suzerainite"),
         species_class="NECROID", species_traits="random",
@@ -188,7 +189,7 @@ EMPIRES = [
     ),
     # 2.5 新增：灭绝政体的虫巢，三颗开局母星（三倍开局）
     dict(
-        n=4, clock=9, research=0, pops=0,
+        n=4, clock=8.5, research=0, pops=0,
         name="恐惧之潮", adj="恐惧", en="Tide of Dread", en_adj="Dread",
         species=("潮噬者", "潮噬者", "潮噬"), species_en=("Tidemaw", "Tidemaws", "Tidemaw"),
         species_class="ART",
@@ -400,6 +401,11 @@ def create_country_block(e):
     n = e["n"]
     civics = " ".join(f"civic = {c}" for c in e["civics"])
     ethics = " ".join(f"ethic = {x}" for x in e["ethics"])
+    starbase = """
+					add_modifier = {
+						modifier = atbgp_starbase_bonus
+						days = -1
+					}""" if e.get("starbase_bonus", True) else ""
     bonus = f"""
 					add_modifier = {{
 						modifier = atbgp_bonus_{n}
@@ -424,7 +430,7 @@ def create_country_block(e):
 					add_modifier = {{
 						modifier = atbgp_power_base
 						days = -1
-					}}
+					}}{starbase}
 				}}
 			}}"""
 
@@ -1627,6 +1633,10 @@ atbgp_btc_bonus = {
 # 3.0.3：海军容量 +1000 → +500；3.1：+500 → +300（自动星球让 AI 富起来后舰船太多，拖慢游戏）
 atbgp_power_base = {
 	country_naval_cap_add = 300
+}
+
+# 3.10：恒星基地上限 +10 从 atbgp_power_base 拆出来，大君主同盟领地不给（旧存档由 atb_ex.2 每年补发）
+atbgp_starbase_bonus = {
 	country_starbase_capacity_add = 10
 }
 
@@ -1665,6 +1675,9 @@ loc("atbgp_btc_bonus_desc", "宗主终于允许这块乡村领地扩编舰队。
 loc("atbgp_power_base", "列强的底蕴", "Great Power's Foundation")
 loc("atbgp_power_base_desc", "这个文明背后站着远比银河诸国强大的力量，它的舰队与要塞规模不受寻常国力的限制。",
     "Something far mightier than the galaxy's nations stands behind this civilization; its fleets and fortresses are not bound by ordinary limits.")
+loc("atbgp_starbase_bonus", "列强的要塞", "Great Power's Strongholds")
+loc("atbgp_starbase_bonus_desc", "列强的疆域由远多于寻常的星堡守护。",
+    "A great power's realm is guarded by far more starbases than usual.")
 loc("atbgp_homeworld_districts", "母星的开拓区", "Homeworld Development Zones")
 loc("atbgp_homeworld_districts_desc", "列强在母星上早已规划好大片农田、电站与矿区，足以养活远超寻常的人口。",
     "The great power long ago laid out vast farmlands, power plants and mines on its homeworld, enough to support an unusually large population.")

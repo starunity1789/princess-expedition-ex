@@ -32,6 +32,8 @@
  atbgp_btc_bonus_desc:0 "The suzerain has finally allowed this rural fief to expand its fleet."
  atbgp_power_base:0 "Great Power's Foundation"
  atbgp_power_base_desc:0 "Something far mightier than the galaxy's nations stands behind this civilization; its fleets and fortresses are not bound by ordinary limits."
+ atbgp_starbase_bonus:0 "Great Power's Strongholds"
+ atbgp_starbase_bonus_desc:0 "A great power's realm is guarded by far more starbases than usual."
  atbgp_homeworld_districts:0 "Homeworld Development Zones"
  atbgp_homeworld_districts_desc:0 "The great power long ago laid out vast farmlands, power plants and mines on its homeworld, enough to support an unusually large population."
  atbgp_growth_boost:0 "Pioneers' Boom"

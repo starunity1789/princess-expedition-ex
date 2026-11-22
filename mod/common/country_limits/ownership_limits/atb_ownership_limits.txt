@@ -1,0 +1,6 @@
+# 3.10：ownership_limits 可叠加（原版 00_ownership_limits.txt 的说明），这里只追加可编入舰队的主宰的上限
+default = {
+	ship_of_size_limits = {
+		atb_juggernaut_ships_limit
+	}
+}

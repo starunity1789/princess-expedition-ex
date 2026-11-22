@@ -9,6 +9,8 @@ event = {
 	immediate = {
 		atb_ex_apply_galaxy_rules = yes
 		atb_ex_grant_habitat_techs = yes
+		# 3.10：银河里至少 7 座 L 星门（开局设置关掉 L 星门时也一样），在远征军星团生成之前做
+		atb_ex_ensure_lgates = yes
 		# 3.1：第二天再补一次银河规则（开局当天设置的全局旗标、新国家都能接上）
 		random_country = { country_event = { id = atb_ex.5 days = 1 } }
 		# 3.6：两个虫洞、白鹿与远星的好感（等两个星团都生成好，第三天做）
@@ -23,45 +25,10 @@ event = {
 			atb_ex_relocate_expedition = yes
 		}
 
-		# 每局必定生成天选民，固定在 8 点方向：原版 1/4 概率的随机生成已在覆盖文件里关掉，
-		# 这里用原版同一个初始化器在固定方位生成
-		if = {
-			limit = {
-				has_first_contact_dlc = yes
-				NOT = { any_system = { has_star_flag = chosen_system } }
-			}
-			atb_ex_spawn_chosen = yes
-		}
-
-		# 每局必定生成传奇领袖凯德斯（瓦格罗之子嗣）的坠毁点：原版银河生成时约 1/4 概率出现。
-		# 有远征军时，放在星团出口「大传承者」往银河里 3~5 跳（离起源要塞 4~6 跳）；
-		# 坠毁点自己的初始化器会照原版生成后续三处遗迹
-		if = {
-			limit = {
-				has_paragon_dlc = yes
-				NOT = { any_system = { has_star_flag = legendary_leader_spawn_system } }
-			}
-			if = {
-				limit = { exists = event_target:atb_rl_sys_gateway }
-				event_target:atb_rl_sys_gateway = {
-					closest_system = {
-						min_steps = 3
-						max_steps = 5
-						limit = {
-							has_owner = no
-							NOT = { has_star_flag = atbgp_cluster }
-						}
-						atb_ex_spawn_legendary_leader_site = yes
-					}
-				}
-			}
-			else = {
-				random_system = {
-					limit = { has_owner = no }
-					atb_ex_spawn_legendary_leader_site = yes
-				}
-			}
-		}
+		# 每局必定生成天选民，固定在 7 点半方向：原版 1/4 概率的随机生成已在覆盖文件里关掉，
+		# 这里用原版同一个初始化器在固定方位生成。3.10：等保底列强生成好（第二天，atb_ex.7），
+		# 虫洞出口固定在大君主同盟领地的母星系
+		random_country = { country_event = { id = atb_ex.7 days = 1 } }
 	}
 }
 
@@ -78,6 +45,15 @@ event = {
 		atb_ex_grant_habitat_techs = yes
 		# 3.6：旧存档补做虫洞与好感（做过就有全局旗标，atb_ex.6 自己会跳过）
 		random_country = { country_event = { id = atb_ex.6 } }
+		# 3.10：列强的恒星基地上限 +10 拆成单独的修正（大君主同盟领地不给），旧存档在这里补发
+		every_country = {
+			limit = {
+				has_country_flag = atbgp_great_power
+				NOT = { has_country_flag = atbgp_power_3 }
+				NOT = { has_modifier = atbgp_starbase_bonus }
+			}
+			add_modifier = { modifier = atbgp_starbase_bonus days = -1 }
+		}
 	}
 }
 
@@ -188,5 +164,52 @@ country_event = {
 				}
 			}
 		}
+	}
+}
+
+# 3.10：开局第二天生成天选民（保底列强已经生成好，虫洞出口能固定在大君主同盟领地母星）
+country_event = {
+	id = atb_ex.7
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_first_contact_dlc = yes
+				NOT = { any_system = { has_star_flag = chosen_system } }
+			}
+			atb_ex_spawn_chosen_fixed = yes
+		}
+	}
+}
+
+# 3.10：开门——天选民或大君主同盟领地的舰队第一次穿过伊索姆之门的虫洞（on_entering_wormhole）时，两国结盟。
+# THIS = 舰队，FROM = 跳往的星系，FROMFROM = 出发的星系
+fleet_event = {
+	id = atb_ex.8
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_global_flag = atb_ex_chosen_pact }
+		exists = event_target:chosen_empire
+		exists = event_target:atb_ex_overlord
+		exists = owner
+		OR = {
+			from = { has_star_flag = ithomes_gate }
+			fromfrom = { has_star_flag = ithomes_gate }
+		}
+		owner = {
+			OR = {
+				is_same_value = event_target:chosen_empire
+				is_same_value = event_target:atb_ex_overlord
+			}
+		}
+	}
+
+	immediate = {
+		set_global_flag = atb_ex_chosen_pact
+		event_target:chosen_empire = { atb_ex_chosen_ally_overlord = yes }
 	}
 }

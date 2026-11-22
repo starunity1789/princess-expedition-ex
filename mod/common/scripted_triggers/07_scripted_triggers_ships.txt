@@ -3,6 +3,9 @@
 # 使用泰坦反应堆，并能装备泰坦级（T 槽）武器：
 # ship_uses_battleship_components / ship_uses_titan_components / ship_uses_artillery_role / ship_uses_carrier_role /
 # ship_uses_line_role / ship_uses_titan_reactors / ship_uses_battleship_thrusters / ship_uses_battleship_cloaks
+# 3.10：可编入舰队的主宰 atb_juggernaut 加进 ship_uses_titan_components（T 槽武器）/ ship_uses_juggernaut_components /
+# ship_uses_artillery_role / ship_uses_carrier_role / ship_uses_juggernaut_reactors / ship_uses_colossus_thrusters；
+# 原版主宰的 juggernaut_potential_construction 改为 always = no，原内容改名 atb_juggernaut_potential_construction。
 # 游戏更新后，请用新版原版文件重新做同样的修改。
 
 #####################
@@ -297,6 +300,8 @@ ship_uses_titan_components = {
 	OR = {
 		# 皇女的远征军：无畏舰
 		is_ship_size = atb_dreadnought
+		# 皇女的远征军：可编入舰队的主宰（3.10）
+		is_ship_size = atb_juggernaut
 		is_ship_size = titan
 		is_ship_size = bio_titan
 		is_ship_size = cosmo_crisis_titan
@@ -314,7 +319,11 @@ ship_uses_star_eater_components = {
 }
 
 ship_uses_juggernaut_components = {
-	is_ship_size = juggernaut
+	OR = {
+		is_ship_size = juggernaut
+		# 皇女的远征军：可编入舰队的主宰（3.10）
+		is_ship_size = atb_juggernaut
+	}
 }
 
 ship_uses_ion_cannon_components = {
@@ -354,6 +363,8 @@ ship_uses_artillery_role = {
 	OR = {
 		# 皇女的远征军：无畏舰
 		is_ship_size = atb_dreadnought
+		# 皇女的远征军：可编入舰队的主宰（3.10）
+		is_ship_size = atb_juggernaut
 		# Regular Ships
 		is_ship_size = corvette
 		is_ship_size = frigate
@@ -407,6 +418,8 @@ ship_uses_carrier_role = {
 	OR = {
 		# 皇女的远征军：无畏舰
 		is_ship_size = atb_dreadnought
+		# 皇女的远征军：可编入舰队的主宰（3.10）
+		is_ship_size = atb_juggernaut
 		# Regular Ships
 		is_ship_size = cruiser
 		is_ship_size = battleship
@@ -757,6 +770,8 @@ ship_uses_titan_reactors = {
 
 ship_uses_juggernaut_reactors = {
 	OR = {
+		# 皇女的远征军：可编入舰队的主宰（3.10）
+		is_ship_size = atb_juggernaut
 		# Regular Ships
 		is_ship_size = juggernaut
 		# Galactic Nemesis Ships
@@ -821,6 +836,8 @@ ship_uses_titan_thrusters = {
 
 ship_uses_colossus_thrusters = {
 	OR = {
+		# 皇女的远征军：可编入舰队的主宰（3.10）
+		is_ship_size = atb_juggernaut
 		# Regular Ships
 		is_ship_size = colossus
 		is_ship_size = juggernaut
@@ -1106,7 +1123,13 @@ colossus_possible_construction = {
 	}
 }
 
+# 皇女的远征军 3.10：原版主宰（移动船坞）不再能建造，改由可编入舰队的 atb_juggernaut 代替
 juggernaut_potential_construction = {
+	always = no
+}
+
+# 原版 juggernaut_potential_construction 的内容，给 atb_juggernaut 用（主宰本身不再是恒星基地，这里照抄无妨）
+atb_juggernaut_potential_construction = {
 	OR = {
 		AND = {
 			is_scope_type = starbase

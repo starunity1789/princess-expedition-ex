@@ -6,3 +6,27 @@ atb_ai_auto_pop_jobs = {
 	mult = 0.01
 	floor = yes
 }
+
+# 3.10 星球作用域：自动建筑的产出倍数 = 产能 A × 国家倍率（海军容量仍按 A 本身）。
+# 普通 AI、燃烧白鹿军团、远星同盟组织：×1（基础系数已 ×1.11）；
+# 恐惧之潮、终端对齐协议：相对普通 AI 再 ×1.23/1.11（合计比 3.9 多 23%）；
+# 大君主同盟领地：相对普通 AI 再 ×1.33/1.11（合计比 3.9 多 33%）
+atb_ai_auto_output = {
+	base = 0
+	add = atb_ai_auto_jobs
+	modifier = {
+		factor = 1.1982
+		exists = owner
+		owner = { has_country_flag = atbgp_power_3 }
+	}
+	modifier = {
+		factor = 1.1081
+		exists = owner
+		owner = {
+			OR = {
+				has_country_flag = atbgp_power_4
+				has_country_flag = atbgp_power_5
+			}
+		}
+	}
+}

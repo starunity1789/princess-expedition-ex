@@ -93,3 +93,99 @@ origin_atb_princess_expedition = {
 		base = 0
 	}
 }
+
+# 3.10：遥远之约定——皇女的远征军的变体。图标、开局与远征军完全相同（同样切换为合成繁衍、国家标记
+# atb_princess_expedition，另加 atb_distant_promise），区别在开局布置（atb_ex_relocate_expedition）：
+# 开局直接生成 L 星群（原版 distar.11000），远征军的固定星系围着 L 星群生成、只连 L 星群不连银河；
+# L 星群结局固定为空星群（没有灰色风暴），小灰的异常现象保证出现在 L 星群的纳米星球上。
+origin_atb_distant_promise = {
+	is_origin = yes
+	icon = "gfx/interface/icons/origins/origin_atb_princess_expedition.dds"
+	picture = GFX_origin_atb_princess_expedition
+
+	starting_colony = pc_atb_fortress
+	initializers = { atb_origin_system }
+
+	playable = {
+		has_machine_age_dlc = yes
+		has_ancrel = yes
+		has_distar = yes
+	}
+
+	possible = {
+		is_nomadic = no
+		authority = { value = auth_dictatorial }
+		ethics = {
+			NOT = { value = ethic_gestalt_consciousness }
+			NOR = {
+				text = civic_tooltip_not_spiritualist
+				value = ethic_spiritualist
+				value = ethic_fanatic_spiritualist
+			}
+		}
+		civics = {
+			NOR = {
+				value = civic_permanent_employment
+				value = civic_reanimated_armies
+				value = civic_natural_design
+				value = civic_augmentation_bazaars
+			}
+			NOR = {
+				text = civic_tooltip_not_mutagenic
+				value = civic_toxic_baths
+				value = civic_toxic_baths_individual_machine
+				value = civic_corporate_toxic_baths
+				value = civic_corporate_toxic_baths_individual_machine
+				value = civic_hive_toxic_baths
+				value = civic_machine_toxic_baths
+			}
+			NOR = {
+				text = civic_tooltip_not_eager_explorers
+				value = civic_eager_explorers
+				value = civic_privatized_exploration
+				value = civic_hive_stargazers
+				value = civic_machine_exploration_protocol
+			}
+			NOR = {
+				text = civic_tooltip_not_chosen
+				value = civic_chosen
+				value = civic_corporate_chosen
+			}
+			NOR = {
+				text = civic_tooltip_not_entropy_drinkers
+				value = civic_entropy_drinkers
+				value = civic_entropy_drinkers_corporate
+			}
+			NOR = {
+				text = civic_tooltip_not_galvanic_empire
+				value = civic_galvanic_symbiosis
+				value = civic_hive_galvanic_symbiosis
+				value = civic_corporate_galvanic_symbiosis
+				value = civic_machine_galvanic_symbiosis
+			}
+			NOR = {
+				text = civic_tooltip_not_deep_sleep
+				value = civic_deep_sleep
+				value = civic_corporate_deep_sleep
+			}
+		}
+		species_archetype = { NOT = { value = MACHINE } }
+	}
+
+	traits = {
+		trait = trait_pathogenic_genes
+	}
+
+	description = origin_tooltip_atb_distant_promise_effects
+	negative_description = origin_tooltip_atb_distant_promise_negative_effects
+
+	flags = { custom_start_screen }
+
+	advanced_start = no
+	max_once_global = yes
+	blocks_random_machine_empire_generation = yes
+
+	random_weight = {
+		base = 0
+	}
+}

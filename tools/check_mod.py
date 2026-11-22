@@ -174,7 +174,7 @@ checks = [
     ("大君主固定宇宙创生", "atbgp_force_crisis_perk = { PERK = ap_cosmogenesis }" in ev),
     ("大君主固定基因纯净飞升", "atbgp_start_purity_ascension = yes" in ev and "atbgp_purity_lock = yes" in ev),
     ("大君主合成人公民权", "atbgp_force_ai_full_rights = yes" in ev and "option = ai_full_rights" in eff),
-    ("恐惧之潮方位 = 180°（9 点）", "9 点方位（角度 180）" in ev),
+    ("恐惧之潮方位 = 195°（8 点半，3.10）", "8 点半方位（角度 195）" in ev),
     ("恐惧之潮国民 = 噬杀蜂群 + 唯一意志 + 亚空间突触",
      "civic = civic_hive_devouring_swarm civic = civic_hive_one_mind civic = civic_hive_subspace_ephapse" in init),
     ("恐惧之潮三颗开局母星", init.count("atbgp_planet_4_home_") == 3 and "atbgp_planet_4_home_4" not in init),
@@ -187,8 +187,9 @@ checks = [
     ("多母星都走原版开局流程", init.count("generate_start_pops = yes") == 7),
     ("大君主与终端对齐协议加入星海共同体", init.count("set_country_flag = atbgp_gc_member") == 2
      and "has_country_flag = atbgp_gc_member" in rules and "can_be_part_of_galactic_community = {" in rules),
-    ("五个列强开局海军容量 +300（3.1）、恒星基地上限 +10", init.count("modifier = atbgp_power_base") == 5
-     and "country_naval_cap_add = 300\n\tcountry_starbase_capacity_add = 10" in gpmod),
+    ("五个列强开局海军容量 +300（3.1）；恒星基地上限 +10 除大君主外（3.10）", init.count("modifier = atbgp_power_base") == 5
+     and "atbgp_power_base = {\n\tcountry_naval_cap_add = 300\n}" in gpmod
+     and "atbgp_starbase_bonus = {\n\tcountry_starbase_capacity_add = 10\n}" in gpmod),
     ("3.0.3：AI 超容造舰预算 ×0.1、天灾邻国 ×5 只到 100%", (lambda b: "factor = 0.1\n\t\t\tused_naval_capacity_percent >= 1.0" in b
      and "used_naval_capacity_percent < 1.0\t# 皇女的远征军EX：原版 1.5" in b)(
         read(MOD / "common/ai_budget/01_alloys_budget.txt") if (MOD / "common/ai_budget/01_alloys_budget.txt").exists() else "")),
@@ -208,8 +209,8 @@ checks = [
     ("大君主额外国家修正已挂上",
      "modifier = atbgp_bonus_3" in init and "atbgp_bonus_3 = {" in gpmod
      and "species_leader_exp_gain = 0.5" in gpmod and "negative_traits_country = -1" in gpmod),
-    ("远征军星团方位 = 12 点（88~92）",
-     exeff.count("min_orientation_angle = 88") == 6 and "min_orientation_angle = 267" in exeff),
+    ("远征军星团方位 = 12 点（88~92；3.10 起遥远之约定另有一处，在 L 星群正上方）",
+     exeff.count("min_orientation_angle = 88") == 7 and "min_orientation_angle = 267" in exeff),
     ("远征军母星系有毁坏的巨型船坞与 L 星门", 'type = "mega_shipyard_ruined"' in rl
      and rl.split("atb_rl_home = {")[1].split("atb_rl_lgate = {")[0].count("lgate_base") == 1),
     ("高位元素秘封研究院", "d_atb_elemental_seal_institute = {" in atbdep and "country_resource_max_add = 1000000" in atbdep
@@ -226,7 +227,7 @@ checks = [
         'authority = "auth_dictatorial"', 'government = "gov_technocratic_dictatorship"', 'planet_class = "pc_continental"'))
      and "atb_preset_playable = {" in read(MOD / "common/scripted_triggers/atb_triggers.txt")),
     ("巨型船坞 50 个船坞", mega.count("starbase_shipyard_capacity_add = 50") == 2 and "capacity_add = 20" not in mega),
-    ("天选民固定 8 点", "atb_ex_spawn_chosen = yes" in exev and exeff.count("min_orientation_angle = 208") == 4
+    ("天选民固定 7 点半（3.10）", "atb_ex_spawn_chosen_fixed = yes" in exev and exeff.count("min_orientation_angle = 223") == 4
      and "# random_rim_system = {" in arcsite
      and not re.search(r"^\s*system_event = \{ id = fircon\.3500 \}", arcsite, re.M)),
     ("二皇女带舰船加成", "ship_weapon_damage = 1.0" in trt and "ship_shield_hardening_add = 1.0" in trt),
@@ -308,7 +309,8 @@ checks += [
     ("自动星球 6 座建筑都定义了", all(f"{b} = {{" in auto_bld for b in (
         "building_atb_ai_core", "building_atb_ai_foundry", "building_atb_ai_power",
         "building_atb_ai_admin", "building_atb_ai_industry", "building_atb_ai_supply"))
-     and auto_bld.count("multiplier = planet.atb_ai_auto_jobs") >= 8),
+     and auto_bld.count("multiplier = value:atb_ai_auto_output") == 9
+     and "atb_ai_auto_output = {" in read(MOD / "common/script_values/atb_ai_auto_values.txt")),
     ("自治中枢带护盾、FTL 抑制器、10 支防御陆军、海军容量", "planetary_ftl_inhibitor = yes" in auto_bld
      and "planet_orbital_bombardment_damage = -0.5" in auto_bld and "planet_defense_armies_add = 10" in auto_bld
      and "country_naval_cap_add = @atb_ai_auto_naval_cap" in auto_bld),
@@ -318,11 +320,15 @@ checks += [
      and all(f"on_{h} = {{" in auto_oa for h in ("game_start", "colonized", "colony_transfer", "yearly_pulse_country"))),
     ("3.6：自动星球数值列强与普通相同（+3/年、起点 10、上限 300）", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 3" in auto_var
      and "@atb_ai_auto_start_gp = 10" in auto_var and "@atb_ai_auto_cap_gp = 300" in auto_var),
-    ("3.6：自动星球产出 ×1.5（合金 ×1.25），海军容量仍 0.1", "@atb_ai_auto_out_consumer_goods = 1.17" in auto_var
-     and "@atb_ai_auto_out_energy = 1.755" in auto_var
+    ("3.10：自动星球产出再 ×1.11（3.6 的 ×1.5 / 合金 ×1.25 之上），海军容量仍 0.1", "@atb_ai_auto_out_consumer_goods = 1.2987" in auto_var
+     and "@atb_ai_auto_out_energy = 1.9481" in auto_var
      and "@atb_ai_auto_naval_cap = 0.1" in auto_var and auto_bld.count("@atb_ai_auto_out_") >= 17),
-    ("3.6：自动星球合金 0.4146、科研 0.8747", "@atb_ai_auto_out_alloys = 0.4146" in auto_var
-     and "@atb_ai_auto_out_research = 0.8747" in auto_var),
+    ("3.10：自动星球合金 0.4602、科研 0.9709；列强倍率（大君主 ×1.1982，恐惧之潮/终端 ×1.1081）",
+     "@atb_ai_auto_out_alloys = 0.4602" in auto_var and "@atb_ai_auto_out_research = 0.9709" in auto_var
+     and "factor = 1.1982" in read(MOD / "common/script_values/atb_ai_auto_values.txt")
+     and "factor = 1.1081" in read(MOD / "common/script_values/atb_ai_auto_values.txt")),
+    ("3.10：大君主同盟领地没有恒星基地上限 +10", "country_starbase_capacity_add" not in read(MOD / "common/static_modifiers/atbgp_static_modifiers.txt").split("atbgp_power_base = {", 1)[1].split("}", 1)[0]
+     and read(MOD / "common/solar_system_initializers/atbgp_initializers.txt").count("modifier = atbgp_starbase_bonus") == 4),
     ("3.6：无形链接↔逆鳞、极限边缘↔神话两个虫洞，白鹿与远星互相 +200 好感", "id = atb_ex.6" in read(MOD / "events/atb_ex_events.txt")
      and re.sub(r"#.*", "", read(MOD / "events/atb_ex_events.txt")).count("link_wormholes = prev") == 2
      and "base = 200" in read(MOD / "common/opinion_modifiers/atb_ex_opinion_modifiers.txt")),
@@ -331,6 +337,44 @@ checks += [
     ("3.6：三皇女异常发现 +50%、要塞工程学 +30", "ship_anomaly_generation_chance_mult = 0.5" in read(MOD / "common/traits/atb_leader_traits.txt")
      and "engineering_research = 60" in read(MOD / "common/deposits/atb_deposits.txt")),
     ("3.8：星海纪念碑凝聚力 +66", "unity = 66" in read(MOD / "common/deposits/atb_deposits.txt")),
+    ("3.10：可编入舰队的主宰（20 万舰体、T 槽、没有船坞、限 1 艘），原版主宰停建",
+     "atb_juggernaut = {" in read(MOD / "common/ship_sizes/atb_ship_sizes.txt")
+     and "max_hitpoints = 200000" in read(MOD / "common/ship_sizes/atb_ship_sizes.txt")
+     and "class = shipclass_military" in read(MOD / "common/ship_sizes/atb_ship_sizes.txt").split("atb_juggernaut = {", 1)[1]
+     and "starbase_shipyard_capacity_add" not in read(MOD / "common/ship_sizes/atb_ship_sizes.txt")
+     and read(MOD / "common/section_templates/atb_juggernaut.txt").count("invisible_titanic_fixed") == 2
+     and read(MOD / "common/section_templates/atb_juggernaut.txt").count("large_strike_craft") == 6
+     and read(MOD / "common/scripted_triggers/07_scripted_triggers_ships.txt").count("is_ship_size = atb_juggernaut") == 6
+     and "juggernaut_potential_construction = {\n\talways = no\n}" in read(MOD / "common/scripted_triggers/07_scripted_triggers_ships.txt")
+     and "atb_juggernaut_ships_limit" in read(MOD / "common/country_limits/ownership_limits/atb_ownership_limits.txt")),
+    ("3.10：起源「遥远之约定」：开局生成 L 星群、星团只连 L 星群、空星群结局、小灰异常现象",
+     "origin_atb_distant_promise = {" in read(MOD / "common/governments/civics/atb_origins.txt")
+     and "set_country_flag = atb_distant_promise" in read(MOD / "common/scripted_effects/atb_effects.txt")
+     and "country_event = { id = distar.11000 }" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "to = event_target:lcluster4b" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "category = disco_gray_cat" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "has_origin = origin_atb_distant_promise" in read(MOD / "events/atb_events.txt")
+     and "origin_atb_distant_promise:0" in read(MOD / "localisation/simp_chinese/atb_princess_expedition_l_simp_chinese.yml")
+     and "origin_atb_distant_promise:0" in read(MOD / "localisation/english/atb_princess_expedition_l_english.yml")),
+    ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
+     and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
+    ("3.10：星堡舰体 +300%、交战范围翻倍、花费减半、平台上限 +12；防御平台与离子炮时间/花费/维护减半、舰体 +300%",
+     (lambda m: m.count("_hull_mult = 3") == 9 and m.count("_engagement_range_mult = 1") == 8
+      and "starbase_upgrade_cost_mult = -0.5" in m and "starbase_outpost_cost_mult = -0.5" in m
+      and "starbase_defense_platform_capacity_add = 12" in m and "shipclass_military_station_build_cost_mult = -0.5" in m
+      and "shipclass_military_station_build_speed_mult = 1" in m and "ship_ion_cannon_upkeep_mult = -0.5" in m
+      and "ship_military_station_small_upkeep_mult = -0.5" in m)(read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt"))),
+    ("3.10：L 星门线索 7 → 3，银河里至少 7 座 L 星门",
+     "max = 3\t# 皇女的远征军EX：原版 7" in read(MOD / "common/event_chains/00_event_chains_distant_stars.txt")
+     and "atb_ex_ensure_lgates = {" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "atb_ex_ensure_lgates = yes" in read(MOD / "events/atb_ex_events.txt")),
+    ("3.10：天选民虫洞出口在大君主母星、同种族、开门后结盟；天选民 7 点半、恐惧之潮 8 点半",
+     "atb_ex_spawn_chosen_fixed = {" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "change_dominant_species" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "min_orientation_angle = 223" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "id = atb_ex.8" in read(MOD / "events/atb_ex_events.txt")
+     and "atb_ex.8" in read(MOD / "common/on_actions/atb_ex_on_actions.txt")
+     and "min_orientation_angle = 193" in read(MOD / "events/atbgp_events.txt")),
     ("3.9：首席调停者、开局 3 个国策、第一皇女领袖维护费 -33%",
      read(MOD / "common/governments/councilors/atb_th_councilors.txt").count("empire_size_colonies_mult = -0.01") == 2
      and "GOVERNMENT_CIVIC_POINTS_BASE = 3" in read(MOD / "common/defines/atb_ex_defines.txt")

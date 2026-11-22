@@ -110,6 +110,10 @@ atbgp_home_1 = {
 						modifier = atbgp_power_base
 						days = -1
 					}
+					add_modifier = {
+						modifier = atbgp_starbase_bonus
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_1
@@ -625,6 +629,10 @@ atbgp_home_2 = {
 					advanced_empire_base_init_effect = yes
 					add_modifier = {
 						modifier = atbgp_power_base
+						days = -1
+					}
+					add_modifier = {
+						modifier = atbgp_starbase_bonus
 						days = -1
 					}
 				}
@@ -1566,6 +1574,10 @@ atbgp_home_4 = {
 						modifier = atbgp_power_base
 						days = -1
 					}
+					add_modifier = {
+						modifier = atbgp_starbase_bonus
+						days = -1
+					}
 				}
 			}
 			set_owner = event_target:atbgp_country_4
@@ -1769,6 +1781,10 @@ atbgp_home_5 = {
 					advanced_empire_base_init_effect = yes
 					add_modifier = {
 						modifier = atbgp_power_base
+						days = -1
+					}
+					add_modifier = {
+						modifier = atbgp_starbase_bonus
 						days = -1
 					}
 				}
