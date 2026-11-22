@@ -356,6 +356,18 @@ checks += [
      and "has_origin = origin_atb_distant_promise" in read(MOD / "events/atb_events.txt")
      and "origin_atb_distant_promise:0" in read(MOD / "localisation/simp_chinese/atb_princess_expedition_l_simp_chinese.yml")
      and "origin_atb_distant_promise:0" in read(MOD / "localisation/english/atb_princess_expedition_l_english.yml")),
+    ("3.11：遥远之约定的 L 星群纳米星球可环境改造（开局与每年补）",
+     read(MOD / "common/scripted_effects/atb_ex_effects.txt").count("atb_ex_lcluster_terraformable") == 2
+     and "atb_ex_lcluster_terraformable = yes" in read(MOD / "events/atb_ex_events.txt")
+     and "modifier = terraforming_candidate" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")),
+    ("3.11：遥远之约定把原版 11 个特殊星系搬进 L 星群（并清掉银河里的那份）",
+     (lambda e: all(f"INIT = {k}" in e for k in (
+         "time_loop_world_system", "living_planet_system", "scavenger_system", "guardians_init_dragon",
+         "guardians_artist_init_01", "guardians_curator_init_01", "great_wound_system", "elderly_tiyanki_system",
+         "hyacinth_system", "locust_system_initializer_01", "voidworms_spawn_system_medium"))
+      and e.count("atb_ex_lc_link = { A = ") == 12 and "atb_ex_lc_strip_galaxy_copies = yes" in e
+      and "atb_ex_lcluster_extra_systems = yes" in e and "hyperlane = no" in e)(
+         read(MOD / "common/scripted_effects/atb_ex_effects.txt"))),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.10：星堡舰体 +300%、交战范围翻倍、花费减半、平台上限 +12；防御平台与离子炮时间/花费/维护减半、舰体 +300%",

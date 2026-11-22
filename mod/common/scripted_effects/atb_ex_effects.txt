@@ -209,6 +209,250 @@ atb_ex_place_gray_anomaly = {
 	}
 }
 
+# 3.11：遥远之约定的 L 星群纳米星球可环境改造。
+# 原版只在灰蛊风暴被消灭时（graygoo 事件）给所有纳米星球加 terraforming_candidate，
+# 这个起源没有风暴，所以要自己加；改造仍需原版科技「气候修复」（tech_climate_restoration）
+atb_ex_lcluster_terraformable = {
+	every_system = {
+		limit = { has_star_flag = lcluster }
+		every_system_planet = {
+			limit = {
+				is_planet_class = pc_gray_goo
+				NOT = { has_modifier = terraforming_candidate }
+			}
+			add_modifier = { modifier = terraforming_candidate days = -1 }
+		}
+	}
+}
+
+# 3.11：遥远之约定——把原版的 11 个特殊星系「搬」进 L 星群。
+# 原版这些星系是开局随机生成的（维拉X-1 是「猎取风信子号」事件链的终点），没法挪位置，所以：
+#   1. 银河里已经生成的那份：清掉守护者 / 飞地 / 虫群和特殊星球，去掉星系旗标，变成普通星系；
+#   2. 用原版同一个初始化器在 L 星群外围再生成一份（全局事件目标随之指向新的这份，原版事件照常触发）；
+#   3. 每个新星系只连 L 星群（以太龙在最外侧，连两个新星系），不连银河。
+# 方位以 L 星群最终出口（lcluster1）为原点；避开朝向银河的一侧和通往远征军的上方航道
+atb_ex_lcluster_extra_systems = {
+	atb_ex_lc_strip_galaxy_copies = yes
+
+	set_spawn_system_batch = begin
+	atb_ex_lc_spawn = { INIT = time_loop_world_system TARGET = atb_lc_time_loop MIN = 95 MAX = 105 A1 = 296 A2 = 304 }
+	atb_ex_lc_spawn = { INIT = living_planet_system TARGET = atb_lc_living MIN = 100 MAX = 110 A1 = 316 A2 = 324 }
+	atb_ex_lc_spawn = { INIT = scavenger_system TARGET = atb_lc_scavenger MIN = 95 MAX = 105 A1 = 336 A2 = 344 }
+	if = {
+		limit = { has_leviathans = yes }
+		atb_ex_lc_spawn = { INIT = guardians_init_dragon TARGET = atb_lc_dragon MIN = 160 MAX = 172 A1 = 325 A2 = 335 }
+		random_list = {
+			1 = { atb_ex_lc_spawn = { INIT = guardians_artist_init_01 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
+			1 = { atb_ex_lc_spawn = { INIT = guardians_artist_init_02 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
+			1 = { atb_ex_lc_spawn = { INIT = guardians_artist_init_03 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
+		}
+	}
+	random_list = {
+		1 = { atb_ex_lc_spawn = { INIT = guardians_curator_init_01 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
+		1 = { atb_ex_lc_spawn = { INIT = guardians_curator_init_02 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
+		1 = { atb_ex_lc_spawn = { INIT = guardians_curator_init_03 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
+	}
+	atb_ex_lc_spawn = { INIT = great_wound_system TARGET = atb_lc_great_wound MIN = 115 MAX = 125 A1 = 36 A2 = 44 }
+	atb_ex_lc_spawn = { INIT = elderly_tiyanki_system TARGET = atb_lc_tiyanki MIN = 125 MAX = 135 A1 = 56 A2 = 64 }
+	atb_ex_lc_spawn = { INIT = hyacinth_system TARGET = atb_lc_vela MIN = 120 MAX = 130 A1 = 116 A2 = 124 }
+	atb_ex_lc_spawn = { INIT = locust_system_initializer_01 TARGET = atb_lc_swarm MIN = 110 MAX = 120 A1 = 136 A2 = 144 }
+	if = {
+		limit = {
+			has_grand_archive_dlc = yes
+			voidworms_enabled = yes
+		}
+		atb_ex_lc_spawn = { INIT = voidworms_spawn_system_medium TARGET = atb_lc_voidworms MIN = 105 MAX = 115 A1 = 156 A2 = 164 }
+	}
+	set_spawn_system_batch = end
+
+	atb_ex_lc_link = { A = atb_lc_time_loop B = lcluster1b }
+	atb_ex_lc_link = { A = atb_lc_living B = lcluster1b }
+	atb_ex_lc_link = { A = atb_lc_scavenger B = lcluster1b }
+	atb_ex_lc_link = { A = atb_lc_dragon B = atb_lc_living }
+	atb_ex_lc_link = { A = atb_lc_dragon B = atb_lc_scavenger }
+	atb_ex_lc_link = { A = atb_lc_artist B = lcluster2b }
+	atb_ex_lc_link = { A = atb_lc_curator B = lcluster2b }
+	atb_ex_lc_link = { A = atb_lc_great_wound B = lcluster2b }
+	atb_ex_lc_link = { A = atb_lc_tiyanki B = lcluster4b }
+	atb_ex_lc_link = { A = atb_lc_vela B = lcluster4b }
+	atb_ex_lc_link = { A = atb_lc_swarm B = lcluster3 }
+	atb_ex_lc_link = { A = atb_lc_voidworms B = lcluster3 }
+
+	# 维拉X-1 只当作资源丰富的星系：去掉「猎取风信子号」事件链认的旗标，事件链走到最后照原版另外生成自己的那份
+	if = {
+		limit = { exists = event_target:atb_lc_vela }
+		event_target:atb_lc_vela = {
+			remove_star_flag = hyacinth_system
+			every_system_planet = {
+				limit = { has_planet_flag = hyacinth_planet }
+				remove_planet_flag = hyacinth_planet
+			}
+		}
+	}
+}
+
+# 在 L 星群外围用原版初始化器生成一个星系（不连航道）
+atb_ex_lc_spawn = {
+	event_target:lcluster1 = {
+		spawn_system = {
+			min_distance >= $MIN$
+			max_distance <= $MAX$
+			min_orientation_angle = $A1$
+			max_orientation_angle = $A2$
+			initializer = $INIT$
+			hyperlane = no
+			effect = {
+				set_star_flag = atb_ex_lc_extra
+				save_global_event_target_as = $TARGET$
+			}
+		}
+	}
+}
+
+atb_ex_lc_link = {
+	if = {
+		limit = {
+			exists = event_target:$A$
+			exists = event_target:$B$
+		}
+		event_target:$A$ = { add_hyperlane = { from = this to = event_target:$B$ } }
+	}
+}
+
+# 银河里已经随机生成的同名星系：清掉其中的特殊内容，免得与 L 星群里的那份重复（星球、普通资源保留）
+atb_ex_lc_strip_galaxy_copies = {
+	# 以太龙：龙与其国家、龙巢
+	every_country = {
+		limit = {
+			is_country_type = guardian_dragon
+			has_country_flag = dragon_country
+		}
+		every_controlled_fleet = { destroy_fleet = this }
+		destroy_country = yes
+	}
+	every_system = {
+		limit = { has_star_flag = guardians_dragon_system }
+		every_system_planet = {
+			limit = { has_planet_flag = hoard_planet }
+			remove_planet = yes
+		}
+		remove_star_flag = guardians_dragon_system
+		remove_star_flag = guardian
+		remove_star_flag = hostile_system
+		remove_star_flag = antique_threat_system
+	}
+	# 艺术团、策展人修会：飞地国家与空间站
+	every_country = {
+		limit = {
+			OR = {
+				has_country_flag = artist_enclave_country
+				has_country_flag = curator_enclave_country
+			}
+		}
+		every_controlled_fleet = { destroy_fleet = this }
+		destroy_country = yes
+	}
+	every_system = {
+		limit = {
+			OR = {
+				has_star_flag = guardians_artists_system
+				has_star_flag = guardians_curators_system
+			}
+		}
+		remove_star_flag = guardians_artists_system
+		remove_star_flag = guardians_curators_system
+		remove_star_flag = enclave
+	}
+	# 老年提央基、拾荒者机器人
+	every_country = {
+		limit = {
+			OR = {
+				is_country_type = guardian_elderly_tiyanki
+				is_country_type = guardian_scavenger_bot
+			}
+		}
+		every_controlled_fleet = { destroy_fleet = this }
+		destroy_country = yes
+	}
+	every_system = {
+		limit = {
+			OR = {
+				has_star_flag = elderly_tiyanki_system
+				has_star_flag = scavenger_bot_system
+			}
+		}
+		remove_star_flag = elderly_tiyanki_system
+		remove_star_flag = scavenger_bot_system
+		remove_star_flag = guardian
+		remove_star_flag = hostile_system
+		remove_star_flag = antique_threat_system
+	}
+	# 大伤口：虚空云（虚空云国家是全银河共用的，只清这个星系里的）与暗物质矿藏
+	every_system = {
+		limit = { has_star_flag = great_wound }
+		every_fleet_in_system = {
+			limit = {
+				exists = owner
+				owner = { is_country_type = cloud }
+			}
+			destroy_fleet = this
+		}
+		every_system_planet = { clear_deposits = yes }
+		remove_star_flag = great_wound
+		remove_star_flag = natural_spectacle_system
+	}
+	# 时间循环世界、活体星球：特殊星球
+	every_system = {
+		limit = {
+			OR = {
+				has_star_flag = time_loop_world_system
+				has_star_flag = living_planet_system
+			}
+		}
+		every_system_planet = {
+			limit = {
+				OR = {
+					has_planet_flag = is_time_loop_world
+					has_planet_flag = living_planet
+				}
+			}
+			remove_planet = yes
+		}
+		remove_star_flag = time_loop_world_system
+		remove_star_flag = living_planet_system
+		remove_star_flag = natural_spectacle_system
+	}
+	# 失落虫群：虫群国家与孕育虫群的盖亚卫星
+	every_country = {
+		limit = { has_country_flag = lost_swarm }
+		every_controlled_fleet = { destroy_fleet = this }
+		destroy_country = yes
+	}
+	every_system = {
+		limit = { has_star_flag = lost_swarm_system }
+		every_system_planet = {
+			limit = { has_modifier = nascent_locust }
+			remove_planet = yes
+		}
+		remove_star_flag = lost_swarm_system
+		remove_star_flag = hostile_system
+		remove_star_flag = natural_spectacle_system
+	}
+	# 虚空虫巢穴：巢穴与虫群舰队（虚空虫国家是全银河共用的，只清这个星系里的）
+	every_system = {
+		limit = { has_star_flag = voidworms_system }
+		every_fleet_in_system = {
+			limit = {
+				exists = owner
+				owner = { is_country_type = voidworms }
+			}
+			destroy_fleet = this
+		}
+		remove_star_flag = voidworms_system
+		remove_star_flag = space_ecology_system
+	}
+}
+
 # 国家作用域：本国还没有银河规则就加上（存储上限 +100K、非生物船基础舰体翻倍）
 atb_ex_give_galaxy_rules = {
 	if = {
@@ -467,6 +711,8 @@ atb_ex_relocate_expedition = {
 			event_target:atb_rl_sys_gateway = { add_hyperlane = { from = this to = event_target:lcluster1 } }
 		}
 		atb_ex_place_gray_anomaly = yes
+		atb_ex_lcluster_terraformable = yes
+		atb_ex_lcluster_extra_systems = yes
 	}
 	else = {
 		atbgp_link_to_galaxy = { SYSTEM = atb_rl_sys_gateway }

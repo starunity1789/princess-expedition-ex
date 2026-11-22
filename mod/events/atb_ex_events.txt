@@ -54,6 +54,11 @@ event = {
 			}
 			add_modifier = { modifier = atbgp_starbase_bonus days = -1 }
 		}
+		# 3.11：遥远之约定的 L 星群纳米星球可环境改造，旧存档在这里补（已有修正的星球会跳过）
+		if = {
+			limit = { any_country = { has_country_flag = atb_distant_promise } }
+			atb_ex_lcluster_terraformable = yes
+		}
 	}
 }
 
