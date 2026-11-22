@@ -228,40 +228,43 @@ atb_ex_lcluster_terraformable = {
 # 3.11：遥远之约定——把原版的 11 个特殊星系「搬」进 L 星群。
 # 原版这些星系是开局随机生成的（维拉X-1 是「猎取风信子号」事件链的终点），没法挪位置，所以：
 #   1. 银河里已经生成的那份：清掉守护者 / 飞地 / 虫群和特殊星球，去掉星系旗标，变成普通星系；
-#   2. 用原版同一个初始化器在 L 星群外围再生成一份（全局事件目标随之指向新的这份，原版事件照常触发）；
+#   2. 在 L 星群外围再生成一份（全局事件目标随之指向新的这份，原版事件照常触发）。原版初始化器都有
+#      max_instances = 1，名额在银河生成时已用掉（3.11 实测全部被拒），所以用照抄原版、去掉名额限制的
+#      atb_lc_* 副本（solar_system_initializers/atb_lc_initializers.txt，gen_vanilla_patches.py 生成）；
+#      维拉X-1 没有名额限制，直接用原版的；
 #   3. 每个新星系只连 L 星群（以太龙在最外侧，连两个新星系），不连银河。
 # 方位以 L 星群最终出口（lcluster1）为原点；避开朝向银河的一侧和通往远征军的上方航道
 atb_ex_lcluster_extra_systems = {
 	atb_ex_lc_strip_galaxy_copies = yes
 
 	set_spawn_system_batch = begin
-	atb_ex_lc_spawn = { INIT = time_loop_world_system TARGET = atb_lc_time_loop MIN = 95 MAX = 105 A1 = 296 A2 = 304 }
-	atb_ex_lc_spawn = { INIT = living_planet_system TARGET = atb_lc_living MIN = 100 MAX = 110 A1 = 316 A2 = 324 }
-	atb_ex_lc_spawn = { INIT = scavenger_system TARGET = atb_lc_scavenger MIN = 95 MAX = 105 A1 = 336 A2 = 344 }
+	atb_ex_lc_spawn = { INIT = atb_lc_time_loop_world_system TARGET = atb_lc_time_loop MIN = 95 MAX = 105 A1 = 296 A2 = 304 }
+	atb_ex_lc_spawn = { INIT = atb_lc_living_planet_system TARGET = atb_lc_living MIN = 100 MAX = 110 A1 = 316 A2 = 324 }
+	atb_ex_lc_spawn = { INIT = atb_lc_scavenger_system TARGET = atb_lc_scavenger MIN = 95 MAX = 105 A1 = 336 A2 = 344 }
 	if = {
 		limit = { has_leviathans = yes }
-		atb_ex_lc_spawn = { INIT = guardians_init_dragon TARGET = atb_lc_dragon MIN = 160 MAX = 172 A1 = 325 A2 = 335 }
+		atb_ex_lc_spawn = { INIT = atb_lc_guardians_init_dragon TARGET = atb_lc_dragon MIN = 160 MAX = 172 A1 = 325 A2 = 335 }
 		random_list = {
-			1 = { atb_ex_lc_spawn = { INIT = guardians_artist_init_01 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
-			1 = { atb_ex_lc_spawn = { INIT = guardians_artist_init_02 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
-			1 = { atb_ex_lc_spawn = { INIT = guardians_artist_init_03 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
+			1 = { atb_ex_lc_spawn = { INIT = atb_lc_guardians_artist_init_01 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
+			1 = { atb_ex_lc_spawn = { INIT = atb_lc_guardians_artist_init_02 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
+			1 = { atb_ex_lc_spawn = { INIT = atb_lc_guardians_artist_init_03 TARGET = atb_lc_artist MIN = 105 MAX = 115 A1 = 356 A2 = 4 } }
 		}
 	}
 	random_list = {
-		1 = { atb_ex_lc_spawn = { INIT = guardians_curator_init_01 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
-		1 = { atb_ex_lc_spawn = { INIT = guardians_curator_init_02 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
-		1 = { atb_ex_lc_spawn = { INIT = guardians_curator_init_03 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
+		1 = { atb_ex_lc_spawn = { INIT = atb_lc_guardians_curator_init_01 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
+		1 = { atb_ex_lc_spawn = { INIT = atb_lc_guardians_curator_init_02 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
+		1 = { atb_ex_lc_spawn = { INIT = atb_lc_guardians_curator_init_03 TARGET = atb_lc_curator MIN = 105 MAX = 115 A1 = 16 A2 = 24 } }
 	}
-	atb_ex_lc_spawn = { INIT = great_wound_system TARGET = atb_lc_great_wound MIN = 115 MAX = 125 A1 = 36 A2 = 44 }
-	atb_ex_lc_spawn = { INIT = elderly_tiyanki_system TARGET = atb_lc_tiyanki MIN = 125 MAX = 135 A1 = 56 A2 = 64 }
+	atb_ex_lc_spawn = { INIT = atb_lc_great_wound_system TARGET = atb_lc_great_wound MIN = 115 MAX = 125 A1 = 36 A2 = 44 }
+	atb_ex_lc_spawn = { INIT = atb_lc_elderly_tiyanki_system TARGET = atb_lc_tiyanki MIN = 125 MAX = 135 A1 = 56 A2 = 64 }
 	atb_ex_lc_spawn = { INIT = hyacinth_system TARGET = atb_lc_vela MIN = 120 MAX = 130 A1 = 116 A2 = 124 }
-	atb_ex_lc_spawn = { INIT = locust_system_initializer_01 TARGET = atb_lc_swarm MIN = 110 MAX = 120 A1 = 136 A2 = 144 }
+	atb_ex_lc_spawn = { INIT = atb_lc_locust_system_initializer_01 TARGET = atb_lc_swarm MIN = 110 MAX = 120 A1 = 136 A2 = 144 }
 	if = {
 		limit = {
 			has_grand_archive_dlc = yes
 			voidworms_enabled = yes
 		}
-		atb_ex_lc_spawn = { INIT = voidworms_spawn_system_medium TARGET = atb_lc_voidworms MIN = 105 MAX = 115 A1 = 156 A2 = 164 }
+		atb_ex_lc_spawn = { INIT = atb_lc_voidworms_spawn_system_medium TARGET = atb_lc_voidworms MIN = 105 MAX = 115 A1 = 156 A2 = 164 }
 	}
 	set_spawn_system_batch = end
 

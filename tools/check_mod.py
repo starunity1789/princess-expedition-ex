@@ -361,10 +361,11 @@ checks += [
      and "atb_ex_lcluster_terraformable = yes" in read(MOD / "events/atb_ex_events.txt")
      and "modifier = terraforming_candidate" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")),
     ("3.11：遥远之约定把原版 11 个特殊星系搬进 L 星群（并清掉银河里的那份）",
-     (lambda e: all(f"INIT = {k}" in e for k in (
+     (lambda e: "INIT = hyacinth_system" in e and all(f"INIT = atb_lc_{k}" in e and f"\natb_lc_{k} = {{" in read(MOD / "common/solar_system_initializers/atb_lc_initializers.txt") for k in (
          "time_loop_world_system", "living_planet_system", "scavenger_system", "guardians_init_dragon",
          "guardians_artist_init_01", "guardians_curator_init_01", "great_wound_system", "elderly_tiyanki_system",
-         "hyacinth_system", "locust_system_initializer_01", "voidworms_spawn_system_medium"))
+         "locust_system_initializer_01", "voidworms_spawn_system_medium"))
+      and "\tmax_instances" not in read(MOD / "common/solar_system_initializers/atb_lc_initializers.txt")
       and e.count("atb_ex_lc_link = { A = ") == 12 and "atb_ex_lc_strip_galaxy_copies = yes" in e
       and "atb_ex_lcluster_extra_systems = yes" in e and "hyperlane = no" in e)(
          read(MOD / "common/scripted_effects/atb_ex_effects.txt"))),

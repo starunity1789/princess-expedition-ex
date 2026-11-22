@@ -235,3 +235,102 @@ for patch in PATCHES:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes((b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8"))
     print("generated", patch["path"])
+
+
+# ---- 3.11：遥远之约定搬进 L 星群的原版特殊星系 ----
+# 原版这些初始化器都有 max_instances = 1，银河生成时用掉了名额（清掉银河里那份也不退），spawn_system 会报
+# 「reached its max_instances limit」而不生成。这里照抄原版、换成 atb_lc_ 前缀的新键，去掉随机生成相关的
+# usage / usage_odds / max_instances / spawn_chance，只供 atb_ex_lcluster_extra_systems 用 spawn_system 生成。
+# 内容取原版（不取 Real Space 等 MOD 的改写，它们用到自己的脚本变量）。
+LC_INITIALIZERS = [
+    "time_loop_world_system", "living_planet_system", "scavenger_system", "guardians_init_dragon",
+    "guardians_artist_init_01", "guardians_artist_init_02", "guardians_artist_init_03",
+    "guardians_curator_init_01", "guardians_curator_init_02", "guardians_curator_init_03",
+    "great_wound_system", "elderly_tiyanki_system", "locust_system_initializer_01",
+    "voidworms_spawn_system_medium",
+]
+LC_STRIP = ("usage", "usage_odds", "max_instances", "spawn_chance", "scaled_spawn_chance", "primitive_system")
+
+
+def lc_blocks(text):
+    import re
+    i, n = 0, len(text)
+    for m in re.finditer(r"(?m)^([A-Za-z_0-9]+)\s*=\s*\{", text):
+        if m.start() < i:
+            continue
+        depth, j = 0, m.end() - 1
+        while j < n:
+            c = text[j]
+            if c == "#":
+                j = text.find("\n", j)
+                j = n if j < 0 else j
+                continue
+            if c == "{":
+                depth += 1
+            elif c == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+            j += 1
+        yield m.group(1), text[m.start():j + 1]
+        i = j + 1
+
+
+def lc_strip_top(block):
+    """去掉初始化器第一层的随机生成参数（含整个 usage_odds 块）"""
+    import re
+    out, lines, k = [], block.split("\n"), 0
+    while k < len(lines):
+        line = lines[k]
+        m = re.match(r"^\t([A-Za-z_]+)\s*=", line)
+        if m and m.group(1) in LC_STRIP:
+            depth = line.split("#")[0].count("{") - line.split("#")[0].count("}")
+            k += 1
+            while depth > 0:
+                code = lines[k].split("#")[0]
+                depth += code.count("{") - code.count("}")
+                k += 1
+            continue
+        out.append(line)
+        k += 1
+    return "\n".join(out)
+
+
+lc_found = {}
+for f in sorted((GAME / "common/solar_system_initializers").glob("*.txt")):
+    for key, block in lc_blocks(f.read_text(encoding="utf-8-sig").replace("\r\n", "\n")):
+        if key in LC_INITIALIZERS:
+            lc_found[key] = (f.name, block)
+missing = [k for k in LC_INITIALIZERS if k not in lc_found]
+if missing:
+    sys.exit(f"原版里找不到初始化器：{missing}")
+
+VOIDWORM_INLINE = ("\tinline_script = {\n"
+                   "\t\tscript = grand_archive/voidworms_system_planet_initializer\n"
+                   "\t\tSIZE = medium\n"
+                   "\t}\n")
+lc_out = [
+    "# 皇女的远征军EX：遥远之约定搬进 L 星群的原版特殊星系（3.11）。",
+    "# 由 tools/gen_vanilla_patches.py 从原版照抄生成，请勿手改：键名加 atb_lc_ 前缀，去掉 usage / usage_odds /",
+    "# max_instances / spawn_chance（原版 max_instances = 1 的名额在银河生成时已用掉，spawn_system 会拒绝生成）。",
+    "# 只由 atb_ex_lcluster_extra_systems 用 spawn_system 生成，不参与银河生成。群星更新后重新生成。",
+    "",
+]
+for key in LC_INITIALIZERS:
+    fname, block = lc_found[key]
+    if key == "voidworms_spawn_system_medium":
+        if block.count(VOIDWORM_INLINE) != 1:
+            sys.exit("voidworms_spawn_system_medium 的写法变了，请手动核对")
+        inline = (GAME / "common/inline_scripts/grand_archive/voidworms_system_planet_initializer.txt") \
+            .read_text(encoding="utf-8-sig").replace("\r\n", "\n").replace("$SIZE$", "medium").strip("\n")
+        inline = "\n".join(("\t" + l) if l else l for l in inline.split("\n")) + "\n"
+        block = block.replace(VOIDWORM_INLINE, inline)
+    block = lc_strip_top(block)
+    if "max_instances" in block or "usage_odds" in block:
+        sys.exit(f"{key}：没去干净随机生成参数，请手动核对")
+    lc_out.append(f"# 原版 {fname} 的 {key}")
+    lc_out.append("atb_lc_" + block)
+    lc_out.append("")
+out = MOD / "common/solar_system_initializers/atb_lc_initializers.txt"
+out.write_text("\n".join(lc_out), encoding="utf-8", newline="\n")
+print("generated", out.relative_to(MOD).as_posix())
