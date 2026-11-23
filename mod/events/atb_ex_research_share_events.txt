@@ -1,0 +1,75 @@
+namespace = atb_ai
+
+# 皇女的远征军EX 3.13：玩家科研分享
+# 每年一次（on_yearly_pulse）：
+#   1. 把所有玩家（is_ai = no）当时的物理、社会、工程科研月收入分别合计（总收入，不扣支出；多人游戏时是所有玩家之和）；
+#   2. 各乘 @atb_ex_research_share（0.2）与 @atb_ex_research_share_months（12），即一次发一整年的量；
+#   3. 无条件加给每个常规 AI 帝国（is_ai = yes 且 is_country_type = default，含保底列强；堕落帝国、天灾、事件国家不算）。
+# 加的是研究点数本身（add_resource），直接进入 AI 当前的研究，不再吃 AI 自己的科研加成。
+# 合计值先存在一个玩家国家（holder）的变量上，再由 holder 逐个发给 AI。
+
+event = {
+	id = atb_ai.20
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		any_playable_country = { is_ai = no }
+	}
+
+	immediate = {
+		random_playable_country = {
+			limit = { is_ai = no }
+			save_event_target_as = atb_ex_rs_holder
+		}
+
+		# 1. 清零合计
+		event_target:atb_ex_rs_holder = {
+			set_variable = { which = atb_ex_rs_physics value = 0 }
+			set_variable = { which = atb_ex_rs_society value = 0 }
+			set_variable = { which = atb_ex_rs_engineering value = 0 }
+		}
+
+		# 2. 逐个玩家读出月收入，累加到 holder
+		every_playable_country = {
+			limit = { is_ai = no }
+			set_variable = { which = atb_ex_rs_own_physics value = value:atb_ex_resource_revenue|RESOURCE|physics_research| }
+			set_variable = { which = atb_ex_rs_own_society value = value:atb_ex_resource_revenue|RESOURCE|society_research| }
+			set_variable = { which = atb_ex_rs_own_engineering value = value:atb_ex_resource_revenue|RESOURCE|engineering_research| }
+			event_target:atb_ex_rs_holder = {
+				change_variable = { which = atb_ex_rs_physics value = prev.atb_ex_rs_own_physics }
+				change_variable = { which = atb_ex_rs_society value = prev.atb_ex_rs_own_society }
+				change_variable = { which = atb_ex_rs_engineering value = prev.atb_ex_rs_own_engineering }
+			}
+		}
+
+		# 3. 乘比例，发给所有常规 AI
+		event_target:atb_ex_rs_holder = {
+			multiply_variable = { which = atb_ex_rs_physics value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_society value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_engineering value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_physics value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_society value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_engineering value = @atb_ex_research_share_months }
+
+			every_playable_country = {
+				limit = {
+					is_ai = yes
+					is_country_type = default
+				}
+				add_resource = {
+					physics_research = 1
+					mult = prev.atb_ex_rs_physics
+				}
+				add_resource = {
+					society_research = 1
+					mult = prev.atb_ex_rs_society
+				}
+				add_resource = {
+					engineering_research = 1
+					mult = prev.atb_ex_rs_engineering
+				}
+			}
+		}
+	}
+}
