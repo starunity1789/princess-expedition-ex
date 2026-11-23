@@ -42,14 +42,15 @@ atb_ex_galaxy_rules = {
 	shipsize_paladin_ship_hull_add = 1500
 
 	# 3.10：星堡（前哨站～城塞，以及深空城塞 1～3 级）舰体值 +300%、交战范围翻倍；建造与升级花费 -50%
-	shipsize_starbase_outpost_hull_mult = 3
-	shipsize_starbase_starport_hull_mult = 3
-	shipsize_starbase_starhold_hull_mult = 3
-	shipsize_starbase_starfortress_hull_mult = 3
-	shipsize_starbase_citadel_hull_mult = 3
-	shipsize_starbase_deep_space_citadel_1_hull_mult = 3
-	shipsize_starbase_deep_space_citadel_2_hull_mult = 3
-	shipsize_starbase_deep_space_citadel_3_hull_mult = 3
+	# 3.14：舰体值改为 +1000%；建造（前哨站）与升级时间 -80%
+	shipsize_starbase_outpost_hull_mult = 10
+	shipsize_starbase_starport_hull_mult = 10
+	shipsize_starbase_starhold_hull_mult = 10
+	shipsize_starbase_starfortress_hull_mult = 10
+	shipsize_starbase_citadel_hull_mult = 10
+	shipsize_starbase_deep_space_citadel_1_hull_mult = 10
+	shipsize_starbase_deep_space_citadel_2_hull_mult = 10
+	shipsize_starbase_deep_space_citadel_3_hull_mult = 10
 	shipsize_starbase_outpost_engagement_range_mult = 1
 	shipsize_starbase_starport_engagement_range_mult = 1
 	shipsize_starbase_starhold_engagement_range_mult = 1
@@ -60,12 +61,15 @@ atb_ex_galaxy_rules = {
 	shipsize_starbase_deep_space_citadel_3_engagement_range_mult = 1
 	starbase_outpost_cost_mult = -0.5
 	starbase_upgrade_cost_mult = -0.5
-	# 3.10：防御平台上限 +12
-	starbase_defense_platform_capacity_add = 12
+	starbase_upgrade_time_mult = -0.8
+	shipclass_starbase_build_speed_mult = 4	# 建造时间 ×1/5
+	# 3.10：防御平台上限 +12；3.14 再 +12
+	starbase_defense_platform_capacity_add = 24
 	# 3.10：防御平台与离子炮（军事空间站类）建造时间减半、建造花费减半、舰体值 +300%、维护费减半
-	shipclass_military_station_build_speed_mult = 1
+	# 3.14：建造时间 -80%（速度 ×5）、舰体值 +1000%
+	shipclass_military_station_build_speed_mult = 4
 	shipclass_military_station_build_cost_mult = -0.5
-	shipclass_military_station_hull_mult = 3
+	shipclass_military_station_hull_mult = 10
 	ship_military_station_small_upkeep_mult = -0.5
 	ship_ion_cannon_upkeep_mult = -0.5
 }

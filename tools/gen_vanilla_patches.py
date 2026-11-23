@@ -7,7 +7,7 @@
 - events/ancient_relics_arcsite_events_2.txt：关掉 ancrel.12050 里 1/4 概率随机生成天选民的那一支
   （其余权重不变；天选民改由本 MOD 的 atb_ex_spawn_chosen 固定在 7 点半生成（3.10 前为 8 点））
 - （3.0～3.6 还覆盖过 common/starbase_modules/00_starbase_modules.txt 让船坞产能翻倍，3.7 起恢复原版）
-- common/event_chains/00_event_chains_distant_stars.txt（3.10）：L 星门线索 7 → 3
+- common/event_chains/00_event_chains_distant_stars.txt（3.10）：L 星门线索 7 → 3（3.14 起 5）
 - common/ai_budget/01_alloys_budget.txt（3.0.3）：AI 超出海军容量后造舰预算大幅降低——×0.75 → ×0.1；
   「邻国成为天灾时 ×5」只在舰容 100% 以内生效（原版 150%）。AI 有了自动星球以后合金很多，原版规则下
   会一直超容造舰，舰船数量翻倍拖慢游戏（系列 21 实测）
@@ -194,13 +194,13 @@ PATCHES = [
              "\t\t}\n", 1),
         ],
     ),
-    # ---- 3.10：L 星门线索 7 → 3 ----
+    # ---- 3.10：L 星门线索 7 → 3；3.14 改为 5 ----
     dict(
         path="common/event_chains/00_event_chains_distant_stars.txt",
         header=[
             "皇女的远征军EX：覆盖原版 common/event_chains/00_event_chains_distant_stars.txt。",
             "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：L 星群事件链（l_cluster_chain）",
-            "需要的 L 星门线索 7 → 3（对所有国家生效）。群星更新后用新版原版重新生成。",
+            "需要的 L 星门线索 7 → 5（对所有国家生效；3.10～3.13 为 3）。群星更新后用新版原版重新生成。",
         ],
         replace=[("l_cluster_chain = {\n"
                   "\ticon = \"gfx/interface/icons/situation_log/situation_log_main_quest.dds\"\n"
@@ -213,7 +213,7 @@ PATCHES = [
                   "\tpicture = GFX_evt_surreal_visions\n"
                   "\tcounter = {\n"
                   "\t\tclues = {\n"
-                  "\t\t\tmax = 3\t# 皇女的远征军EX：原版 7\n", 1)],
+                  "\t\t\tmax = 5\t# 皇女的远征军EX：原版 7（3.10～3.13 为 3）\n", 1)],
     ),
 ]
 
@@ -334,3 +334,59 @@ for key in LC_INITIALIZERS:
 out = MOD / "common/solar_system_initializers/atb_lc_initializers.txt"
 out.write_text("\n".join(lc_out), encoding="utf-8", newline="\n")
 print("generated", out.relative_to(MOD).as_posix())
+
+
+# ---- 3.14：两项开局科技，照抄原版先驱者科技（只改名） ----
+# 农业生产聚合体 = 巴奥有机工厂（tech_secrets_baol + 建筑 building_baol_organic_plant）
+# 集中工业产线枢纽 = 伊拉斯人海军船坞（tech_secrets_irassian + 恒星基地建筑 irassian_naval_yards / arkship_irassian_naval_yards）
+# 科技加 start_tech = yes（所有国家开局就有，potential 照原版要求远古遗迹 DLC），图标沿用原版；
+# 建筑与恒星基地建筑照抄，只把键名和前置科技换成新的。与原版那两项先驱者科技互不影响，都有时两种建筑都能造。
+PRECURSOR_RENAME = {
+    "tech_secrets_baol": "tech_atb_agri_aggregate",
+    "tech_secrets_irassian": "tech_atb_industrial_hub",
+    "building_baol_organic_plant": "building_atb_agri_aggregate",
+    "arkship_irassian_naval_yards": "atb_arkship_industrial_hub",
+    "irassian_naval_yards": "atb_industrial_hub",
+}
+PRECURSOR_COPIES = [
+    # (原版目录, 原版键, 输出文件, 额外插在第一行之后的内容)
+    ("common/technology", "tech_secrets_baol", "common/technology/atb_precursor_copy_tech.txt",
+     '\ticon = "tech_secrets_baol"\n\tstart_tech = yes\t# 皇女的远征军EX：开局科技\n'),
+    ("common/technology", "tech_secrets_irassian", "common/technology/atb_precursor_copy_tech.txt",
+     '\ticon = "tech_secrets_irassian"\n\tstart_tech = yes\t# 皇女的远征军EX：开局科技\n'),
+    ("common/buildings", "building_baol_organic_plant", "common/buildings/atb_precursor_copy_buildings.txt",
+     "\ticon = building_baol_organic_plant\n"),
+    ("common/starbase_buildings", "irassian_naval_yards", "common/starbase_buildings/atb_precursor_copy_starbase_buildings.txt", ""),
+    ("common/starbase_buildings", "arkship_irassian_naval_yards", "common/starbase_buildings/atb_precursor_copy_starbase_buildings.txt", ""),
+]
+
+
+def precursor_rename(block):
+    import re
+    # 长的键先换（arkship_irassian_naval_yards 含 irassian_naval_yards）；只换整词，图标名 GFX_starbase_irassian_naval_yards 不动
+    for old in sorted(PRECURSOR_RENAME, key=len, reverse=True):
+        block = re.sub(rf"(?<![A-Za-z0-9_]){old}(?![A-Za-z0-9_])", PRECURSOR_RENAME[old], block)
+    return block
+
+
+pc_out = {}
+for folder, key, outrel, extra in PRECURSOR_COPIES:
+    found = None
+    for f in sorted((GAME / folder).glob("*.txt")):
+        for k, block in lc_blocks(f.read_text(encoding="utf-8-sig").replace("\r\n", "\n")):
+            if k == key:
+                found = (f.name, block)
+    if not found:
+        sys.exit(f"原版 {folder} 里找不到 {key}")
+    fname, block = found
+    new = precursor_rename(block)
+    first, rest = new.split("\n", 1)
+    new = first + "\n" + extra + rest
+    pc_out.setdefault(outrel, []).append(f"# 原版 {folder}/{fname} 的 {key}\n{new}\n")
+for outrel, parts in pc_out.items():
+    head = ("# 皇女的远征军EX 3.14：开局科技「农业生产聚合体」「集中工业产线枢纽」，照抄原版先驱者科技（巴奥有机工厂、伊拉斯人海军船坞）只改名。\n"
+            "# 由 tools/gen_vanilla_patches.py 从原版生成，请勿手改；群星更新后重新生成。\n\n")
+    out = MOD / outrel
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(head + "\n".join(parts), encoding="utf-8", newline="\n")
+    print("generated", outrel)

@@ -320,11 +320,11 @@ checks += [
      and all(f"on_{h} = {{" in auto_oa for h in ("game_start", "colonized", "colony_transfer", "yearly_pulse_country"))),
     ("3.6：自动星球数值列强与普通相同（+3/年、起点 10、上限 300）", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 3" in auto_var
      and "@atb_ai_auto_start_gp = 10" in auto_var and "@atb_ai_auto_cap_gp = 300" in auto_var),
-    ("3.10：自动星球产出再 ×1.11（3.6 的 ×1.5 / 合金 ×1.25 之上），海军容量仍 0.1", "@atb_ai_auto_out_consumer_goods = 1.2987" in auto_var
-     and "@atb_ai_auto_out_energy = 1.9481" in auto_var
+    ("3.14：自动星球产出为 3.10 的 ×1.6（3.13 的 ×2.1 下调），海军容量仍 0.1", "@atb_ai_auto_out_consumer_goods = 2.0779" in auto_var
+     and "@atb_ai_auto_out_energy = 3.1170" in auto_var
      and "@atb_ai_auto_naval_cap = 0.1" in auto_var and auto_bld.count("@atb_ai_auto_out_") >= 17),
-    ("3.10：自动星球合金 0.4602、科研 0.9709；列强倍率（大君主 ×1.1982，恐惧之潮/终端 ×1.1081）",
-     "@atb_ai_auto_out_alloys = 0.4602" in auto_var and "@atb_ai_auto_out_research = 0.9709" in auto_var
+    ("3.14：自动星球合金 0.7363、科研 1.5534；列强倍率（大君主 ×1.1982，恐惧之潮/终端 ×1.1081）",
+     "@atb_ai_auto_out_alloys = 0.7363" in auto_var and "@atb_ai_auto_out_research = 1.5534" in auto_var
      and "factor = 1.1982" in read(MOD / "common/script_values/atb_ai_auto_values.txt")
      and "factor = 1.1081" in read(MOD / "common/script_values/atb_ai_auto_values.txt")),
     ("3.10：大君主同盟领地没有恒星基地上限 +10", "country_starbase_capacity_add" not in read(MOD / "common/static_modifiers/atbgp_static_modifiers.txt").split("atbgp_power_base = {", 1)[1].split("}", 1)[0]
@@ -369,16 +369,26 @@ checks += [
       and e.count("atb_ex_lc_link = { A = ") == 12 and "atb_ex_lc_strip_galaxy_copies = yes" in e
       and "atb_ex_lcluster_extra_systems = yes" in e and "hyperlane = no" in e)(
          read(MOD / "common/scripted_effects/atb_ex_effects.txt"))),
+    ("3.14：二皇女海军容量 +500、舰队指挥上限 +1000",
+     "country_naval_cap_add = 500\t# 3.14" in read(MOD / "common/traits/atb_leader_traits.txt")
+     and "command_limit_add = 1000\t# 3.14" in read(MOD / "common/traits/atb_leader_traits.txt")),
+    ("3.14：开局科技农业生产聚合体、集中工业产线枢纽（照抄巴奥有机工厂、伊拉斯人海军船坞）",
+     read(MOD / "common/technology/atb_precursor_copy_tech.txt").count("start_tech = yes") == 2
+     and "prerequisites = {\n\t\t\"tech_atb_agri_aggregate\"" in read(MOD / "common/buildings/atb_precursor_copy_buildings.txt")
+     and read(MOD / "common/starbase_buildings/atb_precursor_copy_starbase_buildings.txt").count("has_technology = tech_atb_industrial_hub") == 2
+     and all(f" {k}:0" in read(MOD / f"localisation/{lang}/atb_ex_l_{lang}.yml") for lang in ("simp_chinese", "english")
+             for k in ("tech_atb_agri_aggregate", "building_atb_agri_aggregate", "tech_atb_industrial_hub", "sm_atb_industrial_hub", "sm_atb_arkship_industrial_hub"))),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
-    ("3.10：星堡舰体 +300%、交战范围翻倍、花费减半、平台上限 +12；防御平台与离子炮时间/花费/维护减半、舰体 +300%",
-     (lambda m: m.count("_hull_mult = 3") == 9 and m.count("_engagement_range_mult = 1") == 8
+    ("3.14：星堡舰体 +1000%、交战范围翻倍、花费减半、建造与升级时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
+     (lambda m: m.count("_hull_mult = 10\n") == 9 and "starbase_upgrade_time_mult = -0.8" in m
+      and "shipclass_starbase_build_speed_mult = 4" in m and m.count("_engagement_range_mult = 1") == 8
       and "starbase_upgrade_cost_mult = -0.5" in m and "starbase_outpost_cost_mult = -0.5" in m
-      and "starbase_defense_platform_capacity_add = 12" in m and "shipclass_military_station_build_cost_mult = -0.5" in m
-      and "shipclass_military_station_build_speed_mult = 1" in m and "ship_ion_cannon_upkeep_mult = -0.5" in m
+      and "starbase_defense_platform_capacity_add = 24" in m and "shipclass_military_station_build_cost_mult = -0.5" in m
+      and "shipclass_military_station_build_speed_mult = 4" in m and "ship_ion_cannon_upkeep_mult = -0.5" in m
       and "ship_military_station_small_upkeep_mult = -0.5" in m)(read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt"))),
-    ("3.10：L 星门线索 7 → 3，银河里至少 7 座 L 星门",
-     "max = 3\t# 皇女的远征军EX：原版 7" in read(MOD / "common/event_chains/00_event_chains_distant_stars.txt")
+    ("3.14：L 星门线索 7 → 5，银河里至少 7 座 L 星门",
+     "max = 5\t# 皇女的远征军EX：原版 7" in read(MOD / "common/event_chains/00_event_chains_distant_stars.txt")
      and "atb_ex_ensure_lgates = {" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
      and "atb_ex_ensure_lgates = yes" in read(MOD / "events/atb_ex_events.txt")),
     ("3.10：天选民虫洞出口在大君主母星、同种族、开门后结盟；天选民 7 点半、恐惧之潮 8 点半",

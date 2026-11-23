@@ -1,6 +1,6 @@
 # 皇女的远征军EX：覆盖原版 common/event_chains/00_event_chains_distant_stars.txt。
 # 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：L 星群事件链（l_cluster_chain）
-# 需要的 L 星门线索 7 → 3（对所有国家生效）。群星更新后用新版原版重新生成。
+# 需要的 L 星门线索 7 → 5（对所有国家生效；3.10～3.13 为 3）。群星更新后用新版原版重新生成。
 
 # Event chains.
 
@@ -31,7 +31,7 @@ l_cluster_chain = {
 	picture = GFX_evt_surreal_visions
 	counter = {
 		clues = {
-			max = 3	# 皇女的远征军EX：原版 7
+			max = 5	# 皇女的远征军EX：原版 7（3.10～3.13 为 3）
 		}
 	}
 	situation_log_category = developments

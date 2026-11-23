@@ -56,3 +56,15 @@
  atb_species_rl_dragonkin:0 "Dragonkin"
  atb_ex_deer_star_ties:0 "Old Ties of Deer and Star"
  NAME_atb_ex_chosen_pact:0 "Covenant of the Chosen"
+
+ # 3.14：开局科技（照抄原版巴奥有机工厂、伊拉斯人海军船坞，只改名）
+ tech_atb_agri_aggregate:0 "Agricultural Production Aggregate"
+ tech_atb_agri_aggregate_desc:0 "A facility that merges farmland and workshop: the goods and tools we need are grown right beside the crops, and the farming lines supply consumer goods along the way."
+ building_atb_agri_aggregate:0 "$tech_atb_agri_aggregate$"
+ building_atb_agri_aggregate_desc:0 "$tech_atb_agri_aggregate_desc$"
+ tech_atb_industrial_hub:0 "Centralized Industrial Line Hub"
+ tech_atb_industrial_hub_desc:0 "A hub that gathers scattered shipbuilding lines into one place under a single schedule, so ships roll out of the yards like running water."
+ sm_atb_industrial_hub:0 "$tech_atb_industrial_hub$"
+ sm_atb_industrial_hub_desc:0 "$tech_atb_industrial_hub_desc$"
+ sm_atb_arkship_industrial_hub:0 "$tech_atb_industrial_hub$"
+ sm_atb_arkship_industrial_hub_desc:0 "$tech_atb_industrial_hub_desc$"

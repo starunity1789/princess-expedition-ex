@@ -1,0 +1,34 @@
+# 皇女的远征军EX 3.14：开局科技「农业生产聚合体」「集中工业产线枢纽」，照抄原版先驱者科技（巴奥有机工厂、伊拉斯人海军船坞）只改名。
+# 由 tools/gen_vanilla_patches.py 从原版生成，请勿手改；群星更新后重新生成。
+
+# 原版 common/technology/00_ancient_relics_tech.txt 的 tech_secrets_baol
+tech_atb_agri_aggregate = {
+	icon = "tech_secrets_baol"
+	start_tech = yes	# 皇女的远征军EX：开局科技
+	cost = @tier4cost3
+	area = society
+	category = { archaeostudies }
+	tier = 4
+	is_rare = yes
+	weight = 0
+
+	potential = {
+		has_ancrel = yes
+	}
+}
+
+# 原版 common/technology/00_ancient_relics_tech.txt 的 tech_secrets_irassian
+tech_atb_industrial_hub = {
+	icon = "tech_secrets_irassian"
+	start_tech = yes	# 皇女的远征军EX：开局科技
+	cost = @tier4cost3
+	area = society
+	category = { archaeostudies }
+	tier = 4
+	is_rare = yes
+	weight = 0
+
+	potential = {
+		has_ancrel = yes
+	}
+}

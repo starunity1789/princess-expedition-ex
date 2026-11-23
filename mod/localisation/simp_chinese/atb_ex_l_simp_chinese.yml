@@ -56,3 +56,15 @@
  atb_species_rl_dragonkin:0 "龙族"
  atb_ex_deer_star_ties:0 "白鹿与远星的旧谊"
  NAME_atb_ex_chosen_pact:0 "宗主与天选之约"
+
+ # 3.14：开局科技（照抄原版巴奥有机工厂、伊拉斯人海军船坞，只改名）
+ tech_atb_agri_aggregate:0 "农业生产聚合体"
+ tech_atb_agri_aggregate_desc:0 "把农田与工坊并成一体的生产设施：在作物旁直接培育出所需的物品与工具，农业产线顺带供应日用品。"
+ building_atb_agri_aggregate:0 "$tech_atb_agri_aggregate$"
+ building_atb_agri_aggregate_desc:0 "$tech_atb_agri_aggregate_desc$"
+ tech_atb_industrial_hub:0 "集中工业产线枢纽"
+ tech_atb_industrial_hub_desc:0 "把分散的造船产线集中到一处统一调度的枢纽，让船坞的舰船如流水般下线。"
+ sm_atb_industrial_hub:0 "$tech_atb_industrial_hub$"
+ sm_atb_industrial_hub_desc:0 "$tech_atb_industrial_hub_desc$"
+ sm_atb_arkship_industrial_hub:0 "$tech_atb_industrial_hub$"
+ sm_atb_arkship_industrial_hub_desc:0 "$tech_atb_industrial_hub_desc$"

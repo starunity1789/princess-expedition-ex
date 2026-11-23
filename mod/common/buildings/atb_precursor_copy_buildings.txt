@@ -1,0 +1,123 @@
+# 皇女的远征军EX 3.14：开局科技「农业生产聚合体」「集中工业产线枢纽」，照抄原版先驱者科技（巴奥有机工厂、伊拉斯人海军船坞）只改名。
+# 由 tools/gen_vanilla_patches.py 从原版生成，请勿手改；群星更新后重新生成。
+
+# 原版 common/buildings/03_resource_buildings.txt 的 building_baol_organic_plant
+building_atb_agri_aggregate = {
+	icon = building_baol_organic_plant
+	base_buildtime = @b2_time
+	planet_limit = 1
+	category = resource
+
+	building_sets = {
+		farming
+		factory
+	}
+
+	potential = {
+		NOR = {
+			is_planet_class = pc_machine
+			has_modifier = resort_colony
+		}
+	}
+
+	destroy_trigger = {
+		exists = owner
+		OR = {
+			owner = {
+				is_ai = yes
+				country_uses_food = no
+			}
+			is_planet_class = pc_machine
+			has_modifier = resort_colony
+		}
+	}
+
+	inline_script = {
+		script = jobs/farmers_add
+		AMOUNT = @building_static_jobs
+	}
+	# for exceptions to the above (i.e. Wilderness):
+	inline_script = {
+		script = buildings/planet_job_resource_produces_add
+		JOB = farmers
+		RESOURCE = food
+		AMOUNT = 0.25
+	}
+
+	# Additional farmer output (non-Archaeoengineering)
+	triggered_planet_modifier = {
+		potential = {
+			owner = {
+				country_uses_consumer_goods = yes
+			}
+		}
+		planet_farmers_consumer_goods_produces_add = 0.10
+	}
+	triggered_planet_modifier = {
+		potential = {
+			owner = {
+				country_uses_consumer_goods = no
+			}
+		}
+		planet_farmers_energy_produces_add = 0.25
+	}
+
+	# Additional farmer output (with Archaeoengineering)
+	triggered_planet_modifier = {
+		potential = {
+			owner = {
+				country_uses_consumer_goods = yes
+				has_ascension_perk = ap_archaeoengineers
+			}
+		}
+		planet_farmers_consumer_goods_produces_add = 0.125
+	}
+	triggered_planet_modifier = {
+		potential = {
+			owner = {
+				country_uses_consumer_goods = no
+				has_ascension_perk = ap_archaeoengineers
+			}
+		}
+		planet_farmers_energy_produces_add = 0.25
+	}
+
+	resources = {
+		category = planet_buildings
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = volatile_motes
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
+		}
+		cost = {
+			minor_artifacts = 25
+		}
+		cost = {
+			trigger = {
+				owner = { is_wilderness_empire = yes }
+			}
+			biomass = @b3_biomass
+		}
+		upkeep = {
+			energy = 2
+		}
+	}
+
+	ai_resource_production = {
+		food = 10
+
+		trigger = {
+			has_any_agriculture_zone = yes
+		}
+	}
+
+	inline_script = {
+		script = buildings/on_all_wilderness_buildings_districts
+	}
+
+	prerequisites = {
+		"tech_atb_agri_aggregate"
+	}
+}
