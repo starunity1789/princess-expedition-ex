@@ -1,0 +1,48 @@
+# 皇女的远征军：覆盖原版 common/event_chains/00_event_chains_force_of_will.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别：has_origin = origin_golden_generation 换成
+# atb_has_golden_generation = yes（远征军融合黄金世代的学院与培养领袖部分）。群星更新后用新版原版重新生成。
+
+chain_lost_makers = {
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	picture = GFX_evt_lost_makers
+	situation_log_category = precursors
+	counter = {
+		unearthed_memories = {
+			max = 3
+		}
+	}
+	abort_trigger = {
+		NOT = { has_origin = origin_lost_makers }
+	}
+}
+
+pre_chain_lost_makers = {
+	picture = GFX_evt_lost_makers
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	situation_log_category = empire_concerns
+	abort_trigger = {
+		NOT = { has_origin = origin_lost_makers }
+	}
+}
+
+chain_golden_generation = {
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	picture = GFX_evt_golden_generation_academy
+	situation_log_category = empire_concerns
+	counter = {
+		years_before_graduation = { show_when_zero = no }
+	}
+	abort_trigger = {
+		NOT = { atb_has_golden_generation = yes }
+	}
+}
+
+force_of_will_chain = {
+	picture = GFX_evt_spiritualist_ideology
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	situation_log_category = ambitions
+	counter = {
+		ambition_level_reached = { max = 5 }
+	}
+	situation_log_category = developments
+}

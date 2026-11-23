@@ -1,4 +1,4 @@
-﻿### Humanoid 1
+### Humanoid 1
 ### Created by Henrik Thyrwall
 
 NITORI = {

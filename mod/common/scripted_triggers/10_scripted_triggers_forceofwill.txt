@@ -1,0 +1,1335 @@
+# 皇女的远征军：覆盖原版 common/scripted_triggers/10_scripted_triggers_forceofwill.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别：has_origin = origin_golden_generation 换成
+# atb_has_golden_generation = yes（远征军融合黄金世代的学院与培养领袖部分）。群星更新后用新版原版重新生成。
+
+###################################
+# Force of Will Scripted Triggers #
+###################################
+
+is_open_stars_sovereignty_empire = {
+	OR = {
+		has_valid_civic = civic_open_stars_sovereignty
+		has_valid_civic = civic_corporate_open_stars_sovereignty
+	}
+}
+
+is_path_of_the_self_empire = {
+	OR = {
+		has_valid_civic = civic_path_of_the_self
+		has_valid_civic = civic_path_of_the_self_corporate
+	}
+}
+
+is_social_concord_empire = {
+	OR = {
+		has_valid_civic = civic_social_concord
+		has_valid_civic = civic_social_concord_corporate
+	}
+}
+
+is_warmongers_empire = {
+	OR = {
+		has_valid_civic = civic_warmongers
+		has_valid_civic = civic_warmongers_corporate
+	}
+}
+
+is_megacity_architects_empire = {
+	OR = {
+		has_valid_civic = civic_megacity_architects
+		has_valid_civic = civic_megacity_architects_corporate
+	}
+}
+
+fanatic_faction_exists = {
+	any_pop_faction = {
+		is_faction_fanatic = yes
+	}
+}
+
+# Whether an empire may found its Ideology from any fanatic faction, rather than being locked to a single Ideology ethic
+# scope = country
+can_found_ideology_from_any_faction = {
+	hidden_trigger = {
+		OR = {
+			is_ai = no
+			has_ai_personality = federation_builders
+			has_ai_personality = ruthless_capitalists
+			has_ai_personality = hegemonic_imperialists
+		}
+	}
+}
+
+# Whether an empire may found an Ideology at all - always true for players, restricted by personality for AIs
+# scope = country
+can_found_ideology_from_ai_personality = {
+	OR = {
+		can_found_ideology_from_any_faction = yes
+		has_ai_personality = evangelising_zealots
+		has_ai_personality = spiritual_seekers
+		has_ai_personality = honorbound_warriors
+		has_ai_personality = democratic_crusaders
+		has_ai_personality = fanatic_befrienders
+	}
+}
+
+is_at_war_with_equivalent_or_stronger_empire = {
+	any_war = {
+		any_war_participant = {
+			NOT = { is_same_value = root }
+			relative_power = {
+				who = root
+				category = all
+				value >= equivalent
+			}
+		}
+	}
+}
+
+is_immigration_bureau_valid = {
+	exists = owner
+	solar_system? = {
+		any_country_neighbor_to_system = {
+			is_immigration_bureau_neighbor_valid = {
+				OWNER = prevprev.owner
+			}
+		}
+	}
+}
+
+is_immigration_bureau_neighbor_valid = {
+	has_communications = $OWNER$
+}
+
+can_pop_group_generate = {
+	is_being_assimilated = no
+	can_think = yes
+	has_virtual_species_trait = no
+	has_infertile_clone_soldier_trait = no
+	NOR = {
+		has_trait = trait_mechanical
+		has_trait = trait_presapient_stage
+		has_trait = trait_hive_mind
+		has_trait = trait_shroud_forged
+		has_trait = trait_syncretic_proles
+		has_trait = trait_void_dweller_1
+		has_trait = trait_void_dweller_2
+		has_trait = trait_necrophage
+		has_trait = trait_pathogenic_genes
+		has_trait = trait_wilderness
+		has_trait = trait_presapient_unintelligent
+		has_trait = trait_presapient_docile_livestock
+		has_trait = trait_presapient_forcefully_devolved
+		has_trait = trait_enigmatic_intelligence_failed
+		has_trait = trait_pc_cosmogenesis_world_preference
+		has_trait = trait_pc_nanotech_preference
+		has_trait = trait_machine_pc_nanotech_preference
+		has_trait = trait_pc_hive_preference
+		has_trait = trait_pc_machine_preference
+		has_trait = trait_machine_pc_machine_preference
+		has_trait = trait_pc_gaia_preference
+		has_trait = trait_machine_pc_gaia_preference
+		has_trait = trait_pc_ringworld_habitable_preference
+		has_trait = trait_machine_pc_ringworld_habitable_preference
+		has_trait = trait_pc_shattered_ring_habitable_preference
+		has_trait = trait_machine_pc_shattered_ring_habitable_preference
+		has_trait = trait_pc_habitat_preference
+		has_trait = trait_machine_habitat_planet_preference
+		has_trait = trait_pc_city_preference
+	}
+}
+
+can_initiate_ideology = {
+	NOT = { has_country_flag = ideology_initiated }
+	can_generate_ideology = yes
+}
+
+can_generate_ideology = {
+	hidden_trigger = {
+		ideologies_enabled = yes
+		is_country_type = default
+		# Lost Makers have their own special ideology
+		NOT = { has_origin = origin_lost_makers }
+		# Starting Creeds are replaced once the Creed choice is made
+		NAND = {
+			has_origin = origin_cybernetic_creed
+			has_made_cyber_creed_faction_choice = no
+		}
+		if = {
+			limit = { is_ai = yes }
+			NOT = { has_country_flag = cannot_codify_ideology }
+		}
+	}
+	custom_tooltip = {
+		success_text = GENERATE_IDEOLOGY_KNOWS_EMPIRE
+		fail_text = GENERATE_IDEOLOGY_KNOWS_EMPIRE
+		any_playable_country = {
+			has_communications = root
+		}
+	}
+	custom_tooltip = {
+		success_text = GENERATE_IDEOLOGY_HAS_IDEOLOGY
+		fail_text = GENERATE_IDEOLOGY_HAS_IDEOLOGY
+		NOT = { exists = ideology }
+	}
+}
+
+is_absolutist = {
+	OR = {
+		has_ethic = ethic_absolute_authoritarian
+		has_ethic = ethic_absolute_egalitarian
+		has_ethic = ethic_absolute_materialist
+		has_ethic = ethic_absolute_militarist
+		has_ethic = ethic_absolute_pacifist
+		has_ethic = ethic_absolute_spiritualist
+		has_ethic = ethic_absolute_xenophile
+		has_ethic = ethic_absolute_xenophobe
+	}
+}
+
+embrace_faction_potential = {
+	owner? = {
+		OR = {
+			is_subject = no
+			NOT = { any_agreement = { agreement_preset = preset_dominion } }
+		}
+	}
+}
+
+can_embrace_faction = {
+	custom_tooltip = {
+		fail_text = NOT_CROWDSOURCING_EMBRACE
+		owner = {
+			OR = {
+				is_$ETHIC$ = no
+				is_crowdsourcing_empire = no
+			}
+		}
+	}
+	custom_tooltip = {
+		fail_text = EMBRACE_FACTION_COOLDOWN
+		owner = {
+			NOT = { has_modifier = embraced_faction_timer }
+		}
+	}
+
+	is_in_political_reorientation = no
+
+	support > 0.20
+	if = {
+		limit = {
+			is_faction_fanatic = yes
+			owner = { is_fanatic_$ETHIC$ = yes }
+		}
+		owner = {
+			custom_tooltip = {
+				success_text = tooltip_not_abs_$ETHIC$
+				fail_text = tooltip_not_abs_$ETHIC$
+				NOT = { has_ethic = ethic_absolute_$ETHIC$ }
+			}
+			custom_tooltip = {
+				fail_text = HAS_ABSOLUTE_ETHIC_PROJECT
+				NOR = {
+					has_special_project = ABSOLUTE_ETHIC_PROJECT
+					has_special_project = ABSOLUTE_ETHIC_PROJECT_SPIRITUALIST
+				}
+			}
+			if = {
+				limit = { exists = ideology }
+				OR = {
+					custom_tooltip = {
+						text = must_be_ideology_custodian
+						ideology = { is_ideology_custodian = prev }
+					}
+					has_ascension_perk = ap_force_of_will
+					AND = {
+						custom_tooltip = {
+							text = civic_tooltip_fan_authoritarian
+							is_fanatic_authoritarian = yes
+						}
+						is_galactic_emperor = yes
+					}
+				}
+				ideological_strength_percent >= 0.75
+			}
+			else = {
+				custom_tooltip = {
+					fail_text = HAS_ADOPTED_IDEOLOGY
+					always = no
+				}
+			}
+		}
+	}
+	else = {
+		owner = {
+			custom_tooltip = {
+				success_text = civic_tooltip_not_fan_$ETHIC$
+				fail_text = civic_tooltip_not_fan_$ETHIC$
+				is_fanatic_$ETHIC$ = no
+			}
+		}
+	}
+
+	if = {
+		limit = {
+			exists = ideology
+			owner = { has_ascension_perk = ap_force_of_will }
+		}
+		custom_tooltip = {
+			fail_text = cannot_embrace_foreign_faction_while_has_ap_force_of_will
+			owner = { exists = ideology }
+			ideology = { is_same_value = prev.owner.ideology }
+		}
+	}
+}
+
+can_become_absolute = {
+	is_absolute = no
+	NOR = {
+		has_modifier = embraced_faction_timer
+		has_special_project = ABSOLUTE_ETHIC_PROJECT
+		has_special_project = ABSOLUTE_ETHIC_PROJECT_SPIRITUALIST
+	}
+}
+
+# This = Colony
+# From = Ideology
+does_colony_need_ideological_faction = {
+	exists = owner
+	NOT = {
+		owner = { # The owner already has the faction
+			any_pop_faction = {
+				ideology? = { is_same_value = from }
+			}
+		}
+	}
+}
+
+# Scope = Colony
+has_memorial = {
+	OR = {
+		# Default
+		has_building = building_autochthon_monument
+		has_building = building_heritage_site
+		has_building = building_hypercomms_forum
+		# Corporate
+		has_building = building_corporate_monument
+		has_building = building_corporate_site
+		has_building = building_corporate_forum
+		# Hive Mind
+		has_building = building_sensorium_1
+		has_building = building_sensorium_2
+		has_building = building_sensorium_3
+		# Machine
+		has_building = building_simulation_1
+		has_building = building_simulation_2
+		has_building = building_simulation_3
+		# Memorialist
+		has_building = building_galactic_memorial_1
+		has_building = building_galactic_memorial_2
+		has_building = building_galactic_memorial_3
+		# Wilderness
+		has_building = building_avatar_chamber_1
+		has_building = building_avatar_chamber_2
+		has_building = building_avatar_chamber_3
+		# Entropy Drinkers Default
+		has_building = building_lifecrypt_1
+		has_building = building_lifecrypt_2
+		has_building = building_lifecrypt_3
+		# Entropy Drinkers Corporate
+		has_building = building_lifecrypt_corporate_1
+		has_building = building_lifecrypt_corporate_2
+		has_building = building_lifecrypt_corporate_3
+		# Entropy Drinkers Hive Mind
+		has_building = building_lifecrypt_hive_mind_1
+		has_building = building_lifecrypt_hive_mind_2
+		has_building = building_lifecrypt_hive_mind_3
+		# Entropy Drinkers Machine
+		has_building = building_lifecrypt_machine_1
+		has_building = building_lifecrypt_machine_2
+		has_building = building_lifecrypt_machine_3
+	}
+}
+
+# Scope = Country
+can_have_default_memorial = {
+	is_memorialist_empire = no
+    is_entropy_drinkers_empire = no
+}
+
+# Duplicate of can_embrace_faction without tooltips
+can_embrace_faction_simplified = {
+	support > 0.20
+	owner = {
+		OR = {
+			is_$ETHIC$ = no
+			is_crowdsourcing_empire = no
+		}
+		NOT = { has_modifier = embraced_faction_timer }
+		NOT = { has_country_flag = political_reorientation }
+		if = {
+			limit = {
+				prev = { is_faction_fanatic = yes }
+				is_fanatic_$ETHIC$ = yes
+			}
+			NOT = { has_ethic = ethic_absolute_$ETHIC$ }
+			NOR = {
+				has_special_project = ABSOLUTE_ETHIC_PROJECT
+				has_special_project = ABSOLUTE_ETHIC_PROJECT_SPIRITUALIST
+			}
+			exists = ideology
+			ideological_strength_percent >= 0.75
+		}
+		else = { is_fanatic_$ETHIC$ = no }
+	}
+
+	if = {
+		limit = {
+			exists = ideology
+			owner = { has_ascension_perk = ap_force_of_will }
+		}
+		owner = { exists = ideology }
+		ideology? = { is_same_value = prev.owner.ideology }
+	}
+}
+
+# Scope = Pop faction
+ai_should_promote_ideology_faction = {
+	owner = {
+		exists = ideology
+		NOT = { has_country_flag = abandoning_ideology }
+	}
+	ideology? = { is_same_value = prev.owner.ideology }
+}
+
+# Scope = Pop faction
+ai_should_suppress_competing_faction = {
+	owner = {
+		exists = ideology
+		NOT = { has_country_flag = abandoning_ideology }
+	}
+	has_same_ethic_as_ideology = owner.ideology
+	NOT = {
+		ideology? = { is_same_value = prev.owner.ideology }
+	}
+}
+
+# Scope = pop faction
+can_auto_embrace_faction = {
+	if = {
+		limit = { is_militarist = yes }
+		can_embrace_faction_simplified = { ETHIC = militarist }
+	}
+	else_if = {
+		limit = { is_pacifist = yes }
+		can_embrace_faction_simplified = { ETHIC = pacifist }
+	}
+	else_if = {
+		limit = { is_materialist = yes }
+		can_embrace_faction_simplified = { ETHIC = materialist }
+	}
+	else_if = {
+		limit = { is_spiritualist = yes }
+		can_embrace_faction_simplified = { ETHIC = spiritualist }
+	}
+	else_if = {
+		limit = { is_egalitarian = yes }
+		can_embrace_faction_simplified = { ETHIC = egalitarian }
+	}
+	else_if = {
+		limit = { is_authoritarian = yes }
+		can_embrace_faction_simplified = { ETHIC = authoritarian }
+	}
+	else_if = {
+		limit = { is_xenophobe = yes }
+		can_embrace_faction_simplified = { ETHIC = xenophobe }
+	}
+	else_if = {
+		limit = { is_xenophile = yes }
+		can_embrace_faction_simplified = { ETHIC = xenophile }
+	}
+}
+
+can_advocate_faction = {
+	owner? = {
+		can_generate_ideology = yes
+		can_found_ideology_from_any_faction = yes
+	}
+	is_in_political_reorientation = no
+	custom_tooltip = {
+		fail_text = recent_abandon
+		owner? = {
+			NOT = { has_country_flag = recently_abandon_ideology }
+		}
+	}
+	custom_tooltip = {
+		fail_text = cyber_creed_undecided_tt
+		is_undecided_cyber_creed_faction = no
+	}
+	custom_tooltip = {
+		fail_text = can_manage_own_ideology_tt
+		owner = {
+			NOT = {
+				OR = {
+					any_agreement = {
+						OR = {
+							has_term_value = {
+								term = subject_ideology
+								value = subject_ideological_ban
+							}
+							has_term_value = {
+								term = subject_ideology
+								value = subject_unified_ideology
+							}
+						}
+					}
+					federation? = {
+						has_federation_law = official_ideology_leader
+					}
+				}
+			}
+		}
+	}
+}
+
+can_colony_receive_auto_migration = {
+	NOR = {
+		planet_devastation >= 10
+		has_modifier = planet_culture_shock
+		is_doomsday_planet = yes
+		is_planet_class = pc_cosmogenesis_world
+	}
+}
+
+# Scope: Country/Pop faction
+# The scoped object follows the same ethic (any degree) as $FACTION$
+has_matching_ethic_with_faction = {
+	if = {
+		limit = { $FACTION$ = { is_authoritarian = yes } }
+		is_authoritarian = yes
+	}
+	else_if = {
+		limit = { $FACTION$ = { is_militarist = yes } }
+		is_militarist = yes
+	}
+	else_if = {
+		limit = { $FACTION$ = { is_xenophobe = yes } }
+		is_xenophobe = yes
+	}
+	else_if = {
+		limit = { $FACTION$ = { is_egalitarian = yes } }
+		is_egalitarian = yes
+	}
+	else_if = {
+		limit = { $FACTION$ = { is_materialist = yes } }
+		is_materialist = yes
+	}
+	else_if = {
+		limit = { $FACTION$ = { is_pacifist = yes } }
+		is_pacifist = yes
+	}
+	else_if = {
+		limit = { $FACTION$ = { is_xenophile = yes } }
+		is_xenophile = yes
+	}
+	else_if = {
+		limit = { $FACTION$ = { is_spiritualist = yes } }
+		is_spiritualist = yes
+	}
+	else = {
+		always = no
+	}
+}
+
+# Scope: pop faction
+# The owner follows this faction's ethic, at any degree
+owner_follows_faction_ethic = {
+	owner? = {
+		has_matching_ethic_with_faction = { FACTION = prev }
+	}
+}
+
+# Scope: pop faction
+# The owner follows the fanatic version of this faction's ethic
+owner_follows_faction_ethic_fanatic = {
+	if = {
+		limit = { is_authoritarian = yes }
+		owner? = { is_fanatic_authoritarian = yes }
+	}
+	else_if = {
+		limit = { is_militarist = yes }
+		owner? = { is_fanatic_militarist = yes }
+	}
+	else_if = {
+		limit = { is_xenophobe = yes }
+		owner? = { is_fanatic_xenophobe = yes }
+	}
+	else_if = {
+		limit = { is_egalitarian = yes }
+		owner? = { is_fanatic_egalitarian = yes }
+	}
+	else_if = {
+		limit = { is_materialist = yes }
+		owner? = { is_fanatic_materialist = yes }
+	}
+	else_if = {
+		limit = { is_pacifist = yes }
+		owner? = { is_fanatic_pacifist = yes }
+	}
+	else_if = {
+		limit = { is_xenophile = yes }
+		owner? = { is_fanatic_xenophile = yes }
+	}
+	else_if = {
+		limit = { is_spiritualist = yes }
+		owner? = { is_fanatic_spiritualist = yes }
+	}
+	else = {
+		always = no
+	}
+}
+
+# Scope: pop faction
+# A faction created for an ideology does not outlive it
+is_ideology_leftover_faction = {
+	has_pop_faction_flag = created_for_ideology
+	NOT = { exists = ideology }
+}
+
+# Scope: pop faction
+# Can the faction turn fanatic through approval (non-fanatic empire or non-matching ethics with fanatic empires)
+is_eligible_fanatic = {
+	is_faction_fanatic = no
+	has_pop_faction_flag = promoted_faction
+	faction_approval >= @fanatic_faction_approval_threshold
+	owner_follows_faction_ethic = yes
+}
+
+# This: Pop faction
+# FACTION: the pop faction to compare groups with
+# Both factions come from the same special factions group (event factions Secret Societies and Creeds for now)
+shares_faction_group_with = {
+	OR = {
+		AND = {
+			has_pop_faction_flag = secret_societies_faction
+			$FACTION$ = { has_pop_faction_flag = secret_societies_faction }
+		}
+		AND = {
+			has_pop_faction_flag = cyber_creed_faction
+			$FACTION$ = { has_pop_faction_flag = cyber_creed_faction }
+		}
+	}
+}
+
+# Scope: Pop faction
+# Is one of the starting Creeds (will be replaced after the Creed choice)
+is_undecided_cyber_creed_faction = {
+	has_pop_faction_flag = cyber_creed_faction
+	owner? = { has_made_cyber_creed_faction_choice = no }
+}
+
+# Scope: country (a potential recipient of the leaked intel)
+# COUNTRY = the country whose secrets are being leaked
+# FACTION = the fanatic faction leaking them
+is_valid_intel_leak_recipient = {
+	is_country_type = default
+	has_communications = $COUNTRY$
+	NOR = {
+		is_friendly_to = $COUNTRY$
+		is_protective_to = $COUNTRY$
+		is_cordial_to = $COUNTRY$
+		is_loyal_to = $COUNTRY$
+	}
+	has_matching_ethic_with_faction = { FACTION = $FACTION$ }
+}
+
+# Lost Makers
+
+lost_makers_has_met_base_game_precursor = {
+	OR = {
+		has_country_flag = lost_maker_precursor_vultaum
+		has_country_flag = lost_maker_precursor_yuht
+		has_country_flag = lost_maker_precursor_first_league
+		has_country_flag = lost_maker_precursor_irassian
+		has_country_flag = lost_maker_precursor_cybrex
+	}
+}
+
+has_planet_regulation_modifier = {
+	OR = {
+		has_default_planet_regulation_modifier = yes
+		has_gestalt_planet_regulation_modifier = yes
+		has_robot_planet_regulation_modifier = yes
+	}
+}
+
+has_default_planet_regulation_modifier = {
+	OR = {
+		has_modifier = planet_population_control
+		has_modifier = irassian_planet_population_control
+	}
+}
+
+has_gestalt_planet_regulation_modifier = {
+	OR = {
+		has_modifier = planet_population_control_gestalt
+		has_modifier = irassian_planet_population_control_gestalt
+	}
+}
+
+has_robot_planet_regulation_modifier = {
+	OR = {
+		has_modifier = planet_robot_assembly_control
+		has_modifier = irassian_planet_robot_assembly_control
+	}
+}
+
+# Golden Generation
+
+had_previous_relationship_event = { # Check for all possible flags
+	OR = {
+		has_leader_flag = golden_generation_had_relationship_event
+		has_leader_flag = golden_generation_aggrieved_leader
+		has_leader_flag = golden_generation_leader_feuding_reconciliated
+		has_leader_flag = golden_generation_grieving_leader
+		has_leader_flag = golden_generation_leader_lover
+		has_leader_flag = golden_generation_sibling_leader
+		has_leader_flag = golden_generation_leader_racing_reconciliated
+		has_leader_flag = golden_generation_maverick_leader
+	}
+}
+
+has_90_happiness_golden_leader = {
+	happiness_planet >= 0.9
+	has_ground_combat = no
+	has_orbital_bombardment = no
+	leader? = {
+		has_trait = leader_trait_golden_generation
+		NOT = { has_leader_flag = gg_gov_assigned_less_than_year }
+	}
+	owner? = { atb_has_golden_generation = yes }
+}
+
+is_golden_generation_councilor = {
+	is_councilor = yes
+	has_trait = leader_trait_golden_generation
+	is_same_species = owner.species
+}
+
+can_trigger_forceofwill_5540_event = {
+	resource_stockpile_compare = {
+		resource = consumer_goods
+		value >= 500
+	}
+	count_owned_leader = {
+		count > 1
+		limit = { is_golden_generation_councilor = yes }
+	}
+	has_agenda_selected = yes
+}
+
+can_be_ego_clasher_2 = {
+	is_golden_generation_councilor = yes
+	NOT = { is_same_value = event_target:ego_clasher_1 }
+	NOR = {
+		AND = {
+			has_leader_flag = golden_generation_leader_feuding_reconciliated
+			event_target:ego_clasher_1 = {
+				has_leader_flag = golden_generation_leader_feuding_reconciliated
+			}
+		}
+		AND = {
+			has_leader_flag = golden_generation_leader_lover
+			event_target:ego_clasher_1 = {
+				has_leader_flag = golden_generation_leader_lover
+			}
+		}
+		AND = {
+			has_leader_flag = golden_generation_leader_racing_reconciliated
+			event_target:ego_clasher_1 = {
+				has_leader_flag = golden_generation_leader_racing_reconciliated
+			}
+		}
+		AND = {
+			has_leader_flag = golden_generation_maverick_leader
+			event_target:ego_clasher_1 = {
+				has_leader_flag = golden_generation_maverick_leader
+			}
+		}
+	}
+}
+
+can_be_harmonious_councilor_2 = {
+	is_golden_generation_councilor = yes
+	NOT = { is_same_value = event_target:harmonious_councilor_1 }
+	NOR = {
+		AND = {
+			OR = {
+				has_leader_flag = feuding_pupils_embittered_leader
+				has_leader_flag = feuding_pupils_other_leader
+			}
+			event_target:harmonious_councilor_1 = {
+				OR = {
+					has_leader_flag = feuding_pupils_embittered_leader
+					has_leader_flag = feuding_pupils_other_leader
+				}
+			}
+		}
+		AND = {
+			OR = {
+				has_leader_flag = cyberprank_embittered_leader
+				has_leader_flag = cyberprank_other_leader
+			}
+			event_target:harmonious_councilor_1 = {
+				OR = {
+					has_leader_flag = cyberprank_embittered_leader
+					has_leader_flag = cyberprank_other_leader
+				}
+			}
+		}
+	}
+}
+
+# from = dead leader
+is_golden_generation_leader_death = {
+	atb_has_golden_generation = yes
+	from = {
+		has_trait = leader_trait_golden_generation
+		is_same_species = prev
+	}
+}
+
+###########################
+# Ideology Momentum events
+###########################
+
+# Positive surging events
+can_trigger_on_ideology_momentum_surging_events = {
+	NAND = {
+		has_country_flag = forceofwill.1610_fired
+		has_country_flag = forceofwill.1620_fired
+		has_country_flag = forceofwill.1630_fired
+	}
+}
+
+# Very Positive events
+has_any_on_ideology_momentum_very_positive_events_fired = {
+	OR = {
+		has_country_flag = forceofwill.1580_fired
+		has_country_flag = forceofwill.1590_fired
+		has_country_flag = forceofwill.1600_fired
+	}
+}
+can_trigger_on_ideology_momentum_very_positive_events = {
+	OR = {
+		NOT = { has_country_flag = forceofwill.1580_fired }
+		NOT = { has_country_flag = forceofwill.1590_fired }
+		can_trigger_forceofwill_1600_event = yes
+	}
+}
+can_trigger_forceofwill_1600_event = {
+	NOT = { has_country_flag = forceofwill.1600_fired }
+	resource_stockpile_compare = {
+		resource = consumer_goods
+		value >= 1000
+	}
+}
+
+# Positive events
+has_any_on_ideology_momentum_positive_events_fired = {
+	OR = {
+		has_country_flag = forceofwill.1550_fired
+		has_country_flag = forceofwill.1560_fired
+		has_country_flag = forceofwill.1570_fired
+	}
+}
+
+# Dangerously Low events
+can_trigger_on_ideology_momentum_dangerously_low_events = {
+	OR = {
+		can_trigger_forceofwill_1700_event = yes
+		can_trigger_forceofwill_1710_event = yes
+		can_trigger_forceofwill_1720_event = yes
+	}
+}
+can_trigger_forceofwill_1700_event = {
+	NOT = { has_country_flag = forceofwill.1700_fired }
+	any_owned_planet = {
+		num_buildings = { type = any value > 1 }
+		any_owned_pop_group = {
+			pop_group_size >= 500
+		}
+		OR = {
+			num_assigned_jobs = {
+				job = enforcer
+				value > 0
+			}
+			owner = {
+				ideological_strength >= 100
+			}
+		}
+	}
+}
+can_trigger_forceofwill_1710_event = {
+	NOT = { has_country_flag = forceofwill.1710_fired }
+	any_owned_leader = {
+		is_ruler = no
+		OR = {
+			exists = planet
+			leader_class = official
+		}
+	}
+}
+can_trigger_forceofwill_1720_event = {
+	NOT = { has_country_flag = forceofwill.1720_fired }
+	count_owned_fleet = {
+		limit = {
+			exists = leader
+			is_ship_class = shipclass_military
+		}
+		count > 1
+	}
+	resource_stockpile_compare = {
+		resource = unity
+		value >= 1000
+	}
+}
+
+# Moderately Low events
+has_any_on_ideology_momentum_moderately_low_events_fired = {
+	OR = {
+		has_country_flag = forceofwill.1670_fired
+		has_country_flag = forceofwill.1680_fired
+		has_country_flag = forceofwill.1690_fired
+	}
+}
+can_trigger_on_ideology_momentum_moderately_low_events = {
+	OR = {
+		can_trigger_forceofwill_1670_event = yes
+		can_trigger_forceofwill_1680_event = yes
+		can_trigger_forceofwill_1690_event = yes
+	}
+}
+can_trigger_forceofwill_1670_event = {
+	NOT = { has_country_flag = forceofwill.1670_fired }
+	any_owned_leader = {
+		is_ruler = no
+		OR = {
+			exists = planet
+			leader_class = official
+		}
+		NOT = { has_trait = leader_trait_maimed }
+	}
+	resource_stockpile_compare = {
+		resource = unity
+		value >= 1000
+	}
+}
+can_trigger_forceofwill_1680_event = {
+	NOT = { has_country_flag = forceofwill.1680_fired }
+	resource_stockpile_compare = {
+		resource = unity
+		value >= 1000
+	}
+	OR = {
+		any_owned_colony = {
+			num_assigned_jobs = {
+				job = politician
+				value >= 100
+			}
+		}
+		any_owned_colony = {
+			num_assigned_jobs = {
+				job = bureaucrat
+				value >= 100
+			}
+		}
+	}
+}
+can_trigger_forceofwill_1690_event = {
+	NOT = { has_country_flag = forceofwill.1690_fired }
+	any_owned_leader = {
+		is_ruler = no
+		OR = {
+			exists = planet
+			is_councilor = yes
+		}
+		NOT = { has_trait = leader_trait_dissident }
+	}
+}
+
+# Low events
+has_any_on_ideology_momentum_low_events_fired = {
+	OR = {
+		has_country_flag = forceofwill.1640_fired
+		has_country_flag = forceofwill.1650_fired
+		has_country_flag = forceofwill.1660_fired
+	}
+}
+
+##################
+# Galactic Halls
+##################
+
+is_megastructure_galactic_halls = {
+	OR = {
+		is_megastructure_type = galactic_halls_0_militarist
+		is_megastructure_type = galactic_halls_0_pacifist
+		is_megastructure_type = galactic_halls_0_xenophile
+		is_megastructure_type = galactic_halls_0_xenophobe
+		is_megastructure_type = galactic_halls_0_materialist
+		is_megastructure_type = galactic_halls_0_spiritualist
+		is_megastructure_type = galactic_halls_0_authoritarian
+		is_megastructure_type = galactic_halls_0_egalitarian
+	}
+}
+
+galactic_halls_have_same_ethic_as_ideology = {
+	switch = {
+		trigger = is_megastructure_type
+		galactic_halls_0_militarist = { $IDEOLOGY$ = { is_militarist = yes } }
+		galactic_halls_0_pacifist = { $IDEOLOGY$ = { is_pacifist = yes } }
+		galactic_halls_0_xenophile = { $IDEOLOGY$ = { is_xenophile = yes } }
+		galactic_halls_0_xenophobe = { $IDEOLOGY$ = { is_xenophobe = yes } }
+		galactic_halls_0_materialist = { $IDEOLOGY$ = { is_materialist = yes } }
+		galactic_halls_0_spiritualist = { $IDEOLOGY$ = { is_spiritualist = yes } }
+		galactic_halls_0_authoritarian = { $IDEOLOGY$ = { is_authoritarian = yes } }
+		galactic_halls_0_egalitarian = { $IDEOLOGY$ = { is_egalitarian = yes } }
+	}
+}
+
+has_active_ideological_building = {
+	OR = {
+		has_active_building = building_ideological_hall
+		has_active_building = building_ideological_institute
+		has_active_building = building_ideological_citadel
+		has_active_building = building_ideological_church
+		has_active_building = building_ideological_high_church
+		has_active_building = building_ideological_sanctum
+		has_active_building = building_ideological_creche
+		has_active_building = building_ideological_greater_creche
+		has_active_building = building_ideological_grand_creche
+		has_active_building = building_ideological_core
+		has_active_building = building_ideological_grid
+		has_active_building = building_ideological_nexus
+	}
+}
+
+# Scope: colony
+planet_should_start_ideological_revolt = {
+	owner? = {
+		is_gestalt = no
+		any_revealed_ideology = {
+			NOT = { is_same_value = prev.ideology }
+			prevprev = {
+				pop_ideology_percentage = {
+					percentage > 0.3
+					ideology = prev
+				}
+			}
+		}
+		is_momentum_pending = no
+	}
+}
+
+# Scope: colony
+planet_should_start_ideological_schism = {
+	owner? = {
+		is_gestalt = no
+		exists = ideology
+		is_momentum_pending = no
+		NOT = { has_country_flag = abandoning_ideology }
+	}
+	check_variable_arithmetic = {
+		which = value:pop_ideology_percentage_value|IDEOLOGY|owner.ideology|
+		value > 0.3
+	}
+}
+
+# Scope: pop group
+# True while the group still has pops not yet following the envoy's ideology.
+pop_group_convertible_by_cultural_envoy = {
+	pop_ideology_percentage = {
+		percentage < 1
+		ideology = event_target:envoy_country.ideology
+	}
+}
+
+# Scope: candidate country. SITUATION_OWNER: country scope of the situation's owner.
+country_can_back_ideological_revolt_trigger = {
+	is_country_type = default
+	is_subject = no
+	NOT = { is_same_value = $SITUATION_OWNER$ }
+	has_communications = $SITUATION_OWNER$
+	NOR = {
+		is_in_federation_with = $SITUATION_OWNER$
+		has_defensive_pact = $SITUATION_OWNER$
+		has_non_aggression_pact = $SITUATION_OWNER$
+	}
+}
+
+# A completed ideological revolt spins off a new vassal empire instead of the colony being annexed
+# by its backer: a Nomad backer cannot own planets, and a settled backer cannot own an Arkship.
+# BACKER = the country backing the revolt
+# TARGET = the revolting planet
+ideological_revolt_creates_vassal_trigger = {
+	OR = {
+		$BACKER$ = { is_nomadic = yes }
+		$TARGET$ = { is_planet_class = pc_ark }
+	}
+}
+
+meditation_body_housing_sufficient = {
+	check_variable_arithmetic = {
+		which = trigger:pop_amount
+		multiply = 2
+		value <= trigger:free_housing
+	}
+}
+
+meditation_mind_amenities_sufficient = {
+	check_variable_arithmetic = {
+		which = trigger:free_amenities
+		multiply = 1.5
+		value >= trigger:total_amenities
+	}
+}
+
+# Overlord, subject and federation ties rule out an Ideological Rivalry.
+# This = declaring Country, $TARGET$ = the other Country
+can_be_ideological_rival = {
+	# Can't be rivals with your overlord or their other subjects.
+	NAND = {
+		is_subject = yes
+		$TARGET$? = {
+			OR = {
+				is_fallen_empire = yes
+				is_overlord_to = prev
+				has_overlord = prev.overlord
+			}
+		}
+	}
+	# Can't be rivals with your subjects.
+	NOT = {
+		$TARGET$? = {
+			is_subject = yes
+			has_overlord = prev
+		}
+	}
+	NOT = {
+		$TARGET$? = { is_in_federation_with = prev }
+	}
+}
+
+# This = Attacking Country
+# From = Target Country
+has_ideological_war_casus_belli = {
+	OR = {
+		is_pacifist = no
+		is_gestalt = yes
+		AND = {
+			ideology = { is_ideology_custodian = root }
+			OR = {
+				is_ideology_rival = from
+				from = { is_ideology_rival = prev }
+			}
+		}
+		has_country_flag = refused_adopt_ideology_from_@from
+	}
+}
+
+# War scope. The war goal target is always the main defender for an attacker war goal, and the main attacker for a defender one.
+war_imposes_ideology_on_root = {
+	OR = {
+		AND = {
+			defender = { is_same_value = root }
+			OR = {
+				using_war_goal = {
+					type = wg_impose_ideology
+					owner = attacker
+				}
+				using_war_goal = {
+					type = wg_ideological_subjugation
+					owner = attacker
+				}
+			}
+		}
+		AND = {
+			attacker = { is_same_value = root }
+			OR = {
+				using_war_goal = {
+					type = wg_impose_ideology
+					owner = defender
+				}
+				using_war_goal = {
+					type = wg_ideological_subjugation
+					owner = defender
+				}
+			}
+		}
+	}
+}
+
+are_galcom_members_at_peace = {
+	exists = owner
+	owner = {
+		is_galactic_community_member = yes
+		NOT = {
+			any_galcom_member = {
+				is_at_war = yes
+			}
+		}
+	}
+}
+
+# Scope = country
+is_affected_by_bad_ideology = {
+	ideology? = {
+		NOT = { is_same_value = $COUNTRY$.ideology }
+		$COUNTRY$ = {
+			NOT = { has_same_ethic_as_ideology = prev }
+			foreign_ideology_affinity = {
+				ideology = prev
+				value <= 1
+			}
+		}
+	}
+}
+
+# Scope = pop_group, From = ideology. True if the owner runs the Broadcasting edict matching the ideology's ethic.
+owner_has_matching_broadcasting_edict = {
+	OR = {
+		AND = {
+			from? = { is_authoritarian = yes }
+			owner? = { has_edict = broadcasting_authoritarian }
+		}
+		AND = {
+			from? = { is_egalitarian = yes }
+			owner? = { has_edict = broadcasting_egalitarian }
+		}
+		AND = {
+			from? = { is_xenophobe = yes }
+			owner? = { has_edict = broadcasting_xenophobe }
+		}
+		AND = {
+			from? = { is_xenophile = yes }
+			owner? = { has_edict = broadcasting_xenophile }
+		}
+		AND = {
+			from? = { is_militarist = yes }
+			owner? = { has_edict = broadcasting_militarist }
+		}
+		AND = {
+			from? = { is_pacifist = yes }
+			owner? = { has_edict = broadcasting_pacifist }
+		}
+		AND = {
+			from? = { is_materialist = yes }
+			owner? = { has_edict = broadcasting_materialist }
+		}
+		AND = {
+			from? = { is_spiritualist = yes }
+			owner? = { has_edict = broadcasting_spiritualist }
+		}
+	}
+}
+
+# This = Country
+# From = Other Country
+has_opposite_fanatic_ethic = {
+	OR = {
+		AND = {
+			is_fanatic_materialist = yes
+			from = { is_fanatic_spiritualist = yes }
+		}
+		AND = {
+			is_fanatic_spiritualist = yes
+			from = { is_fanatic_materialist = yes }
+		}
+		AND = {
+			is_fanatic_egalitarian = yes
+			from = { is_fanatic_authoritarian = yes }
+		}
+		AND = {
+			is_fanatic_authoritarian = yes
+			from = { is_fanatic_egalitarian = yes }
+		}
+		AND = {
+			is_fanatic_pacifist = yes
+			from = { is_fanatic_militarist = yes }
+		}
+		AND = {
+			is_fanatic_militarist = yes
+			from = { is_fanatic_pacifist = yes }
+		}
+		AND = {
+			is_fanatic_xenophile = yes
+			from = { is_fanatic_xenophobe = yes }
+		}
+		AND = {
+			is_fanatic_xenophobe = yes
+			from = { is_fanatic_xenophile = yes }
+		}
+	}
+}
+
+is_in_political_reorientation = {
+	custom_tooltip = {
+		success_text = MANAGE_FACTION_COOLDOWN
+		owner? = {
+			has_country_flag = political_reorientation
+		}
+	}
+}
+
+can_apply_absolute_ethic_opinion = {
+	is_fallen_empire = no
+	from = {
+		is_fallen_empire = no
+	}
+}
+
+# This = Country
+has_overlord_ideology = {
+	exists = ideology
+	overlord? = {
+		ideology? = {
+			is_same_value = prevprev.ideology
+		}
+	}
+}
+
+is_tenet_at_slot = {
+	if = {
+		limit = { has_active_tenet = $TENET$ }
+		get_tenet_tier = {
+			tenet = $TENET$
+			value = $VALUE$
+		}
+	}
+	else = {
+		num_active_tenets = @\[( $VALUE$ - 1 )]
+	}
+}
+
+is_tenet_at_slot_or_higher = {
+	if = {
+		limit = { has_active_tenet = $TENET$ }
+		get_tenet_tier = {
+			tenet = $TENET$
+			value >= $VALUE$
+		}
+	}
+	else = {
+		num_active_tenets >= @\[( $VALUE$ - 1 )]
+	}
+}
+
+has_cultural_envoy_leader_trait = {
+	OR = {
+		has_trait = leader_trait_cultural_envoy_indoctrinator
+		has_trait = leader_trait_cultural_envoy_zealot
+		has_trait = leader_trait_cultural_envoy_persuasive_luminary
+		has_trait = leader_trait_cultural_envoy_negotiator
+	}
+}

@@ -1,0 +1,7296 @@
+# 皇女的远征军：覆盖原版 events/origin_events_forceofwill.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别（远征军融合黄金世代的学院与培养领袖部分）：
+# - has_origin = origin_golden_generation 换成 atb_has_golden_generation = yes，forceofwill.5695 除外
+#   （它安排 5699→5700 把黄金世代编纂成意识形态，远征军不要意识形态部分）
+# - forceofwill.5800 / 5810（黄金学院失去）：原版 set_origin = origin_default，远征军的起源是合成繁衍，
+#   不能被清掉，改为只对真正的黄金世代起源改默认起源，远征军去掉标记 atb_golden_generation
+# 群星更新后用新版原版重新生成。
+
+#==================================
+# Origin Events - Force of Will
+#==================================
+
+namespace = forceofwill
+
+#==================================
+# 3XXX - Lost Makers
+#==================================
+
+country_event = {
+	id = forceofwill.3000
+	title = forceofwill.3000.name
+	desc = {
+		trigger = {
+			has_country_flag = lost_maker_precursor_baol
+		}
+		text = forceofwill.3000.desc_baol
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = lost_maker_precursor_baol }
+		}
+		text = forceofwill.3000.desc
+	}
+
+	picture = GFX_evt_lost_makers_code
+	show_sound = event_lost_makers_system_glitch
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = lost_maker_precursor_found }
+	}
+
+	immediate = {
+		set_country_flag = lost_maker_precursor_found
+	}
+
+	option = {
+		name = PROCEED
+		lost_makers_create_event_chain = yes
+	}
+}
+
+country_event = {
+	id = forceofwill.3010
+	title = forceofwill.3010.name
+	desc = forceofwill.3010.desc
+	picture = GFX_evt_astral_rift_corridors
+	show_sound = event_scanner
+	is_triggered_only = yes
+	location = event_target:dig_site_planet
+
+	trigger = {
+		has_origin = origin_lost_makers
+	}
+
+	immediate = {
+		capital_scope.solar_system = {
+			random_system_planet = {
+				limit = {
+					is_homeworld = no
+					is_star = no
+					NOT = { is_planet_class = pc_gas_giant }
+				}
+				save_event_target_as = dig_site_planet
+			}
+			if = {
+				limit = { NOT = { exists = event_target:dig_site_planet } }
+				spawn_planet = {
+					generate_random_name = yes
+					class = pc_asteroid
+					orbit_distance = { min = 160 max = 240 }
+					orbit_angle = { min = 0 max = 360 }
+					init_effect = {
+						clear_deposits = yes
+						save_event_target_as = dig_site_planet
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.3010.a
+		set_country_flag = lost_makers_precursor_site_spawned
+		event_target:dig_site_planet = {
+			create_archaeological_site = lost_makers_precursor_site
+		}
+		custom_tooltip = origin_lost_makers_negative_effects_tooltip
+	}
+
+	after = {
+		hidden_effect = {
+			random_list = {
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { is_precursor_available = precursor_1 }
+					}
+					set_country_flag = lost_makers_precursor_1_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { is_precursor_available = precursor_2 }
+					}
+					set_country_flag = lost_makers_precursor_2_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { is_precursor_available = precursor_3 }
+					}
+					set_country_flag = lost_makers_precursor_3_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { is_precursor_available = precursor_4 }
+					}
+					set_country_flag = lost_makers_precursor_4_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { is_precursor_available = precursor_5 }
+					}
+					set_country_flag = lost_makers_precursor_5_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						OR = {
+							NOT = { is_precursor_available = precursor_baol_1 }
+							has_global_flag = baol_started # Baol was already rolled by another Lost Makers empire
+						}
+					}
+					set_global_flag = baol_started # Baol is now reserved by that empire
+					set_country_flag = lost_makers_precursor_baol_1_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						OR = {
+							NOT = { is_precursor_available = precursor_zroni_1 }
+							has_global_flag = zroni_started # Zroni was already rolled by another Lost Makers empire
+						}
+					}
+					set_global_flag = zroni_started # Zroni is now reserved by that empire
+					set_country_flag = lost_makers_precursor_zroni_1_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						OR = {
+							NOT = { is_precursor_available = precursor_inetian }
+							has_global_flag = inetian_started # Inetian was already rolled by another Lost Makers empire
+						}
+					}
+					set_global_flag = inetian_started # Inetian is now reserved by that empire
+					set_country_flag = lost_makers_precursor_inetian_selected
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						OR = {
+							NOT = { is_precursor_available = precursor_adakkaria }
+							has_global_flag = adakkaria_started # adAkkaria was already rolled by another Lost Makers empire
+						}
+					}
+					set_global_flag = adakkaria_started # adAkkaria is now reserved by that empire
+					set_country_flag = lost_makers_precursor_adakkaria_selected
+				}
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = forceofwill.3020
+	title = forceofwill.3020.name
+	desc = {
+		trigger = {
+			if = {
+				limit = {
+					controller = {
+						OR = {
+							has_country_flag = lost_makers_precursor_5_selected
+							has_country_flag = lost_makers_precursor_adakkaria_selected
+						}
+					}
+				}
+				text = forceofwill.3020.desc.millenia
+			}
+			else = {
+				text = forceofwill.3020.desc.million
+			}
+		}
+	}
+	picture = GFX_evt_astral_rift_corridors
+	show_sound = event_machinery
+
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	trigger = {
+		controller = { has_origin = origin_lost_makers }
+	}
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = REMARKABLE
+		controller = {
+			if = {
+				limit = { has_ancrel = yes }
+				add_monthly_resource_mult = {
+					resource = minor_artifacts
+					value = @tier1materialreward
+					min = @tier1materialmin
+					max = @tier1materialmax
+				}
+			}
+			else = {
+				add_monthly_resource_mult = {
+					resource = engineering_research
+					value = @tier1researchreward
+					min = @tier1researchmin
+					max = @tier1researchmax
+				}
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = forceofwill.3025
+	title = forceofwill.3025.name
+	desc = forceofwill.3025.desc
+	picture = GFX_evt_astral_rift_corridors
+	show_sound = event_ai_started
+
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	trigger = {
+		controller = { has_origin = origin_lost_makers }
+	}
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = forceofwill.3025.a
+		controller = {
+			if = {
+				limit = { has_ancrel = yes }
+				add_monthly_resource_mult = {
+					resource = minor_artifacts
+					value = @tier2materialreward
+					min = @tier2materialmin
+					max = @tier2materialmax
+				}
+			}
+			else = {
+				add_monthly_resource_mult = {
+					resource = engineering_research
+					value = @tier2researchreward
+					min = @tier2researchmin
+					max = @tier2researchmax
+				}
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = forceofwill.3030
+	title = forceofwill.3030.name
+	desc = forceofwill.3030.desc
+	picture = GFX_evt_astral_rift_corridors
+	show_sound = event_lost_makers_process_complete
+	is_triggered_only = yes
+
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	trigger = {
+		controller = { has_origin = origin_lost_makers }
+	}
+
+	immediate = {
+		from = {
+			set_site_progress_locked = yes
+			solar_system = {
+				closest_system = {
+					min_steps = 1
+					limit = {
+						has_natural_wormhole = no
+						is_surveyed = {
+							who = root.controller
+							status = no
+						}
+						has_owner = no
+						root.controller = {
+							switch = {
+								trigger = has_country_flag
+								lost_makers_precursor_1_selected = { prev = { has_star_flag = precursor_1 } }
+								lost_makers_precursor_2_selected = { prev = { has_star_flag = precursor_2 } }
+								lost_makers_precursor_3_selected = { prev = { has_star_flag = precursor_3 } }
+								lost_makers_precursor_4_selected = { prev = { has_star_flag = precursor_4 } }
+								lost_makers_precursor_5_selected = { prev = { has_star_flag = precursor_5 } }
+								lost_makers_precursor_baol_1_selected = { prev = { has_star_flag = precursor_baol_1 } }
+								lost_makers_precursor_zroni_1_selected = { prev = { has_star_flag = precursor_zroni_1 } }
+								lost_makers_precursor_inetian_selected = { prev = { has_star_flag = precursor_inetian } }
+								lost_makers_precursor_adakkaria_selected = { prev = { has_star_flag = precursor_adakkaria } }
+							}
+						}
+					}
+					save_event_target_as = selected_precursor_system
+				}
+				if = {
+					limit = { NOT = { exists = event_target:selected_precursor_system } }
+					# Failsafe check
+					closest_system = {
+						min_steps = 1
+						limit = {
+							has_natural_wormhole = no
+							is_surveyed = {
+								who = root.controller
+								status = no
+							}
+							has_owner = no
+							has_special_star_flag_trigger = no
+							has_precursor_star_flag_trigger = no
+						}
+						save_event_target_as = selected_precursor_system
+						# Turn this system into a precursor system FOR this empire
+						set_star_flag = lost_makers_precursor_system
+						root.controller = {
+							set_country_flag = precursor_system_spawned@prev
+							switch = {
+								trigger = has_country_flag
+								lost_makers_precursor_1_selected = { prev = { set_star_flag = precursor_1 } }
+								lost_makers_precursor_2_selected = { prev = { set_star_flag = precursor_2 } }
+								lost_makers_precursor_3_selected = { prev = { set_star_flag = precursor_3 } }
+								lost_makers_precursor_4_selected = { prev = { set_star_flag = precursor_4 } }
+								lost_makers_precursor_5_selected = { prev = { set_star_flag = precursor_5 } }
+								lost_makers_precursor_baol_1_selected = { prev = { set_star_flag = precursor_baol_1 } }
+								lost_makers_precursor_zroni_1_selected = { prev = { set_star_flag = precursor_zroni_1 } }
+								lost_makers_precursor_inetian_selected = { prev = { set_star_flag = precursor_inetian } }
+								lost_makers_precursor_adakkaria_selected = { prev = { set_star_flag = precursor_adakkaria } }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.3030.a
+		trigger = {
+			controller = {
+				OR = {
+					has_country_flag = lost_makers_precursor_3_selected
+					has_country_flag = lost_makers_precursor_5_selected
+					has_country_flag = lost_makers_precursor_baol_1_selected
+				}
+			}
+		}
+		custom_tooltip = forceofwill.3030.tt.remove
+		custom_tooltip = forceofwill.3030.a.tt
+		hidden_effect = {
+			controller = {
+				lost_makers_restore_module_effect = {
+					RESTORED_TRAIT = trait_restored_module_military
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.3030.b
+		trigger = {
+			controller = {
+				OR = {
+					has_country_flag = lost_makers_precursor_4_selected
+					has_country_flag = lost_makers_precursor_zroni_1_selected
+					has_country_flag = lost_makers_precursor_adakkaria_selected
+				}
+			}
+		}
+		custom_tooltip = forceofwill.3030.tt.remove
+		custom_tooltip = forceofwill.3030.b.tt
+		hidden_effect = {
+			controller = {
+				lost_makers_restore_module_effect = {
+					RESTORED_TRAIT = trait_restored_module_research
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.3030.c
+		trigger = {
+			controller = {
+				OR = {
+					has_country_flag = lost_makers_precursor_1_selected
+					has_country_flag = lost_makers_precursor_baol_1_selected
+					has_country_flag = lost_makers_precursor_zroni_1_selected
+					has_country_flag = lost_makers_precursor_inetian_selected
+				}
+			}
+		}
+		custom_tooltip = forceofwill.3030.tt.remove
+		custom_tooltip = forceofwill.3030.c.tt
+		hidden_effect = {
+			controller = {
+				lost_makers_restore_module_effect = {
+					RESTORED_TRAIT = trait_restored_module_learning
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.3030.d
+		trigger = {
+			controller = {
+				OR = {
+					has_country_flag = lost_makers_precursor_2_selected
+					has_country_flag = lost_makers_precursor_4_selected
+					has_country_flag = lost_makers_precursor_5_selected
+					has_country_flag = lost_makers_precursor_inetian_selected
+				}
+			}
+		}
+		custom_tooltip = forceofwill.3030.tt.remove
+		custom_tooltip = forceofwill.3030.d.tt
+		hidden_effect = {
+			controller = {
+				lost_makers_restore_module_effect = {
+					RESTORED_TRAIT = trait_restored_module_admin
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.3030.e
+		trigger = {
+			controller = {
+				OR = {
+					has_country_flag = lost_makers_precursor_1_selected
+					has_country_flag = lost_makers_precursor_2_selected
+					has_country_flag = lost_makers_precursor_3_selected
+					has_country_flag = lost_makers_precursor_adakkaria_selected
+				}
+			}
+		}
+		custom_tooltip = forceofwill.3030.tt.remove
+		custom_tooltip = forceofwill.3030.e.tt
+		hidden_effect = {
+			controller = {
+				lost_makers_restore_module_effect = {
+					RESTORED_TRAIT = trait_restored_module_environment
+				}
+			}
+		}
+	}
+
+	after = {
+		from = { set_site_progress_locked = no }
+		controller = {
+			set_country_flag = origin_lost_makers_connection_restored
+		}
+		hidden_effect = {
+			controller = {
+				if = {
+					limit = {
+						event_target:selected_precursor_system = {
+							distance = {
+								source = root.from.solar_system
+								min_jumps = 6
+							}
+						}
+					}
+					country_event = {
+						id = forceofwill.3035
+						scopes = {
+							from = event_target:selected_precursor_system
+							fromfrom = root.from.planet
+						}
+						days = 10
+					}
+				}
+				else = {
+					country_event = {
+						id = forceofwill.3040
+						scopes = {
+							from = event_target:selected_precursor_system
+							fromfrom = root.from.planet
+						}
+						days = 10
+					}
+				}
+			}
+		}
+	}
+}
+
+# from = precursor system
+# fromfrom = arc site planet
+country_event = {
+	id = forceofwill.3035
+	title = forceofwill.3035.name
+	desc = {
+		trigger = {
+			has_country_flag = has_already_met_apoc_5
+		}
+		text = forceofwill.3035.desc.apoc
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = has_already_met_apoc_5 }
+		}
+		text = forceofwill.3035.desc.default
+	}
+	location = from
+
+	picture = GFX_evt_wormhole
+	show_sound = event_scanner
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_lost_makers
+		NOT = { has_country_flag = lost_makers_precursor_wormhole }
+	}
+
+	immediate = {
+		from = { save_event_target_as = selected_precursor_system } # Needed for situation localization
+		set_country_flag = lost_makers_precursor_wormhole
+		if = {
+			limit = { has_country_flag = encountered_first_wormhole }
+			set_country_flag = has_already_met_apoc_5
+		}
+		else = {
+			set_country_flag = encountered_first_wormhole
+		}
+		add_seen_bypass_type = wormhole
+
+		from = {
+			spawn_natural_wormhole = {
+				bypass_type = wormhole
+				random_pos = yes
+				orbit_angle = 360
+			}
+		}
+		fromfrom.solar_system = {
+			spawn_natural_wormhole = {
+				bypass_type = wormhole
+				random_pos = yes
+				orbit_angle = 360
+			}
+			link_wormholes = root.from
+		}
+
+		begin_event_chain = {
+			event_chain = pre_chain_lost_makers
+			target = this
+		}
+		create_point_of_interest = {
+			id = precursor_system.2
+			name = "precursor_system_1_poi"
+			desc = "precursor_system_2_poi_desc"
+			location = from
+			event_chain = pre_chain_lost_makers
+		}
+	}
+
+	option = {
+		name = {
+			trigger = {
+				NOT = { has_technology = tech_wormhole_stabilization }
+			}
+			text = apoc.5.a
+		}
+		name = {
+			trigger = {
+				has_technology = tech_wormhole_stabilization
+			}
+			text = forceofwill.3035.a
+		}
+		custom_tooltip = forceofwill.3035.a.tt
+		add_tech_option_or_research_effect = {
+			TECH = tech_wormhole_stabilization
+			PROGRESS = 0.5
+			CATEGORY = physics_research
+		}
+	}
+
+	after = {
+		remove_country_flag = has_already_met_apoc_5
+	}
+}
+
+# from = precursor system
+# fromfrom = arc site planet
+country_event = {
+	id = forceofwill.3040
+	title = forceofwill.3040.name
+	desc = forceofwill.3040.desc
+	location = from
+
+	picture = GFX_evt_star_chart
+	show_sound = event_lost_makers_hard_drive_reading
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_lost_makers
+		NOT = { has_country_flag = lost_maker_precursor_found }
+	}
+
+	immediate = {
+		from = { save_event_target_as = selected_precursor_system } # Needed for situation localization
+		begin_event_chain = {
+			event_chain = pre_chain_lost_makers
+			target = this
+		}
+		create_point_of_interest = {
+			id = precursor_system.1
+			name = "precursor_system_1_poi"
+			desc = "precursor_system_1_poi_desc"
+			location = from
+			event_chain = pre_chain_lost_makers
+		}
+	}
+
+	option = {
+		name = forceofwill.3040.a
+	}
+}
+
+# Restored Module: Defense Systems - Admiral Starting Level
+# scope: country, from: leader
+country_event = {
+	id = forceofwill.3050
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		from = {
+			leader_class = commander
+			species = { has_trait = trait_restored_module_military }
+		}
+	}
+
+	immediate = {
+		from = {
+			add_skill_without_trait_selection = 1
+		}
+	}
+}
+
+# Dig Site 1
+country_event = {
+	id = forceofwill.3100
+	title = forceofwill.3100.name
+	desc = {
+		trigger = {
+			if = {
+				limit = { lost_makers_has_met_base_game_precursor = yes }
+				text = forceofwill.3100.desc_base
+			}
+			else = {
+				text = forceofwill.3100.desc_special
+			}
+			text = newline
+			text = forceofwill.3100.desc_suffix
+		}
+	}
+
+	picture = GFX_evt_lost_makers_analyze
+	show_sound = event_lost_makers_hard_drive_reading
+	is_triggered_only = yes
+
+	event_chain = chain_lost_makers
+
+	trigger = {
+		NOT = { has_country_flag = lost_maker_clue_1 }
+	}
+
+	immediate = {
+		set_country_flag = lost_maker_clue_1
+	}
+
+	option = {
+		name = ACKNOWLEDGED
+		enable_special_project = {
+			name = LOST_MAKERS_UNEARTH_MEMORIES_1
+			owner = root
+		}
+	}
+}
+
+# 1st Special Project Completed
+country_event = {
+	id = forceofwill.3150
+	title = forceofwill.3150.name
+	desc = forceofwill.3150.desc
+	is_triggered_only = yes
+
+	picture = GFX_evt_lost_makers_code
+	show_sound = event_lost_makers_process_complete
+
+	event_chain = chain_lost_makers
+
+	immediate = {
+		set_country_flag = lost_maker_precursor_link
+	}
+
+	option = {
+		name = forceofwill.3150.a
+
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+		add_monthly_resource_mult = {
+			resource = engineering_research
+			value = @tier1researchreward
+			min = @tier1researchmin
+			max = @tier1researchmax
+		}
+		add_monthly_resource_mult = {
+			resource = society_research
+			value = @tier1researchreward
+			min = @tier1researchmin
+			max = @tier1researchmax
+		}
+	}
+}
+
+# Dig Site 2
+country_event = {
+	id = forceofwill.3200
+	title = forceofwill.3200.name
+	desc = {
+		trigger = {
+			if = {
+				limit = { lost_makers_has_met_base_game_precursor = yes }
+				text = forceofwill.3200.desc_base
+			}
+			else = {
+				text = forceofwill.3200.desc_special
+			}
+		}
+	}
+
+	is_triggered_only = yes
+
+	picture = GFX_evt_lost_makers_analyze
+	show_sound = event_lost_makers_hard_drive_reading
+
+	event_chain = chain_lost_makers
+
+	option = {
+		name = ACKNOWLEDGED
+		enable_special_project = {
+			name = LOST_MAKERS_UNEARTH_MEMORIES_2
+			owner = root
+		}
+	}
+}
+
+# 2nd Special Project Completed
+country_event = {
+	id = forceofwill.3250
+	title = forceofwill.3250.name
+	desc = {
+		trigger = {
+			text = forceofwill.3250.desc_intro
+			text = newline
+			switch = {
+				trigger = has_country_flag
+				lost_maker_precursor_vultaum = {
+					text = forceofwill.3250.desc_vultaum
+				}
+				lost_maker_precursor_yuht = {
+					text = forceofwill.3250.desc_yuht
+				}
+				lost_maker_precursor_first_league = {
+					text = forceofwill.3250.desc_first_league
+				}
+				lost_maker_precursor_irassian = {
+					text = forceofwill.3250.desc_irassian
+				}
+				lost_maker_precursor_cybrex = {
+					text = forceofwill.3250.desc_cybrex
+				}
+				lost_maker_precursor_zroni = {
+					if = {
+						limit = { has_technology = tech_psionic_theory }
+						text = forceofwill.3250.desc_zroni_shroud
+					}
+					else = {
+						text = forceofwill.3250.desc_zroni
+					}
+				}
+				lost_maker_precursor_baol = {
+					text = forceofwill.3250.desc_baol
+				}
+				lost_maker_precursor_inetian = {
+					text = forceofwill.3250.desc_inetian
+				}
+				lost_maker_precursor_adakkaria = {
+					text = forceofwill.3250.desc_adakkaria
+				}
+			}
+			text = newline
+			text = forceofwill.3250.desc_outro
+		}
+	}
+
+	picture = GFX_evt_lost_makers_code
+	show_sound = event_lost_makers_process_complete
+	is_triggered_only = yes
+
+	event_chain = chain_lost_makers
+
+	option = {
+		name = forceofwill.3250.a
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+		add_monthly_resource_mult = {
+			resource = engineering_research
+			value = @tier1researchreward
+			min = @tier1researchmin
+			max = @tier1researchmax
+		}
+		add_monthly_resource_mult = {
+			resource = society_research
+			value = @tier1researchreward
+			min = @tier1researchmin
+			max = @tier1researchmax
+		}
+	}
+}
+
+# Dig Site 3
+country_event = {
+	id = forceofwill.3300
+	title = forceofwill.3300.name
+	desc = {
+		trigger = {
+			if = {
+				limit = { lost_makers_has_met_base_game_precursor = yes }
+				text = forceofwill.3300.desc_base
+			}
+			else = {
+				text = forceofwill.3300.desc_special
+			}
+		}
+	}
+
+	picture = GFX_evt_lost_makers_analyze
+	show_sound = event_lost_makers_hard_drive_reading
+	is_triggered_only = yes
+
+	event_chain = chain_lost_makers
+
+	option = {
+		name = ACKNOWLEDGED
+		enable_special_project = {
+			name = LOST_MAKERS_UNEARTH_MEMORIES_3
+			owner = root
+		}
+	}
+}
+
+# 3rd Special Project Completed
+country_event = {
+	id = forceofwill.3350
+	title = forceofwill.3350.name
+	desc = {
+		trigger = {
+			text = forceofwill.3350.desc_intro
+			text = newline
+			switch = {
+				trigger = has_country_flag
+				lost_maker_precursor_vultaum = {
+					text = forceofwill.3350.desc_vultaum
+				}
+				lost_maker_precursor_yuht = {
+					text = forceofwill.3350.desc_yuht
+				}
+				lost_maker_precursor_first_league = {
+					text = forceofwill.3350.desc_first_league
+				}
+				lost_maker_precursor_irassian = {
+					text = forceofwill.3350.desc_irassian
+				}
+				lost_maker_precursor_cybrex = {
+					text = forceofwill.3350.desc_cybrex
+				}
+				lost_maker_precursor_zroni = {
+					if = {
+						limit = {
+							OR = {
+								has_civic = civic_hive_chosen
+								owner_main_species = {
+									has_trait = trait_psionic
+								}
+								AND = {
+									has_ascension_perk = ap_become_the_crisis
+									OR = {
+										has_crisis_level = crisis_level_4
+										has_crisis_level = crisis_level_5
+									}
+								}
+								AND = {
+									country_has_situation = {
+										SITUATION = situation_breach_shroud
+									}
+									has_country_flag = breach_shroud_stage_3_started
+								}
+							}
+						}
+						text = forceofwill.3350.desc_zroni_shroud
+					}
+					else = {
+						text = forceofwill.3350.desc_zroni
+					}
+				}
+				lost_maker_precursor_baol = {
+					text = forceofwill.3350.desc_baol
+				}
+				lost_maker_precursor_inetian = {
+					text = forceofwill.3350.desc_inetian
+				}
+				lost_maker_precursor_adakkaria = {
+					if = {
+						limit = { has_technology = tech_psionic_theory }
+						text = forceofwill.3350.desc_adakkaria_psionic
+					}
+					else = {
+						text = forceofwill.3350.desc_adakkaria
+					}
+				}
+			}
+			text = newline
+			text = forceofwill.3350.desc_outro_base
+			text = newline
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = vultaum_world_found
+						has_country_flag = yuht_world_found
+						has_country_flag = league_world_found
+						has_country_flag = irassian_world_found
+						has_country_flag = cybrex_world_found
+						has_country_flag = green_thumb_achievement
+						has_country_flag = dust_off_achievement
+						has_country_flag = completed_inetian_traders_precursor
+						has_country_flag = adakkaria_world_found
+						has_country_flag = tempest_invocator_found
+					}
+				}
+				text = forceofwill.3350.desc_outro_b
+			}
+			else = {
+				text = forceofwill.3350.desc_outro_a
+			}
+		}
+	}
+	is_triggered_only = yes
+
+	picture = GFX_evt_lost_makers_code
+	show_sound = event_lost_makers_process_complete
+
+	event_chain = chain_lost_makers
+
+	option = {
+		name = {
+			trigger = {
+				if = {
+					limit = {
+						is_homicidal = yes
+						has_country_flag = lost_maker_precursor_inetian
+					}
+					text = forceofwill.3350.a.genocidal_inetian
+				}
+				else = {
+					text = forceofwill.3350.a
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					has_country_flag = vultaum_world_found
+					has_country_flag = yuht_world_found
+					has_country_flag = league_world_found
+					has_country_flag = irassian_world_found
+					has_country_flag = cybrex_world_found
+					has_country_flag = green_thumb_achievement
+					has_country_flag = dust_off_achievement
+					has_country_flag = adakkaria_world_found
+					has_country_flag = tempest_invocator_found
+				}
+			}
+			enable_special_project = {
+				name = "LOST_MAKERS_RECOVER_LOST_DIRECTIVE"
+				owner = root
+			}
+		}
+
+		hidden_effect = {
+			force_add_civic = civic_memory_optimization
+		}
+		custom_tooltip = forceofwill.3350.a.tt
+	}
+}
+
+# from = precursor world
+country_event = {
+	id = forceofwill.3400
+	title = forceofwill.3400.name
+	desc = {
+		trigger = {
+			has_completed_event_chain_counter = {
+				event_chain = chain_lost_makers
+				counter = unearthed_memories
+			}
+		}
+		text = forceofwill.3400.desc_b
+	}
+	desc = {
+		trigger = {
+			NOT = {
+				has_completed_event_chain_counter = {
+					event_chain = chain_lost_makers
+					counter = unearthed_memories
+				}
+			}
+		}
+		text = forceofwill.3400.desc_a
+	}
+
+	picture = GFX_evt_lost_makers_code
+	show_sound = event_lost_makers_process_complete
+
+	is_triggered_only = yes
+
+	event_chain = chain_lost_makers
+
+	trigger = {
+		NOT = { has_country_flag = lost_maker_knowledge_restored }
+	}
+
+	immediate = {
+		set_country_flag = lost_maker_knowledge_restored
+	}
+
+	option = {
+		name = PROCEED
+		trigger = {
+			has_completed_event_chain_counter = {
+				event_chain = chain_lost_makers
+				counter = unearthed_memories
+			}
+			NOT = { has_special_project = "LOST_MAKERS_RECOVER_LOST_DIRECTIVE" } # avoid possibly duplicating the project
+		}
+
+		enable_special_project = {
+			name = "LOST_MAKERS_RECOVER_LOST_DIRECTIVE"
+			owner = root
+		}
+	}
+
+	option = {
+		name = PROCEED
+		trigger = {
+			NOT = {
+				has_completed_event_chain_counter = {
+					event_chain = chain_lost_makers
+					counter = unearthed_memories
+				}
+			}
+		}
+		custom_tooltip = forceofwill.3400.a.tt
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = forceofwill.3450
+				days = 90
+				scopes = { from = from }
+			}
+		}
+	}
+}
+
+# from = precursor world
+country_event = {
+	id = forceofwill.3450
+	title = forceofwill.3450.name
+	desc = {
+		trigger = {
+			if = {
+				limit = { has_country_flag = lost_maker_precursor_baol }
+				text = forceofwill.3450.desc.baol
+			}
+			else = {
+				text = forceofwill.3450.desc.default
+			}
+		}
+	}
+
+	picture = GFX_evt_archaeological_dig
+	show_sound = event_lost_makers_component_excavation
+
+	is_triggered_only = yes
+
+	event_chain = chain_lost_makers
+
+	trigger = {
+		NOT = {
+			has_country_flag = lost_maker_preserved_remains
+		}
+	}
+
+	immediate = {
+		set_country_flag = lost_maker_preserved_remains
+	}
+
+	option = {
+		name = FASCINATING
+
+		add_monthly_resource_mult = {
+			resource = society_research
+			value = @tier1researchreward
+			min = @tier1researchmin
+			max = @tier1researchmax
+		}
+
+		if = {
+			limit = { has_grand_archive_dlc = yes }
+			give_specimen = {
+				key = lost_makers_predecessor_components
+				targets = { founder_species from }
+			}
+		}
+		else = {
+			add_monthly_resource_mult = {
+				resource = unity
+				value = @tier1unityreward
+				min = @tier1unitymin
+				max = @tier1unitymax
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.3500
+	title = forceofwill.3500.name
+	desc = {
+		trigger = {
+			text = forceofwill.3500.desc_intro
+			text = newline
+			switch = {
+				trigger = has_country_flag
+				lost_maker_precursor_vultaum = {
+					text = forceofwill.3500.desc_vultaum
+				}
+				lost_maker_precursor_yuht = {
+					text = forceofwill.3500.desc_yuht
+				}
+				lost_maker_precursor_first_league = {
+					text = forceofwill.3500.desc_first_league
+				}
+				lost_maker_precursor_irassian = {
+					text = forceofwill.3500.desc_irassian
+				}
+				lost_maker_precursor_cybrex = {
+					text = forceofwill.3500.desc_cybrex
+				}
+				lost_maker_precursor_zroni = {
+					text = forceofwill.3500.desc_zroni
+				}
+				lost_maker_precursor_baol = {
+					text = forceofwill.3500.desc_baol
+				}
+				lost_maker_precursor_inetian = {
+					text = forceofwill.3500.desc_inetian
+				}
+				lost_maker_precursor_adakkaria = {
+					text = forceofwill.3500.desc_adakkaria
+				}
+			}
+			text = newline
+			if = {
+				limit = {
+					OR = {
+						is_homicidal = yes
+						has_country_flag = lost_maker_precursor_inetian
+						has_country_flag = lost_maker_precursor_yuht
+					}
+				}
+				text = forceofwill.3500.desc_outro_genocidal
+			}
+			else = {
+				text = forceofwill.3500.desc_outro
+			}
+		}
+	}
+	is_triggered_only = yes
+	picture = GFX_evt_lost_makers
+	show_sound = event_lost_makers_process_complete
+
+	event_chain = chain_lost_makers
+
+	immediate = {
+		set_country_flag = lost_maker_directive_restored
+	}
+
+	option = {
+		name = forceofwill.3500.a
+		lost_makers_restore_directive_effect = yes
+		set_country_flag = lost_maker_directive_reinstated
+
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+
+		if = {
+			limit = {
+				OR = {
+					has_country_flag = lost_makers_precursor_zroni
+					has_country_flag = lost_makers_precursor_adakkaria
+				}
+				NOT = { has_technology = tech_psionic_theory }
+			}
+			add_tech_progress = {
+				tech = tech_psionic_theory
+				progress = 0.25
+			}
+		}
+		else = {
+			add_monthly_resource_mult = {
+				resource = society_research
+				value = @tier1researchreward
+				min = @tier1researchmin
+				max = @tier1researchmax
+			}
+		}
+	}
+
+	option = {
+		name = {
+			trigger = {
+				if = {
+					limit = {
+						OR = {
+							is_homicidal = yes
+							has_country_flag = lost_maker_precursor_inetian
+							has_country_flag = lost_maker_precursor_yuht
+						}
+					}
+					text = forceofwill.3500.b.genocidal
+				}
+				else = {
+					text = forceofwill.3500.b
+				}
+			}
+		}
+
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier5unityreward
+			min = @tier5unitymin
+			max = @tier5unitymax
+		}
+		add_monthly_resource_mult = {
+			resource = engineering_research
+			value = @tier5researchreward
+			min = @tier5researchmin
+			max = @tier5researchmax
+		}
+
+		add_modifier = {
+			modifier = obsolete_data_cleanup
+			days = -1
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			end_event_chain = chain_lost_makers
+		}
+	}
+}
+
+carrier_event = {
+	id = forceofwill.3550
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_force_of_will_dlc = yes
+		from? = { has_active_tenet = tenet_lost_makers_yuht }
+	}
+
+	immediate = {
+		add_modifier = {
+			modifier = repurposed_yuht_nursery
+			days = -1
+		}
+	}
+}
+
+#==================================
+# 5XXX - Golden Generation
+#==================================
+
+# Golden Generation game_start setup
+country_event = {
+	id = forceofwill.5000
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		random_owned_planet = {
+			limit = { has_building = building_golden_academy }
+			set_carrier_flag = golden_academy_built
+			save_event_target_as = golden_academy_planet
+		}
+		country_event = {
+			id = forceofwill.5001
+			days = 180
+			random = 180
+			scopes = { from = event_target:golden_academy_planet }
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5001
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		begin_event_chain = {
+			event_chain = chain_golden_generation
+			target = this
+		}
+		country_event = {
+			id = forceofwill.5005
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5005
+	title = forceofwill.5005.name
+	desc = forceofwill.5005.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_golden_generation_celebration
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+	}
+
+	option = {
+		name = forceofwill.5005.a
+		custom_tooltip = forceofwill.5005.a.tt
+	}
+
+	option = {
+		name = forceofwill.5005.b
+		custom_tooltip = forceofwill.5005.b.tt
+		set_country_flag = golden_generation_additional_leader_trained
+		add_modifier = { modifier = golden_academy_budget_modifier }
+		hidden_effect = {
+			spawn_golden_generation_leader = { CLASS = official }
+		}
+	}
+
+	option = {
+		name = forceofwill.5005.c
+		custom_tooltip = forceofwill.5005.c.tt
+		set_country_flag = golden_generation_additional_leader_trained
+		add_modifier = { modifier = golden_academy_budget_modifier }
+		hidden_effect = {
+			spawn_golden_generation_leader = { CLASS = commander }
+		}
+	}
+
+	option = {
+		name = forceofwill.5005.d
+		custom_tooltip = forceofwill.5005.d.tt
+		set_country_flag = golden_generation_additional_leader_trained
+		add_modifier = { modifier = golden_academy_budget_modifier }
+		hidden_effect = {
+			spawn_golden_generation_leader = { CLASS = scientist }
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			spawn_golden_generation_leader = { CLASS = official }
+			spawn_golden_generation_leader = { CLASS = commander }
+			spawn_golden_generation_leader = { CLASS = scientist }
+
+			country_event = { id = forceofwill.5006 }
+		}
+	}
+}
+
+# Golden Generation chain counter countdown
+country_event = {
+	id = forceofwill.5006
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		# Setup graduation countdown
+		set_variable = {
+			which = golden_generation_years_before_graduation
+			value = 20
+		}
+		add_event_chain_counter = {
+			event_chain = chain_golden_generation
+			counter = years_before_graduation
+			amount = 20
+		}
+		country_event = {
+			id = forceofwill.5007
+			days = 360
+		}
+	}
+}
+
+# Golden Generation chain counter countdown
+country_event = {
+	id = forceofwill.5007
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_event_chain = chain_golden_generation
+		is_variable_set = golden_generation_years_before_graduation
+	}
+
+	immediate = {
+		subtract_variable = { which = golden_generation_years_before_graduation value = 1 }
+		add_event_chain_counter = {
+			event_chain = chain_golden_generation
+			counter = years_before_graduation
+			amount = -1
+		}
+
+		if = {
+			limit = {
+				check_variable = {
+					which = golden_generation_years_before_graduation
+					value = 0
+				}
+			}
+			clear_variable = golden_generation_years_before_graduation
+			country_event = { id = forceofwill.5400 }
+			break = yes
+		}
+
+		if = {
+			limit = {
+				check_variable = {
+					which = golden_generation_years_before_graduation
+					value = 18
+				}
+			}
+			# Trigger "Trait" event after 2 years
+			country_event = {
+				id = forceofwill.5010
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = golden_generation_years_before_graduation
+					value = 15
+				}
+			}
+			# Trigger "Relationship" event after 5 years
+			country_event = {
+				id = forceofwill.5011
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = golden_generation_years_before_graduation
+					value = 12
+				}
+			}
+			# Trigger "Trait" event after 8 years
+			country_event = {
+				id = forceofwill.5010
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = golden_generation_years_before_graduation
+					value = 9
+				}
+			}
+			# Trigger "Social" event after 11 years
+			country_event = {
+				id = forceofwill.5012
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = golden_generation_years_before_graduation
+					value = 6
+				}
+			}
+			# Trigger "Trait" event after 14 years
+			country_event = {
+				id = forceofwill.5010
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = golden_generation_years_before_graduation
+					value = 3
+				}
+			}
+			# Trigger "Relationship" event after 17 years
+			country_event = {
+				id = forceofwill.5011
+			}
+		}
+
+		country_event = {
+			id = forceofwill.5007
+			days = 360
+		}
+	}
+}
+
+# Golden Generation "Trait" event pool
+country_event = {
+	id = forceofwill.5010
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		fire_on_action = { on_action = on_golden_generation_trait_event }
+	}
+}
+
+# Golden Generation "Relationship" event pool
+country_event = {
+	id = forceofwill.5011
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		fire_on_action = { on_action = on_golden_generation_relationship_event }
+	}
+}
+
+# Golden Generation "Social" event pool
+country_event = {
+	id = forceofwill.5012
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		fire_on_action = { on_action = on_golden_generation_social_event }
+	}
+}
+
+# Golden Generation leaders death check
+# This = Country
+# From = Leader
+country_event = {
+	id = forceofwill.5020
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_event_chain = chain_golden_generation
+		exists = from
+		from = { has_leader_flag = leader_golden_generation }
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				NOR = {
+					any_owned_leader = {
+						has_leader_flag = leader_golden_generation
+						NOT = { has_trait_tier1or2or3 = { TRAIT = leader_trait_backup_clone } } # Clones aren't taken into account
+					}
+					any_pool_leader = {
+						has_leader_flag = leader_golden_generation
+					}
+				}
+			}
+			end_event_chain = chain_golden_generation
+			country_event = {
+				id = forceofwill.5705
+				days = 15
+			}
+			clear_general_event_pool_trigger = yes
+		}
+	}
+}
+
+# Golden Generation "Trait" events
+
+# Homesick Student
+country_event = {
+	id = forceofwill.5100
+	title = forceofwill.5100.name
+	desc = forceofwill.5100.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5100_event_triggered }
+		count_leader_in_training = { count > 0 }
+		resource_stockpile_compare = {
+			resource = energy
+			value >= 500
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5100_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_trait_event }
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5100.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		event_target:selected_leader_in_training = {
+			switch = {
+				trigger = leader_class
+				commander = { add_trait_with_concept_tt = { TRAIT = leader_trait_restrained } }
+				official = { add_trait_with_concept_tt = { TRAIT = leader_trait_principled } }
+				scientist = { add_trait_with_concept_tt = { TRAIT = leader_trait_carefree } }
+			}
+			add_trait_chance_with_concept_tt = {
+				CHANCE = 20
+				TRAIT = leader_trait_arrested_development
+			}
+		}
+		random_leader_in_training = {
+			limit = {
+				NOT = { is_same_value = event_target:selected_leader_in_training }
+			}
+			add_trait_chance_with_concept_tt = {
+				CHANCE = 10
+				TRAIT = leader_trait_sadistic
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5100.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+				mult = value:count_leaders_in_training
+			}
+		}
+		add_resource = {
+			energy = -500
+			mult = value:count_leaders_in_training
+		}
+		every_leader_in_training = {
+			limit = { always = yes }
+			hidden_effect = {
+				random = {
+					chance = 15
+					add_trait = { trait = leader_trait_arrested_development }
+				}
+			}
+			if = {
+				limit = { has_trait = leader_trait_resilient }
+				if = {
+					limit = { has_trait = leader_trait_adaptable }
+					add_experience = 100
+				}
+				else = {
+					add_trait_with_concept_tt = { TRAIT = leader_trait_adaptable }
+				}
+			}
+			else = {
+				add_trait_with_custom_concept_tt = { TRAIT = leader_trait_resilient }
+			}
+		}
+		custom_tooltip = forceofwill.5100.a.tt
+	}
+
+	option = {
+		name = OPTION_DENIED
+		event_target:selected_leader_in_training = {
+			add_trait_with_concept_tt = { TRAIT = leader_trait_adaptable }
+			if = {
+				limit = { has_trait = leader_trait_melancholic }
+				if = {
+					limit = { has_trait = leader_trait_stubborn }
+					add_trait_with_custom_concept_tt = { TRAIT = leader_trait_destructive }
+				}
+				else = {
+					add_trait_with_concept_tt = { TRAIT = leader_trait_stubborn }
+				}
+			}
+			else = {
+				add_trait_with_custom_concept_tt = { TRAIT = leader_trait_melancholic }
+			}
+		}
+		default_hide_option = yes
+	}
+}
+
+# Teacher's Pet
+country_event = {
+	id = forceofwill.5105
+	title = forceofwill.5105.name
+	desc = forceofwill.5105.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_classroom
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5105_event_triggered }
+		count_leader_in_training = { count > 0 }
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5105_event_triggered
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_trait_event }
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5105.a
+		event_target:selected_leader_in_training = {
+			# Giving them leader_trait_bureaucrat here improves the tooltip
+			add_trait_with_concept_tt = { TRAIT = leader_trait_bureaucrat }
+			if = {
+				limit = { has_trait = leader_trait_melancholic }
+				if = {
+					limit = { has_trait = leader_trait_stubborn }
+					add_trait_chance_with_custom_concept_tt = {
+						CHANCE = 15
+						TRAIT = leader_trait_destructive
+					}
+				}
+				else = {
+					add_trait_chance_with_concept_tt = {
+						CHANCE = 15
+						TRAIT = leader_trait_stubborn
+					}
+				}
+			}
+			else = {
+				add_trait_chance_with_custom_concept_tt = {
+					CHANCE = 15
+					TRAIT = leader_trait_melancholic
+				}
+			}
+		}
+		every_leader_in_training = {
+			limit = {
+				NOT = { is_same_value = event_target:selected_leader_in_training }
+			}
+			add_trait_with_concept_tt = { TRAIT = leader_trait_bureaucrat }
+		}
+	}
+
+	option = {
+		name = forceofwill.5105.b
+		event_target:selected_leader_in_training = {
+			add_trait_with_concept_tt = { TRAIT = leader_trait_eager }
+			switch = {
+				trigger = leader_class
+				commander = { add_trait_with_concept_tt = { TRAIT = leader_trait_aggressive } }
+				official = { add_trait_with_concept_tt = { TRAIT = leader_trait_intellectual } }
+				scientist = { add_trait_with_concept_tt = { TRAIT = leader_trait_meticulous } }
+			}
+		}
+		hidden_effect = {
+			every_leader_in_training = {
+				limit = {
+					NOT = { is_same_value = event_target:selected_leader_in_training }
+				}
+				random = {
+					chance = 5
+					add_trait = { trait = leader_trait_excessive }
+				}
+			}
+		}
+		custom_tooltip = forceofwill.5105.b.tt
+	}
+}
+
+# Students' Union
+country_event = {
+	id = forceofwill.5110
+	title = forceofwill.5110.name
+	desc = forceofwill.5110.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5110_event_triggered }
+		count_leader_in_training = { count > 0 }
+		any_leader_in_training = {
+			has_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5110_event_triggered
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_trait_event }
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5110.a
+		event_target:selected_leader_in_training = {
+			add_trait_with_concept_tt = { TRAIT = trait_ruler_charismatic }
+			switch = {
+				trigger = leader_class
+				commander = { add_trait_with_concept_tt = { TRAIT = leader_trait_trickster } }
+				official = { add_trait_with_concept_tt = { TRAIT = leader_trait_spycraft } }
+				scientist = { add_trait_with_custom_concept_tt = { TRAIT = leader_trait_roamer } }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5110.b
+		event_target:selected_leader_in_training = {
+			add_trait_with_custom_concept_tt = { TRAIT = trait_ruler_champion_of_the_people }
+			switch = {
+				trigger = leader_class
+				commander = { add_trait_with_custom_concept_tt = { TRAIT = leader_trait_enlister } }
+				official = { add_trait_with_concept_tt = { TRAIT = leader_trait_principled } }
+				scientist = { add_trait_with_concept_tt = { TRAIT = leader_trait_spark_of_genius } }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5110.c
+		trigger = { is_authoritarian = no }
+		every_leader_in_training = {
+			limit = { always = yes }
+			if = {
+				limit = { has_trait = leader_trait_bureaucrat }
+				add_experience = 100
+			}
+			else = {
+				add_trait_with_concept_tt = { TRAIT = leader_trait_bureaucrat }
+			}
+		}
+	}
+}
+
+# Cross-Functional Learning
+country_event = {
+	id = forceofwill.5115
+	title = forceofwill.5115.name
+	desc = forceofwill.5115.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_lecture
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5115_event_triggered }
+		count_leader_in_training = { count > 0 }
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5115_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_trait_event }
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5115.a
+		trigger = {
+			event_target:selected_leader_in_training = {
+				OR = {
+					leader_class = commander
+					leader_class = official
+				}
+			}
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		event_target:selected_leader_in_training = {
+			add_trait_with_custom_concept_tt = { TRAIT = leader_trait_gifted }
+			add_trait_with_concept_tt = { TRAIT = leader_trait_spark_of_genius_other_classes }
+		}
+	}
+
+	option = {
+		name = forceofwill.5115.b
+		trigger = {
+			event_target:selected_leader_in_training = {
+				OR = {
+					leader_class = commander
+					leader_class = scientist
+				}
+			}
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		event_target:selected_leader_in_training = {
+			add_trait_with_custom_concept_tt = { TRAIT = leader_trait_gifted }
+			switch = {
+				trigger = leader_class
+				commander = { add_trait_with_concept_tt = { TRAIT = leader_trait_spycraft_commander } }
+				scientist = { add_trait_with_concept_tt = { TRAIT = leader_trait_shipwright_scientist } }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5115.c
+		trigger = {
+			event_target:selected_leader_in_training = {
+				OR = {
+					leader_class = official
+					leader_class = scientist
+				}
+			}
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		event_target:selected_leader_in_training = {
+			add_trait_with_custom_concept_tt = { TRAIT = leader_trait_gifted }
+			switch = {
+				trigger = leader_class
+				official = { add_trait_with_concept_tt = { TRAIT = leader_trait_fleet_organizer_official } }
+				scientist = { add_trait_with_concept_tt = { TRAIT = leader_trait_defence_engineer_scientist } }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5115.d
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 1000
+			}
+		}
+		add_resource = { energy = -1000 }
+		every_leader_in_training = {
+			limit = { always = yes }
+			add_trait_with_custom_concept_tt = { TRAIT = leader_trait_gifted }
+		}
+	}
+
+	option = {
+		name = OPTION_DENIED
+		custom_tooltip = forceofwill.5115.e.tt
+		hidden_effect = {
+			event_target:selected_leader_in_training = {
+				# When graduating, don't consume trait selection when giving Golden Generation trait
+				# So leader will have automatically an additional trait
+				set_leader_flag = golden_generation_dont_consume_trait_selection
+			}
+		}
+		default_hide_option = yes
+	}
+}
+
+# Outside Experience
+country_event = {
+	id = forceofwill.5120
+	title = forceofwill.5120.name
+	desc = {
+		trigger = {
+			text = forceofwill.5120.desc.common_1
+			if = {
+				limit = { exists = event_target:selected_leader_in_training_1 }
+				text = newline
+				text = forceofwill.5120.desc.leader_in_training_1
+			}
+			if = {
+				limit = { exists = event_target:selected_leader_in_training_2 }
+				text = newline
+				text = forceofwill.5120.desc.leader_in_training_2
+			}
+			if = {
+				limit = { exists = event_target:selected_leader_in_training_3 }
+				text = newline
+				text = forceofwill.5120.desc.leader_in_training_3
+			}
+			if = {
+				limit = { exists = event_target:selected_leader_in_training_4 }
+				text = newline
+				text = forceofwill.5120.desc.leader_in_training_4
+			}
+			text = newline
+			text = forceofwill.5120.desc.common_2
+		}
+	}
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_classroom
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5120_event_triggered }
+		NOT = {
+			any_leader_in_training = {
+				num_leader_traits = { value = 0 }
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5120_event_triggered
+		while = {
+			count = value:count_leaders_in_training
+			random_list = {
+				1 = {
+					modifier = {
+						factor = 0
+						exists = event_target:selected_leader_in_training_1
+					}
+					random_leader_in_training = {
+						limit = { NOT = { has_leader_flag = selected_for_exp_event } }
+						set_leader_flag = selected_for_exp_event
+						save_event_target_as = selected_leader_in_training_1
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						exists = event_target:selected_leader_in_training_2
+					}
+					random_leader_in_training = {
+						limit = { NOT = { has_leader_flag = selected_for_exp_event } }
+						set_leader_flag = selected_for_exp_event
+						save_event_target_as = selected_leader_in_training_2
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						exists = event_target:selected_leader_in_training_3
+					}
+					random_leader_in_training = {
+						limit = { NOT = { has_leader_flag = selected_for_exp_event } }
+						set_leader_flag = selected_for_exp_event
+						save_event_target_as = selected_leader_in_training_3
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						exists = event_target:selected_leader_in_training_4
+					}
+					random_leader_in_training = {
+						limit = { NOT = { has_leader_flag = selected_for_exp_event } }
+						set_leader_flag = selected_for_exp_event
+						save_event_target_as = selected_leader_in_training_4
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5120.a
+		trigger = { exists = event_target:selected_leader_in_training_1 }
+		event_target:selected_leader_in_training_1 = {
+			add_trait = { trait = leader_trait_capitalist }
+		}
+	}
+
+	option = {
+		name = forceofwill.5120.b
+		trigger = { exists = event_target:selected_leader_in_training_2 }
+		event_target:selected_leader_in_training_2 = {
+			add_trait = { trait = leader_trait_private_mines }
+		}
+	}
+
+	option = {
+		name = forceofwill.5120.c
+		trigger = { exists = event_target:selected_leader_in_training_3 }
+		event_target:selected_leader_in_training_3 = {
+			add_trait = { trait = leader_trait_scrapper }
+		}
+	}
+
+	option = {
+		name = forceofwill.5120.d
+		trigger = { exists = event_target:selected_leader_in_training_4 }
+		event_target:selected_leader_in_training_4 = {
+			add_trait = { trait = leader_trait_entrepreneur }
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			every_leader_in_training = {
+				remove_leader_flag = selected_for_exp_event
+			}
+		}
+	}
+}
+
+# Extreme Trial
+country_event = {
+	id = forceofwill.5125
+	title = forceofwill.5125.name
+	desc = forceofwill.5125.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_golden_generation_lecture
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5125_event_triggered }
+		count_leader_in_training = { count > 0 }
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5125_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					has_trait = leader_trait_arrested_development
+					has_leader_flag = golden_generation_had_trait_event
+				}
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5125.a
+		event_target:selected_leader_in_training = {
+			add_trait_with_concept_tt = { TRAIT = trait_ruler_warlike_all_classes }
+			if = {
+				limit = { has_trait = leader_trait_resilient }
+				if = {
+					limit = { has_trait = leader_trait_adaptable }
+					add_experience = 150
+				}
+				else = {
+					add_trait_with_concept_tt = { TRAIT = leader_trait_adaptable }
+				}
+			}
+			else = {
+				add_trait_with_custom_concept_tt = { TRAIT = leader_trait_resilient }
+			}
+			if = {
+				limit = { has_trait = leader_trait_destructive }
+				if = {
+					limit = { has_trait = leader_trait_stubborn }
+					add_trait_chance_with_custom_concept_tt = {
+						CHANCE = 35
+						TRAIT = leader_trait_melancholic
+					}
+				}
+				else = {
+					add_trait_chance_with_concept_tt = {
+						CHANCE = 35
+						TRAIT = leader_trait_stubborn
+					}
+				}
+			}
+			else = {
+				add_trait_chance_with_custom_concept_tt = {
+					CHANCE = 35
+					TRAIT = leader_trait_destructive
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5125.b
+		every_leader_in_training = {
+			limit = { always = yes }
+			if = {
+				limit = { has_trait = leader_trait_resilient }
+				add_experience = 100
+			}
+			else = {
+				add_trait_with_custom_concept_tt = { TRAIT = leader_trait_resilient }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5125.c
+		event_target:selected_leader_in_training = {
+			switch = {
+				trigger = leader_class
+				scientist = {
+					add_trait_with_concept_tt = { TRAIT = leader_trait_meticulous }
+					add_trait_with_concept_tt = { TRAIT = leader_trait_archaeologist }
+				}
+				official = {
+					add_trait_with_concept_tt = { TRAIT = leader_trait_intellectual }
+					add_trait_with_concept_tt = { TRAIT = leader_trait_principled }
+				}
+				commander = {
+					add_trait_with_concept_tt = { TRAIT = leader_trait_cautious }
+					add_trait_with_concept_tt = { TRAIT = leader_trait_restrained }
+				}
+			}
+			add_trait_chance_with_concept_tt = {
+				CHANCE = 35
+				TRAIT = leader_trait_arrested_development
+			}
+		}
+	}
+}
+
+# Creature Attachment
+country_event = {
+	id = forceofwill.5130
+	title = forceofwill.5130.name
+	desc = forceofwill.5130.desc
+	is_triggered_only = yes
+	picture = GFX_evt_but_they_are_cute
+	show_sound = event_dangerous_animals
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		is_homicidal = no
+		NOT = { has_country_flag = forceofwill.5130_event_triggered }
+		any_leader_in_training = {
+			NOR = {
+				has_leader_flag = golden_generation_had_trait_event
+				AND = {
+					has_trait = leader_trait_resilient
+					has_trait = leader_trait_adaptable
+				}
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5130_event_triggered
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					has_leader_flag = golden_generation_had_trait_event
+					AND = {
+						has_trait = leader_trait_resilient
+						has_trait = leader_trait_adaptable
+					}
+				}
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5130.a
+		event_target:selected_leader_in_training = {
+			add_trait = { trait = leader_trait_emotional_support_pet }
+		}
+	}
+
+	option = {
+		name = {
+			trigger = {
+				if = {
+					limit = {
+						OR = {
+							is_authoritarian = yes
+							is_xenophobe = yes
+							is_militarist = yes
+						}
+					}
+					text = forceofwill.5130.b.bad_people
+				}
+				else = { text = forceofwill.5130.b.common }
+			}
+		}
+		event_target:selected_leader_in_training = {
+			if = {
+				limit = { has_trait = leader_trait_resilient }
+				add_trait = { trait = leader_trait_adaptable }
+			}
+			else = {
+				add_trait = { trait = leader_trait_resilient }
+			}
+		}
+	}
+}
+
+# Bullying Accusations
+country_event = {
+	id = forceofwill.5135
+	title = forceofwill.5135.name
+	desc = forceofwill.5135.desc
+	is_triggered_only = yes
+	picture = GFX_evt_smear_campaign
+	show_sound = event_golden_generation_students_fight
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5135_event_triggered }
+		any_leader_in_training = {
+			NOR = {
+				has_leader_flag = golden_generation_had_trait_event
+				has_trait = leader_trait_gifted
+				AND = {
+					has_trait = leader_trait_resilient
+					has_trait = leader_trait_adaptable
+				}
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5135_event_triggered
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					has_leader_flag = golden_generation_had_trait_event
+					has_trait = leader_trait_gifted
+					AND = {
+						has_trait = leader_trait_resilient
+						has_trait = leader_trait_adaptable
+					}
+				}
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5135.a
+		event_target:selected_leader_in_training = {
+			if = {
+				limit = { has_trait = leader_trait_adaptable }
+				add_trait = { trait = leader_trait_resilient }
+			}
+			else = {
+				add_trait = { trait = leader_trait_adaptable }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5135.b
+		event_target:selected_leader_in_training = {
+			add_trait = { trait = leader_trait_gifted }
+		}
+	}
+}
+
+# Bad News
+country_event = {
+	id = forceofwill.5140
+	title = forceofwill.5140.name
+	desc = forceofwill.5140.desc
+	is_triggered_only = yes
+	picture = GFX_evt_acquire_asset
+	show_sound = event_bad_omen
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5140_event_triggered }
+		any_leader_in_training = {
+			NOR = {
+				has_leader_flag = golden_generation_had_trait_event
+				has_leader_flag = golden_generation_sibling_leader
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5140_event_triggered
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					has_leader_flag = golden_generation_had_trait_event
+					has_leader_flag = golden_generation_sibling_leader
+				}
+			}
+			save_event_target_as = selected_leader_in_training
+			set_leader_flag = golden_generation_whole_family_died
+			set_leader_flag = golden_generation_had_trait_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5140.a
+		event_target:selected_leader_in_training = {
+			switch = {
+				trigger = leader_class
+				commander = { add_trait_with_concept_tt = { TRAIT = leader_trait_restrained } }
+				official = { add_trait_with_concept_tt = { TRAIT = leader_trait_principled } }
+				scientist = { add_trait_with_concept_tt = { TRAIT = leader_trait_meticulous } }
+			}
+			if = {
+				limit = { has_trait = leader_trait_melancholic }
+				if = {
+					limit = { has_trait = leader_trait_stubborn }
+					add_trait_chance_with_custom_concept_tt = {
+						CHANCE = 10
+						TRAIT = leader_trait_destructive
+					}
+				}
+				else = {
+					add_trait_chance_with_concept_tt = {
+						CHANCE = 10
+						TRAIT = leader_trait_stubborn
+					}
+				}
+			}
+			else = {
+				add_trait_chance_with_custom_concept_tt = {
+					CHANCE = 10
+					TRAIT = leader_trait_melancholic
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5140.b
+		event_target:selected_leader_in_training = {
+			switch = {
+				trigger = leader_class
+				commander = { add_trait_with_concept_tt = { TRAIT = leader_trait_butcher } }
+				official = { add_trait_with_concept_tt = { TRAIT = leader_trait_spycraft } }
+				scientist = { add_trait_with_concept_tt = { TRAIT = leader_trait_spark_of_genius } }
+			}
+			add_trait_chance_with_concept_tt = {
+				CHANCE = 10
+				TRAIT = leader_trait_substance_abuser
+			}
+		}
+	}
+}
+
+# Golden Generation "Relationship" events
+
+# Feuding Pupils
+country_event = {
+	id = forceofwill.5200
+	title = forceofwill.5200.name
+	desc = forceofwill.5200.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_fight
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5200_event_triggered }
+		count_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			count > 1
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5200_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			save_event_target_as = feuding_leader_1
+			set_leader_flag = golden_generation_had_relationship_event
+		}
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					is_same_value = event_target:feuding_leader_1
+					has_leader_flag = golden_generation_had_relationship_event
+				}
+			}
+			save_event_target_as = feuding_leader_2
+		}
+	}
+
+	option = {
+		name = forceofwill.5200.a
+		event_target:feuding_leader_1 = {
+			add_experience = 200
+			set_leader_flag = golden_generation_aggrieved_leader
+		}
+		event_target:feuding_leader_2 = {
+			add_experience = 200
+			set_leader_flag = golden_generation_aggrieved_leader
+		}
+		hidden_effect = {
+			random_list = {
+				1 = {
+					event_target:feuding_leader_1 = {
+						set_leader_flag = feuding_pupils_embittered_leader
+					}
+					event_target:feuding_leader_2 = {
+						set_leader_flag = feuding_pupils_other_leader
+					}
+				}
+				1 = {
+					event_target:feuding_leader_1 = {
+						set_leader_flag = feuding_pupils_other_leader
+					}
+					event_target:feuding_leader_2 = {
+						set_leader_flag = feuding_pupils_embittered_leader
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5200.b
+		if = {
+			limit = {
+				event_target:feuding_leader_1 = {
+					num_leader_traits = {
+						value > 0
+						negative = yes
+					}
+				}
+			}
+			event_target:feuding_leader_1 = {
+				remove_trait = random_negative
+			}
+		}
+		else_if = {
+			limit = {
+				event_target:feuding_leader_2 = {
+					num_leader_traits = {
+						value > 0
+						negative = yes
+					}
+				}
+			}
+			event_target:feuding_leader_2 = {
+				remove_trait = random_negative
+			}
+		}
+		else = {
+			add_monthly_resource_mult = {
+				resource = unity
+				value = @tier2unityreward
+				min = @tier2unitymin
+				max = @tier2unitymax
+			}
+		}
+		event_target:feuding_leader_1 = {
+			set_leader_flag = golden_generation_leader_feuding_reconciliated
+		}
+		event_target:feuding_leader_2 = {
+			set_leader_flag = golden_generation_leader_feuding_reconciliated
+		}
+	}
+}
+
+# Nascent Romance
+country_event = {
+	id = forceofwill.5205
+	title = forceofwill.5205.name
+	desc = forceofwill.5205.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5205_event_triggered }
+		count_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			count > 1
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5205_event_triggered
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			save_event_target_as = lover_leader_1
+			set_leader_flag = golden_generation_had_relationship_event
+		}
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					is_same_value = event_target:lover_leader_1
+					has_leader_flag = golden_generation_had_relationship_event
+				}
+			}
+			save_event_target_as = lover_leader_2
+		}
+	}
+
+	option = {
+		name = forceofwill.5205.a
+		event_target:lover_leader_1 = {
+			add_experience = 200
+			set_leader_flag = golden_generation_grieving_leader
+		}
+		event_target:lover_leader_2 = {
+			add_experience = 200
+			set_leader_flag = golden_generation_grieving_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5205.b
+		default_hide_option = yes
+		event_target:lover_leader_1 = {
+			set_leader_flag = golden_generation_leader_lover
+		}
+		event_target:lover_leader_2 = {
+			set_leader_flag = golden_generation_leader_lover
+		}
+	}
+}
+
+# Wargames
+country_event = {
+	id = forceofwill.5210
+	title = forceofwill.5210.name
+	desc = forceofwill.5210.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_fight
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5210_event_triggered }
+		is_fanatic_egalitarian = no
+		is_fanatic_authoritarian = no
+		count_leader_in_training = { count > 2 }
+		count_leader_in_training = {
+			limit = { had_previous_relationship_event = no }
+			count > 0
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5210_event_triggered
+		random_leader_in_training = {
+			limit = { had_previous_relationship_event = no }
+			save_event_target_as = wargames_leader_1
+			set_leader_flag = golden_generation_had_relationship_event
+		}
+	}
+
+	option = {
+		name = forceofwill.5210.a
+		event_target:wargames_leader_1 = {
+			add_trait = { trait = leader_trait_golden_exclusivist }
+		}
+	}
+
+	option = {
+		name = forceofwill.5210.b
+		every_leader_in_training = {
+			limit = { always = yes }
+			add_trait_with_custom_concept_tt = { TRAIT = leader_trait_golden_cooperator }
+		}
+	}
+}
+
+# Secret Siblings
+country_event = {
+	id = forceofwill.5215
+	title = forceofwill.5215.name
+	desc = forceofwill.5215.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5215_event_triggered }
+		count_leader_in_training = {
+			limit = {
+				NOR = {
+					has_leader_flag = golden_generation_whole_family_died
+					has_leader_flag = golden_generation_had_relationship_event
+				}
+			}
+			count > 1
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5215_event_triggered
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					has_leader_flag = golden_generation_whole_family_died
+					has_leader_flag = golden_generation_had_relationship_event
+				}
+			}
+			save_event_target_as = sibling_leader_1
+			set_leader_flag = golden_generation_sibling_leader
+			set_leader_flag = golden_generation_had_relationship_event
+		}
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					is_same_value = event_target:sibling_leader_1
+					has_leader_flag = golden_generation_whole_family_died
+					has_leader_flag = golden_generation_had_relationship_event
+				}
+			}
+			save_event_target_as = sibling_leader_2
+			set_leader_flag = golden_generation_sibling_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5215.a
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+		hidden_effect = {
+			country_event = {
+				id = forceofwill.5420
+				years = 35
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5215.b
+		event_target:sibling_leader_1 = {
+			add_experience = 200
+		}
+		event_target:sibling_leader_2 = {
+			add_experience = 200
+		}
+		set_country_flag = golden_generation_family_secret_kept
+	}
+}
+
+# Race for the Prize
+country_event = {
+	id = forceofwill.5220
+	title = forceofwill.5220.name
+	desc = forceofwill.5220.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_classroom
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5220_event_triggered }
+		count_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			count > 1
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5220_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			save_event_target_as = competing_leader_1
+			set_leader_flag = golden_generation_had_relationship_event
+		}
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					is_same_value = event_target:competing_leader_1
+					has_leader_flag = golden_generation_had_relationship_event
+				}
+			}
+			save_event_target_as = competing_leader_2
+		}
+	}
+
+	option = {
+		name = forceofwill.5220.a
+		event_target:competing_leader_1 = {
+			add_experience = 100
+			set_leader_flag = golden_generation_leader_racing_reconciliated
+		}
+		event_target:competing_leader_2 = {
+			add_experience = 100
+			set_leader_flag = golden_generation_leader_racing_reconciliated
+		}
+	}
+
+	option = {
+		name = forceofwill.5220.b
+		event_target:competing_leader_1 = {
+			add_experience = 200
+			set_leader_flag = golden_generation_aggrieved_leader
+			set_leader_flag = race_for_the_prize_other_leader
+		}
+		event_target:competing_leader_2 = {
+			set_leader_flag = golden_generation_aggrieved_leader
+			set_leader_flag = race_for_the_prize_embittered_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5220.c
+		event_target:competing_leader_1 = {
+			set_leader_flag = golden_generation_aggrieved_leader
+			set_leader_flag = race_for_the_prize_embittered_leader
+		}
+		event_target:competing_leader_2 = {
+			add_experience = 200
+			set_leader_flag = golden_generation_aggrieved_leader
+			set_leader_flag = race_for_the_prize_other_leader
+		}
+	}
+}
+
+# Cyberprank
+country_event = {
+	id = forceofwill.5225
+	title = forceofwill.5225.name
+	desc = forceofwill.5225.desc
+	is_triggered_only = yes
+	picture = GFX_evt_synth_sabotage
+	show_sound = event_lost_makers_system_glitch
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5225_event_triggered }
+		count_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			count > 1
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5225_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		random_leader_in_training = {
+			limit = {
+				NOT = { has_leader_flag = golden_generation_had_relationship_event }
+			}
+			save_event_target_as = hacker_leader_1
+			set_leader_flag = golden_generation_had_relationship_event
+		}
+		random_leader_in_training = {
+			limit = {
+				NOR = {
+					is_same_value = event_target:hacker_leader_1
+					has_leader_flag = golden_generation_had_relationship_event
+				}
+			}
+			save_event_target_as = hacker_leader_2
+		}
+	}
+
+	option = {
+		name = forceofwill.5225.a
+		add_monthly_resource_mult = {
+			resource = influence
+			value = @tier1influencereward
+			min = @tier1influencemin
+			max = @tier1influencemax
+		}
+		if = {
+			limit = {
+				event_target:hacker_leader_1 = { has_trait = leader_trait_melancholic }
+				event_target:hacker_leader_2 = { has_trait = leader_trait_melancholic }
+			}
+			random_list = {
+				1 = {
+					event_target:hacker_leader_1 = {
+						if = {
+							limit = { NOT = { has_trait = leader_trait_stubborn } }
+							add_trait_with_concept_tt = { TRAIT = leader_trait_stubborn }
+						}
+						else = {
+							add_trait_with_custom_concept_tt = { TRAIT = leader_trait_destructive }
+						}
+						set_leader_flag = cyberprank_embittered_leader
+					}
+					event_target:hacker_leader_2 = {
+						set_leader_flag = cyberprank_other_leader
+					}
+				}
+				1 = {
+					event_target:hacker_leader_2 = {
+						if = {
+							limit = { NOT = { has_trait = leader_trait_stubborn } }
+							add_trait_with_concept_tt = { TRAIT = leader_trait_stubborn }
+						}
+						else = {
+							add_trait_with_custom_concept_tt = { TRAIT = leader_trait_destructive }
+						}
+						set_leader_flag = cyberprank_embittered_leader
+					}
+					event_target:hacker_leader_1 = {
+						set_leader_flag = cyberprank_other_leader
+					}
+				}
+			}
+		}
+		else = {
+			random_list = {
+				1 = {
+					modifier = {
+						factor = 0
+						event_target:hacker_leader_1 = { has_trait = leader_trait_melancholic }
+					}
+					event_target:hacker_leader_1 = {
+						add_trait_with_custom_concept_tt = { TRAIT = leader_trait_melancholic }
+						set_leader_flag = cyberprank_embittered_leader
+					}
+					event_target:hacker_leader_2 = {
+						set_leader_flag = cyberprank_other_leader
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						event_target:hacker_leader_2 = { has_trait = leader_trait_melancholic }
+					}
+					event_target:hacker_leader_2 = {
+						add_trait_with_custom_concept_tt = { TRAIT = leader_trait_melancholic }
+						set_leader_flag = cyberprank_embittered_leader
+					}
+					event_target:hacker_leader_1 = {
+						set_leader_flag = cyberprank_other_leader
+					}
+				}
+			}
+		}
+
+		event_target:hacker_leader_1 = {
+			set_leader_flag = golden_generation_aggrieved_leader
+		}
+		event_target:hacker_leader_2 = {
+			set_leader_flag = golden_generation_aggrieved_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5225.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+
+		event_target:hacker_leader_1 = {
+			set_leader_flag = golden_generation_maverick_leader
+			set_leader_flag = maverick_leader_instigator
+		}
+		event_target:hacker_leader_2 = {
+			set_leader_flag = golden_generation_maverick_leader
+			set_leader_flag = maverick_leader_hacker
+		}
+	}
+}
+
+# Golden Generation "Social" events
+
+# Unequal Performance
+country_event = {
+	id = forceofwill.5300
+	title = forceofwill.5300.name
+	desc = forceofwill.5300.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_classroom
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5300_event_triggered }
+		resource_stockpile_compare = {
+			resource = energy
+			value >= 1000
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5300_event_triggered
+	}
+
+	option = {
+		name = forceofwill.5300.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 1000
+			}
+		}
+		add_resource = {
+			energy = -1000
+		}
+		ordered_leader_in_training = {
+			position = 0
+			inverse = no
+			order_by = trigger:has_experience
+			add_experience = 400
+		}
+		custom_tooltip = forceofwill.5300.tenet_tt
+		set_country_flag = golden_generation_favoritism_tenet
+	}
+
+	option = {
+		name = forceofwill.5300.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 1000
+			}
+		}
+		add_resource = {
+			energy = -1000
+		}
+		add_monthly_resource_mult = {
+			resource = society_research
+			value = @tier2researchreward
+			min = @tier2researchmin
+			max = @tier2researchmax
+		}
+		custom_tooltip = forceofwill.5300.tenet_tt
+		set_country_flag = golden_generation_equitable_tenet
+	}
+
+	option = {
+		name = forceofwill.5300.c
+		default_hide_option = yes
+	}
+}
+
+# Transfer Student
+country_event = {
+	id = forceofwill.5305
+	title = forceofwill.5305.name
+	desc = forceofwill.5305.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOR = {
+			has_country_flag = forceofwill.5305_event_triggered
+			has_country_flag = golden_generation_additional_leader_trained
+		}
+		resource_stockpile_compare = {
+			resource = unity
+			value >= 500
+		}
+		resource_stockpile_compare = {
+			resource = trade
+			value >= 500
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5305_event_triggered
+		random_leader_in_training = {
+			save_event_target_as = random_leader_in_training 
+		}
+		create_saved_leader = {
+			creator = root
+			key = golden_generation_transfer_student
+			species = owner_main_species
+			tier = leader_tier_renowned
+			name = random
+			skill = 1
+			randomize_traits = yes
+			effect = {
+				set_age = event_target:random_leader_in_training.trigger:leader_age
+				random_list = {
+					1 = { change_leader_class = commander }
+					1 = { change_leader_class = scientist }
+					1 = { change_leader_class = official }
+				}
+				if = {
+					limit = { has_trait = leader_trait_adaptable }
+					add_trait = { trait = random_common }
+					remove_trait = leader_trait_adaptable
+				}
+				add_trait = { trait = leader_trait_stubborn }
+				save_event_target_as = prodigy_leader
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5305.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = unity
+				value >= 500
+			}
+			resource_stockpile_compare = {
+				resource = trade
+				value >= 500
+			}
+		}
+		add_resource = {
+			unity = -500
+			trade = -500
+		}
+		custom_tooltip = forceofwill.5305.a.tt
+		hidden_effect = {
+			set_country_flag = golden_generation_transfer_student_enrolled
+			event_target:prodigy_leader = {
+				set_leader_flag = leader_golden_generation
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5305.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 200
+			}
+		}
+		add_resource = { energy = -200 }
+		every_leader_in_training = {
+			limit = { always = yes }
+			add_experience = 250
+		}
+		hidden_effect = {
+			remove_saved_leader = golden_generation_transfer_student
+		}
+	}
+
+	option = {
+		name = OPTION_DENIED
+		default_hide_option = yes
+		hidden_effect = {
+			remove_saved_leader = golden_generation_transfer_student
+		}
+	}
+}
+
+# Public Discontent
+country_event = {
+	id = forceofwill.5310
+	title = forceofwill.5310.name
+	desc = forceofwill.5310.desc
+	is_triggered_only = yes
+	picture = GFX_evt_civil_action
+	show_sound = event_factions
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5310_event_triggered }
+		resource_stockpile_compare = {
+			resource = energy
+			value >= 1000
+		}
+		resource_stockpile_compare = {
+			resource = consumer_goods
+			value >= 200
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5310_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+	}
+
+	option = {
+		name = forceofwill.5310.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 1000
+			}
+			resource_stockpile_compare = {
+				resource = consumer_goods
+				value >= 200
+			}
+		}
+		add_resource = {
+			energy = -1000
+			consumer_goods = -200
+		}
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier2unityreward
+			min = @tier2unitymin
+			max = @tier2unitymax
+		}
+	}
+
+	option = {
+		name = forceofwill.5310.b
+		default_hide_option = yes
+		add_resource = { influence = 50 }
+		event_target:golden_academy_planet = {
+			add_modifier = {
+				modifier = academy_discontent_modifier
+				years = 10
+			}
+		}
+	}
+}
+
+# Reproductive Burdens
+country_event = {
+	id = forceofwill.5315
+	title = forceofwill.5315.name
+	desc = forceofwill.5315.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_students
+	show_sound = event_golden_generation_students_talk
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5315_event_triggered }
+	}
+
+	weight_multiplier = {
+		factor = 1
+		modifier = {
+			factor = 0.001
+			is_fanatic_egalitarian = yes 
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5315_event_triggered
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		# Selected leaders for option A
+		random_leader_in_training = {
+			save_event_target_as = selected_leader_1
+		}
+		random_leader_in_training = {
+			limit = {
+				NOT = { is_same_value = event_target:selected_leader_1 }
+			}
+			save_event_target_as = selected_leader_2
+		}
+	}
+
+	option = {
+		name = forceofwill.5315.a
+		event_target:selected_leader_1 = {
+			add_experience = 200
+		}
+		event_target:selected_leader_2 = {
+			add_experience = 200
+		}
+	}
+
+	option = {
+		name = forceofwill.5315.b
+		every_leader_in_training = {
+			limit = { always = yes }
+			add_trait_chance_with_concept_tt = {
+				CHANCE = 10
+				TRAIT = leader_trait_passive
+			}
+		}
+		event_target:golden_academy_planet = {
+			add_modifier = {
+				modifier = academy_sterilization_program
+			}
+		}
+	}
+}
+
+# Graduation event
+
+country_event = {
+	id = forceofwill.5400
+	title = forceofwill.5400.name
+	desc = forceofwill.5400.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_golden_generation_celebration
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = golden_generation_graduation }
+		count_leader_in_training = { count > 0 }
+	}
+
+	immediate = {
+		set_country_flag = golden_generation_graduation
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+		}
+		every_leader_in_training = {
+			if = {
+				limit = { has_leader_flag = golden_generation_dont_consume_trait_selection }
+				add_trait = { trait = leader_trait_golden_generation }
+			}
+			else = {
+				add_trait = {
+					trait = leader_trait_golden_generation
+					consume_selection = yes
+				}
+			}
+			add_owner_initial_skill_modifiers = yes
+			recruitable = yes
+			set_custom_description = golden_generation_graduate_leader_desc
+			if = {
+				limit = { has_leader_flag = golden_generation_had_relationship_event }
+				remove_leader_flag = golden_generation_had_relationship_event
+			}
+			if = {
+				limit = { has_leader_flag = golden_generation_had_trait_event }
+				remove_leader_flag = golden_generation_had_trait_event
+			}
+		}
+		if = {
+			limit = { has_country_flag = golden_generation_transfer_student_enrolled }
+			activate_saved_leader = {
+				add_to_owned = no
+				key = golden_generation_transfer_student
+				effect = {
+					add_trait = { trait = leader_trait_golden_generation }
+					add_owner_initial_skill_modifiers = yes
+					set_custom_description = golden_generation_graduate_leader_desc
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5400.a
+		custom_tooltip = forceofwill.5400.a.tt
+		hidden_effect = {
+			open_leader_tab = yes
+			country_event = {
+				id = forceofwill.5410
+				months = 6
+			}
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			setup_general_event_pool_trigger = yes
+			country_event = { # Reflection event
+				id = forceofwill.5705
+				years = 100
+			}
+			set_timed_country_flag = { # for Aging Leaders event
+				flag = lifespan_extension_timer #Used in random Spy Network events
+				years = 50
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5410
+	title = forceofwill.5410.name
+	desc = forceofwill.5410.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_conversation
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = golden_generation_academy_closing }
+		any_owned_planet = {
+			has_carrier_flag = golden_academy_built
+		}
+	}
+
+	immediate = {
+		set_country_flag = golden_generation_academy_closing
+		random_owned_planet = {
+			limit = { has_carrier_flag = golden_academy_built }
+			save_event_target_as = golden_academy_planet
+			remove_golden_academy = yes
+		}
+	}
+
+	option = {
+		name = forceofwill.5410.a
+		custom_tooltip = forceofwill.5410.a.tt
+		add_modifier = { modifier = golden_generation_prestige_modifier }
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier5unityreward
+			min = @tier5unitymin
+			max = @tier5unitymax
+		}
+	}
+
+	option = {
+		name = forceofwill.5410.b
+		default_hide_option = yes
+		custom_tooltip = forceofwill.5410.b.tt
+		hidden_effect = {
+			set_country_flag = golden_academy_reformed
+			event_target:golden_academy_planet = {
+				add_building = building_elite_academy
+			}
+			every_pool_leader = {
+				limit = { NOT = { has_leader_flag = leader_golden_generation } }
+				add_trait = { trait = leader_trait_elite_alumnus }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5410.c
+		custom_tooltip = forceofwill.5410.c.tt
+		hidden_effect = {
+			set_country_flag = golden_academy_converted
+			event_target:golden_academy_planet = {
+				add_building = building_golden_museum
+			}
+		}
+	}
+}
+
+# Elite Academy effect
+# scope: country, from: leader
+country_event = {
+	id = forceofwill.5415
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		num_buildings = {
+			type = building_elite_academy
+			value > 0
+			disabled = no
+			in_construction = no
+		}
+		from = { # Prevent giving trait to GG leader backup clones
+			NOT = { has_trait = leader_trait_golden_generation }
+		}
+	}
+
+	immediate = {
+		from = {
+			add_trait = { trait = leader_trait_elite_alumnus }
+		}
+	}
+}
+
+# Medical Emergency
+country_event = {
+	id = forceofwill.5420
+	title = forceofwill.5420.name
+	desc = forceofwill.5420.desc
+	is_triggered_only = yes
+	picture = GFX_evt_emergency_workers
+	show_sound = event_default
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5420_event_triggered }
+		count_owned_leader = {
+			limit = { has_leader_flag = golden_generation_sibling_leader }
+			count >= 2
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5420_event_triggered
+		setup_general_event_pool_trigger = yes
+		random_owned_leader = {
+			limit = { has_leader_flag = golden_generation_sibling_leader }
+			save_event_target_as = saved_leader
+		}
+		random_owned_leader = {
+			limit = {
+				NOT = { is_same_value = event_target:saved_leader }
+				has_leader_flag = golden_generation_sibling_leader
+			}
+			save_event_target_as = sibling_leader
+		}
+	}
+
+	option = {
+		name = EXCELLENT
+		event_target:saved_leader = {
+			add_trait = { trait = leader_trait_organ_transplant }
+		}
+	}
+}
+
+# Family Secret
+# from = dead leader
+country_event = {
+	id = forceofwill.5425
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5425_event_triggered }
+		has_country_flag = golden_generation_family_secret_kept
+		from? = {
+			has_leader_flag = golden_generation_sibling_leader
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5425_event_triggered
+		clone_leader = {
+			target = from
+			effect = {
+				save_event_target_as = dead_leader
+				exile_leader_as = golden_generation_dead_sibling@owner
+			}
+		}
+		country_event = {
+			id = forceofwill.5427
+			days = 20
+		}
+	}
+}
+
+# from = dead leader
+country_event = {
+	id = forceofwill.5426
+	title = forceofwill.5426.name
+	desc = forceofwill.5426.desc
+	is_triggered_only = yes
+	picture = GFX_evt_acquire_asset
+	show_sound = event_bad_omen
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+		random_owned_leader = {
+			limit = { has_leader_flag = golden_generation_sibling_leader }
+			save_event_target_as = alive_leader
+		}
+	}
+
+	option = {
+		name = UNFORTUNATE
+		event_target:alive_leader = {
+			random_list = {
+				1 = {
+					modifier = {
+						factor = 0
+						has_trait = leader_trait_melancholic
+					}
+					add_trait = { trait = leader_trait_melancholic }
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						has_trait = leader_trait_substance_abuser
+					}
+					add_trait = { trait = leader_trait_substance_abuser }
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						has_trait = leader_trait_volatile
+					}
+					add_trait = { trait = leader_trait_volatile }
+				}
+			}
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			# Clean up the clone since we aren't using it.
+			event_target:dead_leader = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+# Transition - Clean-up event for forceofwill.5426
+country_event = {
+	id = forceofwill.5427
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				count_owned_leader = {
+					limit = { has_leader_flag = golden_generation_sibling_leader }
+					count >= 1
+				}
+			}
+			country_event = {
+				id = forceofwill.5426
+			}
+		}
+		else = {
+			# Other sibling died in the meantime, so we just cleanup cloned leader
+			event_target:dead_leader = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+# Aggrieved Alumnus
+leader_event = {
+	id = forceofwill.5430
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_leader_flag = golden_generation_aggrieved_leader
+		owner? = {
+			atb_has_golden_generation = yes
+			NOT = { has_country_flag = forceofwill.5430_event_triggered } # flag set by forceofwill.5431 when triggered
+		}
+	}
+
+	immediate = {
+		# Conditions to select correct pair of conflicting leaders
+
+		# From Feuding Pupils
+		if = {
+			limit = {
+				has_leader_flag = feuding_pupils_embittered_leader
+			}
+			save_event_target_as = embittered_leader
+			owner = {
+				random_owned_leader = {
+					limit = { has_leader_flag = feuding_pupils_other_leader }
+					save_event_target_as = other_leader
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_leader_flag = feuding_pupils_other_leader
+			}
+			save_event_target_as = other_leader
+			owner = {
+				random_owned_leader = {
+					limit = { has_leader_flag = feuding_pupils_embittered_leader }
+					save_event_target_as = embittered_leader
+				}
+			}
+		}
+		# From Race for the Prize
+		else_if = {
+			limit = {
+				has_leader_flag = race_for_the_prize_embittered_leader
+			}
+			save_event_target_as = embittered_leader
+			owner = {
+				random_owned_leader = {
+					limit = { has_leader_flag = race_for_the_prize_other_leader }
+					save_event_target_as = other_leader
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_leader_flag = race_for_the_prize_other_leader
+			}
+			save_event_target_as = other_leader
+			owner = {
+				random_owned_leader = {
+					limit = { has_leader_flag = race_for_the_prize_embittered_leader }
+					save_event_target_as = embittered_leader
+				}
+			}
+		}
+		# From Cyberprank
+		else_if = {
+			limit = {
+				has_leader_flag = cyberprank_embittered_leader
+			}
+			save_event_target_as = embittered_leader
+			owner = {
+				random_owned_leader = {
+					limit = { has_leader_flag = cyberprank_other_leader }
+					save_event_target_as = other_leader
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_leader_flag = cyberprank_other_leader
+			}
+			save_event_target_as = other_leader
+			owner = {
+				random_owned_leader = {
+					limit = { has_leader_flag = cyberprank_embittered_leader }
+					save_event_target_as = embittered_leader
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				exists = event_target:embittered_leader
+				exists = event_target:other_leader
+			}
+			owner = {
+				country_event = {
+					id = forceofwill.5431
+					scopes = {
+						from = event_target:embittered_leader
+						fromfrom = event_target:other_leader
+					}
+					days = 3600
+					random = 1800
+				}
+			}
+		}
+	}
+}
+
+# from = embittered leader
+# fromfrom = other leader
+country_event = {
+	id = forceofwill.5431
+	title = forceofwill.5431.name
+	desc = forceofwill.5431.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_golden_generation_leaders_argue
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5430_event_triggered }
+		# Verify we still have the leaders recruited
+		any_owned_leader = {
+			is_same_value = from
+		}
+		any_owned_leader = {
+			is_same_value = fromfrom
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5430_event_triggered
+		setup_general_event_pool_trigger = yes
+		export_monthly_resource_to_variable = {
+			RESOURCE = trade
+			VALUE = @tier2materialreward
+			MIN = @tier2materialmin
+			MAX = @tier2materialmax
+		}
+	}
+
+	option = {
+		name = forceofwill.5431.a
+		if = {
+			limit = { has_country_flag = golden_academy_reformed }
+			add_modifier = {
+				modifier = golden_generation_academy_scandal_elite
+				years = 10
+			}
+		}
+		else = {
+			add_modifier = {
+				modifier = golden_generation_academy_scandal
+				years = 10
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5431.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = trade
+				value >= 1
+				mult = trade_produce
+			}
+		}
+		add_resource = {
+			trade = -1
+			mult = trade_produce
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			clear_variable = trade_produce
+		}
+	}
+}
+
+# In Memory of
+# from = dead leader
+country_event = {
+	id = forceofwill.5435
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5435_event_triggered } # flag set by forceofwill.5436 when triggered
+		from? = {
+			OR = {
+				has_leader_flag = golden_generation_leader_feuding_reconciliated
+				has_leader_flag = golden_generation_leader_racing_reconciliated
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				from = { has_leader_flag = golden_generation_leader_feuding_reconciliated }
+			}
+			clone_leader = {
+				target = from
+				effect = {
+					save_event_target_as = dead_leader
+					exile_leader_as = golden_generation_dead_feunding_leader@owner
+				}
+			}
+			random_owned_leader = {
+				limit = {
+					has_leader_flag = golden_generation_leader_feuding_reconciliated
+					NOT = { is_same_value = root.from }
+				}
+				save_event_target_as = surviving_leader
+			}
+		}
+		else_if = {
+			limit = {
+				from = { has_leader_flag = golden_generation_leader_racing_reconciliated }
+			}
+			clone_leader = {
+				target = from
+				effect = {
+					save_event_target_as = dead_leader
+					exile_leader_as = golden_generation_dead_racing_leader@owner
+				}
+			}
+			random_owned_leader = {
+				limit = {
+					has_leader_flag = golden_generation_leader_racing_reconciliated
+					NOT = { is_same_value = root.from }
+				}
+				save_event_target_as = surviving_leader
+			}
+		}
+
+		if = {
+			limit = {
+				exists = event_target:dead_leader
+				exists = event_target:surviving_leader
+			}
+			owner = {
+				country_event = {
+					id = forceofwill.5437
+					scopes = {
+						from = event_target:dead_leader
+						fromfrom = event_target:surviving_leader
+					}
+					days = 30
+				}
+			}
+		}
+		else = {
+			# Other leader wasn't found, so we just cleanup cloned leader
+			event_target:dead_leader = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5436
+	title = forceofwill.5436.name
+	desc = forceofwill.5436.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_nem_asset_acquired_positive
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5435_event_triggered }
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5435_event_triggered
+		setup_general_event_pool_trigger = yes
+		from = { save_event_target_as = dead_leader }
+		fromfrom = { save_event_target_as = surviving_leader }
+	}
+
+	option = {
+		name = forceofwill.5436.a
+		add_modifier = {
+			modifier = golden_generation_memorial_scholarship
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			# Clean up the clone since we aren't using it.
+			event_target:dead_leader = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5437
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5435_event_triggered } # flag set by forceofwill.5436 when triggered
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				# Verify surviving leader is still alive
+				any_owned_leader = {
+					is_same_value = fromfrom
+				}
+			}
+			country_event = {
+				id = forceofwill.5436
+				scopes = {
+					from = from
+					fromfrom = fromfrom
+				}
+			}
+		}
+		else = {
+			# Other leader wasn't found, so we just cleanup cloned leader
+			from = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+# The Grief of
+# from = dead leader
+country_event = {
+	id = forceofwill.5440
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = forceofwill.5440_event_triggered }
+		from? = {
+			has_leader_flag = golden_generation_grieving_leader
+			NOT = { has_trait = leader_trait_has_backup_clone }
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5440_event_triggered
+		clone_leader = {
+			target = from
+			effect = {
+				save_event_target_as = dead_leader
+				exile_leader_as = golden_generation_dead_lover@owner
+			}
+		}
+		country_event = {
+			id = forceofwill.5442
+			days = 30
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5441
+	title = forceofwill.5441.name
+	desc = forceofwill.5441.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_default
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+		random_owned_leader = {
+			limit = { has_leader_flag = golden_generation_grieving_leader }
+			save_event_target_as = surviving_leader
+		}
+		export_monthly_resource_to_variable = {
+			RESOURCE = trade
+			VALUE = @tier2materialreward
+			MIN = @tier2materialmin
+			MAX = @tier2materialmax
+		}
+	}
+
+	option = {
+		name = forceofwill.5441.a
+		event_target:surviving_leader = {
+			switch = {
+				trigger = leader_class
+				scientist = {
+					if = {
+						limit = {
+							NOT = { has_trait = leader_trait_traumatized }
+						}
+						add_trait = { trait = leader_trait_traumatized }
+					}
+				}
+				commander = {
+					if = {
+						limit = {
+							NOT = { has_trait = leader_trait_lethargic }
+						}
+						add_trait = { trait = leader_trait_lethargic }
+					}
+				}
+				official = {
+					if = {
+						limit = {
+							is_xenophile = yes
+							NOT = { has_trait = leader_trait_substance_abuser }
+						}
+						add_trait = { trait = leader_trait_substance_abuser }
+					}
+					else_if = {
+						limit = {
+							is_xenophile = no
+							NOT = { has_trait = leader_trait_reclusive }
+						}
+						add_trait = { trait = leader_trait_reclusive }
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_trait = leader_trait_melancholic }
+				}
+				add_trait = { trait = leader_trait_melancholic }
+			}
+			else_if = {
+				limit = {
+					NOT = { has_trait = leader_trait_volatile }
+				}
+				add_trait = { trait = leader_trait_volatile }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5441.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = trade
+				value >= 1
+				mult = trade_produce
+			}
+		}
+		add_resource = {
+			trade = -1
+			mult = trade_produce
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			# Clean up the clone since we aren't using it.
+			event_target:dead_leader = {
+				kill_leader = { show_notification = no }
+			}
+			clear_variable = trade_produce
+		}
+	}
+}
+
+# Transition - Clean-up event for forceofwill.5441
+country_event = {
+	id = forceofwill.5442
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				count_owned_leader = {
+					limit = { has_leader_flag = golden_generation_grieving_leader }
+					count >= 1
+				}
+			}
+			country_event = {
+				id = forceofwill.5441
+			}
+		}
+		else = {
+			# Other lover died in the meantime, so we just cleanup cloned leader
+			event_target:dead_leader = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+# Golden Wedding
+leader_event = {
+	id = forceofwill.5445
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_leader_flag = golden_generation_leader_lover
+		owner? = {
+			atb_has_golden_generation = yes
+			NOT = { has_country_flag = forceofwill.5445_event_triggered } # flag set when recruiting both lovers
+		}
+	}
+
+	immediate = {
+		owner = {
+			random_owned_leader = {
+				limit = {
+					NOT = { is_same_value = root }
+					has_leader_flag = golden_generation_leader_lover
+				}
+				save_event_target_as = second_lover
+				owner = {
+					set_country_flag = forceofwill.5445_event_triggered
+					country_event = {
+						id = forceofwill.5446
+						scopes = {
+							from = root
+							fromfrom = event_target:second_lover
+						}
+						days = 720
+						random = 1080
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5446
+	title = forceofwill.5446.name
+	desc = forceofwill.5446.desc
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_golden_generation_celebration
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		# Verify we still have the leaders recruited
+		any_owned_leader = {
+			is_same_value = from
+		}
+		any_owned_leader = {
+			is_same_value = fromfrom
+		}
+		NOT = {
+			from = { has_trait = leader_trait_venerated }
+			fromfrom = { has_trait = leader_trait_venerated }
+		}
+	}
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = forceofwill.5446.a
+		from = {
+			if = {
+				limit = {
+					NOT = { has_trait = leader_trait_venerated }
+				}
+				add_trait = { trait = leader_trait_venerated }
+			}
+		}
+		fromfrom = {
+			if = {
+				limit = {
+					NOT = { has_trait = leader_trait_venerated }
+				}
+				add_trait = { trait = leader_trait_venerated }
+			}
+		}
+	}
+}
+
+# Impromptu Espionnage
+leader_event = {
+	id = forceofwill.5450
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_leader_flag = golden_generation_maverick_leader
+		owner? = {
+			atb_has_golden_generation = yes
+			NOT = { has_country_flag = forceofwill.5450_event_triggered } # flag set when recruiting both leaders
+		}
+	}
+
+	immediate = {
+		owner = {
+			random_owned_leader = {
+				limit = {
+					NOT = { is_same_value = root }
+					has_leader_flag = golden_generation_maverick_leader
+				}
+
+				if = {
+					limit = { has_leader_flag = maverick_leader_instigator }
+					save_event_target_as = first_leader
+					root = { save_event_target_as = second_leader }
+				}
+				else_if = {
+					limit = { has_leader_flag = maverick_leader_hacker }
+					root = { save_event_target_as = first_leader }
+					save_event_target_as = second_leader
+				}
+
+				owner = {
+					set_country_flag = forceofwill.5450_event_triggered
+					country_event = {
+						id = forceofwill.5451
+						scopes = {
+							from = event_target:first_leader
+							fromfrom = event_target:second_leader
+						}
+						days = 1800
+						random = 1800
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5451
+	title = forceofwill.5451.name
+	desc = forceofwill.5451.desc
+	is_triggered_only = yes
+	picture = GFX_evt_intelligence_report
+	show_sound = event_espionage_concluded
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		# Verify we still have the leaders recruited
+		any_owned_leader = {
+			is_same_value = from
+		}
+		any_owned_leader = {
+			is_same_value = fromfrom
+		}
+		any_relation = {
+			is_country_type = default
+			has_communications = root
+		}
+	}
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+		random_relation = {
+			limit = {
+				is_country_type = default
+				has_communications = root
+				root = {
+					opinion = { who = prev value < 0 }
+					intel = { who = prev value < 90 }
+				}
+			}
+			save_event_target_as = hostile_empire
+		}
+		if = {
+			limit = {
+				NOT = { exists = event_target:hostile_empire }
+			}
+			# If we don't find a suitable victim, check only intel
+			random_relation = {
+				limit = {
+					is_country_type = default
+					has_communications = root
+					root = {
+						intel = { who = prev value < 90 }
+					}
+				}
+				save_event_target_as = hostile_empire
+			}
+			if = {
+				limit = {
+					NOT = { exists = event_target:hostile_empire }
+				}
+				# If we STILL don't find a suitable victim, just take whoever
+				random_relation = {
+					limit = {
+						is_country_type = default
+						has_communications = root
+					}
+					save_event_target_as = hostile_empire
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5451.a
+		add_intel = {
+			who = event_target:hostile_empire
+			amount = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5451.b
+		add_intel = {
+			who = event_target:hostile_empire
+			amount = 30
+		}
+		event_target:hostile_empire = {
+			add_opinion_modifier = {
+				who = root
+				modifier = opinion_impromptu_espionage
+			}
+		}
+	}
+}
+
+# Victorious Commander
+# Fired from on_space_battle_won
+country_event = {
+	id = forceofwill.5500
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5500_event_triggered }
+		atb_has_golden_generation = yes
+		fromfrom = {
+			leader = { has_trait = leader_trait_golden_generation }
+		}
+	}
+
+	immediate = {
+		fromfrom = {
+			leader = { save_event_target_as = victorious_commander }
+		}
+		country_event = {
+			id = forceofwill.5501
+			days = 10
+			random = 5
+		}
+		set_country_flag = forceofwill.5500_event_triggered
+	}
+}
+
+# Check if conditions for event are right, remove flag if not
+country_event = {
+	id = forceofwill.5501
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				exists = event_target:victorious_commander
+				resource_stockpile_compare = {
+					resource = energy
+					value >= 500
+				}
+				resource_stockpile_compare = {
+					resource = consumer_goods
+					value >= 200
+				}
+			}
+			country_event = { id = forceofwill.5502 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5500_event_triggered
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5502
+	title = forceofwill.5502.name
+	desc = forceofwill.5502.desc
+	is_triggered_only = yes
+	picture = GFX_evt_salute
+	show_sound = event_celebration
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = forceofwill.5502.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+			resource_stockpile_compare = {
+				resource = consumer_goods
+				value >= 200
+			}
+		}
+		add_resource = {
+			energy = -500
+			consumer_goods = -200
+		}
+		add_modifier = {
+			modifier = inspired_leadership
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5502.b
+		default_hide_option = yes
+	}
+}
+
+# Inspiring Scientific Expedition
+
+# Fired from on_astral_rift_exploration_complete
+country_event = {
+	id = forceofwill.5505
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOR = { # Avoid multiple event triggers during 10-day wait
+			has_country_flag = forceofwill.5509_event_from_rift
+			has_country_flag = forceofwill.5509_event_from_anomaly
+			has_country_flag = forceofwill.5509_event_from_site
+		}
+		atb_has_golden_generation = yes
+		fromfrom = {
+			leader = { has_trait = leader_trait_golden_generation }
+		}
+	}
+
+	immediate = {
+		random = {
+			chance = 10
+			fromfrom = {
+				leader = { save_event_target_as = inspiring_scientist }
+			}
+			from = {
+				solar_system = { save_event_target_as = expedition_system }
+			}
+			country_event = {
+				id = forceofwill.5508
+				days = 10
+				random = 5
+			}
+			set_country_flag = forceofwill.5509_event_from_rift
+		}
+	}
+}
+
+# Fired from anomaly_success
+ship_event = {
+	id = forceofwill.5506
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		controller = {
+			NOR = {
+				has_country_flag = forceofwill.5509_event_from_rift
+				has_country_flag = forceofwill.5509_event_from_anomaly
+				has_country_flag = forceofwill.5509_event_from_site
+			}
+			atb_has_golden_generation = yes
+		}
+		leader = { has_trait = leader_trait_golden_generation }
+	}
+
+	immediate = {
+		random = {
+			chance = 10
+			leader = { save_event_target_as = inspiring_scientist }
+			from = {
+				solar_system = { save_event_target_as = expedition_system }
+			}
+			controller = {
+				country_event = {
+					id = forceofwill.5508
+					days = 10
+					random = 5
+				}
+				set_country_flag = forceofwill.5509_event_from_anomaly
+			}
+		}
+	}
+}
+
+# Fired from on_arch_site_finished
+fleet_event = {
+	id = forceofwill.5507
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		controller = {
+			NOR = {
+				has_country_flag = forceofwill.5509_event_from_rift
+				has_country_flag = forceofwill.5509_event_from_anomaly
+				has_country_flag = forceofwill.5509_event_from_site
+			}
+			atb_has_golden_generation = yes
+		}
+		leader = { has_trait = leader_trait_golden_generation }
+	}
+
+	immediate = {
+		random = {
+			chance = 10
+			leader = { save_event_target_as = inspiring_scientist }
+			solar_system = { save_event_target_as = expedition_system }
+			controller = {
+				country_event = {
+					id = forceofwill.5508
+					days = 10
+					random = 5
+				}
+				set_country_flag = forceofwill.5509_event_from_site
+			}
+		}
+	}
+}
+
+# Check if inspiring_scientist is still present, remove flags if not
+country_event = {
+	id = forceofwill.5508
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = { exists = event_target:inspiring_scientist }
+			country_event = { id = forceofwill.5509 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5509_event_from_rift
+			remove_country_flag = forceofwill.5509_event_from_anomaly
+			remove_country_flag = forceofwill.5509_event_from_site
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5509
+	title = forceofwill.5509.name
+	desc = forceofwill.5509.desc
+	is_triggered_only = yes
+	picture = {
+		trigger = { has_country_flag = forceofwill.5509_event_from_rift }
+		picture = GFX_evt_a_rift_in_space
+	}
+	picture = {
+		trigger = { has_country_flag = forceofwill.5509_event_from_anomaly }
+		picture = GFX_evt_physics_research
+	}
+	picture = {
+		trigger = { has_country_flag = forceofwill.5509_event_from_site }
+		picture = GFX_evt_archaeological_dig
+	}
+	show_sound = event_laboratory_sound
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = EXCELLENT
+		add_modifier = {
+			modifier = inspiring_scientist
+			years = 10
+		}
+	}
+}
+
+# Heroic Leadership
+# Fired from on_planet_defenders_win
+country_event = {
+	id = forceofwill.5510
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5510_event_triggered }
+		atb_has_golden_generation = yes
+		fromfromfrom = {
+			leader = { has_trait = leader_trait_golden_generation }
+		}
+	}
+
+	immediate = {
+		fromfromfrom = {
+			save_event_target_as = invaded_colony
+			leader = { save_event_target_as = heroic_governor }
+		}
+		country_event = {
+			id = forceofwill.5511
+			days = 10
+			random = 5
+		}
+		set_country_flag = forceofwill.5510_event_triggered
+	}
+}
+
+# Check if conditions for event are right, remove flag if not
+country_event = {
+	id = forceofwill.5511
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				exists = event_target:heroic_governor
+				exists = event_target:invaded_colony
+				event_target:invaded_colony = {
+					has_ground_combat = no
+					has_orbital_bombardment = no
+				}
+			}
+			country_event = { id = forceofwill.5512 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5510_event_triggered
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5512
+	title = forceofwill.5512.name
+	desc = forceofwill.5512.desc
+	is_triggered_only = yes
+	picture = GFX_evt_crisis_declared
+	show_sound = event_air_raid_siren
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = EXCELLENT
+		event_target:invaded_colony = {
+			add_modifier = {
+				modifier = shared_resolve
+				years = 25
+			}
+		}
+	}
+}
+
+# Dismissal Backlash
+country_event = {
+	id = forceofwill.5515
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5515_event_triggered }
+		atb_has_golden_generation = yes
+		from = {
+			NOT = { has_leader_flag = golden_generation_kill_no_consequence } 
+			has_trait = leader_trait_golden_generation
+		}
+	}
+
+	immediate = {
+		clone_leader = {
+			target = from
+			effect = {
+				save_event_target_as = dismissed_leader
+				exile_leader_as = golden_generation_dismissed_leader
+			}
+		}
+		country_event = {
+			id = forceofwill.5516
+			days = 10
+			random = 5
+		}
+		set_country_flag = forceofwill.5515_event_triggered
+	}
+}
+
+# Check if the player can afford to rehire leader, remove flag if not
+country_event = {
+	id = forceofwill.5516
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				atb_has_golden_generation = yes
+				resource_stockpile_compare = {
+					resource = unity
+					value >= 1
+					mult = value:leader_cost_rounded_up|BASE|0.5|LEADER|event_target:dismissed_leader|
+				}
+			}
+			country_event = { id = forceofwill.5517 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5515_event_triggered
+			# Clean up the clone since we aren't using it.
+			event_target:dismissed_leader = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5517
+	title = forceofwill.5517.name
+	desc = forceofwill.5517.desc
+	is_triggered_only = yes
+	picture = GFX_evt_civil_action
+	show_sound = event_factions
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = forceofwill.5517.a
+		add_modifier = {
+			modifier = golden_generation_public_outrage
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5517.b
+		custom_tooltip = forceofwill.5517.b.tt
+		add_resource = {
+			unity = -1
+			mult = value:leader_cost_rounded_up|BASE|0.5|LEADER|event_target:dismissed_leader|
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = unity
+				value >= 1
+				mult = value:leader_cost_rounded_up|BASE|0.5|LEADER|event_target:dismissed_leader|
+			}
+		}
+		clone_leader = {
+			target = event_target:dismissed_leader
+			skip_background_generation = yes
+			custom_description = forceofwill_5517_leader_desc
+		}
+		create_message = {
+			type = MESSAGE_REHIRED_LEADER
+			localization = MESSAGE_REHIRED_LEADER_DESC
+			days = @toast_message_days
+			target = event_target:dismissed_leader
+			variable = {
+				type = name
+				localization = LEADER
+				scope = event_target:dismissed_leader
+			}
+			variable = {
+				key = "border"
+				value = "GFX_border_veteran"
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5517.c
+		add_modifier = {
+			modifier = golden_generation_public_appeasement
+			years = 10
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			event_target:dismissed_leader = {
+				kill_leader = {
+					show_notification = no
+				}
+			}
+		}
+	}
+}
+
+# Inspirational Leader
+# Fired from on_leader_level_up
+country_event =  {
+	id = forceofwill.5520
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5520_event_triggered }
+		atb_has_golden_generation = yes
+		from = {
+			has_trait = leader_trait_golden_generation
+			has_base_skill = 10
+		}
+	}
+
+	immediate = {
+		random = {
+			chance = 20
+			from = { save_event_target_as = lv10_leader }
+			country_event = {
+				id = forceofwill.5521
+				days = 10
+				random = 5
+			}
+			set_country_flag = forceofwill.5520_event_triggered
+		}
+	}
+}
+
+# Check if the leader still exists, remove flag if not
+country_event = {
+	id = forceofwill.5521
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				exists = event_target:lv10_leader
+			}
+			country_event = { id = forceofwill.5522 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5520_event_triggered
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5522
+	title = forceofwill.5522.name
+	desc = forceofwill.5522.desc
+	is_triggered_only = yes
+	picture = GFX_evt_legendary_leader
+	show_sound = event_ideology_events_speech_applause
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = EXCELLENT
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+		custom_tooltip = all_leaders_half_exp_to_level
+		hidden_effect = {
+			every_owned_leader = {
+				add_experience = value:leader_level_half_experience|LEADER|this|
+			}
+		}
+	}
+}
+
+# Crisis of Leadership
+# Fired from on_war_lost
+country_event =  {
+	id = forceofwill.5525
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5525_event_triggered }
+		atb_has_golden_generation = yes
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+		}
+	}
+
+	immediate = {
+		random = {
+			chance = 25
+			country_event = {
+				id = forceofwill.5526
+				days = 10
+				random = 5
+			}
+			set_country_flag = forceofwill.5525_event_triggered
+		}
+	}
+}
+
+# Check if conditions are right for the event, remove flag if not
+country_event = {
+	id = forceofwill.5526
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				any_owned_leader = {
+					has_trait = leader_trait_golden_generation
+				}
+				resource_stockpile_compare = {
+					resource = consumer_goods
+					value >= 500
+				}
+			}
+			country_event = { id = forceofwill.5527 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5525_event_triggered
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5527
+	title = forceofwill.5527.name
+	desc = forceofwill.5527.desc
+	is_triggered_only = yes
+	picture = GFX_evt_ongoing_disaster
+	show_sound = event_bad_omen
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = forceofwill.5527.a
+		add_modifier = {
+			modifier = golden_generation_crisis_leadership
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5527.b
+		allow = {
+			any_owned_leader = { has_trait = leader_trait_golden_generation }
+		}
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier5unityreward
+			min = @tier5unitymin
+			max = @tier5unitymax
+		}
+		if = {
+			limit = {
+				count_owned_leader = {
+					limit = { has_trait = leader_trait_golden_generation }
+					count > 1
+				}
+			}
+			random_owned_leader = {
+				limit = {
+					has_trait = leader_trait_golden_generation
+					is_ruler = no
+				}
+				set_leader_flag = golden_generation_kill_no_consequence
+				kill_leader = {
+					show_notification = no
+					fire = yes
+				}
+			}
+		}
+		else = {
+			random_owned_leader = {
+				limit = { has_trait = leader_trait_golden_generation }
+				set_leader_flag = golden_generation_kill_no_consequence
+				kill_leader = {
+					show_notification = no
+					fire = yes
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5527.c
+		allow = {
+			resource_stockpile_compare = {
+				resource = consumer_goods
+				value >= 500
+			}
+		}
+		add_resource = { consumer_goods = -500 }
+	}
+}
+
+# Victory Celebrations
+# Fired from on_war_won
+country_event =  {
+	id = forceofwill.5530
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5530_event_triggered }
+		atb_has_golden_generation = yes
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+		}
+	}
+
+	immediate = {
+		random = {
+			chance = 20
+			country_event = {
+				id = forceofwill.5531
+				days = 10
+				random = 5
+			}
+			set_country_flag = forceofwill.5530_event_triggered
+		}
+	}
+}
+
+# Check if conditions are right for the event, remove flag if not
+country_event = {
+	id = forceofwill.5531
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				any_owned_leader = {
+					has_trait = leader_trait_golden_generation
+				}
+				resource_stockpile_compare = {
+					resource = consumer_goods
+					value >= 100
+				}
+				resource_stockpile_compare = {
+					resource = energy
+					value >= 500
+				}
+			}
+			country_event = { id = forceofwill.5532 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5530_event_triggered
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5532
+	title = forceofwill.5532.name
+	desc = forceofwill.5532.desc
+	is_triggered_only = yes
+	picture = GFX_evt_crisis_defeated
+	show_sound = event_celebration
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = forceofwill.5532.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = consumer_goods
+				value >= 100
+			}
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = {
+			energy = -500
+			consumer_goods = -100
+		}
+		add_modifier = {
+			modifier = golden_generation_victory
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5532.b
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+		custom_tooltip = gg_leaders_half_exp_to_level
+		hidden_effect = {
+			every_owned_leader = {
+				limit = { has_trait = leader_trait_golden_generation }
+				add_experience = value:leader_level_half_experience|LEADER|this|
+			}
+		}
+	}
+}
+
+# Golden Dividends
+# Fired from on_colony_monthly_pulse
+carrier_event = {
+	id = forceofwill.5535
+	hide_window = yes
+	is_triggered_only = yes
+
+	pre_triggers = {
+		has_owner = yes
+		has_ground_combat = no
+		is_occupied_flag = no
+	}
+
+	trigger = {
+		has_90_happiness_golden_leader = yes
+		owner = {
+			NOT = { has_country_flag = forceofwill.5535_event_triggered }
+		}
+	}
+
+	immediate = {
+		save_event_target_as = happy_colony
+		owner = {
+			country_event = {
+				id = forceofwill.5536
+				days = 10
+				random = 5
+			}
+			set_country_flag = forceofwill.5535_event_triggered
+		}
+	}
+}
+
+# Check if conditions are right for the event, remove flag if not
+country_event = {
+	id = forceofwill.5536
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				exists = event_target:happy_colony
+				event_target:happy_colony = {
+					has_90_happiness_golden_leader = yes
+				}
+			}
+			event_target:happy_colony = {
+				leader = {
+					save_event_target_as = happiness_leader
+				}
+			}
+			country_event = { id = forceofwill.5537 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5535_event_triggered
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5537
+	title = forceofwill.5537.name
+	desc = forceofwill.5537.desc
+	is_triggered_only = yes
+	picture = GFX_evt_crisis_defeated
+	show_sound = event_golden_generation_celebration
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = EXCELLENT
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier3unityreward
+			min = @tier3unitymin
+			max = @tier3unitymax
+		}
+		event_target:happy_colony = {
+			add_modifier = {
+				modifier = golden_generation_dividends
+				years = 10
+			}
+		}
+	}
+}
+
+# Add timed flag to check if a Golden Generation governor was assigned < 1 year ago
+# Fired from on_leader_assigned
+leader_event = {
+	id = forceofwill.5538
+	hide_window = yes
+	is_triggered_only = yes
+
+	pre_triggers = {
+		has_owner = yes
+	}
+
+	trigger = {
+		has_trait = leader_trait_golden_generation
+		exists = colony
+		NOT = { has_leader_flag = gg_gov_assigned_less_than_year }
+		owner = { atb_has_golden_generation = yes }
+	}
+
+	immediate = {
+		set_timed_leader_flag = {
+			flag = gg_gov_assigned_less_than_year
+			days = 360
+		}
+	}
+}
+
+# Remove timed flag when a Golden Generation governor is unassigned
+# Fired from on_leader_unassigned
+leader_event = {
+	id = forceofwill.5539
+	hide_window = yes
+	is_triggered_only = yes
+
+	pre_triggers = {
+		has_owner = yes
+	}
+
+	trigger = {
+		NOT = { exists = colony }
+		has_leader_flag = gg_gov_assigned_less_than_year
+	}
+
+	immediate = {
+		remove_leader_flag = gg_gov_assigned_less_than_year
+	}
+}
+
+# Ego Clash
+# Fired from on_yearly_pulse_country
+country_event = {
+	id = forceofwill.5540
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5540_event_triggered }
+		can_trigger_forceofwill_5540_event = yes
+	}
+
+	immediate = { # Try to fire event with up to 3 leaders
+		try_firing_ego_clash_event = yes
+		if = {
+			limit = {
+				NOT = {
+					any_owned_leader = {
+						has_leader_flag = golden_generation_ego_clasher
+					}
+				}
+			}
+			try_firing_ego_clash_event = yes
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_owned_leader = {
+						has_leader_flag = golden_generation_ego_clasher
+					}
+				}
+			}
+			try_firing_ego_clash_event = yes
+		}
+	}
+
+	after = {
+		every_owned_leader = {
+			limit = { has_leader_flag = golden_generation_not_ego_clasher }
+			remove_leader_flag = golden_generation_not_ego_clasher
+		}
+	}
+}
+
+# Check if conditions are right for the event, remove flag if not
+country_event = {
+	id = forceofwill.5541
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				can_trigger_forceofwill_5540_event = yes
+				count_owned_leader = {
+					limit = { has_leader_flag = golden_generation_ego_clasher }
+					count > 1
+				}
+			}
+			country_event = { id = forceofwill.5542 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5540_event_triggered
+		}
+	}
+
+	after = {
+		every_owned_leader = {
+			limit = { has_leader_flag = golden_generation_ego_clasher }
+			remove_leader_flag = golden_generation_ego_clasher
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5542
+	title = forceofwill.5542.name
+	desc = forceofwill.5542.desc
+	is_triggered_only = yes
+	picture = GFX_evt_assembly_fight
+	show_sound = event_golden_generation_leaders_argue
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+		if = {
+			limit = {
+				NOT = { has_country_flag = forceofwill.5545_event_triggered }
+			}
+			set_timed_country_flag = { # Block 'Councilor Harmony' for 20 years
+				flag = forceofwill.5545_event_triggered
+				years = 20
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5542.a
+		add_modifier = {
+			modifier = golden_generation_ego_clash
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5542.b
+		add_modifier = {
+			modifier = golden_generation_mediation
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5542.c
+		allow = {
+			resource_stockpile_compare = {
+				resource = consumer_goods
+				value >= 500
+			}
+		}
+		add_resource = { consumer_goods = -500 }
+	}
+}
+
+# Councilor Harmony
+# Fired from on_agenda_finished
+country_event = {
+	id = forceofwill.5545
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5545_event_triggered }
+		count_owned_leader = {
+			count > 1
+			limit = { is_golden_generation_councilor = yes }
+		}
+	}
+
+	immediate = { # Try to fire event with up to 3 leaders
+		try_firing_council_harmony_event = yes
+		if = {
+			limit = {
+				NOT = {
+					any_owned_leader = {
+						has_leader_flag = golden_generation_harmonious
+					}
+				}
+			}
+			try_firing_council_harmony_event = yes
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_owned_leader = {
+						has_leader_flag = golden_generation_harmonious
+					}
+				}
+			}
+			try_firing_council_harmony_event = yes
+		}
+	}
+
+	after = {
+		every_owned_leader = {
+			limit = { has_leader_flag = golden_generation_not_harmonious_councilor }
+			remove_leader_flag = golden_generation_not_harmonious_councilor
+		}
+	}
+}
+
+# Check if conditions are right for the event, remove flag if not
+country_event = {
+	id = forceofwill.5546
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				count_owned_leader = {
+					limit = { has_leader_flag = golden_generation_harmonious_councilor }
+					count > 1
+				}
+			}
+			country_event = { id = forceofwill.5547 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5545_event_triggered
+		}
+	}
+
+	after = {
+		every_owned_leader = {
+			limit = { has_leader_flag = golden_generation_harmonious_councilor }
+			remove_leader_flag = golden_generation_harmonious_councilor
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5547
+	title = forceofwill.5547.name
+	desc = forceofwill.5547.desc
+	is_triggered_only = yes
+	picture = GFX_evt_arguing_senate
+	show_sound = event_conversation
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+		if = {
+			limit = {
+				NOT = { has_country_flag = forceofwill.5540_event_triggered }
+			}
+			set_timed_country_flag = { # Block 'Ego Clash' for 20 years
+				flag = forceofwill.5540_event_triggered
+				years = 20
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5547.a
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier1unityreward
+			min = @tier1unitymin
+			max = @tier1unitymax
+		}
+		add_modifier = {
+			modifier = golden_generation_golden_council
+			years = 10
+		}
+	}
+}
+
+# Wasted Talents
+# Fired from on_yearly_pulse_country
+country_event = {
+	id = forceofwill.5550
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5550_event_triggered }
+		atb_has_golden_generation = yes
+		any_pool_leader = {
+			has_trait = leader_trait_golden_generation
+			leader_age >= 50
+		}
+	}
+
+	immediate = {
+		random_pool_leader = {
+			limit = {
+				has_trait = leader_trait_golden_generation
+				leader_age >= 50
+			}
+			save_event_target_as = wasted_talent
+		}		
+		country_event = {
+			id = forceofwill.5551
+			days = 45
+			random = 15
+		}
+		set_country_flag = forceofwill.5550_event_triggered
+	}
+}
+
+# Check if conditions for event are right, remove flag if not
+country_event = {
+	id = forceofwill.5551
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				exists = event_target:wasted_talent
+				OR = {
+					resource_stockpile_compare = {
+						resource = consumer_goods
+						value >= 500
+					}
+					resource_stockpile_compare = {
+						resource = unity
+						value >= 1
+						mult = event_target:wasted_talent.value:leader_cost
+					}
+				}
+			}
+			country_event = { id = forceofwill.5552 }
+		}
+		else = {
+			remove_country_flag = forceofwill.5550_event_triggered
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5552
+	title = forceofwill.5552.name
+	desc = forceofwill.5552.desc
+	is_triggered_only = yes
+	picture = GFX_evt_acquire_asset
+	show_sound = event_golden_generation_lecture
+	event_chain = chain_golden_generation
+
+	immediate = {
+		setup_general_event_pool_trigger = yes
+		clone_leader = {
+			target = event_target:wasted_talent
+			skip_background_generation = yes
+			effect = {
+				save_event_target_as = wasted_talent_clone
+				exile_leader_as = golden_generation_wasted_talent_clone@owner
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5552.a
+		add_modifier = {
+			modifier = golden_generation_wasted_talent
+			years = 10
+		}
+		event_target:wasted_talent = {
+			set_leader_flag = wasted_talent_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5552.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = unity
+				value >= 1
+				mult = event_target:wasted_talent_clone.value:leader_cost
+			}
+			custom_tooltip = {
+				fail_text = forceofwill.5552.tt.fail
+				any_pool_leader = {
+					is_same_value = event_target:wasted_talent
+				}
+			}
+		}
+		add_resource = {
+			unity = -1
+			mult = event_target:wasted_talent_clone.value:leader_cost
+		}
+		custom_tooltip = forceofwill.5552.b.tt
+		clone_leader = {
+			target = event_target:wasted_talent_clone
+			skip_background_generation = yes
+			effect = {
+				save_event_target_as = wasted_talent_clone_clone
+			}
+		}
+		create_message = {
+			type = MESSAGE_RECRUITED_INTERNAL_LEADER
+			localization = MESSAGE_RECRUITED_INTERNAL_LEADER_DESC
+			days = @toast_message_days
+			target = event_target:wasted_talent_clone_clone
+			variable = {
+				type = name
+				localization = LEADER
+				scope = event_target:wasted_talent_clone_clone
+			}
+			variable = {
+				key = "border"
+				value = "GFX_border_veteran"
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { exists = event_target:wasted_talent }
+				event_target:wasted_talent = {
+					kill_leader = { show_notification = no }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5552.c
+		allow = {
+			resource_stockpile_compare = {
+				resource = consumer_goods
+				value >= 500
+			}
+			custom_tooltip = {
+				fail_text = forceofwill.5552.tt.fail
+				any_pool_leader = {
+					is_same_value = event_target:wasted_talent
+				}
+			}
+		}
+		add_resource = { consumer_goods = -500 }
+	}
+
+	after = {
+		hidden_effect = {
+			event_target:wasted_talent_clone = {
+				kill_leader = { show_notification = no }
+			}
+		}
+	}
+}
+
+# Remove Wasted Talent modifier
+# Fired from on_leader_hired
+leader_event = {
+	id = forceofwill.5553
+	hide_window = yes
+	is_triggered_only = yes
+
+	pre_triggers = {
+		has_owner = yes
+	}
+
+	trigger = {
+		has_leader_flag = wasted_talent_leader
+	}
+
+	immediate = {
+		owner = {
+			if = {
+				limit = {
+					has_modifier = golden_generation_wasted_talent
+				}
+				remove_modifier = golden_generation_wasted_talent
+			}
+		}
+		remove_leader_flag = wasted_talent_leader
+	}
+}
+
+# Golden Generation general event pool
+country_event = {
+	id = forceofwill.5590
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = origin_general_event_pool_triggered
+		is_variable_set = origin_general_event_pool_timer
+	}
+
+	immediate = {
+		if = {
+			limit = { NOT = { atb_has_golden_generation = yes } }
+			clear_general_event_pool_trigger = yes
+			break = yes
+		}
+
+		subtract_variable = { which = origin_general_event_pool_timer value = 1 }
+		if = {
+			limit = {
+				check_variable = {
+					which = origin_general_event_pool_timer
+					value = 0
+				}
+			}
+			fire_on_action = { on_action = on_golden_generation_general_event }
+			setup_general_event_pool_trigger = yes
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5600
+	title = forceofwill.5600.name
+	desc = forceofwill.5600.desc
+	is_triggered_only = yes
+	picture = GFX_evt_alien_propaganda
+	show_sound = event_announcement
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5600_event_triggered }
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+			has_total_skill >= 4
+			is_ruler = no
+		}
+		resource_stockpile_compare = {
+			resource = consumer_goods
+			value >= 100
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5600_event_triggered
+		random_owned_leader = {
+			limit = {
+				has_trait = leader_trait_golden_generation
+				has_total_skill >= 4
+				is_ruler = no
+			}
+			save_event_target_as = exhausted_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5600.a
+		custom_tooltip = forceofwill.5600.a.tt
+		hidden_effect = {
+			event_target:exhausted_leader = {
+				exile_leader_as = exhausted_leader@root
+			}
+			country_event = {
+				id = forceofwill.5601
+				days = 50
+				scopes = { from = event_target:exhausted_leader }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5600.b
+		default_hide_option = yes
+		hidden_effect = {
+			random = {
+				chance = 10
+				event_target:exhausted_leader = {
+					if = {
+						limit = { leader_class = commander }
+						custom_tooltip = forceofwill.5600.b.tt.commander
+						random_list = {
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_slipshod
+								}
+								add_trait = { trait = leader_trait_slipshod }
+							}
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_uninspiring
+								}
+								add_trait = { trait = leader_trait_uninspiring }
+							}
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_nervous
+								}
+								add_trait = { trait = leader_trait_nervous }
+							}
+						}
+					}
+					else_if = {
+						limit = { leader_class = official }
+						custom_tooltip = forceofwill.5600.b.tt.official
+						random_list = {
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_fallible
+								}
+								add_trait = { trait = leader_trait_fallible }
+							}
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_substance_abuser
+								}
+								add_trait = { trait = leader_trait_substance_abuser }
+							}
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_arrested_development
+								}
+								add_trait = { trait = leader_trait_arrested_development }
+							}
+						}
+					}
+					else_if = {
+						limit = { leader_class = scientist }
+						custom_tooltip = forceofwill.5600.b.tt.scientist
+						random_list = {
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_paranoid
+								}
+								add_trait = { trait = leader_trait_paranoid }
+							}
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_neurotic
+								}
+								add_trait = { trait = leader_trait_neurotic }
+							}
+							1 = {
+								modifier = {
+									factor = 0
+									has_trait = leader_trait_narrow_minded
+								}
+								add_trait = { trait = leader_trait_narrow_minded }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5600.c
+		allow = {
+			resource_stockpile_compare = {
+				resource = consumer_goods
+				value >= 100
+			}
+		}
+		add_resource = { consumer_goods = -100 }
+		
+	}
+}
+
+# Exhausted leader returns
+country_event = {
+	id = forceofwill.5601
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		return_leader_from_exile = exhausted_leader@root
+		from = { add_skill_without_trait_selection = 1 }
+		create_message = {
+			type = MESSAGE_LEADER_RETURNED
+			localization = MESSAGE_STRESSED_LEADER_RETURNED_DESC
+			days = @toast_message_days
+			target = from
+			variable = {
+				type = name
+				localization = LEADER
+				scope = from
+			}
+			variable = {
+				key = "border"
+				value = "GFX_border_veteran"
+			}
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5605
+	title = forceofwill.5605.name
+	desc = forceofwill.5605.desc
+	is_triggered_only = yes
+	picture = GFX_evt_cover_blown
+	show_sound = event_bad_omen
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5605_event_triggered }
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+		}
+		resource_stockpile_compare = {
+			resource = influence
+			value >= 30
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5605_event_triggered
+		random_owned_leader = {
+			limit = { has_trait = leader_trait_golden_generation }
+			save_event_target_as = victim_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5605.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = influence
+				value >= 30
+			}
+		}
+		add_resource = { influence = -30 }
+		add_modifier = {
+			modifier = golden_generation_show_trial
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5605.b
+		default_hide_option = yes
+	}
+}
+
+country_event =  {
+	id = forceofwill.5610
+	title = forceofwill.5610.name
+	desc = forceofwill.5610.desc
+	is_triggered_only = yes
+	picture = GFX_evt_smear_campaign
+	show_sound = event_administrative_work
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5610_event_triggered }
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+			is_ruler = no
+			OR = {
+				leader_class = official
+				exists = colony
+			}
+		}
+		resource_stockpile_compare = {
+			resource = energy
+			value >= 500
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5610_event_triggered
+		random_owned_leader = {
+			limit = {
+				has_trait = leader_trait_golden_generation
+				is_ruler = no
+				OR = {
+					leader_class = official
+					exists = colony
+				}
+			}
+			save_event_target_as = incompetent_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5610.a
+		custom_tooltip = forceofwill.5610.a.tt
+		add_modifier = {
+			modifier = golden_generation_transparent_society
+			years = 10
+		}
+		hidden_effect = {
+			event_target:incompetent_leader = {
+				exile_leader_as = incompetent_leader@root
+			}
+			country_event = {
+				id = forceofwill.5611
+				days = 100
+				scopes = { from = event_target:incompetent_leader }
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5610.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		default_hide_option = yes
+	}
+
+	option = {
+		name = forceofwill.5610.c
+		add_modifier = {
+			modifier = golden_generation_reputation_damage
+			years = 10
+		}
+	}
+}
+
+# Incompetent leader returns
+country_event = {
+	id = forceofwill.5611
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		return_leader_from_exile = incompetent_leader@root
+		create_message = {
+			type = MESSAGE_LEADER_RETURNED
+			localization = MESSAGE_INCOMPETENT_LEADER_RETURNED_DESC
+			days = @toast_message_days
+			target = from
+			variable = {
+				type = name
+				localization = LEADER
+				scope = from
+			}
+			variable = {
+				key = "border"
+				value = "GFX_border_veteran"
+			}
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5615
+	title = forceofwill.5615.name
+	desc = forceofwill.5615.desc
+	is_triggered_only = yes
+	picture = GFX_evt_enlightenment_failure
+	show_sound = event_conversation
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5615_event_triggered }
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5615_event_triggered
+	}
+
+	option = {
+		name = forceofwill.5615.a
+		default_hide_option = yes
+		add_modifier = {
+			modifier = golden_indulgence_modifier
+			years = 10
+		}
+	}
+
+	option = {
+		name = forceofwill.5615.b
+		add_modifier = {
+			modifier = dissatisfied_elite_modifier
+			years = 10
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5620
+	title = forceofwill.5620.name
+	desc = forceofwill.5620.desc
+	is_triggered_only = yes
+	picture = GFX_evt_diplomatic_visit
+	show_sound = event_default
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5620_event_triggered }
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+		}
+		resource_stockpile_compare = {
+			resource = energy
+			value >= 500
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5620_event_triggered
+		random_owned_leader = {
+			limit = { has_trait = leader_trait_golden_generation }
+			save_event_target_as = selected_leader
+		}
+		if = {
+			limit = {
+				exists = home_planet
+				home_planet.owner = { is_same_value = root }
+			}
+			home_planet = {
+				save_event_target_as = selected_planet
+			}
+		}
+		else = {
+			capital_scope = {
+				save_event_target_as = selected_planet
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5620.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		event_target:selected_planet = {
+			add_modifier = {
+				modifier = golden_commemoration_modifier
+				years = 10
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5620.b
+		default_hide_option = yes
+	}
+}
+
+country_event =  {
+	id = forceofwill.5625
+	title = forceofwill.5625.name
+	desc = forceofwill.5625.desc
+	is_triggered_only = yes
+	picture = GFX_evt_society_research
+	show_sound = event_laboratory_sound
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5625_event_triggered }
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+			num_leader_traits = {
+				negative = yes
+				value > 0
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5625_event_triggered
+		ordered_owned_leader = {
+			limit = {
+				has_trait = leader_trait_golden_generation
+			}
+			position = 0
+			order_by = value:leader_num_negative_leader_traits
+			save_event_target_as = corrected_leader
+		}
+		if = {
+			limit = {
+				count_owned_leader = {
+					limit = {
+						has_trait = leader_trait_golden_generation
+						num_leader_traits = {
+							negative = yes
+							value > 0
+						}
+					}
+					count > 1
+				}
+			}
+			set_variable = {
+				which = full_clear_negative
+				value = 0
+			}
+			every_owned_leader = {
+				limit = {
+					has_trait = leader_trait_golden_generation
+					num_leader_traits = {
+						negative = yes
+						value > 0
+					}
+				}
+				save_event_target_as = leader
+				prev = {
+					change_variable = {
+						which = full_clear_negative
+						value = event_target:leader.value:leader_num_negative_leader_traits
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5625.a
+	}
+
+	option = {
+		name = forceofwill.5625.b
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+			}
+		}
+		add_resource = { energy = -500 }
+		event_target:corrected_leader = {
+			remove_trait = random_negative
+		}
+	}
+
+	option = {
+		name = forceofwill.5625.c
+		trigger = {
+			event_target:corrected_leader = {
+				num_leader_traits = {
+					negative = yes
+					value > 1
+				}
+			}
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+				mult = event_target:corrected_leader.value:leader_num_negative_leader_traits
+			}
+		}
+		add_resource = {
+			energy = -500
+			mult = event_target:corrected_leader.value:leader_num_negative_leader_traits
+		}
+		event_target:corrected_leader = {
+			remove_trait = all_negative
+		}
+	}
+
+	option = {
+		name = forceofwill.5625.d
+		trigger = {
+			is_variable_set = full_clear_negative
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+				mult = full_clear_negative
+			}
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 500
+				mult = full_clear_negative
+			}
+		}
+		add_resource = {
+			energy = -500
+			mult = full_clear_negative
+		}
+		every_owned_leader = {
+			limit = {
+				has_trait = leader_trait_golden_generation
+				num_leader_traits = {
+					negative = yes
+					value > 0
+				}
+			}
+			remove_trait = all_negative
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			if = {
+				limit = { is_variable_set = full_clear_negative }
+				clear_variable = full_clear_negative
+			}
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5630
+	title = forceofwill.5630.name
+	desc = {
+		trigger = {
+			text = forceofwill.5630.desc.common_1
+			text = newline
+			if = {
+				limit = {
+					OR = {
+						is_dictatorial_authority = yes
+						is_imperial_authority = yes
+					}
+				}
+				if = {
+					limit = {
+						ruler = { has_trait = leader_trait_golden_generation }
+					}
+					text = forceofwill.5630.desc_2.auth_ruler
+				}
+				else = {
+					text = forceofwill.5630.desc_2.auth_default
+				}
+			}
+			else_if = {
+				limit = { is_megacorp = yes }
+				text = forceofwill.5630.desc_2.corp
+			}
+			else = {
+				text = forceofwill.5630.desc_2.default
+			}
+		}
+	}
+	is_triggered_only = yes
+	picture = GFX_evt_society_research
+	show_sound = event_laboratory_sound
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOT = { has_country_flag = forceofwill.5630_event_triggered }
+		has_genetic_stage_3_tradition = no
+		is_cloning_authority = no
+		OR = {
+			AND = {
+				OR = {
+					is_dictatorial_authority = yes
+					is_imperial_authority = yes
+				}
+				ruler = { has_trait = leader_trait_golden_generation }
+			}
+			any_owned_leader = {
+				has_trait = leader_trait_golden_generation
+				NOT = { has_trait = leader_trait_has_backup_clone }
+			}
+		}
+		resource_stockpile_compare = {
+			resource = energy
+			value >= 2000
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5630_event_triggered
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						is_dictatorial_authority = no
+						is_imperial_authority = no
+					}
+					ruler = { NOT = { has_trait = leader_trait_golden_generation } }
+				}
+			}
+			random_owned_leader = {
+				limit = {
+					has_trait = leader_trait_golden_generation
+					NOT = { has_trait = leader_trait_has_backup_clone }
+				}
+				save_event_target_as = golden_leader_1
+			}
+			random_owned_leader = {
+				limit = {
+					has_trait = leader_trait_golden_generation
+					NOT = { has_trait = leader_trait_has_backup_clone }
+					NOT = { is_same_value = event_target:golden_leader_1 }
+				}
+				save_event_target_as = golden_leader_2
+			}
+			random_owned_leader = {
+				limit = {
+					has_trait = leader_trait_golden_generation
+					NOT = { has_trait = leader_trait_has_backup_clone }
+					NOR = {
+						is_same_value = event_target:golden_leader_1
+						is_same_value = event_target:golden_leader_2
+					}
+				}
+				save_event_target_as = golden_leader_3
+			}
+			random_owned_leader = {
+				limit = {
+					has_trait = leader_trait_golden_generation
+					NOT = { has_trait = leader_trait_has_backup_clone }
+					NOR = {
+						is_same_value = event_target:golden_leader_1
+						is_same_value = event_target:golden_leader_2
+						is_same_value = event_target:golden_leader_3
+					}
+				}
+				save_event_target_as = golden_leader_4
+			}
+		}
+	}
+
+	option = {
+		name = {
+			trigger = {
+				if = {
+					limit = {
+						OR = {
+							is_dictatorial_authority = yes
+							is_imperial_authority = yes
+						}
+					}
+					text = forceofwill.5630.a.auth
+				}
+				else = {
+					text = forceofwill.5630.a.default
+				}
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5630.b
+		trigger = { exists = event_target:golden_leader_1 }
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 2000
+			}
+		}
+		add_resource = { energy = -2000 }
+		event_target:golden_leader_1 = {
+			add_trait = { trait = leader_trait_has_backup_clone }
+		}
+	}
+
+	option = {
+		name = forceofwill.5630.c
+		trigger = { exists = event_target:golden_leader_2 }
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 2000
+			}
+		}
+		add_resource = { energy = -2000 }
+		event_target:golden_leader_2 = {
+			add_trait = { trait = leader_trait_has_backup_clone }
+		}
+	}
+
+	option = {
+		name = forceofwill.5630.d
+		trigger = { exists = event_target:golden_leader_3 }
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 2000
+			}
+		}
+		add_resource = { energy = -2000 }
+		event_target:golden_leader_3 = {
+			add_trait = { trait = leader_trait_has_backup_clone }
+		}
+	}
+
+	option = {
+		name = forceofwill.5630.e
+		trigger = { exists = event_target:golden_leader_4 }
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 2000
+			}
+		}
+		add_resource = { energy = -2000 }
+		event_target:golden_leader_4 = {
+			add_trait = { trait = leader_trait_has_backup_clone }
+		}
+	}
+
+	option = {
+		name = forceofwill.5630.f
+		trigger = {
+			OR = {
+				is_dictatorial_authority = yes
+				is_imperial_authority = yes
+			}
+			ruler = { has_trait = leader_trait_golden_generation }
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 2000
+			}
+		}
+		add_resource = { energy = -2000 }
+		ruler = {
+			add_trait = { trait = leader_trait_has_backup_clone }
+		}
+	}
+}
+
+country_event =  {
+	id = forceofwill.5635
+	title = forceofwill.5635.name
+	desc = forceofwill.5635.desc
+	is_triggered_only = yes
+	picture = GFX_evt_three_sided_deal
+	show_sound = event_bad_omen
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		NOR = {
+			has_country_flag = forceofwill.5635_event_triggered
+			has_country_flag = lifespan_extension_timer
+		}
+		any_owned_leader = {
+			has_trait = leader_trait_golden_generation
+			NOT = { has_trait = leader_trait_shroud_age }
+		}
+		resource_stockpile_compare = {
+			resource = energy
+			value >= 2000
+		}
+	}
+
+	immediate = {
+		set_country_flag = forceofwill.5635_event_triggered
+		random_owned_leader = {
+			limit = {
+				has_trait = leader_trait_golden_generation
+				NOT = { has_trait = leader_trait_shroud_age }
+			}
+			save_event_target_as = selected_leader
+		}
+	}
+
+	option = {
+		name = forceofwill.5635.a
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 2000
+			}
+		}
+		add_resource = { energy = -2000 }
+		event_target:selected_leader = {
+			add_trait = { trait = leader_trait_shroud_age }
+		}
+	}
+
+	option = {
+		name = forceofwill.5635.b
+		trigger = {
+			count_owned_leader = {
+				limit = {
+					has_trait = leader_trait_golden_generation
+					NOT = { has_trait = leader_trait_shroud_age }
+				}
+				count > 1
+			}
+		}
+		allow = {
+			resource_stockpile_compare = {
+				resource = energy
+				value >= 2000
+				mult = value:count_golden_generation_leaders
+			}
+		}
+		add_resource = {
+			energy = -2000
+			mult = value:count_golden_generation_leaders
+		}
+		every_owned_leader = {
+			limit = {
+				has_trait = leader_trait_golden_generation
+				NOT = { has_trait = leader_trait_shroud_age }
+			}
+			add_trait = { trait = leader_trait_shroud_age }
+		}
+	}
+
+	option = {
+		name = forceofwill.5635.c
+		default_hide_option = yes
+	}
+}
+
+# Golden Generation Opportunity check
+leader_event = {
+	id = forceofwill.5695
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_trait = leader_trait_golden_generation
+		owner? = {
+			has_origin = origin_golden_generation	# 皇女的远征军：意识形态部分远征军不触发
+			NOT = { has_country_flag = golden_generation_codifying_ideology } # set in forceofwill.5699
+		}
+	}
+
+	immediate = {
+		owner = {
+			country_event = {
+				id = forceofwill.5699
+				days = 5400
+				random = 1800
+			}
+		}
+	}
+}
+
+
+country_event = {
+	id = forceofwill.5699
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = golden_generation_codifying_ideology }
+		is_fanatic = yes
+	}
+
+	immediate = {
+		set_country_flag = golden_generation_codifying_ideology
+		country_event = { id = forceofwill.5700 }
+	}
+}
+
+country_event = {
+	id = forceofwill.5700
+	title = forceofwill.5700.name
+	desc = {
+		trigger = {
+			if = {
+				limit = { is_fanatic_spiritualist = yes }
+				text = forceofwill.5700.desc.spirit
+				if = {
+					limit = { exists = ideology }
+					text = newline
+					text = forceofwill.5700.desc.spirit.replace
+				}
+			}
+			else = {
+				text = forceofwill.5700.desc.default
+				if = {
+					limit = { exists = ideology }
+					text = newline
+					text = forceofwill.5700.desc.default.replace
+				}
+			}
+		}
+	}
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy 
+	show_sound = event_conversation
+
+	event_chain = chain_golden_generation
+
+	trigger = {
+		atb_has_golden_generation = yes
+		is_fanatic = yes
+	}
+
+	option = {
+		name = forceofwill.5700.a
+		hidden_effect = {
+			if = {
+				limit = { exists = ideology }
+				export_trigger_value_to_variable = {
+					trigger = ideological_strength
+					variable = golden_generation_ideology_strength
+				}
+			}
+		}
+		generate_ideology = {
+			NAME = "{
+				key = ideology_golden_generation
+				variable_string = \"[this.GetAdj]\"
+			}"
+		}
+		hidden_effect = {
+			event_target:generated_ideology = {
+				set_ideology_flag = golden_generation_ideology
+				random_list = {
+					1 = { set_ideology_flag = golden_generation_tenet_pillars_leadership }
+					1 = { set_ideology_flag = golden_generation_tenet_excellence_doctrine }
+					1 = { set_ideology_flag = golden_generation_tenet_high_command }
+				}
+			}
+			set_country_flag = golden_generation_ideology_generated
+			if = {
+				limit = { is_variable_set = golden_generation_ideology_strength }
+				add_ideological_strength = golden_generation_ideology_strength
+				clear_variable = golden_generation_ideology_strength
+			}
+		}
+		custom_tooltip = forceofwill.5700.a.tt
+	}
+
+	option = {
+		name = {
+			trigger = {
+				if = {
+					limit = { is_authoritarian = yes }
+					if = {
+						limit = { is_fanatic_spiritualist = yes }
+						text = forceofwill.5700.b.spirit
+					}
+					else = { text = forceofwill.5700.b.autho }
+				}
+				else = { text = forceofwill.5700.b.default }
+			}
+		}
+		default_hide_option = yes
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier3unityreward
+			min = @tier3unitymin
+			max = @tier3unitymax
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5705
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = golden_generation_legacy_reflection }
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_country_flag = golden_generation_ready_for_legacy
+			}
+			country_event = { id = forceofwill.5710 }
+		}
+		else = {
+			set_country_flag = golden_generation_ready_for_legacy
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5710
+	title = forceofwill.5710.name
+	desc = forceofwill.5710.desc
+
+	is_triggered_only = yes
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_default
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOT = { has_country_flag = golden_generation_legacy_reflection }
+	}
+
+	immediate = {
+		set_country_flag = golden_generation_legacy_reflection
+		clear_general_event_pool_trigger = yes
+	}
+
+	option = {
+		name = forceofwill.5710.a
+		capital_scope = {
+			add_modifier = {
+				modifier = golden_generation_heroes_commemorated_modifier
+			}
+		}
+		if = {
+			limit = { has_grand_archive_dlc = yes }
+			give_specimen = {
+				key = commemorative_statue
+			}
+		}
+	}
+
+	option = {
+		name = forceofwill.5710.b
+		add_modifier = {
+			modifier = golden_generation_learning_from_past_modifier
+		}
+	}
+
+	option = {
+		name = forceofwill.5710.c
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier5unityreward
+			min = @tier5unitymin
+			max = @tier5unitymax
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5800
+	title = forceofwill.5800.name
+	desc = forceofwill.5800.desc
+	is_triggered_only = yes
+
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_bad_omen
+
+	trigger = {
+		atb_has_golden_generation = yes
+		has_country_flag = building_golden_academy_lost
+	}
+
+	immediate = {
+		end_event_chain = chain_golden_generation
+		every_leader_in_training = {
+			kill_leader = { show_notification = no }
+		}
+		# 皇女的远征军：远征军的起源是合成繁衍，只去掉黄金世代标记
+		if = {
+			limit = { has_origin = origin_golden_generation }
+			set_origin = origin_default
+		}
+		remove_country_flag = atb_golden_generation
+		remove_modifier = golden_academy_budget_modifier
+	}
+
+	option = {
+		name = forceofwill.5800.a
+		add_monthly_resource_mult = {
+			resource = unity
+			value = @tier5unityreward
+			min = @tier5unitymin
+			max = @tier5unitymax
+		}
+		tooltip = { end_event_chain = chain_golden_generation }
+		custom_tooltip = origin_golden_generation_lost_tt
+	}
+}
+
+carrier_event = {
+	id = forceofwill.5801
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_carrier_flag = golden_academy_built
+		owner? = {
+			atb_has_golden_generation = yes
+			NOR = {
+				has_country_flag = golden_generation_graduation
+				has_country_flag = building_golden_academy_lost
+			}
+		}
+	}
+
+	immediate = {
+		remove_carrier_flag = golden_academy_built
+		owner = {
+			set_country_flag = building_golden_academy_lost
+			country_event = {
+				id = forceofwill.5800
+				scopes = { from = root }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = forceofwill.5802
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_has_golden_generation = yes
+		NOR = {
+			has_country_flag = golden_generation_graduation
+			has_country_flag = building_golden_academy_lost
+		}
+		fromfrom = {
+			has_carrier_flag = golden_academy_built
+		}
+	}
+
+	immediate = {
+		fromfrom = {
+			remove_carrier_flag = golden_academy_built
+		}
+		set_country_flag = building_golden_academy_lost
+		country_event = {
+			id = forceofwill.5800
+			scopes = { from = fromfrom }
+		}
+	}
+}
+
+carrier_event = {
+	id = forceofwill.5803
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_carrier_flag = golden_academy_built
+		fromfrom? = {
+			atb_has_golden_generation = yes
+			NOR = {
+				has_country_flag = golden_generation_graduation
+				has_country_flag = building_golden_academy_lost
+			}
+		}
+	}
+
+	immediate = {
+		remove_carrier_flag = golden_academy_built
+		fromfrom = {
+			set_country_flag = building_golden_academy_lost
+			country_event = {
+				id = forceofwill.5800
+				scopes = { from = root }
+			}
+		}
+	}
+}
+
+carrier_event = {
+	id = forceofwill.5810
+	title = forceofwill.5810.name
+	desc = forceofwill.5810.desc
+	is_triggered_only = yes
+
+	picture = GFX_evt_golden_generation_academy
+	show_sound = event_bad_omen
+
+	trigger = {
+		last_building_changed = building_golden_academy
+		owner? = {
+			atb_has_golden_generation = yes
+			NOT = { has_country_flag = golden_generation_graduation }
+		}
+	}
+
+	immediate = {
+		remove_carrier_flag = golden_academy_built
+		owner = {
+			end_event_chain = chain_golden_generation
+			every_leader_in_training = {
+				kill_leader = { show_notification = no }
+			}
+			# 皇女的远征军：远征军的起源是合成繁衍，只去掉黄金世代标记
+			if = {
+				limit = { has_origin = origin_golden_generation }
+				set_origin = origin_default
+			}
+			remove_country_flag = atb_golden_generation
+		}
+	}
+
+	option = {
+		name = forceofwill.5810.a
+		owner = {
+			add_monthly_resource_mult = {
+				resource = unity
+				value = @tier5unityreward
+				min = @tier5unitymin
+				max = @tier5unitymax
+			}
+			tooltip = { end_event_chain = chain_golden_generation }
+			custom_tooltip = origin_golden_generation_lost_tt
+		}
+	}
+}

@@ -610,7 +610,9 @@ for p in (TH / "common/global_ship_designs").glob("*.txt"):
         if 'name = "NAME_Kappa_Enclave_Station"' in t[s:e]:
             station = t[s:e]
 write("common/global_ship_designs/atb_th_designs.txt", HEAD + "\n" + station + "\n")
-shutil.copyfile(TH / "common/name_lists/NITORI.txt", MOD / "common/name_lists/atb_th_NITORI.txt")
+# 群星 4.6 起名称集不能带 BOM（带了整份读不出来），复制时去掉
+(MOD / "common/name_lists/atb_th_NITORI.txt").write_bytes(
+    (TH / "common/name_lists/NITORI.txt").read_bytes().removeprefix(b"\xef\xbb\xbf"))
 written.append("common/name_lists/atb_th_NITORI.txt")
 
 # ---------------------------------------------------------------- 残留检查

@@ -1,9 +1,8 @@
-# 皇女的远征军：覆盖原版 events/origin_events_paragon.txt（4.5.2，光耀者起源事件）。
-# 与原版的区别只有三处，都只对远征军（国家标记 atb_princess_expedition）生效：
+# 皇女的远征军：覆盖原版 events/origin_events_paragon.txt（光耀者起源事件）。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别只有三处，都只对远征军（国家标记 atb_princess_expedition）生效：
 # - paragon.5008 / paragon.5009：第一幕结束后改为触发 atb.51，不再触发 paragon.5020
 # - paragon.5020：远征军不触发（原版这里会把政体改为帝制）
 # 第三幕由国家标记 paragon_origin_purges 挡住（原版 paragon.5061 的条件），见 atb_effects.txt。
-# 游戏更新后，请用新版原版文件重新做同样的修改。
 
 #########################
 
@@ -3078,7 +3077,7 @@ country_event = { #After the Fall - First negotiation batch - with Reformists
 			}
 		}
 		if = {
-			limit = { host_has_dlc = "Megacorp" }
+			limit = { has_megacorp_dlc = yes }
 			hidden_effect = {
 				force_remove_civic_by_index = 2
 			}
@@ -3179,7 +3178,8 @@ country_event = { #Started the war
 	option = {
 		name = paragon.5211.b
 		trigger = {
-			NOT = { is_xenophobe = yes }
+			is_xenophobe = no
+			is_absolute = no
 		}
 		switch = {
 			trigger = has_ethic

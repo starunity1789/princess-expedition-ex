@@ -1,12 +1,11 @@
-# 皇女的远征军：覆盖原版 common/scripted_triggers/07_scripted_triggers_ships.txt（4.5.2）。
-# 与原版唯一的区别：以下触发器加入了无畏舰 atb_dreadnought，让它使用战列舰的推进器、隐形装置和战斗电脑，
-# 使用泰坦反应堆，并能装备泰坦级（T 槽）武器：
-# ship_uses_battleship_components / ship_uses_titan_components / ship_uses_artillery_role / ship_uses_carrier_role /
-# ship_uses_line_role / ship_uses_titan_reactors / ship_uses_battleship_thrusters / ship_uses_battleship_cloaks
-# 3.10：可编入舰队的主宰 atb_juggernaut 加进 ship_uses_titan_components（T 槽武器）/ ship_uses_juggernaut_components /
+# 皇女的远征军：覆盖原版 common/scripted_triggers/07_scripted_triggers_ships.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改。与原版的区别：
+# 无畏舰 atb_dreadnought 加进 ship_uses_battleship_components / ship_uses_titan_components / ship_uses_artillery_role /
+# ship_uses_carrier_role / ship_uses_line_role / ship_uses_titan_reactors / ship_uses_battleship_thrusters / ship_uses_battleship_cloaks
+# （战列舰推进器、隐形装置、战斗电脑，泰坦反应堆，T 槽武器）；
+# 3.10：可编入舰队的主宰 atb_juggernaut 加进 ship_uses_titan_components / ship_uses_juggernaut_components /
 # ship_uses_artillery_role / ship_uses_carrier_role / ship_uses_juggernaut_reactors / ship_uses_colossus_thrusters；
 # 原版主宰的 juggernaut_potential_construction 改为 always = no，原内容改名 atb_juggernaut_potential_construction。
-# 游戏更新后，请用新版原版文件重新做同样的修改。
 
 #####################
 # Scripted Triggers #
@@ -217,6 +216,8 @@ ship_uses_corvette_components = {
 		is_ship_size = offspring_mauler_stage_1
 		is_ship_size = offspring_mauler_stage_2
 		is_ship_size = offspring_mauler_stage_3
+		# Ideological Ships
+		is_ship_size = cultural_envoy_ship
 	}
 }
 
@@ -674,6 +675,8 @@ ship_uses_corvette_reactors = {
 		is_ship_size = offspring_mauler_stage_1
 		is_ship_size = offspring_mauler_stage_2
 		is_ship_size = offspring_mauler_stage_3
+		# Ideological Ships
+		is_ship_size = cultural_envoy_ship
 	}
 }
 
@@ -1012,6 +1015,7 @@ ship_uses_civilian_cloaks = {
 		is_ship_size = science
 		is_ship_size = explorer_vessel
 		is_ship_size = observation_station
+		is_ship_size = cultural_envoy_ship
 	}
 }
 
@@ -1028,6 +1032,7 @@ ship_uses_jump_drives = {
 		is_ship_class = shipclass_transport
 		is_ship_class = shipclass_military_special
 		is_ship_class = shipclass_starbase
+		is_ship_class = shipclass_cultural_envoy
 	}
 }
 

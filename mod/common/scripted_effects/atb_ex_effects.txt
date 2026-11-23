@@ -762,6 +762,16 @@ atb_ex_relocate_expedition = {
 		add_deposit = d_atb_sensor_array
 		set_planet_flag = atb_fortress_institute_added
 		add_deposit = d_atb_elemental_seal_institute
+		# 3.15：黄金世代的黄金学院跟着搬到新首都。原版 forceofwill.5000 可能已经在旧首都挂了 golden_academy_built，
+		# 之后的事件按这个标记找学院，所以新首都也挂上
+		if = {
+			limit = { owner = { has_country_flag = atb_golden_generation } }
+			if = {
+				limit = { NOT = { has_building = building_golden_academy } }
+				add_building = building_golden_academy
+			}
+			set_carrier_flag = golden_academy_built
+		}
 	}
 	species = { set_species_homeworld = event_target:atb_rl_new_capital }
 
@@ -774,6 +784,7 @@ atb_ex_relocate_expedition = {
 	# 4. 旧母星：要塞已经开走，只剩一颗荒芜星球；拆掉旧星港，星系改名
 	event_target:atb_rl_old_capital = {
 		remove_planet_flag = atb_origin_fortress
+		remove_carrier_flag = golden_academy_built	# 3.15：免得拆掉旧学院时触发原版「黄金学院失去」（forceofwill.5810）
 		remove_all_buildings = yes
 		destroy_colony = yes
 		clear_deposits = yes

@@ -13,6 +13,18 @@ atb_swap_origin = {
 			days = -1
 		}
 	}
+	# 3.15：融合「黄金世代」起源的学院与培养领袖部分（需意志之力 DLC、开局设置开启意识形态，与原版黄金世代起源的条件相同）。
+	# atb_golden_generation_set 防止学院失去后被再次加上
+	if = {
+		limit = {
+			NOT = { has_country_flag = atb_golden_generation_set }
+			has_force_of_will_dlc = yes
+			ideologies_enabled = yes
+			is_gestalt = no
+		}
+		set_country_flag = atb_golden_generation_set
+		set_country_flag = atb_golden_generation
+	}
 	# 3.10：遥远之约定也是远征军，另记一个标记（开局布置与 L 星群结局不同）
 	if = {
 		limit = { has_origin = origin_atb_distant_promise }

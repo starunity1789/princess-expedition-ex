@@ -20,7 +20,7 @@ Setting: [url=https://github.com/starunity1789/StargazerPR]The Stargazer Project
 [/list]
 
 [h2]Requirements[/h2]
-Stellaris 4.5.*; The Machine Age and Ancient Relics (for the origin); the great powers and events also use Distant Stars, First Contact, Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis and BioGenesis. Bundles the Ancient Dragonkin and Kemonomimi portrait packs - [b]disable those if you are subscribed[/b]. Fully overrides several vanilla files, so it may conflict with mods that change the same files.
+Stellaris 4.6.*; The Machine Age and Ancient Relics (for the origin); the great powers and events also use Distant Stars, First Contact, Synthetic Dawn, MegaCorp, Astral Planes, Necroids, Nemesis and BioGenesis. Bundles the Ancient Dragonkin and Kemonomimi portrait packs - [b]disable those if you are subscribed[/b]. Fully overrides several vanilla files, so it may conflict with mods that change the same files.
 
 ------------------------------------------------------------
 [b]中文玩家：[/b]把 Steam 切换为简体中文即可看到中文简介。

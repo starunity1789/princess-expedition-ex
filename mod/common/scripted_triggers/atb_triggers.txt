@@ -40,3 +40,14 @@ atb_has_unclaimed_precursor_secret = {
 		has_technology = tech_secrets_zroni
 	}
 }
+
+# 3.15：远征军融合「黄金世代」起源的学院与培养领袖部分（意志之力 DLC）。
+# 远征军的起源是合成繁衍，所以原版黄金世代相关文件里的 has_origin = origin_golden_generation 都换成这个触发器
+# （见 tools/gen_vanilla_patches.py）；国家标记 atb_golden_generation 在 atb_swap_origin 里设置，学院失去时原版事件会去掉它
+# 国家作用域
+atb_has_golden_generation = {
+	OR = {
+		has_origin = origin_golden_generation
+		has_country_flag = atb_golden_generation
+	}
+}

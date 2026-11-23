@@ -3,7 +3,7 @@
 
 ap_xeno_compatibility = {
 	potential = {
-		host_has_dlc = "Megacorp"
+		has_megacorp_dlc = yes
 		NOT = {
 			has_ascension_perk = ap_xeno_compatibility
 		}
@@ -54,6 +54,10 @@ ap_xeno_compatibility = {
 		modifier = {
 			factor = 3
 			has_ethic = ethic_fanatic_xenophile
+		}
+		modifier = {
+			factor = 4
+			has_ethic = ethic_absolute_xenophile
 		}
 	}
 }

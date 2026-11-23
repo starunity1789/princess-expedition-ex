@@ -10,6 +10,8 @@ should_count_towards_leader_cap = {
 		has_leader_flag = hired_admiral_merc_leader
 		is_leader_tier = leader_tier_legendary
 		has_trait = leader_trait_rift_warped
+		has_trait = leader_trait_spiritual_prodigy
+		has_trait = leader_trait_golden_generation
 		AND = {
 			has_trait = leader_trait_eager
 			has_base_skill < 4

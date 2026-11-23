@@ -2962,7 +2962,7 @@ fleet_event = {
 			else_if = {
 				limit = {
 					NOT = { has_technology = tech_mega_art }
-					has_megacorp = yes
+					has_megacorp_dlc = yes
 					is_nomadic = no				}
 				add_research_option = tech_mega_art
 				add_tech_progress = {

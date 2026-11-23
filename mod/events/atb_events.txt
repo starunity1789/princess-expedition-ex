@@ -66,6 +66,14 @@ colony_event = {
 				species = owner_main_species
 			}
 		}
+		# 3.15：黄金世代的黄金学院（原版在首都初始化里按起源加；标记设得晚时这里补）
+		if = {
+			limit = {
+				owner = { has_country_flag = atb_golden_generation }
+				NOT = { has_building = building_golden_academy }
+			}
+			add_building = building_golden_academy
+		}
 		# 原版合成繁衍会把首都尺寸设为 20，这里恢复为 25
 		set_planet_size = 25
 		set_planet_flag = atb_origin_fortress

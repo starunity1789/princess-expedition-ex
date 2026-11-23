@@ -3,7 +3,8 @@
 用法：python gen_names.py <MOD 根目录> <文档目录>
 源数据是 tools/cgen_names_source.json，改名字都改那里，然后重新运行；不要手改生成出来的 .txt/.yml。
 名称集原本是独立 MOD「苍神缘起帝国·名称集 0.1.0」，2.6 起并入本 MOD。与原包的区别：
-- 名称集 .txt 加了 UTF-8 BOM（原包没有，游戏会在 error.log 里报 should be in utf8-bom encoding）
+- 名称集 .txt 不带 BOM：2.6～3.14（群星 4.5）曾加 UTF-8 BOM（4.5 不加会报 should be in utf8-bom encoding）；
+  群星 4.6 反过来，带 BOM 的名称集整份读不出来（error.log 报 "verify encoding is UTF8 (no BOM)" 数百行），3.15 起去掉
 - 2.7：殖民船、运输舰、防御平台（含各类空间站）、离子炮不再用 sequential_name 编号——原版只给恒星基地这样用，
   其他舰体用了会显示成很长的数字。改为和原版一样的具名舰名池（源数据里 ship_sequential 留空）
 
@@ -103,7 +104,7 @@ for i, c in enumerate(d["clans"], 1):
     lines += ["\t\tclan_" + str(i).zfill(2) + " = {", "\t\t\tweight = 1", "\t\t\tfull_names = {",
               "\t" + rows_tokens(keys), "\t\t\t}", "\t\t}"]
 lines += ["\t}", "}"]
-put("common/name_lists/00_cgen_azure_genesis.txt", "\n".join(lines) + "\n", True)
+put("common/name_lists/00_cgen_azure_genesis.txt", "\n".join(lines) + "\n", False)	# 群星 4.6 起名称集不能带 BOM
 # 10 种界面语言都显示同一套中文名字
 for lang in d["languages"]:
     content = "l_" + lang + ":\n" + "\n".join(" " + k + ":0 " + json.dumps(v, ensure_ascii=False) for k, v in loc.items()) + "\n"

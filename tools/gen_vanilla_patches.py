@@ -215,6 +215,261 @@ PATCHES = [
                   "\t\tclues = {\n"
                   "\t\t\tmax = 5\t# 皇女的远征军EX：原版 7（3.10～3.13 为 3）\n", 1)],
     ),
+    # ---- 以下 4 个 3.15 起改由本脚本生成（之前手工维护，群星 4.6 改了这几个原版文件） ----
+    # 乌托邦富足在远征军体制下不要求平等主义
+    dict(
+        path="common/species_rights/living_standards/00_living_standards.txt",
+        header=[
+            "皇女的远征军：覆盖原版 common/species_rights/living_standards/00_living_standards.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：乌托邦富足（living_standard_utopian）",
+            "在远征军体制下不要求平等主义。群星更新后用新版原版重新生成。",
+        ],
+        replace=[("\t\t\tfail_text = empire_not_egalitarian\n"
+                  "\t\t\tfrom = {\n"
+                  "\t\t\t\tis_egalitarian = yes\n"
+                  "\t\t\t}\n",
+                  "\t\t\tfail_text = empire_not_egalitarian\n"
+                  "\t\t\tfrom = {\n"
+                  "\t\t\t\tOR = {\n"
+                  "\t\t\t\t\tis_egalitarian = yes\n"
+                  "\t\t\t\t\t# 皇女的远征军：远征军体制也可以使用乌托邦富足\n"
+                  "\t\t\t\t\thas_country_flag = atb_expedition_regime\n"
+                  "\t\t\t\t}\n"
+                  "\t\t\t}\n", 1)],
+    ),
+    # 光耀者起源：远征军第一幕结束后触发 atb.51，不改为帝制
+    dict(
+        path="events/origin_events_paragon.txt",
+        header=[
+            "皇女的远征军：覆盖原版 events/origin_events_paragon.txt（光耀者起源事件）。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别只有三处，都只对远征军（国家标记 atb_princess_expedition）生效：",
+            "- paragon.5008 / paragon.5009：第一幕结束后改为触发 atb.51，不再触发 paragon.5020",
+            "- paragon.5020：远征军不触发（原版这里会把政体改为帝制）",
+            "第三幕由国家标记 paragon_origin_purges 挡住（原版 paragon.5061 的条件），见 atb_effects.txt。",
+        ],
+        replace=[
+            ("\t\tcountry_event = {\n"
+             "\t\t\tid = paragon.5020 days = 180 random = 360\n"
+             "\t\t}\n",
+             "\t\t# 皇女的远征军：远征军不走「改为帝制」的分支，改由 atb.51 收束第一幕\n"
+             "\t\tif = {\n"
+             "\t\t\tlimit = { has_country_flag = atb_princess_expedition }\n"
+             "\t\t\tcountry_event = {\n"
+             "\t\t\t\tid = atb.51 days = 180 random = 360\n"
+             "\t\t\t}\n"
+             "\t\t}\n"
+             "\t\telse = {\n"
+             "\t\t\tcountry_event = {\n"
+             "\t\t\t\tid = paragon.5020 days = 180 random = 360\n"
+             "\t\t\t}\n"
+             "\t\t}\n", 2),
+            ("\tid = paragon.5020\n"
+             "\ttitle = \"paragon.5020.name\"\n"
+             "\tdesc = \"paragon.5020.desc\"\n"
+             "\tpicture = GFX_evt_enclave_overlord\n"
+             "\tshow_sound = event_factions\n"
+             "\n"
+             "\tis_triggered_only = yes\n"
+             "\n"
+             "\ttrigger = {\n"
+             "\t}\n",
+             "\tid = paragon.5020\n"
+             "\ttitle = \"paragon.5020.name\"\n"
+             "\tdesc = \"paragon.5020.desc\"\n"
+             "\tpicture = GFX_evt_enclave_overlord\n"
+             "\tshow_sound = event_factions\n"
+             "\n"
+             "\tis_triggered_only = yes\n"
+             "\n"
+             "\ttrigger = {\n"
+             "\t\t# 皇女的远征军：远征军的起源与体制都依赖独裁制，不能改为帝制\n"
+             "\t\tNOT = { has_country_flag = atb_princess_expedition }\n"
+             "\t}\n", 1),
+        ],
+    ),
+    # 远征军体制：独裁制的一种高级体制替换；独裁流型、虚拟独裁在远征军体制生效时让位
+    dict(
+        path="common/governments/authorities/00_authorities.txt",
+        header=[
+            "皇女的远征军：覆盖原版 common/governments/authorities/00_authorities.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别只在 auth_dictatorial：新增体制「远征军体制」",
+            "auth_atb_expedition，并让独裁流型（物理 / 虚拟）在远征军体制生效时让位。群星更新后用新版原版重新生成。",
+        ],
+        replace=[
+            ("\tadvanced_authority_swap\t= {\n"
+             "\t\tname = \"auth_synth_dictatorial_physical\"\n"
+             "\t\tdescription = \"auth_synth_dictatorial_physical_desc\"\n"
+             "\t\tinherit_icon = no\n"
+             "\t\tinherit_effects = no\n"
+             "\t\ttrigger = {\n"
+             "\t\t\tis_scope_valid = yes\n"
+             "\t\t\thas_country_flag = synth_physical\n",
+             "\t# 皇女的远征军：远征军体制\n"
+             "\t# 数值与独裁流型（auth_synth_dictatorial_physical）相同；采用时会同时设置 synth_physical，\n"
+             "\t# 因此同样能解锁高级机器人特质。额外效果：可用乌托邦富足生活水平（见 00_living_standards.txt），\n"
+             "\t# 来自人口和区划的帝国规模 -12%。\n"
+             "\tadvanced_authority_swap\t= {\n"
+             "\t\tname = \"auth_atb_expedition\"\n"
+             "\t\tdescription = \"auth_atb_expedition_desc\"\n"
+             "\t\tinherit_icon = no\n"
+             "\t\tinherit_effects = no\n"
+             "\t\ttrigger = {\n"
+             "\t\t\tis_scope_valid = yes\n"
+             "\t\t\thas_country_flag = atb_expedition_regime\n"
+             "\t\t}\n"
+             "\t\tmodifier = {\n"
+             "\t\t\tcustom_tooltip = auth_atb_expedition_tt\n"
+             "\t\t\tshow_only_custom_tooltip = no\n"
+             "\t\t\truler_skill_add = 5\n"
+             "\t\t\tall_technology_research_speed = -0.05\n"
+             "\t\t\tplanet_jobs_worker_produces_mult = 0.15\n"
+             "\t\t\tplanet_structures_cost_mult = -0.25\n"
+             "\t\t\tplanet_structures_upkeep_mult = -0.50\n"
+             "\t\t\tempire_size_pops_mult = -0.12\n"
+             "\t\t\tempire_size_districts_mult = -0.12\n"
+             "\t\t}\n"
+             "\t}\n"
+             "\n"
+             "\tadvanced_authority_swap\t= {\n"
+             "\t\tname = \"auth_synth_dictatorial_physical\"\n"
+             "\t\tdescription = \"auth_synth_dictatorial_physical_desc\"\n"
+             "\t\tinherit_icon = no\n"
+             "\t\tinherit_effects = no\n"
+             "\t\ttrigger = {\n"
+             "\t\t\tis_scope_valid = yes\n"
+             "\t\t\thas_country_flag = synth_physical\n"
+             "\t\t\tNOT = { has_country_flag = atb_expedition_regime }\n", 1),
+            ("\t\tname = \"auth_synth_dictatorial_virtual\"\n"
+             "\t\tdescription = \"auth_synth_dictatorial_virtual_desc\"\n"
+             "\t\tinherit_icon = no\n"
+             "\t\tinherit_effects = no\n"
+             "\t\ttrigger = {\n"
+             "\t\t\tis_scope_valid = yes\n"
+             "\t\t\thas_country_flag = synth_virtual\n",
+             "\t\tname = \"auth_synth_dictatorial_virtual\"\n"
+             "\t\tdescription = \"auth_synth_dictatorial_virtual_desc\"\n"
+             "\t\tinherit_icon = no\n"
+             "\t\tinherit_effects = no\n"
+             "\t\ttrigger = {\n"
+             "\t\t\tis_scope_valid = yes\n"
+             "\t\t\thas_country_flag = synth_virtual\n"
+             "\t\t\tNOT = { has_country_flag = atb_expedition_regime }\n", 1),
+        ],
+    ),
+    # ---- 3.15：远征军融合「黄金世代」起源的学院与培养领袖部分（意志之力 DLC） ----
+    # 远征军开局切换成合成繁衍起源，不能再有黄金世代起源，所以把下列原版文件里的
+    # has_origin = origin_golden_generation 换成 atb_has_golden_generation = yes（= 有该起源或有国家标记 atb_golden_generation，
+    # 见 scripted_triggers/atb_triggers.txt）。只覆盖学院、培养事件链、毕业、精英学院 / 博物馆相关的文件；
+    # 意识形态（教条 00_tenets.txt、事件链后期编纂黄金世代意识形态的 forceofwill.5695→5699→5700）与成就事件不改，远征军不触发
+    *[dict(
+        path=p,
+        header=[
+            f"皇女的远征军：覆盖原版 {p}。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别：has_origin = origin_golden_generation 换成",
+            "atb_has_golden_generation = yes（远征军融合黄金世代的学院与培养领袖部分）。群星更新后用新版原版重新生成。",
+        ],
+        replace=[("has_origin = origin_golden_generation", "atb_has_golden_generation = yes", n)],
+    ) for p, n in (
+        ("common/buildings/25_forceofwill_buildings.txt", 6),
+        ("common/event_chains/00_event_chains_force_of_will.txt", 1),
+        ("common/inline_scripts/game_start/origin_golden_generation.txt", 1),
+        ("common/scripted_effects/forceofwill_scripted_effects.txt", 3),
+        ("common/scripted_triggers/10_scripted_triggers_forceofwill.txt", 2),
+    )],
+    dict(
+        path="events/origin_events_forceofwill.txt",
+        header=[
+            "皇女的远征军：覆盖原版 events/origin_events_forceofwill.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别（远征军融合黄金世代的学院与培养领袖部分）：",
+            "- has_origin = origin_golden_generation 换成 atb_has_golden_generation = yes，forceofwill.5695 除外",
+            "  （它安排 5699→5700 把黄金世代编纂成意识形态，远征军不要意识形态部分）",
+            "- forceofwill.5800 / 5810（黄金学院失去）：原版 set_origin = origin_default，远征军的起源是合成繁衍，",
+            "  不能被清掉，改为只对真正的黄金世代起源改默认起源，远征军去掉标记 atb_golden_generation",
+            "群星更新后用新版原版重新生成。",
+        ],
+        replace=[
+            ("has_origin = origin_golden_generation", "atb_has_golden_generation = yes", 72),
+            ("\t\towner? = {\n"
+             "\t\t\tatb_has_golden_generation = yes\n"
+             "\t\t\tNOT = { has_country_flag = golden_generation_codifying_ideology } # set in forceofwill.5699\n",
+             "\t\towner? = {\n"
+             "\t\t\thas_origin = origin_golden_generation\t# 皇女的远征军：意识形态部分远征军不触发\n"
+             "\t\t\tNOT = { has_country_flag = golden_generation_codifying_ideology } # set in forceofwill.5699\n", 1),
+            ("\t\tset_origin = origin_default\n"
+             "\t\tremove_modifier = golden_academy_budget_modifier\n",
+             "\t\t# 皇女的远征军：远征军的起源是合成繁衍，只去掉黄金世代标记\n"
+             "\t\tif = {\n"
+             "\t\t\tlimit = { has_origin = origin_golden_generation }\n"
+             "\t\t\tset_origin = origin_default\n"
+             "\t\t}\n"
+             "\t\tremove_country_flag = atb_golden_generation\n"
+             "\t\tremove_modifier = golden_academy_budget_modifier\n", 1),
+            ("\t\t\tset_origin = origin_default\n"
+             "\t\t}\n"
+             "\t}\n"
+             "\n"
+             "\toption = {\n"
+             "\t\tname = forceofwill.5810.a\n",
+             "\t\t\t# 皇女的远征军：远征军的起源是合成繁衍，只去掉黄金世代标记\n"
+             "\t\t\tif = {\n"
+             "\t\t\t\tlimit = { has_origin = origin_golden_generation }\n"
+             "\t\t\t\tset_origin = origin_default\n"
+             "\t\t\t}\n"
+             "\t\t\tremove_country_flag = atb_golden_generation\n"
+             "\t\t}\n"
+             "\t}\n"
+             "\n"
+             "\toption = {\n"
+             "\t\tname = forceofwill.5810.a\n", 1),
+        ],
+    ),
+    # 无畏舰 atb_dreadnought、可编入舰队的主宰 atb_juggernaut 加进舰船组件 / 定位触发器；原版主宰停建
+    dict(
+        path="common/scripted_triggers/07_scripted_triggers_ships.txt",
+        header=[
+            "皇女的远征军：覆盖原版 common/scripted_triggers/07_scripted_triggers_ships.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改。与原版的区别：",
+            "无畏舰 atb_dreadnought 加进 ship_uses_battleship_components / ship_uses_titan_components / ship_uses_artillery_role /",
+            "ship_uses_carrier_role / ship_uses_line_role / ship_uses_titan_reactors / ship_uses_battleship_thrusters / ship_uses_battleship_cloaks",
+            "（战列舰推进器、隐形装置、战斗电脑，泰坦反应堆，T 槽武器）；",
+            "3.10：可编入舰队的主宰 atb_juggernaut 加进 ship_uses_titan_components / ship_uses_juggernaut_components /",
+            "ship_uses_artillery_role / ship_uses_carrier_role / ship_uses_juggernaut_reactors / ship_uses_colossus_thrusters；",
+            "原版主宰的 juggernaut_potential_construction 改为 always = no，原内容改名 atb_juggernaut_potential_construction。",
+        ],
+        replace=[(f"{trig} = {{\n\tOR = {{\n",
+                  f"{trig} = {{\n\tOR = {{\n" + "".join(
+                      {"d": "\t\t# 皇女的远征军：无畏舰\n\t\tis_ship_size = atb_dreadnought\n",
+                       "j": "\t\t# 皇女的远征军：可编入舰队的主宰（3.10）\n\t\tis_ship_size = atb_juggernaut\n"}[c] for c in who), 1)
+                 for trig, who in (
+                     ("ship_uses_battleship_components", "d"),
+                     ("ship_uses_titan_components", "dj"),
+                     ("ship_uses_artillery_role", "dj"),
+                     ("ship_uses_carrier_role", "dj"),
+                     ("ship_uses_line_role", "d"),
+                     ("ship_uses_titan_reactors", "d"),
+                     ("ship_uses_juggernaut_reactors", "j"),
+                     ("ship_uses_battleship_thrusters", "d"),
+                     ("ship_uses_colossus_thrusters", "j"),
+                     ("ship_uses_battleship_cloaks", "d"),
+                 )] + [
+            ("ship_uses_juggernaut_components = {\n\tis_ship_size = juggernaut\n}\n",
+             "ship_uses_juggernaut_components = {\n"
+             "\tOR = {\n"
+             "\t\tis_ship_size = juggernaut\n"
+             "\t\t# 皇女的远征军：可编入舰队的主宰（3.10）\n"
+             "\t\tis_ship_size = atb_juggernaut\n"
+             "\t}\n"
+             "}\n", 1),
+            ("\njuggernaut_potential_construction = {\n",
+             "\n# 皇女的远征军 3.10：原版主宰（移动船坞）不再能建造，改由可编入舰队的 atb_juggernaut 代替\n"
+             "juggernaut_potential_construction = {\n"
+             "\talways = no\n"
+             "}\n"
+             "\n"
+             "# 原版 juggernaut_potential_construction 的内容，给 atb_juggernaut 用（主宰本身不再是恒星基地，这里照抄无妨）\n"
+             "atb_juggernaut_potential_construction = {\n", 1),
+        ],
+    ),
 ]
 
 for patch in PATCHES:
@@ -326,6 +581,10 @@ for key in LC_INITIALIZERS:
         inline = "\n".join(("\t" + l) if l else l for l in inline.split("\n")) + "\n"
         block = block.replace(VOIDWORM_INLINE, inline)
     block = lc_strip_top(block)
+    # 3.15：巡逻用的 find_closest_planet 等 trigger 带全局唯一的 id（dragon.home.1、scav.1……），照抄会与原版重名，
+    # 游戏报 "id has to be unique" 并让原版那份读取失败（原版星系里的以太龙、拾荒者等就不再巡逻）。加 atb_lc. 前缀
+    import re
+    block, n_ids = re.subn(r'(trigger = \{\s*\n\s*id = )"?([\w.]+)"?', r'\1"atb_lc.\2"', block)
     if "max_instances" in block or "usage_odds" in block:
         sys.exit(f"{key}：没去干净随机生成参数，请手动核对")
     lc_out.append(f"# 原版 {fname} 的 {key}")

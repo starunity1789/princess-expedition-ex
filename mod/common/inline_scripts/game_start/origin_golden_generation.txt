@@ -1,0 +1,17 @@
+# 皇女的远征军：覆盖原版 common/inline_scripts/game_start/origin_golden_generation.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别：has_origin = origin_golden_generation 换成
+# atb_has_golden_generation = yes（远征军融合黄金世代的学院与培养领袖部分）。群星更新后用新版原版重新生成。
+
+
+# Golden Generation Initial Setup
+# Buildings Added:
+#	* Golden Academy
+
+if = {
+	limit = {
+		owner? = {
+			atb_has_golden_generation = yes
+		}
+	}
+	add_building = building_golden_academy
+}

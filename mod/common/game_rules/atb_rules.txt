@@ -1,4 +1,4 @@
-# 覆盖原版 can_be_part_of_galactic_community（common/game_rules/00_rules.txt，4.5.3 核对过）。
+# 覆盖原版 can_be_part_of_galactic_community（common/game_rules/00_rules.txt，4.6.0 核对过）。
 # 与原版唯一的区别：带 atbgp_gc_member 标记的保底列强（大君主同盟领地、终端对齐协议）不受「灭绝政体不能加入」的限制。
 # 被宣布为危机的限制照旧，所以星海天罚升到第 5 级后仍会照原版被踢出、且不能再加入。
 # This = country
@@ -47,7 +47,7 @@ can_be_part_of_galactic_community = {
 	}
 }
 
-# 覆盖原版 can_dismiss_leader（common/game_rules/00_rules.txt，4.5.3 核对过），只在开头加了皇女不可解雇的判断，其余与原版一致。
+# 覆盖原版 can_dismiss_leader（common/game_rules/00_rules.txt，4.6.0 核对过），只在开头加了皇女不可解雇的判断，其余与原版一致。
 # this = leader
 can_dismiss_leader = {
 	# 皇女的远征军：四位皇女不可解雇
@@ -161,6 +161,16 @@ can_dismiss_leader = {
 		custom_tooltip = {
 			always = no
 			fail_text = "leader_no_dismiss_tt"
+		}
+	}
+	if = {
+		limit = {
+			has_leader_flag = miracle_child
+			leader_age < @path_of_the_self_miracle_child_age
+		}
+		custom_tooltip = {
+			always = no
+			fail_text = "miracle_child_no_dismiss_tt"
 		}
 	}
 }

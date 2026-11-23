@@ -1,0 +1,656 @@
+# 皇女的远征军：覆盖原版 common/buildings/25_forceofwill_buildings.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别：has_origin = origin_golden_generation 换成
+# atb_has_golden_generation = yes（远征军融合黄金世代的学院与培养领袖部分）。群星更新后用新版原版重新生成。
+
+building_golden_academy = {
+	position_priority = 100
+	can_be_disabled = no
+	can_demolish = no
+	can_be_ruined = no
+	can_build = no
+
+	category = government
+
+	building_sets = {
+		government
+		origin
+	}
+
+	potential = {
+		owner? = {
+			atb_has_golden_generation = yes
+		}
+	}
+
+	destroy_trigger = {
+		exists = owner
+		NOT = {
+			owner = { atb_has_golden_generation = yes }
+		}
+	}
+
+	resources = {
+		category = planet_buildings_golden_academies
+		upkeep = {
+			energy = @b2_upkeep
+		}
+	}
+
+	triggered_country_modifier = {
+		species_leader_exp_gain = 0.1
+	}
+
+	triggered_planet_modifier = {
+		potential = { exists = owner }
+		job_professor_add = @building_static_jobs
+	}
+
+	triggered_desc = {
+		text = building_golden_academy_tt
+	}
+}
+
+building_elite_academy = {
+	icon = building_golden_academy
+	category = government
+	base_buildtime = @b2_time
+
+	empire_limit = {
+		base = 1
+	}
+
+	building_sets = {
+		government
+		origin
+	}
+
+	potential = {
+		owner? = {
+			atb_has_golden_generation = yes
+			has_country_flag = golden_academy_reformed
+		}
+	}
+
+	destroy_trigger = {
+		exists = owner
+		NOT = {
+			owner = { atb_has_golden_generation = yes }
+		}
+	}
+
+	resources = {
+		category = planet_buildings
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
+		}
+		upkeep = {
+			energy = 2.5 # @b2_upkeep / 2
+			unity = @b2_upkeep
+		}
+	}
+
+	triggered_country_modifier = {
+		country_leader_cap_add = 1
+	}
+
+	triggered_planet_modifier = {
+		potential = { exists = owner }
+		job_professor_add = @building_static_jobs_low
+	}
+
+	triggered_desc = {
+		text = building_elite_academy_tt
+	}
+}
+
+building_golden_museum = {
+	icon = building_golden_academy
+	category = amenity
+	base_buildtime = @b2_time
+
+	planet_limit = {
+		base = 1
+	}
+
+	building_sets = {
+		government
+		origin
+		entertainment
+		unity
+	}
+
+	potential = {
+		owner? = {
+			atb_has_golden_generation = yes
+			has_country_flag = golden_academy_converted
+		}
+	}
+
+	destroy_trigger = {
+		exists = owner
+		NOT = {
+			owner = { atb_has_golden_generation = yes }
+		}
+	}
+
+	resources = {
+		category = planet_buildings
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
+		}
+		upkeep = {
+			energy = @b2_upkeep
+			mult = 0.5 # half of Golden Academy upkeep
+		}
+	}
+
+	planet_modifier = {
+		planet_jobs_unity_produces_mult = 0.15
+		planet_amenities_mult = 0.2
+		planet_entertainers_society_research_produces_add = 0.5
+		planet_entertainers_consumer_goods_upkeep_add = 0.25
+	}
+
+	inline_script = {
+		script = jobs/entertainers_add
+		AMOUNT = @building_static_jobs
+	}
+
+	triggered_country_modifier = {
+		potential = {
+			owner? = { is_gestalt = no }
+		}
+		pop_happiness = 0.05
+	}
+
+	triggered_desc = {
+		trigger = {
+			owner? = { is_regular_empire = yes }
+		}
+		text = entertainers_are_curators_tt
+	}
+}
+
+# Lost Makers
+
+building_memory_core = {
+	icon = building_memory_core
+	position_priority = 100
+	can_demolish = yes
+	can_build = yes
+	base_buildtime = @b3_time # 600 days
+
+	category = research
+
+	building_sets = {
+		research
+	}
+
+	planet_limit = {
+		base = 1
+	}
+
+	potential = {
+		owner? = {
+			has_valid_civic = civic_memory_optimization
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			NOT = {
+				has_valid_civic = civic_memory_optimization
+			}
+		}
+	}
+
+	resources = {
+		category = planet_buildings
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = exotic_gases
+			COST = @b3_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
+		}
+		upkeep = {
+			energy = @b2_upkeep # 5
+		}
+	}
+
+	inline_script = {
+		script = jobs/researchers_add
+		AMOUNT = 100
+	}
+
+	planet_modifier = {
+		planet_researchers_upkeep_mult = -0.10
+		planet_researchers_produces_mult = 0.10
+	}
+}
+
+# Ideological Buildings
+
+# Default
+building_ideological_hall = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = no
+			ideology? = { is_spiritualist = no }
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = yes
+				NOT = { exists = ideology }
+				ideology = { is_spiritualist = yes }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_church
+		building_ideological_creche
+		building_ideological_core
+	}
+
+	inline_script = buildings/ideological_building_1_common_effects
+	inline_script = {
+		script = buildings/ideological_building_ethic_modifiers
+		LVL = 1
+	}
+
+	upgrades = {
+		building_ideological_institute
+	}
+}
+
+building_ideological_institute = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = no
+			ideology? = { is_spiritualist = no }
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = yes
+				NOT = { exists = ideology }
+				ideology = { is_spiritualist = yes }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_high_church
+		building_ideological_greater_creche
+		building_ideological_grid
+	}
+
+	inline_script = buildings/ideological_building_2_common_effects
+	inline_script = {
+		script = buildings/ideological_building_ethic_modifiers
+		LVL = 2
+	}
+
+	upgrades = {
+		building_ideological_citadel
+	}
+}
+
+building_ideological_citadel = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = no
+			ideology? = { is_spiritualist = no }
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = yes
+				NOT = { exists = ideology }
+				ideology = { is_spiritualist = yes }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_sanctum
+		building_ideological_grand_creche
+		building_ideological_nexus
+	}
+
+	inline_script = buildings/ideological_building_3_common_effects
+	inline_script = {
+		script = buildings/ideological_building_ethic_modifiers
+		LVL = 3
+	}
+}
+
+# Spiritualist
+building_ideological_church = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = no
+			ideology? = { is_spiritualist = yes }
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = yes
+				NOT = { exists = ideology }
+				ideology = { is_spiritualist = no }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_hall
+		building_ideological_creche
+		building_ideological_core
+	}
+
+	inline_script = buildings/ideological_building_1_common_effects
+	inline_script = {
+		script = buildings/ideological_building_ethic_modifiers
+		LVL = 1
+	}
+
+	upgrades = {
+		building_ideological_high_church
+	}
+}
+
+building_ideological_high_church = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = no
+			exists = ideology
+			ideology = { is_spiritualist = yes }
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = yes
+				NOT = { exists = ideology }
+				ideology = { is_spiritualist = no }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_institute
+		building_ideological_greater_creche
+		building_ideological_grid
+	}
+
+	inline_script = buildings/ideological_building_2_common_effects
+	inline_script = {
+		script = buildings/ideological_building_ethic_modifiers
+		LVL = 2
+	}
+
+	upgrades = {
+		building_ideological_sanctum
+	}
+}
+
+building_ideological_sanctum = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = no
+			exists = ideology
+			ideology = { is_spiritualist = yes }
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = yes
+				NOT = { exists = ideology }
+				ideology = { is_spiritualist = no }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_citadel
+		building_ideological_grand_creche
+		building_ideological_nexus
+	}
+
+	inline_script = buildings/ideological_building_3_common_effects
+	inline_script = {
+		script = buildings/ideological_building_ethic_modifiers
+		LVL = 3
+	}
+}
+
+# Gestalt
+building_ideological_creche = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = yes
+			exists = ideology
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = no
+				NOT = { exists = ideology }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_hall
+		building_ideological_church
+		building_ideological_core
+	}
+
+	inline_script = buildings/ideological_building_1_common_effects
+	triggered_planet_modifier = {
+		planet_crime_no_happiness_mult = -0.05
+	}
+
+	upgrades = {
+		building_ideological_greater_creche
+	}
+}
+
+building_ideological_greater_creche = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = yes
+			exists = ideology
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = no
+				NOT = { exists = ideology }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_institute
+		building_ideological_high_church
+		building_ideological_grid
+	}
+
+	inline_script = buildings/ideological_building_2_common_effects
+	triggered_planet_modifier = {
+		planet_crime_no_happiness_mult = -0.1
+	}
+
+	upgrades = {
+		building_ideological_grand_creche
+	}
+}
+
+building_ideological_grand_creche = {
+	potential = {
+		owner? = {
+			is_machine_empire = no
+			is_gestalt = yes
+			exists = ideology
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = yes
+				is_gestalt = no
+				NOT = { exists = ideology }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_citadel
+		building_ideological_sanctum
+		building_ideological_nexus
+	}
+
+	inline_script = buildings/ideological_building_3_common_effects
+	triggered_planet_modifier = {
+		planet_crime_no_happiness_mult = -0.15
+	}
+}
+
+# Machine
+building_ideological_core = {
+	potential = {
+		owner? = {
+			is_machine_empire = yes
+			exists = ideology
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = no
+				NOT = { exists = ideology }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_hall
+		building_ideological_church
+		building_ideological_creche
+	}
+
+	inline_script = buildings/ideological_building_1_common_effects
+	triggered_planet_modifier = {
+		planet_crime_no_happiness_mult = -0.05
+	}
+
+	upgrades = {
+		building_ideological_grid
+	}
+}
+
+building_ideological_grid = {
+	potential = {
+		owner? = {
+			is_machine_empire = yes
+			exists = ideology
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = no
+				NOT = { exists = ideology }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_institute
+		building_ideological_high_church
+		building_ideological_greater_creche
+	}
+
+	inline_script = buildings/ideological_building_2_common_effects
+	triggered_planet_modifier = {
+		planet_crime_no_happiness_mult = -0.1
+	}
+
+	upgrades = {
+		building_ideological_nexus
+	}
+}
+
+building_ideological_nexus = {
+	potential = {
+		owner? = {
+			is_machine_empire = yes
+			exists = ideology
+		}
+	}
+
+	destroy_trigger = {
+		owner? = {
+			OR = {
+				is_machine_empire = no
+				NOT = { exists = ideology }
+			}
+		}
+	}
+
+	convert_to = {
+		building_ideological_citadel
+		building_ideological_sanctum
+		building_ideological_grand_creche
+	}
+
+	inline_script = buildings/ideological_building_3_common_effects
+	triggered_planet_modifier = {
+		planet_crime_no_happiness_mult = -0.15
+	}
+}

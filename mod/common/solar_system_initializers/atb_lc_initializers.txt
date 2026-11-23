@@ -612,7 +612,7 @@ atb_lc_scavenger_system = {
 						repeat = {
 							find_random_planet = {
 								trigger = {
-									id = scav.1
+									id = "atb_lc.scav.1"
 									always = yes
 								}
 								found_planet = {
@@ -625,7 +625,7 @@ atb_lc_scavenger_system = {
 							}
 							find_random_planet = {
 								trigger = {
-									id = scav.2
+									id = "atb_lc.scav.2"
 									always = yes
 								}
 								found_planet = {
@@ -638,7 +638,7 @@ atb_lc_scavenger_system = {
 							}
 							find_random_planet = {
 								trigger = {
-									id = scav.3
+									id = "atb_lc.scav.3"
 									always = yes
 								}
 								found_planet = {
@@ -651,7 +651,7 @@ atb_lc_scavenger_system = {
 							}
 							find_random_planet = {
 								trigger = {
-									id = scav.4
+									id = "atb_lc.scav.4"
 									always = yes
 								}
 								found_planet = {
@@ -664,7 +664,7 @@ atb_lc_scavenger_system = {
 							}
 							find_random_planet = {
 								trigger = {
-									id = scav.5
+									id = "atb_lc.scav.5"
 									always = yes
 								}
 								found_planet = {
@@ -763,7 +763,7 @@ atb_lc_guardians_init_dragon = {
 						repeat = {
 							find_closest_planet = {
 								trigger = {
-									id = dragon.home.1
+									id = "atb_lc.dragon.home.1"
 									is_star = yes
 								}
 								found_planet = {
@@ -777,7 +777,7 @@ atb_lc_guardians_init_dragon = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = dragon.home.2
+									id = "atb_lc.dragon.home.2"
 									is_star = no
 									NOT = {
 										is_same_value = event_target:guardian_dragon_planet
@@ -794,7 +794,7 @@ atb_lc_guardians_init_dragon = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = dragon.home.3
+									id = "atb_lc.dragon.home.3"
 									is_same_value = event_target:guardian_dragon_planet
 								}
 								found_planet = {
@@ -1974,7 +1974,7 @@ atb_lc_great_wound_system = {
 						repeat = {
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.1.trigger.1"
+									id = "atb_lc.great_wound.1.trigger.1"
 									is_planet = event_target:patrol_4
 								}
 								found_planet = {
@@ -1984,7 +1984,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.1.trigger.2"
+									id = "atb_lc.great_wound.1.trigger.2"
 									is_planet = event_target:patrol_3
 								}
 								found_planet = {
@@ -1994,7 +1994,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.1.trigger.3"
+									id = "atb_lc.great_wound.1.trigger.3"
 									is_planet = event_target:patrol_2
 								}
 								found_planet = {
@@ -2004,7 +2004,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.1.trigger.4"
+									id = "atb_lc.great_wound.1.trigger.4"
 									is_planet = event_target:patrol_1
 								}
 								found_planet = {
@@ -2032,7 +2032,7 @@ atb_lc_great_wound_system = {
 						repeat = {
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.2.trigger.1"
+									id = "atb_lc.great_wound.2.trigger.1"
 									is_planet = event_target:patrol_1
 								}
 								found_planet = {
@@ -2042,7 +2042,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.2.trigger.2"
+									id = "atb_lc.great_wound.2.trigger.2"
 									is_planet = event_target:patrol_2
 								}
 								found_planet = {
@@ -2052,7 +2052,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.2.trigger.3"
+									id = "atb_lc.great_wound.2.trigger.3"
 									is_planet = event_target:patrol_3
 								}
 								found_planet = {
@@ -2062,7 +2062,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.2.trigger.4"
+									id = "atb_lc.great_wound.2.trigger.4"
 									is_planet = event_target:patrol_4
 								}
 								found_planet = {
@@ -2090,7 +2090,7 @@ atb_lc_great_wound_system = {
 						repeat = {
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.3.trigger.3"
+									id = "atb_lc.great_wound.3.trigger.3"
 									is_planet = event_target:patrol_1
 								}
 								found_planet = {
@@ -2100,7 +2100,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.3.trigger.4"
+									id = "atb_lc.great_wound.3.trigger.4"
 									is_planet = event_target:patrol_2
 								}
 								found_planet = {
@@ -2110,7 +2110,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.3.trigger.1"
+									id = "atb_lc.great_wound.3.trigger.1"
 									is_planet = event_target:patrol_3
 								}
 								found_planet = {
@@ -2120,7 +2120,7 @@ atb_lc_great_wound_system = {
 							}
 							find_closest_planet = {
 								trigger = {
-									id = "great_wound.3.trigger.2"
+									id = "atb_lc.great_wound.3.trigger.2"
 									is_planet = event_target:patrol_4
 								}
 								found_planet = {
@@ -2569,7 +2569,7 @@ atb_lc_locust_system_initializer_01 = {
 							repeat = {
 								find_closest_planet = {
 									trigger = {
-										id = lostswarm.patrol.1
+										id = "atb_lc.lostswarm.patrol.1"
 										has_planet_flag = broken_fortress_1
 									}
 									found_planet = {

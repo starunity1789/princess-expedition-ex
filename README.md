@@ -6,7 +6,7 @@
 
 ## English
 
-A Stellaris (4.5.*) mod: the new origin **The Princesses' Expedition**, plus a rim cluster for the expedition, five guaranteed great powers and a set of galaxy rules.
+A Stellaris (4.6.*) mod: the new origin **The Princesses' Expedition**, plus a rim cluster for the expedition, five guaranteed great powers and a set of galaxy rules.
 
 - Steam Workshop: [The Princesses' Expedition EX](https://steamcommunity.com/sharedfiles/filedetails/?id=3821602893)
 - Setting: [The Stargazer Project](https://github.com/starunity1789/StargazerPR)
@@ -33,6 +33,7 @@ The characters - their personalities, looks and every detail - were designed by 
 ### Features
 
 **Origin: The Princesses' Expedition**
+- Since 3.15 also merges the academy and leader training of **Golden Generation** (Willpower DLC, ideologies enabled in setup): a Golden Academy on the homeworld, a generation of leaders trained through the Golden Generation event chain, and after graduation the academy can become an Elite Academy or a Golden Museum; the Golden Generation ideology part (tenets, codifying the ideology) is not included
 - Includes every mechanic of vanilla Synthetic Fertility; Synthetic Ascension only
 - Capital: the Origin Fortress, a size-25 giant mobile habitat; the four princesses serve as Ruler and Councilors
 - Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors", the Dreadnoughts tech, and the relic "Seal of the Princess Guard"
@@ -73,7 +74,7 @@ The Machine Age and Ancient Relics (origin); Distant Stars (L-Gate); First Conta
 
 ## 中文
 
-群星（Stellaris 4.5.*）MOD。新起源「皇女的远征军」，外加银河边缘的远征军星团、五个保底列强和一组银河规则。
+群星（Stellaris 4.6.*）MOD。新起源「皇女的远征军」，外加银河边缘的远征军星团、五个保底列强和一组银河规则。
 
 - Steam 创意工坊：[皇女的远征军EX](https://steamcommunity.com/sharedfiles/filedetails/?id=3821602893)
 - 世界观：[观星者计划 / The Stargazer Project](https://github.com/starunity1789/StargazerPR)
@@ -100,6 +101,7 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 ### 主要内容
 
 **起源：皇女的远征军**（3.10 起另有变体起源 **「遥远之约定」**：开局直接生成 L 星群，远征军的固定星系围着 L 星群、只连 L 星群不连银河，研究虫洞稳定后经两个虫洞去白鹿与远星；L 星群结局固定为空星群，没有灰色风暴，探索 L 星群必定能找到小灰；3.11 起 L 星群的纳米星球研究气候修复后可环境改造，并把原版的时间循环世界、活体星球、拾荒者机器人、以太龙、艺术团、策展人修会、大伤口、老年提央基、维拉X-1、失落虫群、虚空虫巢穴搬到 L 星群外围，只连 L 星群，银河里原有的那份清掉特殊内容；3.12 修正了 3.11 里除维拉X-1 外都没生成的问题）
+- 3.15 起另融合**黄金世代**（意志之力 DLC，开局设置需开启意识形态）的学院与培养领袖部分：母星有黄金学院，经黄金世代事件链培养一批领袖，毕业后可改革为精英学院或改建为黄金博物馆；黄金世代的意识形态部分（教条、编纂意识形态）不包括
 - 融合原版合成繁衍的全部机制，先走机械飞升；3.6 起合成黎明之后，二皇女尤古朵拉的事件「金鱼游向帷幕」会开启**灵能之路**（需要迷雾之影 DLC）：之后可以照原版选灵能飞升、采纳迷雾灵能传统、经历伟大觉醒，机械之躯会得到迷雾之影的机器人版灵能特质（原版把合成繁衍起源当作已合成飞升、关掉整条灵能线，本 MOD 只对开启了灵能之路的国家开例外）
 - 一皇女菲莉若雅的命定特质「超然生命」：人口帝国规模 −33%，领袖维护费（主要是凝聚力）−33%（3.9）
 - 三皇女幽妃丽娜的命定特质额外给全国科研船异常现象发现几率 +50%（3.6）；起源要塞的「要塞核心」特殊地形工程学 +30（共 60，3.6）

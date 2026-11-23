@@ -59,8 +59,13 @@ all_txts = sorted(p for p in MOD.rglob("*.txt"))
 all_gfxs = sorted(p for p in MOD.rglob("*.gfx"))
 txts = [p for p in all_txts if not is_upstream(p)]
 gfxs = [p for p in all_gfxs if not is_upstream(p)]
+def is_vanilla_copy(p: Path) -> bool:
+    """gen_vanilla_patches.py 从原版生成的整文件覆盖：原版里有跨行字符串，括号检查要按跨行处理"""
+    return "gen_vanilla_patches.py" in read(p)[:800]
+
+
 for p in all_txts + all_gfxs:
-    s = strip_noise(read(p), multiline=is_upstream(p))
+    s = strip_noise(read(p), multiline=is_upstream(p) or is_vanilla_copy(p))
     depth, bad = 0, False
     for ch in s:
         if ch == "{":
@@ -221,7 +226,23 @@ checks = [
      (MOD / "common/name_lists/00_cgen_azure_genesis.txt").exists()
      and len(list((MOD / "localisation").glob("*/cgen_names_l_*.yml"))) == 10
      and read(MOD / "common/name_lists/00_cgen_azure_genesis.txt").count("full_names = {") == 24
-     and (MOD / "common/name_lists/00_cgen_azure_genesis.txt").read_bytes().startswith(b"\xef\xbb\xbf")),
+     # 群星 4.6 起名称集不能带 BOM（4.5 反而要求带），带了整份读不出来
+     and not (MOD / "common/name_lists/00_cgen_azure_genesis.txt").read_bytes().startswith(b"\xef\xbb\xbf")
+     and not (MOD / "common/name_lists/atb_th_NITORI.txt").read_bytes().startswith(b"\xef\xbb\xbf")),
+    ("3.15：L 星群特殊星系副本的 trigger id 加 atb_lc. 前缀（不与原版重名）",
+     "id = \"atb_lc.dragon.home.1\"" in read(MOD / "common/solar_system_initializers/atb_lc_initializers.txt")
+     and "id = scav.1\n" not in read(MOD / "common/solar_system_initializers/atb_lc_initializers.txt")),
+    ("3.15：融合黄金世代的学院与培养领袖（标记、触发器、原版文件替换、意识形态与失去起源的例外、搬家）",
+     "atb_has_golden_generation = {" in read(MOD / "common/scripted_triggers/atb_triggers.txt")
+     and "set_country_flag = atb_golden_generation\n" in read(MOD / "common/scripted_effects/atb_effects.txt")
+     and read(MOD / "events/origin_events_forceofwill.txt").count("atb_has_golden_generation = yes") == 72
+     and read(MOD / "events/origin_events_forceofwill.txt").count("remove_country_flag = atb_golden_generation") == 2
+     and "has_origin = origin_golden_generation\t# 皇女的远征军：意识形态部分" in read(MOD / "events/origin_events_forceofwill.txt")
+     and read(MOD / "common/buildings/25_forceofwill_buildings.txt").count("atb_has_golden_generation = yes") == 7  # 6 处 + 文件头说明
+     and "set_carrier_flag = golden_academy_built" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "remove_carrier_flag = golden_academy_built" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and not (MOD / "common/ideologies").exists()),
+    ("3.15：适配群星 4.6（supported_version）", 'supported_version="v4.6.*"' in read(MOD / "descriptor.mod")),
     ("预设帝国「苍神缘起帝国」：皇女起源 + 内置名称集", all(x in read(MOD / "prescripted_countries/atb_prescripted_countries.txt") for x in (
         'origin = "origin_atb_princess_expedition"', 'name_list = "CGEN_AZURE_GENESIS"', "playable = atb_preset_playable",
         'authority = "auth_dictatorial"', 'government = "gov_technocratic_dictatorship"', 'planet_class = "pc_continental"'))

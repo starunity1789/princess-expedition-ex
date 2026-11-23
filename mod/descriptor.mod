@@ -1,4 +1,4 @@
-version="3.14"
+version="3.15"
 tags={
 	"Gameplay"
 	"Leaders"
@@ -10,4 +10,4 @@ tags={
 }
 name="The Princesses' Expedition EX · 皇女的远征军EX"
 picture="thumbnail.png"
-supported_version="v4.5.*"
+supported_version="v4.6.*"

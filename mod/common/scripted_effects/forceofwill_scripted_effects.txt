@@ -1,0 +1,3531 @@
+# 皇女的远征军：覆盖原版 common/scripted_effects/forceofwill_scripted_effects.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别：has_origin = origin_golden_generation 换成
+# atb_has_golden_generation = yes（远征军融合黄金世代的学院与培养领袖部分）。群星更新后用新版原版重新生成。
+
+# scope = country
+spawn_same_ship = {
+	create_fleet = {
+		effect = {
+			set_owner = root
+			create_ship = {
+				random_existing_design = $SIZE$
+				graphical_culture = root
+			}
+			set_location = {
+				target = root.capital_scope
+				distance = 10
+				angle = 40
+			}
+		}
+	}
+	create_fleet = {
+		effect = {
+			set_owner = root
+			create_ship = {
+				random_existing_design = $SIZE$
+				graphical_culture = "crusader_01"
+			}
+			set_location = {
+				target = root.capital_scope
+				distance = 10
+				angle = 50
+			}
+		}
+	}
+}
+
+###########################
+
+shift_ethic_from_embrace = {
+	if = {
+		limit = {
+			exists = ideology
+			is_fanatic_$ETHIC$ = yes
+			prev = { is_faction_fanatic = yes }
+		}
+		if = {
+			limit = { ideology = { is_spiritualist = yes } }
+			enable_special_project = {
+				name = "ABSOLUTE_ETHIC_PROJECT_SPIRITUALIST"
+				owner = this
+			}
+		}
+		else = {
+			enable_special_project = {
+				name = "ABSOLUTE_ETHIC_PROJECT"
+				owner = this
+			}
+		}
+	}
+	else_if = {
+		limit = { is_fanatic_$ETHIC$ = no }
+		hidden_effect = {
+			# Remember which fanatic factions are ethic-aligned before the shift
+			every_pop_faction = {
+				limit = {
+					is_faction_fanatic = yes
+					is_$ETHIC$ = no
+					owner_follows_faction_ethic = yes
+				}
+				if = {
+					limit = { owner_follows_faction_ethic_fanatic = yes }
+					set_pop_faction_flag = ethics_shift_was_fanatic_aligned
+				}
+				else = {
+					set_pop_faction_flag = ethics_shift_was_aligned
+				}
+			}
+		}
+		shift_ethic = ethic_$ETHIC$
+		create_message = {
+			type = MESSAGE_FACTION_EMBRACED_ETHIC_SHIFTED
+			localization = MESSAGE_FACTION_EMBRACED_ETHIC_SHIFTED_DESC
+			days = 100
+			onclick = government
+		}
+		hidden_effect = {
+			# A fanatic faction whose ethic was downgraded or removed by the shift reacts
+			ordered_pop_faction = {
+				limit = {
+					OR = {
+						AND = {
+							has_pop_faction_flag = ethics_shift_was_fanatic_aligned
+							owner_follows_faction_ethic_fanatic = no
+						}
+						AND = {
+							has_pop_faction_flag = ethics_shift_was_aligned
+							owner_follows_faction_ethic = no
+						}
+					}
+				}
+				order_by = trigger:support
+				position = 0
+				prev = {
+					country_event = {
+						id = forceofwill.7555
+						scopes = { from = prev }
+					}
+				}
+			}
+			every_pop_faction = {
+				remove_pop_faction_flag = ethics_shift_was_fanatic_aligned
+				remove_pop_faction_flag = ethics_shift_was_aligned
+			}
+		}
+	}
+	hidden_effect = { prev = { remove_pop_faction_flag = ai_triggered_embrace } }
+}
+
+generate_ideology = {
+	set_country_flag = ideology_initiated # Just to make sure
+	if = {
+		limit = { is_ai = yes }
+		set_country_flag = cannot_codify_ideology
+	}
+	create_ideology = {
+	[[ETHIC]
+		ethic = $ETHIC$
+	]
+	[[FACTION]
+		faction = $FACTION$
+	]
+	[[NAME]
+		name = $NAME$
+	]
+	[[TYPE]
+		type = $TYPE$
+	]
+	[[TENETS]
+		tenets = { $TENETS$ }
+	]
+	[[TENETS_FROM]
+		tenets = $TENETS_FROM$
+	]
+		effect = {
+			save_event_target_as = generated_ideology
+			create_message = {
+				type = MESSAGE_IDEOLOGY_EMERGED
+				localization = MESSAGE_IDEOLOGY_EMERGED_DESC
+				days = 30
+				onclick = ideologies
+			}
+		}
+	}
+}
+
+generate_ideology_from_faction = {
+	owner? = {
+		generate_ideology = { FACTION = prev }
+	}
+}
+
+# Found an Ideology from one of the empire's fanatic factions, or from its own ethics when it has no fanatic faction
+# scope = country
+# ETHIC = <ethic key without its ethic_ prefix>, to found an Ideology of that ethic when the empire supports it (optional)
+generate_ideology_from_faction_or_ethic = {
+	[[ETHIC]
+		random_pop_faction = {
+			limit = {
+				is_faction_fanatic = yes
+				is_$ETHIC$ = yes
+				NOT = { exists = ideology }
+			}
+			generate_ideology_from_faction = yes
+		}
+		if = {
+			limit = {
+				NOT = { exists = ideology }
+				is_fanatic_$ETHIC$ = yes
+			}
+			generate_ideology = { ETHIC = ethic_fanatic_$ETHIC$ }
+		}
+	]
+	if = {
+		limit = { NOT = { exists = ideology } }
+		random_pop_faction = {
+			limit = {
+				is_faction_fanatic = yes
+				NOR = {
+					exists = ideology
+					has_ethic = ethic_gestalt_consciousness
+				}
+			}
+			generate_ideology_from_faction = yes
+		}
+	}
+	if = {
+		limit = { NOT = { exists = ideology } }
+		generate_ideology = yes
+	}
+}
+
+# scope = country
+generate_ideology_for_empire = {
+	if = {
+		limit = { is_ai = no }
+		generate_ideology_from_faction_or_ethic = yes
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_ai_personality = evangelising_zealots
+				has_ai_personality = spiritual_seekers
+			}
+		}
+		generate_ideology_from_faction_or_ethic = { ETHIC = spiritualist }
+	}
+	else_if = {
+		limit = { has_ai_personality = honorbound_warriors }
+		generate_ideology_from_faction_or_ethic = { ETHIC = militarist }
+	}
+	else_if = {
+		limit = { has_ai_personality = democratic_crusaders }
+		generate_ideology_from_faction_or_ethic = { ETHIC = egalitarian }
+	}
+	else_if = {
+		limit = { has_ai_personality = fanatic_befrienders }
+		generate_ideology_from_faction_or_ethic = { ETHIC = xenophile }
+	}
+	else = {
+		generate_ideology_from_faction_or_ethic = yes
+	}
+}
+
+# Fire the Gestalt Ideology creation event that was deferred because no communications were established at reveal time
+# The fired event re-checks can_initiate_ideology itself and clears the pending flag when it fires
+# scope = country
+fire_pending_gestalt_ideology_creation = {
+	if = {
+		limit = {
+			has_country_flag = gestalt_ideology_creation_pending
+			any_revealed_ideology = {
+				always = yes
+			}
+		}
+		random_revealed_ideology = {
+			save_event_target_as = pending_revealed_ideology
+		}
+		country_event = {
+			id = forceofwill.1200
+			scopes = { from = event_target:pending_revealed_ideology }
+		}
+	}
+}
+
+# Embrace scoped faction
+# Scope: Pop faction
+#
+# ETHIC = <key>: Faction Ethic
+embrace_faction_effect = {
+	add_modifier = { modifier = embraced_faction days = 3600 }
+	owner = {
+		set_country_flag = has_embraced_faction
+		shift_ethic_from_embrace = { ETHIC = $ETHIC$ }
+		hidden_effect = {
+			add_modifier = { modifier = embraced_faction_timer days = 3600 }
+			every_pop_faction = {
+				limit = {
+					NOT = { is_same_value = root }
+				}
+				if = {
+					limit = { is_$ETHIC$ = yes }
+					add_modifier = { modifier = embraced_faction days = 3600 }
+				}
+				else = {
+					add_modifier = { modifier = embraced_another_faction days = 3600 }
+				}
+			}
+		}
+	}
+	hidden_effect = {
+		save_event_target_as = TargetFaction
+		owner = {
+			every_relation = {
+				limit = {
+					is_ai = no
+					is_country_type = default
+					has_communications = prev
+					has_intel_level = {
+						who = prev
+						category = government
+						level >= 1
+					}
+				}
+				country_event = { id = factions.2000 }
+			}
+		}
+	}
+}
+
+# This = Country
+# Refresh Unified Ideology obligation depending on the Overlord's current Ideology
+update_unified_ideology_compliance = {
+	if = {
+		limit = {
+			is_country_type = default
+			has_country_flag = under_unified_ideology_law
+			overlord? = {
+				exists = ideology
+			}
+			has_overlord_ideology = no
+		}
+		if = {
+			limit = {
+				NOT = { has_modifier = unified_ideology_not_accomplished }
+			}
+			add_modifier = { modifier = unified_ideology_not_accomplished }
+		}
+		country_event = {
+			id = forceofwill.1040
+			scopes = { from = overlord.ideology }
+		}
+	}
+	else = {
+		remove_modifier = unified_ideology_not_accomplished
+	}
+}
+
+# This = Country
+# Refresh Ideological Ban obligation depending on our current Ideology
+update_ideological_ban_compliance = {
+	if = {
+		limit = {
+			has_country_flag = under_ideological_ban_law
+			exists = ideology
+		}
+		if = {
+			limit = {
+				NOT = { has_modifier = ideological_ban_not_accomplished }
+			}
+			add_modifier = { modifier = ideological_ban_not_accomplished }
+		}
+	}
+	else = {
+		remove_modifier = ideological_ban_not_accomplished
+	}
+}
+
+start_abandon_ideology_process = {
+	# Any Gestalt AI abandon conditions pending on this Ideology no longer apply
+	remove_country_flag = ideology_abandon_strength_met
+	remove_country_flag = ideology_abandon_deviancy_met
+
+	# Add malus modifier
+	add_modifier = {
+		modifier = abandoning_ideology
+		days = -1
+	}
+	# Add malus flag
+	custom_tooltip = start_abandon_ideology
+	set_country_flag = abandoning_ideology
+
+	every_pop_faction = {
+		limit = {
+			ideology? = {
+				is_same_value = prevprev.ideology
+			}
+		}
+		faction_action = "cancel_promote_faction"
+		faction_action = "suppress_faction"
+	}
+}
+
+stop_abandon_ideology_process = {
+	remove_modifier = abandoning_ideology
+	custom_tooltip = stop_abandon_ideology
+	hidden_effect = {
+		remove_country_flag = abandoning_ideology
+		remove_country_flag = ai_auto_abandoning_ideology
+
+		every_ideology = {
+			limit = { prev = { has_country_flag = adopting_ideology_from_invitation_@prev } }
+			prev = {
+				remove_country_flag = post_abandon_should_adopt_ideology_@prev
+				remove_country_flag = adopting_ideology_from_invitation_@prev
+			}
+		}
+		every_playable_country = {
+			limit = { has_country_flag = invited_to_our_ideology_@prev }
+			remove_country_flag = invited_to_our_ideology_@prev
+		}
+
+		every_pop_faction = {
+			limit = {
+				ideology? = {
+					is_same_value = prevprev.ideology
+				}
+			}
+			faction_action = "cancel_suppress_faction"
+		}
+	}
+}
+
+# Scope = country
+abandon_ideology = {
+	if = {
+		limit = { exists = ideology }
+
+		# Momentum cleanup
+		remove_modifier = ideological_momentum_positive
+		remove_modifier = ideological_disruption
+		remove_modifier = moderate_ideological_disruption
+		remove_modifier = severe_ideological_disruption
+
+		every_owned_planet = {
+			remove_modifier = ideological_momentum_low_stability
+			remove_modifier = ideological_momentum_moderately_low_stability
+			remove_modifier = ideological_momentum_dangerously_low_stability
+			remove_modifier = ideological_momentum_low_gestalt
+			remove_modifier = ideological_momentum_moderately_low_gestalt
+			remove_modifier = ideological_momentum_dangerously_low_gestalt
+		}
+
+		# Modifiers cleanup
+		remove_modifier = ideological_recovery_modifier
+		remove_modifier = propaganda_clubs
+		remove_modifier = doctrinal_funding
+		remove_modifier = government_recognition
+		remove_modifier = citizen_parade
+		remove_modifier = propaganda_success
+		remove_modifier = recruitment_boom
+		remove_modifier = doctrinal_champions_modifier
+		remove_modifier = idealistic_civil_servants
+		remove_modifier = loyalty_rewarded
+		remove_modifier = golden_age_of_ideology_society
+		remove_modifier = golden_age_of_ideology_economy
+		remove_modifier = golden_age_of_ideology_politics
+		remove_modifier = radical_nonconformity
+		remove_modifier = radicalism_suppressed
+		# Gestalt modifiers
+		remove_modifier = deviancy_reduced_hive
+		remove_modifier = deviancy_reduced_machine
+		remove_modifier = increased_productivity_modifier
+		remove_modifier = cognitive_improvement_modifier
+		remove_modifier = cognitive_benefits_modifier
+		remove_modifier = regulatory_improvement_modifier
+		remove_modifier = sustainable_doctrine_modifier
+		remove_modifier = nonstandard_thought_processed_hive
+		remove_modifier = nonstandard_thought_processed_machine
+		remove_modifier = nonstandard_thought_suppressed_hive
+		remove_modifier = nonstandard_thought_suppressed_machine
+		remove_modifier = network_outages_modifier
+		remove_modifier = error_mitigation_modifier
+		remove_modifier = medical_support_modifier
+		remove_modifier = extended_rest_modifier
+		remove_modifier = catatonic_drones_hive
+		remove_modifier = catatonic_drones_machine
+		remove_modifier = overburdened_node_modifier
+		remove_modifier = doctrinal_monitoring_modifier
+
+		every_owned_colony = {
+			remove_modifier = demonstrations_proscribed
+			remove_modifier = anti_elite_demonstrations
+		}
+
+		remove_modifier = economic_stagnation
+		remove_modifier = terror_activity
+		remove_modifier = government_corruption
+		remove_modifier = increased_ideological_investment
+		remove_modifier = resolution_adopted_ideology_denounced
+
+		if = {
+			limit = { has_modifier = resolution_ideology_act_modifier }
+			remove_modifier = resolution_ideology_act_modifier
+		}
+		else_if = {
+			limit = { has_modifier = resolution_ideology_act_modifier_gestalt }
+			remove_modifier = resolution_ideology_act_modifier_gestalt
+		}
+
+		if = {
+			limit = { has_country_flag = abandoning_ideology }
+			remove_modifier = abandoning_ideology
+			remove_country_flag = abandoning_ideology
+		}
+
+		set_timed_country_flag = {
+			flag = recently_abandon_ideology
+			days = 3600
+		}
+		set_timed_country_flag = {
+			flag = recently_abandon_ideology_@ideology
+			days = 3600
+		}
+
+		if = {
+			limit = {
+				atb_has_golden_generation = yes
+				has_country_flag = has_gg_funeral_ideology_modifier
+				has_country_flag = golden_generation_ideology_generated
+			}
+			remove_country_flag = golden_generation_ideology_generated
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_commemoration }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memories }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = mixed_legacy }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_materialist }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_spiritualist }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_militarist }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_pacifist }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_xenophobe }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_xenophile }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_authoritarian }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_egalitarian }
+			switch_to_funeral_mod_without_ideology = { MOD_PREFIX = golden_memorial_corporate }
+		}
+
+		abandon_adopted_ideology = yes
+
+		# Check if should be adopting another ideology
+		ordered_ideology = {
+			limit = {
+				prev = { has_country_flag = post_abandon_should_adopt_ideology_@prev }
+			}
+			position = 0
+			order_by = trigger:galactic_strength
+			save_event_target_as = ideology_target
+			prev = {
+				remove_country_flag = post_abandon_should_adopt_ideology_@prev
+				abort_adopt_ideology_special_project = yes
+				country_event = {
+					id = forceofwill.1040
+					scopes = { from = prev }
+				}
+			}
+		}
+
+		# Only one ideology can be adopted, so drop any other pending invitation
+		every_ideology = {
+			limit = {
+				prev = { has_country_flag = post_abandon_should_adopt_ideology_@prev }
+			}
+			prev = {
+				remove_country_flag = post_abandon_should_adopt_ideology_@prev
+				remove_country_flag = adopting_ideology_from_invitation_@prev
+			}
+		}
+		every_playable_country = {
+			limit = { has_country_flag = invited_to_our_ideology_@prev }
+			remove_country_flag = invited_to_our_ideology_@prev
+		}
+	}
+}
+
+abort_adopt_ideology_special_project = {
+	abort_special_project = { type = ADOPT_IDEOLOGY_SPECIAL_PROJECT }
+	remove_modifier = imposed_ideology_not_accomplished
+	remove_country_flag = adopt_ideology_yourself
+}
+
+assign_leader_ideology_to_federation = {
+	federation_leader.ideology = { save_event_target_as = ideology_target }
+	adopt_ideology = event_target:ideology_target
+	every_member = {
+		send_federation_ideology_ultimatum = yes
+	}
+}
+
+send_federation_ideology_ultimatum = {
+	if = {
+		limit = {
+			NOT = { has_ascension_perk = ap_force_of_will }
+			OR = {
+				NOT = { exists = ideology }
+				ideology = {
+					NOT = { is_same_value = event_target:ideology_target }
+				}
+			}
+			NAND = {
+				has_country_flag = under_unified_ideology_law
+				overlord? = {
+					ideology? = {
+						is_same_value = event_target:ideology_target
+					}
+				}
+			}
+		}
+		country_event = {
+			id = forceofwill.7200
+			scopes = { from = event_target:ideology_target }
+		}
+	}
+}
+
+# Spirit Cultivation effect
+
+update_meditation_unity_bonus = {
+	if = {
+		limit = { has_modifier = meditation_unity }
+		remove_modifier = meditation_unity
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_unity_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_unity
+			multiplier = spirit_cultivation_unity_roll_count
+		}
+	}
+}
+
+update_meditation_happiness_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_happiness }
+			remove_modifier = meditation_happiness
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_happiness_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_happiness
+			multiplier = spirit_cultivation_happiness_roll_count
+		}
+	}
+}
+
+update_meditation_stability_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_stability }
+			remove_modifier = meditation_stability
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_stability_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_stability
+			multiplier = spirit_cultivation_stability_roll_count
+		}
+	}
+}
+
+update_meditation_councilor_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_councilor }
+			remove_modifier = meditation_councilor
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_councilor_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_councilor
+			multiplier = spirit_cultivation_councilor_roll_count
+		}
+	}
+}
+
+update_meditation_leader_upkeep_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_leader_upkeep }
+			remove_modifier = meditation_leader_upkeep
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_leader_upkeep_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_leader_upkeep
+			multiplier = spirit_cultivation_leader_upkeep_roll_count
+		}
+	}
+}
+
+update_meditation_leader_lifespan_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_leader_lifespan }
+			remove_modifier = meditation_leader_lifespan
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_leader_lifespan_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_leader_lifespan
+			multiplier = spirit_cultivation_leader_lifespan_roll_count
+		}
+	}
+}
+
+update_meditation_death_cult_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_death_cult }
+			remove_modifier = meditation_death_cult
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_death_cult_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_death_cult
+			multiplier = spirit_cultivation_death_cult_roll_count
+		}
+	}
+}
+
+update_meditation_ascensionist_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_ascensionist }
+			remove_modifier = meditation_ascensionist
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_ascensionist_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_ascensionist
+			multiplier = spirit_cultivation_ascensionist_roll_count
+		}
+	}
+}
+
+update_meditation_dimensional_worship_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_dimensional_worship }
+			remove_modifier = meditation_dimensional_worship
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_dimensional_worship_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_dimensional_worship
+			multiplier = spirit_cultivation_dimensional_worship_roll_count
+		}
+	}
+}
+
+update_meditation_exalted_priesthood_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_exalted_priesthood }
+			remove_modifier = meditation_exalted_priesthood
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_exalted_priesthood_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_exalted_priesthood
+			multiplier = spirit_cultivation_exalted_priesthood_roll_count
+		}
+	}
+}
+
+update_meditation_gospel_masses_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = meditation_gospel_masses }
+			remove_modifier = meditation_gospel_masses
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = spirit_cultivation_gospel_masses_roll_count
+				value > 0
+			}
+		}
+		add_modifier = {
+			modifier = meditation_gospel_masses
+			multiplier = spirit_cultivation_gospel_masses_roll_count
+		}
+	}
+}
+
+update_spirit_cultivation_modifier = {
+	hidden_effect = {
+		if = {
+			limit = { has_modifier = spirit_cultivation }
+			remove_modifier = spirit_cultivation
+		}
+	}
+	add_modifier = { modifier = spirit_cultivation }
+}
+
+clear_spirit_cultivation_roll_flags = {
+	remove_country_flag = spirit_cultivation_unity_rolled
+	remove_country_flag = spirit_cultivation_happiness_rolled
+	remove_country_flag = spirit_cultivation_stability_rolled
+	remove_country_flag = spirit_cultivation_councilor_rolled
+	remove_country_flag = spirit_cultivation_leader_upkeep_rolled
+	remove_country_flag = spirit_cultivation_leader_lifespan_rolled
+	remove_country_flag = spirit_cultivation_death_cult_rolled
+	remove_country_flag = spirit_cultivation_ascensionist_rolled
+	remove_country_flag = spirit_cultivation_dimensional_worship_rolled
+	remove_country_flag = spirit_cultivation_exalted_priesthood_rolled
+	remove_country_flag = spirit_cultivation_gospel_masses_rolled
+}
+
+calc_highest_ideology_pops_planet = {
+	set_variable = {
+		which = highest_ideological_pops_count
+		value = 0
+	}
+	every_owned_planet = {
+		set_variable = {
+			which = ideological_pops_count
+			value = value:pop_ideology_amount_value|IDEOLOGY|fromfrom.root|WEIGHT|1|
+		}
+		if = {
+			limit = {
+				is_capital = no
+				check_variable_arithmetic = {
+					which = ideological_pops_count
+					value > prev.highest_ideological_pops_count
+				}
+			}
+			save_event_target_as = highest_ideology_pops_planet
+			prev = {
+				set_variable = {
+					which = highest_ideological_pops_count
+					value = prev.ideological_pops_count
+				}
+			}
+		}
+		clear_variable = ideological_pops_count
+	}
+	clear_variable = highest_ideological_pops_count
+}
+
+setup_ideological_rebels_government = {
+	if = {
+		limit = { NOT = { exists = event_target:ideological_revolt_target_ideology } }
+		break = yes
+	}
+	clear_ethos = yes
+	if = {
+		limit = { event_target:revolt_country = { is_hive_empire = yes } }
+		shift_ethic = ethic_gestalt_consciousness
+		change_government = {
+			authority = auth_hive_mind
+			civics = random
+		}
+	}
+	else_if = {
+		limit = { event_target:revolt_country = { is_machine_empire = yes } }
+		shift_ethic = ethic_gestalt_consciousness
+		change_government = {
+			authority = auth_machine_intelligence
+			civics = random
+		}
+	}
+	else = {
+		if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_pacifist = yes }
+			}
+			shift_ethic = ethic_fanatic_pacifist
+		}
+		else_if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_militarist = yes }
+			}
+			shift_ethic = ethic_fanatic_militarist
+		}
+		else_if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_authoritarian = yes }
+			}
+			shift_ethic = ethic_fanatic_authoritarian
+		}
+		else_if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_egalitarian = yes }
+			}
+			shift_ethic = ethic_fanatic_egalitarian
+		}
+		else_if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_xenophile = yes }
+			}
+			shift_ethic = ethic_fanatic_xenophile
+		}
+		else_if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_xenophobe = yes }
+			}
+			shift_ethic = ethic_fanatic_xenophobe
+		}
+		else_if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_spiritualist = yes }
+			}
+			shift_ethic = ethic_fanatic_spiritualist
+		}
+		else_if = {
+			limit = {
+				event_target:ideological_revolt_target_ideology = { is_materialist = yes }
+			}
+			shift_ethic = ethic_fanatic_materialist
+		}
+		change_government = {
+			authority = random
+			civics = random
+		}
+	}
+	[[DONT_COPY_IDEOLOGY]
+		create_ideology = {
+			auto_adopt = yes
+			effect = {
+				save_event_target_as = generated_ideology
+			}
+		}
+	]
+	[[!DONT_COPY_IDEOLOGY]
+		adopt_ideology = event_target:ideological_revolt_target_ideology
+	]
+}
+
+# This: Planet scope
+# Saves the revolting planet and deduces the seceding species; shared by the separatist secession paths.
+deduce_rebel_planet_and_species = {
+	save_event_target_as = rebel_planet
+
+	event_target:revolt_situation = {
+		event_target:rebel_planet = {
+			random_owned_species = {
+				limit = { has_species_flag = rebellion_species@prev }
+				save_event_target_as = rebellion_species
+			}
+		}
+
+		if = {
+			limit = {
+				NOT = { exists = event_target:rebellion_species }
+				is_situation_type = situation_ideological_revolt
+			}
+			deduce_ideological_rebel_founder = yes
+		}
+
+		if = {
+			limit = {
+				NOR = {
+					exists = event_target:rebellion_species
+					is_situation_type = situation_ideological_revolt
+				}
+			}
+			deduce_planetary_separatism_species_rebel_planet = yes
+		}
+	}
+}
+
+# This: the revolt situation.
+# Deduces the organic founder for an ideological secession: a weighted-random organic species on the planet, favoring the most populous.
+deduce_ideological_rebel_founder = {
+	event_target:rebel_planet = {
+		random_owned_species = {
+			limit = {
+				is_sapient = yes
+				# Search for organic species
+				OR = {
+					is_archetype = BIOLOGICAL
+					is_archetype = LITHOID
+				}
+			}
+			weights = {
+				base = 1
+				complex_trigger_modifier = { # favor the species with the most pops on the planet
+					trigger = count_owned_pop_amount
+					trigger_scope = event_target:rebel_planet
+					parameters = {
+						limit = { is_same_species = prevprev } # prevprev = the candidate species
+					}
+					mode = add
+				}
+			}
+			save_event_target_as = rebellion_species
+		}
+	}
+}
+
+# This: the freshly created separatist rebel empire (inside a create_rebels effect)
+# Builds its government from the revolting empire: origin, ethics/authority, ruler, comms.
+setup_separatist_rebel_empire = {
+	set_country_type = default #we don't need the rebel country type with this version, but create_rebels effect has useful functionalities
+	save_event_target_as = rebel_empire
+	set_country_flag = separatist_rebel_of_@root.owner
+	if = {
+		limit = {
+			has_trait = trait_necrophage
+		}
+		set_origin = origin_necrophage
+	}
+	else_if = {
+		limit = {
+			has_trait = trait_void_dweller_1
+		}
+		set_origin = origin_void_dwellers
+	}
+	else_if = {
+		limit = {
+			has_trait = trait_void_dweller_2
+		}
+		set_origin = origin_void_machines
+	}
+	else_if = {
+		limit = {
+			has_trait = trait_cave_dweller
+		}
+		set_origin = origin_subterranean
+	}
+	else_if = {
+		limit = {
+			has_trait = trait_robot_cave_dweller
+		}
+		set_origin = origin_subterranean_machines
+	}
+	else_if = {
+		limit = {
+			event_target:revolt_country = { has_origin = origin_tree_of_life }
+			has_trait = trait_hive_mind
+		}
+		set_origin = origin_tree_of_life
+	}
+
+	if = {
+		limit = {
+			event_target:revolt_situation = {
+				is_situation_type = situation_ideological_revolt
+			}
+		}
+		[[DONT_COPY_IDEOLOGY]
+			setup_ideological_rebels_government = {
+				DONT_COPY_IDEOLOGY = $DONT_COPY_IDEOLOGY$
+			}
+		]
+		[[!DONT_COPY_IDEOLOGY]
+			setup_ideological_rebels_government = yes
+		]
+	}
+	else_if = {
+		limit = {
+			has_trait = trait_machine_unit
+			event_target:revolt_country = { is_individual_machine = no }
+			NOT = { has_ethic = ethic_gestalt_consciousness }
+		}
+		shift_ethic = ethic_gestalt_consciousness
+		change_government = {
+			authority = auth_machine_intelligence
+			civics = random
+		}
+	}
+	else_if = {
+		limit = {
+			has_trait = trait_hive_mind
+			NOT = { has_ethic = ethic_gestalt_consciousness }
+		}
+		shift_ethic = ethic_gestalt_consciousness
+		change_government = {
+			authority = auth_hive_mind
+			civics = random
+		}
+	}
+	else_if = {
+		limit = {
+			event_target:revolt_situation = { has_situation_flag = slave_revolt }
+		}
+		shift_ethic = ethic_fanatic_egalitarian
+		change_government = random
+	}
+	else = {
+		event_target:revolt_situation = {
+			switch = {
+				trigger = has_situation_flag
+				pacifist = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_pacifist
+					}
+				}
+				militarist = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_militarist
+					}
+				}
+				authoritarian = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				egalitarian = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				xenophile = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_xenophile
+					}
+				}
+				xenophobe = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				spiritualist = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				materialist = {
+					event_target:rebel_empire = {
+						shift_ethic = ethic_fanatic_materialist
+					}
+				}
+			}
+		}
+		change_government = random
+	}
+
+	if = {
+		limit = { is_nomadic = yes }
+		set_resource_converter = nomadic_operational_reserves
+		set_faction_properties = {
+			needs_border_access = no
+		}
+		create_fleet = {
+			effect = {
+				set_owner = prev
+
+				create_ship = {
+					name = random
+					random_existing_design = nomads_constructor
+				}
+
+				set_fleet_stance = evasive
+				set_location = prev.capital_star
+			}
+		}
+		# nomads.20 starts the Operational Reserves situation and moves fleets into orbit, so it runs after the ships exist.
+		country_event = { id = nomads.20 }
+	}
+
+	create_leader = {
+		class = random_ruler
+		species = owner_main_species
+		name = random
+		skill = 5
+		effect = {
+			event_target:rebel_empire = { assign_leader = prev }
+			# add_random_leader_trait = yes
+			# add_random_leader_trait = yes
+		}
+	}
+
+	establish_communications_no_message = event_target:revolt_country
+	if = {
+		limit = { exists = event_target:new_owner_empire }
+		establish_communications_no_message = event_target:new_owner_empire
+	}
+}
+
+# This: Planet scope
+create_rebels_and_secede_planet = {
+	deduce_rebel_planet_and_species = yes
+
+	event_target:revolt_situation = {
+		owner = {
+			save_event_target_as = revolt_country
+		}
+		random_country = {
+			limit = {
+				has_country_flag = revolt_joiner_empire_@prev
+				#Re-pick the backer with the trigger this chain polled its backers with.
+				OR = {
+					AND = {
+						prev = { is_situation_type = situation_ideological_revolt }
+						country_can_back_ideological_revolt_trigger = {
+							SITUATION_OWNER = event_target:revolt_situation.owner
+						}
+					}
+					AND = {
+						prev = {
+							NOT = { is_situation_type = situation_ideological_revolt }
+						}
+						separatism_joining_eligibility_trigger = {
+							SPECIES = event_target:rebellion_species
+							SITUATION = event_target:revolt_situation
+						}
+					}
+				}
+			}
+			save_event_target_as = new_owner_empire
+		}
+	}
+
+	create_rebels = {
+		name = random
+		ethos = random
+		authority = random
+		civics = random
+		origin = "origin_separatists"
+		species = event_target:rebellion_species
+		flag = random
+		nomadic = owner # a seceding Arkship spawns a nomadic empire
+		effect = {
+			[[DONT_COPY_IDEOLOGY]
+				setup_separatist_rebel_empire = {
+					DONT_COPY_IDEOLOGY = $DONT_COPY_IDEOLOGY$
+				}
+			]
+			[[!DONT_COPY_IDEOLOGY]
+				setup_separatist_rebel_empire = yes
+			]
+			event_target:rebel_planet = {
+				secede_planet_to_rebels = yes
+			}
+			event_target:revolt_country = {
+				every_owned_planet = { #Flip the additional joiner planets
+					limit = {
+						has_modifier = instability_join_revolt
+						planet_stability < @[ stabilitylevel2 + 10 ]
+						OR = {
+							NOT = { exists = starbase }
+							starbase = { is_owned_by = event_target:revolt_country }
+						}
+						has_ground_combat = no
+						has_orbital_bombardment = no
+					}
+					if = { #if you check this in the original limit of every_owned_planet, it calcs it before the loop is executed. Which means it will set the owner of the system twice if there are two colonies in the system.
+						limit = {
+							exists = controller
+							controller = { is_same_value = event_target:revolt_country }
+						}
+						remove_modifier = instability_join_revolt
+						set_owner = event_target:rebel_empire
+						if = {
+							limit = {
+								event_target:revolt_situation = { has_situation_flag = slave_revolt }
+							}
+							add_modifier = {
+								modifier = free_at_last
+								clear_on_owner_change = yes
+								days = 7200
+							}
+						}
+						else = {
+							add_modifier = {
+								modifier = insurgents_free
+								clear_on_owner_change = yes
+								days = 7200
+							}
+						}
+
+						solar_system = {
+							# Nomads have no primary starbases and cannot claim systems.
+							if = {
+								limit = {
+									event_target:revolt_country = { is_nomadic = no }
+								}
+								if = {
+									limit = { exists = starbase }
+									starbase = { set_owner = event_target:rebel_empire }
+								}
+								add_claims = {
+									who = event_target:revolt_country
+									show_notification = no
+								}
+							}
+							every_system_planet = {
+								limit = {
+									is_colony = yes
+									NOT = { is_same_value = prevprev }
+									is_owned_by = event_target:revolt_country
+								}
+								set_owner = event_target:rebel_empire
+							}
+							every_fleet_in_system = {
+								limit = {
+									is_owned_by = event_target:revolt_country
+									can_go_mia = yes
+								}
+								set_mia = mia_return_home
+							}
+						}
+					}
+				}
+			}
+			every_system_within_border = { #Add a few systems
+				every_neighbor_system = {
+					limit = {
+						exists = owner
+						owner = { is_same_value = event_target:revolt_country }
+						exists = starbase
+						NOR = {
+							starbase = {
+								OR = {
+									is_starbase_type = sfortress
+									NOT = { is_owned_by = event_target:revolt_country }
+								}
+							}
+							any_system_planet = {
+								is_colony = yes
+							}
+						}
+					}
+					starbase = { set_owner = event_target:rebel_empire }
+					add_claims = {
+						who = event_target:revolt_country
+						show_notification = no
+					}
+					every_fleet_in_system = {
+						limit = {
+							is_owned_by = event_target:revolt_country
+							can_go_mia = yes
+						}
+						set_mia = mia_return_home
+					}
+				}
+			}
+			while = { #Get rid of bordergore systems
+				limit = { #Note: system_within_border caching is quite funky at a time like this when many borders are changing hands. The starbase ownership is checked to be extra sure, since it is not cached (unlike system ownership - though that probably would have worked too)
+					event_target:revolt_country = {
+						any_system_within_border = {
+							exists = starbase
+							starbase.owner = { is_same_value = prevprev }
+							count_neighbor_system = {
+								count >= 2
+								limit = {
+									exists = starbase.owner
+									starbase.owner = {
+										is_same_value = event_target:rebel_empire
+									}
+								}
+							}
+							NOR = {
+								starbase = { is_starbase_type = sfortress }
+								any_system_planet = {
+									is_colony = yes
+								}
+							}
+						}
+					}
+				}
+				event_target:revolt_country = {
+					every_system_within_border = {
+						limit = {
+							exists = starbase
+							starbase.owner = { is_same_value = prevprev }
+							count_neighbor_system = {
+								count >= 2
+								limit = {
+									exists = starbase.owner
+									starbase.owner = {
+										is_same_value = event_target:rebel_empire
+									}
+								}
+							}
+							NOR = {
+								starbase = { is_starbase_type = sfortress }
+								any_system_planet = {
+									is_colony = yes
+								}
+							}
+						}
+						starbase = {
+							set_owner = event_target:rebel_empire
+						}
+						add_claims = {
+							who = event_target:revolt_country
+							show_notification = no
+						}
+						every_fleet_in_system = {
+							limit = {
+								is_owned_by = event_target:revolt_country
+								can_go_mia = yes
+							}
+							set_mia = mia_return_home
+						}
+					}
+				}
+			}
+
+			if = {
+				# The backer cannot own the seceded colonies (Nomad backer or Arkship target):
+				# the rebels stay independent and become the backer's subject instead.
+				limit = {
+					exists = event_target:new_owner_empire
+					ideological_revolt_creates_vassal_trigger = {
+						BACKER = event_target:new_owner_empire
+						TARGET = event_target:rebel_planet
+					}
+				}
+				ruler = {
+					save_event_target_as = exiled_rebel # not exiled here; unrest.4220 shows them as the rebel spokesperson
+				}
+				set_subject_of = {
+					who = event_target:new_owner_empire
+					preset = preset_nomad_tributary
+				}
+				event_target:new_owner_empire = {
+					country_event = { id = unrest.4220 }
+				}
+			}
+			else_if = {
+				limit = { exists = event_target:new_owner_empire }
+				set_country_flag = silence_destroy_event
+				ruler = {
+					save_event_target_as = exiled_rebel
+					exile_leader_as = exiled_rebel
+				}
+				every_owned_starbase = {
+					set_owner = event_target:new_owner_empire
+				}
+				every_owned_planet = {
+					set_owner = event_target:new_owner_empire
+					if = {
+						limit = {
+							event_target:revolt_situation = { has_situation_flag = slave_revolt }
+						}
+						add_modifier = {
+							modifier = slaves_defected
+							clear_on_owner_change = yes
+							days = 7200
+						}
+					}
+				}
+				event_target:new_owner_empire = {
+					country_event = { id = unrest.4220 }
+				}
+			}
+			else = {
+				add_resource = {
+					minerals = 15000
+					energy = 15000
+					food = 15000
+					consumer_goods = 10000
+					alloys = 10000
+					rare_crystals = 1000
+					volatile_motes = 1000
+					exotic_gases = 1000
+					influence = 1000
+					unity = 10000
+				}
+				#It copies the traditions and technologies in code
+
+				create_fleet_from_naval_cap = 0.8
+				last_created_fleet = {
+					set_location = event_target:rebel_planet
+				}
+			}
+		}
+	}
+}
+
+# This: Planet scope
+# The backer cannot own the planet (Nomad backer or Arkship colony): spin the revolt into a vassal empire instead.
+secede_planet_to_ideological_revolt_nomad_vassal = {
+	deduce_rebel_planet_and_species = yes
+
+	create_rebels = {
+		name = random
+		ethos = random
+		authority = random
+		civics = random
+		origin = "origin_separatists"
+		species = event_target:rebellion_species
+		flag = random
+		nomadic = owner # a seceding Arkship spawns a nomadic empire
+		effect = {
+			setup_separatist_rebel_empire = yes
+			save_event_target_as = nomad_vassal
+			save_event_target_as = revolt_planet_new_owner
+
+			set_subject_of = {
+				who = event_target:new_owner_empire
+				preset = preset_nomad_tributary
+			}
+
+			event_target:rebel_planet = {
+				secede_planet_to_rebels = yes
+			}
+		}
+	}
+}
+
+# This: Planet scope
+transfer_planet_to_ideological_revolt_supporter = {
+	event_target:revolt_situation = {
+		owner = { save_event_target_as = revolt_country }
+	}
+
+	if = {
+		# A Nomad backer cannot own planets and a settled backer cannot own an Arkship:
+		# spin the revolt into a vassal empire instead.
+		limit = {
+			OR = {
+				event_target:new_owner_empire = { is_nomadic = yes }
+				is_planet_class = pc_ark
+			}
+		}
+		secede_planet_to_ideological_revolt_nomad_vassal = yes
+	}
+	else = {
+		set_owner = event_target:new_owner_empire
+		event_target:new_owner_empire = { save_event_target_as = revolt_planet_new_owner }
+
+		solar_system = {
+			if = {
+				limit = {
+					exists = starbase
+					starbase = { is_owned_by = event_target:revolt_country }
+				}
+				starbase = { set_owner = event_target:new_owner_empire }
+			}
+			add_claims = {
+				who = event_target:revolt_country
+				show_notification = no
+			}
+			every_system_planet = {
+				limit = {
+					is_colony = yes
+					is_owned_by = event_target:revolt_country
+				}
+				set_owner = event_target:new_owner_empire
+			}
+			every_fleet_in_system = {
+				limit = {
+					is_owned_by = event_target:revolt_country
+					can_go_mia = yes
+				}
+				set_mia = mia_return_home
+			}
+		}
+	}
+}
+
+secede_planet_to_rebels = {
+	set_owner = event_target:rebel_empire
+	if = {
+		limit = {
+			event_target:revolt_situation = { has_situation_flag = slave_revolt }
+		}
+		add_modifier = {
+			modifier = free_at_last
+			clear_on_owner_change = yes
+			days = 7200
+		}
+	}
+	else = {
+		add_modifier = {
+			modifier = insurgents_free
+			clear_on_owner_change = yes
+			days = 7200
+		}
+	}
+
+	if = {
+		limit = {
+			NOT = { is_planet_class = pc_ark }
+		}
+		solar_system = {
+			if = {
+				limit = { exists = starbase }
+				starbase = {
+					if = {
+						limit = {
+							is_owned_by = event_target:revolt_country
+						}
+						set_owner = event_target:rebel_empire
+						if = {
+							limit = { has_starbase_size = starbase_outpost }
+							set_starbase_size = starbase_starport
+							set_starbase_module = {
+								slot = 1
+								module = shipyard
+							}
+							set_starbase_module = {
+								slot = 2
+								module = shipyard
+							}
+						}
+						else_if = {
+							limit = {
+								NOT = { has_starbase_module = shipyard }
+							}
+							set_starbase_module = {
+								slot = 1
+								module = shipyard
+							}
+							set_starbase_module = {
+								slot = 2
+								module = shipyard
+							}
+						}
+					}
+				}
+			}
+			else = {
+				create_starbase = {
+					size = starbase_starport
+					module = shipyard
+					module = shipyard
+					owner = event_target:rebel_empire
+				}
+			}
+			add_claims = {
+				who = event_target:revolt_country
+				show_notification = no
+			}
+			every_system_planet = {
+				limit = {
+					is_colony = yes
+					NOT = { is_same_value = event_target:rebel_planet }
+					is_owned_by = event_target:revolt_country
+				}
+				set_owner = event_target:rebel_empire
+			}
+			every_fleet_in_system = {
+				limit = {
+					is_owned_by = event_target:revolt_country
+					can_go_mia = yes
+				}
+				set_mia = mia_return_home
+			}
+		}
+	}
+}
+
+# This = Colony
+add_memorial_1 = {
+	if = {
+		limit = { owner? = { has_valid_civic = civic_entropy_drinkers } }
+		add_building = building_lifecrypt_1
+	}
+	else_if = {
+		limit = { owner? = { has_valid_civic = civic_entropy_drinkers_corporate } }
+		add_building = building_lifecrypt_corporate_1
+	}
+	else_if = {
+		limit = { owner? = { has_valid_civic = civic_entropy_drinkers_hive_mind } }
+		add_building = building_lifecrypt_hive_mind_1
+	}
+	else_if = {
+		limit = { owner? = { has_valid_civic = civic_entropy_drinkers_machine } }
+		add_building = building_lifecrypt_machine_1
+	}
+	else_if = {
+		limit = { owner? = { is_wilderness_empire = yes } }
+		add_building = building_avatar_chamber_1
+	}
+	else_if = {
+		limit = { owner? = { is_memorialist_empire = yes } }
+		add_building = building_galactic_memorial_1
+	}
+	else_if = {
+		limit = { owner? = { is_machine_empire = yes } }
+		add_building = building_simulation_1
+	}
+	else_if = {
+		limit = { owner? = { is_hive_empire = yes } }
+		add_building = building_sensorium_1
+	}
+	else_if = {
+		limit = { owner? = { is_megacorp = yes } }
+		add_building = building_corporate_monument
+	}
+	else_if = {
+		limit = { owner? = { is_ai = no } }
+		add_building = building_autochthon_monument
+	}
+}
+
+# Open Stars Sovereignty
+
+try_give_open_stars_first_contact_bonus_salvagers = {
+	if = {
+		limit = { has_country_flag = open_stars_salvagers_first_contact_bonus }
+		open_stars_first_contact_bonus = yes
+		remove_country_flag = open_stars_salvagers_first_contact_bonus
+	}
+}
+
+try_give_open_stars_first_contact_bonus_shroudwalkers = {
+	if = {
+		limit = { has_country_flag = open_stars_shroudwalkers_first_contact_bonus }
+		open_stars_first_contact_bonus = yes
+		remove_country_flag = open_stars_shroudwalkers_first_contact_bonus
+	}
+}
+
+try_give_open_stars_first_contact_bonus = {
+	if = {
+		limit = { is_open_stars_sovereignty_empire = yes }
+		open_stars_first_contact_bonus = yes
+	}
+}
+
+open_stars_first_contact_bonus = {
+	add_monthly_resource_mult = {
+		resource = unity
+		value = @tier1unityreward
+		min = @tier1unitymin
+		max = @tier1unitymax
+	}
+}
+
+jubilee_random_resource_roll = {
+	while = {
+		count = value:tenet_tier_as_factor|VALUE|1|TENET_KEY|tenet_jubilation|
+		random_list = {
+			10 = { # energy for individualists
+				add_modifier = { modifier = jubilee_energy }
+				modifier = {
+					factor = 0
+					OR = {
+						is_gestalt = yes
+						is_nomadic = yes
+					}
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_energy
+				}
+			}
+			10 = { # energy for gestalts
+				add_modifier = { modifier = jubilee_energy_gestalt }
+				modifier = {
+					factor = 0
+					OR = {
+						is_gestalt = no
+						is_nomadic = yes
+					}
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_energy_gestalt
+				}
+			}
+			10 = { # minerals for individualists
+				add_modifier = { modifier = jubilee_minerals }
+				modifier = {
+					factor = 0
+					OR = {
+						is_gestalt = yes
+						is_nomadic = yes
+					}
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_minerals
+				}
+			}
+			10 = { # minerals for gestalts
+				add_modifier = { modifier = jubilee_minerals_gestalt }
+				modifier = {
+					factor = 0
+					OR = {
+						is_gestalt = no
+						is_nomadic = yes
+					}
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_minerals_gestalt
+				}
+			}
+			10 = { # food for individualists
+				add_modifier = { modifier = jubilee_food }
+				modifier = {
+					factor = 0
+					is_gestalt = yes
+				}
+				modifier = {
+					factor = 0
+					is_lithoid_empire = yes
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_food
+				}
+			}
+			10 = { # food for gestalts
+				add_modifier = { modifier = jubilee_food_gestalt }
+				modifier = {
+					factor = 0
+					is_gestalt = no
+				}
+				modifier = {
+					factor = 0
+					is_lithoid_empire = yes
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_food_gestalt
+				}
+			}
+			10 = { # consumer goods
+				add_modifier = { modifier = jubilee_consumer_goods }
+				modifier = {
+					factor = 0
+					is_gestalt = yes
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_consumer_goods
+				}
+			}
+			10 = { # alloys for individualists
+				add_modifier = { modifier = jubilee_alloys }
+				modifier = {
+					factor = 0
+					is_gestalt = yes
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_alloys
+				}
+			}
+			10 = { # alloys for gestalts
+				add_modifier = { modifier = jubilee_alloys_gestalt }
+				modifier = {
+					factor = 0
+					is_gestalt = no
+				}
+				modifier = {
+					factor = 0
+					has_modifier = jubilee_alloys_gestalt
+				}
+			}
+		}
+	}
+}
+
+# constitutional improvement agenda - permanent population political power increase
+increase_pop_political_power {
+    hidden_effect = {
+            if = {
+                limit = {
+                    NOT = { is_variable_set = pop_political_power_increase_count }
+                }
+                set_variable = {
+                    which = pop_political_power_increase_count
+                    value = 0
+                }
+            }
+
+            change_variable = {
+                which = pop_political_power_increase_count
+                value = $VALUE$
+            }
+
+            if = {
+                limit = { has_modifier = pop_political_power_modifier }
+                remove_modifier = pop_political_power_modifier
+            }
+            add_modifier = {
+                modifier = pop_political_power_modifier
+                mult = pop_political_power_increase_count
+            }
+        }
+}
+
+jubilee_finisher_effect = {
+	jubilee_finisher_effect_resource = {
+		RESOURCE = energy
+		MODIFIER = jubilee_energy
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = energy
+		MODIFIER = jubilee_energy_gestalt
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = minerals
+		MODIFIER = jubilee_minerals
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = minerals
+		MODIFIER = jubilee_minerals_gestalt
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = food
+		MODIFIER = jubilee_food
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = food
+		MODIFIER = jubilee_food_gestalt
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = consumer_goods
+		MODIFIER = jubilee_consumer_goods
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = alloys
+		MODIFIER = jubilee_alloys
+	}
+	jubilee_finisher_effect_resource = {
+		RESOURCE = alloys
+		MODIFIER = jubilee_alloys_gestalt
+	}
+}
+
+jubilee_finisher_effect_resource = {
+	if = {
+		limit = { has_modifier = $MODIFIER$ }
+		custom_tooltip = jubilee_finisher_$RESOURCE$_tt
+		hidden_effect = {
+			add_monthly_resource_mult = {
+				resource = $RESOURCE$
+				value = 6
+				min = @tier1materialmin
+				max = @tier1materialmax
+			}
+			remove_modifier = $MODIFIER$
+		}
+	}
+}
+
+jubilee_remove_modifiers = {
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_energy
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_energy_gestalt
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_minerals
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_minerals_gestalt
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_food
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_food_gestalt
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_consumer_goods
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_alloys
+	}
+	jubilee_remove_modifier = {
+		MODIFIER = jubilee_alloys_gestalt
+	}
+}
+
+jubilee_remove_modifier = {
+	if = {
+		limit = { has_modifier = $MODIFIER$ }
+		remove_modifier = $MODIFIER$
+	}
+}
+
+# Lost Makers origin effect
+
+lost_makers_create_event_chain = {
+	hidden_effect = {
+		set_variable = {
+			which = lost_makers_project_counter
+			value = 0
+		}
+		set_variable = {
+			which = lost_makers_artifact_counter
+			value = 0
+		}
+	}
+	begin_event_chain = {
+		event_chain = chain_lost_makers
+		target = this
+	}
+	hidden_effect = {
+		remove_point_of_interest = precursor_system.1
+		remove_point_of_interest = precursor_system.2
+		end_event_chain = pre_chain_lost_makers
+	}
+}
+
+lost_makers_find_precursor_artifact_effect = {
+	change_variable = {
+		which = lost_makers_artifact_counter
+		value = 1
+	}
+
+	if = {
+		limit = {
+			check_variable = {
+				which = lost_makers_artifact_counter
+				value = 1
+			}
+		}
+		country_event = {
+			id = forceofwill.3100
+			days = 30
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = lost_makers_artifact_counter
+				value = 3
+			}
+		}
+		country_event = {
+			id = forceofwill.3200
+			days = 30
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = lost_makers_artifact_counter
+				value = 5
+			}
+		}
+		country_event = {
+			id = forceofwill.3300
+			days = 30
+		}
+	}
+}
+
+lost_makers_update_counter = {
+	change_variable = {
+		which = lost_makers_project_counter
+		value = 1
+	}
+	add_event_chain_counter = {
+		event_chain = chain_lost_makers
+		counter = unearthed_memories
+		amount = 1
+	}
+}
+
+lost_makers_restore_directive_effect = {
+	switch = {
+		trigger = has_country_flag
+		lost_maker_precursor_vultaum = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_militarist
+				NAME = lost_makers_ideology_name_vultaum
+				TENETS = "tenet = tenet_lost_makers_vultaum"
+			}
+		}
+		lost_maker_precursor_yuht = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_xenophobe
+				NAME = lost_makers_ideology_name_yuht
+				TENETS = "tenet = tenet_lost_makers_yuht"
+			}
+		}
+		lost_maker_precursor_first_league = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_militarist
+				TENETS = "tenet = tenet_lost_makers_first_league"
+			}
+		}
+		lost_maker_precursor_irassian = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_authoritarian
+				NAME = lost_makers_ideology_name_irassian
+				TENETS = "tenet = tenet_lost_makers_irassian"
+			}
+		}
+		lost_maker_precursor_cybrex = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_pacifist
+				TENETS = "tenet = tenet_lost_makers_cybrex"
+			}
+		}
+		lost_maker_precursor_zroni = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_materialist
+				NAME = lost_makers_ideology_name_zroni
+				TENETS = "tenet = tenet_lost_makers_zroni"
+			}
+		}
+		lost_maker_precursor_baol = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_militarist
+				NAME = lost_makers_ideology_name_baol
+				TENETS = "tenet = tenet_lost_makers_baol"
+			}
+		}
+		lost_maker_precursor_inetian = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_xenophile
+				NAME = lost_makers_ideology_name_inetian
+				TENETS = "tenet = tenet_lost_makers_inetian"
+			}
+		}
+		lost_maker_precursor_adakkaria = {
+			generate_ideology = {
+				ETHIC = ethic_fanatic_materialist
+				NAME = lost_makers_ideology_name_adakkaria
+				TENETS = "tenet = tenet_lost_makers_adakkaria"
+			}
+		}
+	}
+}
+
+# Replaces the Redundant Module trait with a Restored Module trait across the scoped country
+# RESTORED_TRAIT = the restored module trait to add
+lost_makers_restore_module_effect = {
+	every_owned_pop_group = {
+		limit = { pop_group_has_trait = trait_redundant_module }
+		prev = {
+			modify_species = {
+				species = prev.species
+				remove_trait = trait_redundant_module
+				add_trait = $RESTORED_TRAIT$
+			}
+		}
+	}
+	# Ships can carry a colonization species that no longer has pop groups on any colony
+	every_controlled_ship = {
+		limit = {
+			is_ship_class = shipclass_colonizer
+			species? = {
+				has_trait = trait_redundant_module
+			}
+		}
+		prev = {
+			modify_species = {
+				species = prev.species
+				remove_trait = trait_redundant_module
+				add_trait = $RESTORED_TRAIT$
+			}
+		}
+	}
+	update_node_portraits_if_gestalt_effect = yes
+}
+
+add_planet_regulation_modifier = {
+	if = {
+		limit = { owner? = { has_active_tenet = tenet_lost_makers_irassian } }
+		add_modifier = { modifier = $IRASSIAN$ days = -1 }
+	}
+	else = {
+		add_modifier = { modifier = $DEFAULT$ days = -1 }
+	}
+}
+
+add_default_planet_regulation_modifier = {
+	add_planet_regulation_modifier = {
+		DEFAULT = planet_population_control
+		IRASSIAN = irassian_planet_population_control
+	}
+}
+
+add_gestalt_planet_regulation_modifier = {
+	add_planet_regulation_modifier = {
+		DEFAULT = planet_population_control_gestalt
+		IRASSIAN = irassian_planet_population_control_gestalt
+	}
+}
+
+add_robot_planet_regulation_modifier = {
+	add_planet_regulation_modifier = {
+		DEFAULT = planet_robot_assembly_control
+		IRASSIAN = irassian_planet_robot_assembly_control
+	}
+}
+
+remove_default_planet_regulation_modifier = {
+	remove_modifier = planet_population_control
+	remove_modifier = irassian_planet_population_control
+}
+
+remove_gestalt_planet_regulation_modifier = {
+	remove_modifier = planet_population_control_gestalt
+	remove_modifier = irassian_planet_population_control_gestalt
+}
+
+remove_robot_planet_regulation_modifier = {
+	remove_modifier = planet_robot_assembly_control
+	remove_modifier = irassian_planet_robot_assembly_control
+}
+
+# Golden Generation origin effect
+
+spawn_golden_generation_leader = {
+	create_saved_leader = {
+		creator = root
+		key = new_golden_generation_leader
+		class = $CLASS$
+		species = owner_main_species
+		tier = leader_tier_renowned
+		name = random
+		custom_description = golden_generation_student_leader_desc
+		randomize_traits = no
+		effect = {
+			set_skill = 1
+			set_age = 5
+			set_leader_flag = leader_golden_generation
+		}
+	}
+	activate_saved_leader = {
+		in_training = yes
+		add_to_owned = no
+		key = new_golden_generation_leader
+	}
+}
+
+add_owner_initial_skill_modifiers = {
+	add_skill_without_trait_selection = owner.modifier:leader_initial_skill
+	switch = {
+		trigger = leader_class
+		commander = {
+			add_skill_without_trait_selection = owner.modifier:commander_initial_skill
+		}
+		official = {
+			add_skill_without_trait_selection = owner.modifier:official_initial_skill
+		}
+		scientist = {
+			add_skill_without_trait_selection = owner.modifier:scientist_initial_skill
+		}
+	}
+}
+
+# scope = planet
+remove_golden_academy = {
+	remove_building = building_golden_academy
+	remove_carrier_flag = golden_academy_built
+	if = {
+		limit = { has_modifier = academy_sterilization_program }
+		remove_modifier = academy_sterilization_program
+	}
+	owner? = {
+		if = {
+			limit = { has_modifier = golden_academy_budget_modifier }
+			remove_modifier = golden_academy_budget_modifier
+		}
+	}
+}
+
+try_firing_gg_councilor_event = {
+	random_owned_leader = {
+		limit = {
+			is_golden_generation_councilor = yes
+			NOT = { has_leader_flag = golden_generation_not_$AFFIX$ }
+		}
+		save_event_target_as = $AFFIX$_1
+	}
+	if = {
+		limit = {
+			any_owned_leader = { can_be_$AFFIX$_2 = yes }
+		}
+		random_owned_leader = {
+			limit = { can_be_$AFFIX$_2 = yes }
+			save_event_target_as = $AFFIX$_2
+		}
+		random = {
+			chance = $CHANCE$
+			event_target:$AFFIX$_1 = { set_leader_flag = golden_generation_$AFFIX$ }
+			event_target:$AFFIX$_2 = { set_leader_flag = golden_generation_$AFFIX$ }
+			country_event = {
+				id = forceofwill.$EVENT_2$
+				days = 10
+				random = 5
+			}
+			set_country_flag = forceofwill.$EVENT_1$_event_triggered
+		}
+	}
+	else = {
+		event_target:$AFFIX$_1 = {
+			set_leader_flag = golden_generation_not_$AFFIX$
+		}
+	}
+}
+
+try_firing_ego_clash_event = {
+	try_firing_gg_councilor_event = {
+		AFFIX = ego_clasher
+		EVENT_1 = 5540
+		EVENT_2 = 5541
+		CHANCE = 10
+	}
+}
+
+try_firing_council_harmony_event = {
+	try_firing_gg_councilor_event = {
+		AFFIX = harmonious_councilor
+		EVENT_1 = 5545
+		EVENT_2 = 5546
+		CHANCE = 25
+	}
+}
+
+add_golden_generation_funeral_modifier = {
+	if = {
+		limit = {
+			atb_has_golden_generation = yes
+			from = { has_trait = leader_trait_golden_generation }
+		}
+		if = {
+			limit = {
+				has_country_flag = golden_generation_ideology_generated
+			}
+			add_modifier = {
+				modifier = $MOD_PREFIX$_with_ideology
+				years = $YEARS$
+			}
+			set_timed_country_flag = {
+				flag = has_gg_funeral_ideology_modifier
+				years = $YEARS$
+			}
+			set_timed_country_flag = {
+				flag = has_$MOD_PREFIX$_with_ideology
+				years = $YEARS$
+			}
+		}
+		else = {
+			add_modifier = {
+				modifier = $MOD_PREFIX$_no_ideology
+				years = $YEARS$
+			}
+		}
+	}
+}
+
+switch_to_funeral_mod_without_ideology = {
+	if = {
+		limit = {
+			has_modifier = $MOD_PREFIX$_with_ideology
+		}
+		export_trigger_value_to_variable = {
+			trigger = timed_flag_days_left
+			parameters = {
+				flag = has_$MOD_PREFIX$_with_ideology
+			}
+			variable = $MOD_PREFIX$_with_ideology_days
+		}
+		remove_modifier = $MOD_PREFIX$_with_ideology
+		add_modifier = {
+			modifier = $MOD_PREFIX$_no_ideology
+			days = 1
+			time_multiplier = $MOD_PREFIX$_with_ideology_days
+		}
+		clear_variable = $MOD_PREFIX$_with_ideology_days
+	}
+}
+
+export_monthly_resource_to_variable = {
+	export_resource_produce_to_variable = {
+		resource = $RESOURCE$
+		variable = $RESOURCE$_produce
+	}
+	set_variable = {
+		which = $RESOURCE$_produce
+		value = value:calc_monthly_resource|BASE_VAR|$RESOURCE$_produce|VALUE|$VALUE$|MULT|$MULT|1$|MIN|$MIN$|MAX|$MAX$|
+	}
+}
+
+# Ideologies effects
+
+impose_ideology_shift = {
+	if = {
+		limit = {
+			ideology = { is_$ETHIC$ = yes }
+			from = {
+				is_fanatic_$ETHIC$ = no
+				is_gestalt = no # shifting a gestalt would cost it ethic_gestalt_consciousness
+			}
+		}
+		from = {
+			shift_ethic = ethic_fanatic_$ETHIC$
+		}
+	}
+}
+
+# This = Attacker
+# From = Defender
+impose_ideology_ethic_shift = {
+	impose_ideology_shift = { ETHIC = militarist }
+	impose_ideology_shift = { ETHIC = xenophobe }
+	impose_ideology_shift = { ETHIC = egalitarian }
+	impose_ideology_shift = { ETHIC = materialist }
+	impose_ideology_shift = { ETHIC = pacifist }
+	impose_ideology_shift = { ETHIC = xenophile }
+	impose_ideology_shift = { ETHIC = authoritarian }
+	impose_ideology_shift = { ETHIC = spiritualist }
+}
+
+clear_sow_peace_modifiers = {
+	remove_modifier = sow_peace_modifier_1
+	remove_modifier = sow_peace_modifier_2
+	remove_modifier = sow_peace_modifier_3
+	remove_modifier = sow_peace_modifier_4
+	remove_modifier = sow_peace_modifier_5
+}
+
+give_sow_peace_removal_reward = {
+	export_monthly_resource_to_variable = {
+		RESOURCE = influence
+		VALUE = @tier2influencereward
+		MIN = @tier2influencemin
+		MAX = @tier2influencemax
+		MULT = $MULT$
+	}
+	export_monthly_resource_to_variable = {
+		RESOURCE = unity
+		VALUE = @tier2unityreward
+		MIN = @tier2unitymin
+		MAX = @tier2unitymax
+		MULT = $MULT$
+	}
+
+	add_resource = {
+		influence = 1
+		mult = influence_produce
+	}
+	add_resource = {
+		unity = 1
+		mult = unity_produce
+	}
+
+	create_message = {
+		type = MESSAGE_PEACE_SOWN
+		localization = MESSAGE_PEACE_SOWN_DESC
+		days = 30
+		target = root.capital_scope # Go to
+
+		variable = {
+			type = variable
+			varname = influence_produce
+			localization = INFLUENCE_REWARD
+			scope = this
+		}
+		variable = {
+			type = variable
+			varname = unity_produce
+			localization = UNITY_REWARD
+			scope = this
+		}
+		variable = {
+			type = variable
+			varname = $MULT$
+			localization = COUNTERS
+			scope = this
+		}
+
+		variable = {
+			type = name
+			localization = ATTACKER
+			scope = root
+		}
+		variable = {
+			type = name
+			localization = WAR
+			scope = root.from
+		}
+	}
+}
+
+refresh_planet_meditation = {
+	every_owned_planet = {
+		limit = {
+			has_carrier_flag = decision_meditation_active
+		}
+
+		if = {
+			limit = { has_modifier = planet_meditation }
+			remove_modifier = planet_meditation
+		}
+		if = {
+			limit = { has_modifier = planet_meditation_mind }
+			remove_modifier = planet_meditation_mind
+		}
+		if = {
+			limit = { has_modifier = planet_meditation_body }
+			remove_modifier = planet_meditation_body
+		}
+
+		if = {
+			limit = {
+				owner? = {
+					has_country_flag = spirit_cultivation_mind
+				}
+			}
+			add_modifier = {
+				modifier = planet_meditation_mind
+			}
+		}
+		else_if = {
+			limit = {
+				owner? = {
+					has_country_flag = spirit_cultivation_body
+				}
+			}
+			add_modifier = {
+				modifier = planet_meditation_body
+			}
+		}
+		else = {
+			add_modifier = {
+				modifier = planet_meditation
+			}
+		}
+	}
+}
+
+clear_planet_meditation_decision = {
+	remove_carrier_flag = decision_meditation_active
+	if = {
+		limit = { has_modifier = planet_meditation }
+		remove_modifier = planet_meditation
+	}
+	if = {
+		limit = { has_modifier = planet_meditation_mind }
+		remove_modifier = planet_meditation_mind
+	}
+	if = {
+		limit = { has_modifier = planet_meditation_body }
+		remove_modifier = planet_meditation_body
+	}
+}
+
+clear_planet_meditation_decisions = {
+	every_owned_planet = {
+		limit = { has_carrier_flag = decision_meditation_active }
+		clear_planet_meditation_decision = yes
+	}
+}
+
+# Galactic Halls
+
+respawn_galactic_halls = {
+	save_event_target_as = previous_location
+	on_galactic_hall_deleted = yes
+	delete_megastructure = this
+	$PLANET$ = { save_event_target_as = target_planet }
+	$OWNER$ = { save_event_target_as = target_owner }
+	if = {
+		limit = {
+			$IDEOLOGY$ = { is_militarist = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = militarist }
+	}
+	else_if = {
+		limit = {
+			$IDEOLOGY$ = { is_pacifist = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = pacifist }
+	}
+	else_if = {
+		limit = {
+			$IDEOLOGY$ = { is_xenophile = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = xenophile }
+	}
+	else_if = {
+		limit = {
+			$IDEOLOGY$ = { is_xenophobe = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = xenophobe }
+	}
+	else_if = {
+		limit = {
+			$IDEOLOGY$ = { is_materialist = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = materialist }
+	}
+	else_if = {
+		limit = {
+			$IDEOLOGY$ = { is_spiritualist = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = spiritualist }
+	}
+	else_if = {
+		limit = {
+			$IDEOLOGY$ = { is_authoritarian = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = authoritarian }
+	}
+	else_if = {
+		limit = {
+			$IDEOLOGY$ = { is_egalitarian = yes }
+		}
+		spawn_galactic_halls_from_ethic = { ETHIC = egalitarian }
+	}
+}
+
+spawn_galactic_halls_from_ethic = {
+	event_target:target_planet.solar_system = {
+		spawn_megastructure = {
+			type = galactic_halls_0_$ETHIC$
+			owner = event_target:target_owner
+			planet = event_target:target_planet
+			init_effect = {
+				if = {
+					limit = { exists = event_target:previous_location }
+					copy_flags_and_variables_from = event_target:previous_location
+					copy_modules_from = event_target:previous_location
+				}
+				[[IS_FROM_RELOCATE]
+					set_timed_megastructure_flag = {
+						flag = recently_relocated_hall
+						days = @galactic_halls_relocate_cooldown
+					}
+				]
+			}
+		}
+	}
+}
+
+move_galactic_halls = {
+	save_event_target_as = previous_location
+	on_galactic_hall_deleted = yes
+	$PLANET$ = { save_event_target_as = target_planet }
+	$OWNER$ = { save_event_target_as = target_owner }
+	if = {
+		limit = { is_megastructure_type = galactic_halls_0_militarist }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = militarist
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE|no$
+		}
+	}
+	else_if = {
+		limit = { is_megastructure_type = galactic_halls_0_pacifist }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = pacifist
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE$
+		}
+	}
+	else_if = {
+		limit = { is_megastructure_type = galactic_halls_0_xenophile }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = xenophile
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE$
+		}
+	}
+	else_if = {
+		limit = { is_megastructure_type = galactic_halls_0_xenophobe }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = xenophobe
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE$
+		}
+	}
+	else_if = {
+		limit = { is_megastructure_type = galactic_halls_0_materialist }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = materialist
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE$
+		}
+	}
+	else_if = {
+		limit = { is_megastructure_type = galactic_halls_0_spiritualist }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = spiritualist
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE$
+		}
+	}
+	else_if = {
+		limit = { is_megastructure_type = galactic_halls_0_authoritarian }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = authoritarian
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE$
+		}
+	}
+	else_if = {
+		limit = { is_megastructure_type = galactic_halls_0_egalitarian }
+		spawn_galactic_halls_from_ethic = {
+			ETHIC = egalitarian
+			IS_FROM_RELOCATE = $IS_FROM_RELOCATE$
+		}
+	}
+	delete_megastructure = this
+}
+
+on_galactic_hall_deleted = {
+	delete_ideology_emitter = yes
+	planet? = {
+		remove_planet_flag = has_galactic_hall_megastructure
+		remove_planet_flag = megastructure
+		remove_planet_flag = has_megastructure
+	}
+}
+
+# Clears the country flags tracking the arkship Galactic Hall module
+clear_arkship_galactic_hall_flags = {
+	remove_country_flag = has_arkship_galactic_hall_module
+	remove_country_flag = has_hall_module_propagation
+}
+
+set_ai_constant = {
+	set_variable = { which = ai_generate_ideology_constant value = $VALUE$ }
+}
+
+add_ideologue_trait = {
+    change_background_ethic = ethic_$ETHIC$
+    add_trait = {
+        trait = leader_trait_ideologue_$ETHIC$
+        show_message = no
+    }
+}
+
+destroy_percentage_of_ships = {
+	export_trigger_value_to_variable = {
+		trigger = count_controlled_ship
+		variable = total_amount_ships
+		parameters = {
+			limit = { is_ship_class = shipclass_military }
+		}
+	}
+	set_variable = {
+		variable = ships_to_destroy
+		value = value:get_percentage_ships_to_destroy|VARIABLE|total_amount_ships|PERCENTAGE|$PERCENTAGE$|
+	}
+	while = {
+		count = ships_to_destroy
+		random_controlled_ship = {
+			limit = { is_ship_class = shipclass_military }
+			controller = {
+				add_monthly_resource_mult = {
+					resource = unity
+					value = @tier1unityreward
+					min = @tier1unitymin
+					max = @tier1unitymax
+
+					mult = prev.trigger:ship_size_multiplier
+				}
+				add_monthly_resource_mult = {
+					resource = consumer_goods
+					value = @tier1materialreward
+					min = @tier1materialmin
+					max = @tier1materialmax
+
+					mult = prev.trigger:ship_size_multiplier
+				}
+			}
+			delete_ship = {
+				target = this
+				kill_leader = no
+			}
+		}
+	}
+	clear_variable = total_amount_ships
+	clear_variable = ships_to_destroy
+}
+
+tenet_disarmament_add_opinion_modifier = {
+	hidden_effect = {
+		every_country = {
+			limit = {
+				NOT = { is_same_value = root.owner }
+			}
+			add_opinion_modifier = {
+				who = root.owner
+				modifier = opinion_disarmament_$TIER$
+			}
+		}
+	}
+}
+
+forceofwill_1700_terrorism = {
+	event_target:attacked_colony = {
+		add_planet_devastation = 10
+		random_owned_pop_group = {
+			limit = {
+				pop_group_size >= 500
+			}
+			kill_pop_group = {
+				pop_group = this
+				amount = 500
+			}
+		}
+		hidden_effect = {
+			ruin_building = random_no_capital
+		}
+	}
+}
+
+kill_pop_job_ordered_colony = {
+	ordered_owned_colony = {
+		position = 0
+		order_by = value:count_owned_pop_job_type|JOB_TYPE|$JOB$|
+		random_owned_pop_job = {
+			limit = { has_job_type = $JOB$ }
+			kill_assigned_pop_amount = {
+				$CALC_TYPE$ = $AMOUNT$
+			}
+		}
+	}
+}
+
+create_forceofwill_1710_leader = {
+	if = {
+		limit = {
+			NOT = {
+				exists = event_target:assassinated_leader.colony
+			}
+		}
+		create_leader = {
+			class = official
+			species = owner_main_species
+			custom_description = forceofwill_1710_leader_desc
+			skill = 5
+			hide_leader = yes
+			effect = { forceofwill_1710_leader_ethic = yes }
+		}
+	}
+	else_if = {
+		limit = {
+			event_target:assassinated_leader = {
+				leader_class = scientist
+			}
+		}
+		create_forceofwill_1710_governor = {
+			CLASS = scientist
+		}
+	}
+	else_if = {
+		limit = {
+			event_target:assassinated_leader = {
+				leader_class = official
+			}
+		}
+		create_forceofwill_1710_governor = {
+			CLASS = official
+		}
+	}
+	else = {
+		create_forceofwill_1710_governor = {
+			CLASS = commander
+		}
+	}
+}
+
+create_forceofwill_1710_governor = {
+	create_leader = {
+		class = $CLASS$
+		species = owner_main_species
+		custom_description = forceofwill_1710_leader_desc
+		skill = 5
+		hide_leader = yes
+		traits = { 0 = subclass_$CLASS$_governor }
+		effect = { forceofwill_1710_leader_ethic = yes }
+	}
+}
+
+forceofwill_1710_leader_ethic = {
+	save_event_target_as = replacement_leader
+	if = {
+		limit = { owner.ideology = { has_ethic = ethic_pacifist } }
+		change_background_ethic = ethic_militarist
+	}
+	else_if = {
+		limit = { owner.ideology = { has_ethic = ethic_militarist } }
+		change_background_ethic = ethic_pacifist
+	}
+	else_if = {
+		limit = { owner.ideology = { has_ethic = ethic_xenophile } }
+		change_background_ethic = ethic_xenophobe
+	}
+	else_if = {
+		limit = { owner.ideology = { has_ethic = ethic_xenophobe } }
+		change_background_ethic = ethic_xenophile
+	}
+	else_if = {
+		limit = { owner.ideology = { has_ethic = ethic_materialist } }
+		change_background_ethic = ethic_spiritualist
+	}
+	else_if = {
+		limit = { owner.ideology = { has_ethic = ethic_spiritualist } }
+		change_background_ethic = ethic_materialist
+	}
+	else_if = {
+		limit = { owner.ideology = { has_ethic = ethic_egalitarian } }
+		change_background_ethic = ethic_authoritarian
+	}
+	else = {
+		change_background_ethic = ethic_egalitarian
+	}
+	remove_trait = leader_trait_ideologue_pacifist
+	remove_trait = leader_trait_ideologue_militarist
+	remove_trait = leader_trait_ideologue_xenophile
+	remove_trait = leader_trait_ideologue_xenophobe
+	remove_trait = leader_trait_ideologue_materialist
+	remove_trait = leader_trait_ideologue_spiritualist
+	remove_trait = leader_trait_ideologue_egalitarian
+	remove_trait = leader_trait_ideologue_authoritarian
+}
+
+setup_general_event_pool_trigger = {
+	if = {
+		limit = { atb_has_golden_generation = yes }
+		set_country_flag = origin_general_event_pool_triggered
+		if = {
+			limit = { is_variable_set = origin_general_event_pool_timer }
+			clear_variable = origin_general_event_pool_timer
+		}
+		set_variable_to_random_value = {
+			which = origin_general_event_pool_timer
+			min = 8
+			max = 10
+			rounded = yes
+		}
+	}
+}
+
+clear_general_event_pool_trigger = {
+	remove_country_flag = origin_general_event_pool_triggered
+	if = {
+		limit = { is_variable_set = origin_general_event_pool_timer }
+		clear_variable = origin_general_event_pool_timer
+	}
+}
+
+trigger_random_endgame_crisis = {
+	random_list = {
+		### Prethoryn Scourge (Swarm)
+		10 = {
+			modifier = {
+				factor = 3
+				allowed_crisis_type = prethoryn
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					allowed_crisis_type = contingency
+					allowed_crisis_type = unbidden
+					allowed_crisis_type = synth_queen
+				}
+				NOT = { has_global_flag = defender_of_the_galaxy_second_crisis }
+			}
+			modifier = {
+				factor = 0
+				has_global_flag = prethoryn_invasion_happened
+			}
+			country_event = { id = crisis.10 days = 30 random = 30 }
+			set_global_flag = galactic_crisis_happened
+			set_timed_global_flag = {
+				flag = galactic_crisis_recently_fired
+				years = 12
+			}
+		}
+		### Unbidden (Extradimensionals)
+		8 = {
+			modifier = {
+				factor = 3.75
+				allowed_crisis_type = unbidden
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					allowed_crisis_type = contingency
+					allowed_crisis_type = prethoryn
+					allowed_crisis_type = synth_queen
+				}
+				NOT = { has_global_flag = defender_of_the_galaxy_second_crisis }
+			}
+			modifier = {
+				factor = 0
+				has_global_flag = extradimensional_invasion_happened
+			}
+			country_event = { id = crisis.1000 days = 30 random = 30 }
+			set_global_flag = galactic_crisis_happened
+			set_timed_global_flag = {
+				flag = galactic_crisis_recently_fired
+				years = 12
+			}
+		}
+		### Contingency (AI)
+		10 = {
+			modifier = {
+				factor = 3
+				allowed_crisis_type = contingency
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					allowed_crisis_type = prethoryn
+					allowed_crisis_type = unbidden
+					allowed_crisis_type = synth_queen
+				}
+			}
+			modifier = {
+				factor = 0
+				has_global_flag = ai_invasion_happened
+			}
+			country_event = { id = crisis.2005 days = 30 random = 30 }
+			set_global_flag = galactic_crisis_happened
+			set_timed_global_flag = {
+				flag = galactic_crisis_recently_fired
+				years = 12
+			}
+		}
+		### Synth Queen
+		10 = {
+			modifier = {
+				factor = 3
+				allowed_crisis_type = synth_queen
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					allowed_crisis_type = prethoryn
+					allowed_crisis_type = unbidden
+					allowed_crisis_type = contingency
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_global_flag = synth_queen_happened
+					has_machine_age_dlc = no
+				}
+			}
+			modifier = {
+				factor = 0
+				any_country = {
+					has_origin = origin_shroud_forged
+				}
+			}
+			country_event = { id = crisis.8005 days = 30 random = 30 }
+			set_global_flag = galactic_crisis_happened
+			set_timed_global_flag = {
+				flag = galactic_crisis_recently_fired
+				years = 12
+			}
+		}
+	}
+}
+
+save_revolt_target_ideology_event_target = {
+	event_target:ideological_revolt_target_ideology@this = {
+		save_event_target_as = ideological_revolt_target_ideology
+	}
+}
+
+# Ideological Revolt - ask the next eligible target-ideology member if they want to support the revolt.
+ask_ideology_member_if_they_want_this_revolt = {
+	event_target:revolt_situation = {
+		save_revolt_target_ideology_event_target = yes
+		remove_situation_flag = ideological_revolt_polling_found_candidate
+	}
+	event_target:ideological_revolt_target_ideology = {
+		# Poll target-ideology members from nearest to most distant
+		ordered_adopting_country = {
+			position = 0
+			order_by = value:ideological_revolt_distance_to_target
+			inverse = yes
+			limit = {
+				country_can_back_ideological_revolt_trigger = {
+					SITUATION_OWNER = event_target:revolt_situation.owner
+				}
+				NOT = { has_country_flag = asked_about_revolt_@event_target:revolt_situation }
+			}
+			set_country_flag = asked_about_revolt_@event_target:revolt_situation
+			event_target:revolt_situation = {
+				set_situation_flag = ideological_revolt_polling_found_candidate
+			}
+			country_event = { id = forceofwill.7320 }
+		}
+	}
+	if = {
+		limit = {
+			event_target:revolt_situation = {
+				NOT = { has_situation_flag = ideological_revolt_polling_found_candidate }
+				NOT = { has_situation_flag = ideological_revolt_polling_exhausted }
+			}
+		}
+		event_target:revolt_situation = {
+			set_situation_flag = ideological_revolt_polling_exhausted
+			situation_event = { id = forceofwill.7330 }
+		}
+	}
+}
+
+shift_ethic_from_adopt_ideology = {
+	if = {
+		limit = { is_fanatic_$OPPOSITE$ = yes }
+		shift_ethic = ethic_$ETHIC$
+	}
+	if = {
+		limit = { is_fanatic_$ETHIC$ = no }
+		shift_ethic = ethic_$ETHIC$
+	}
+	while = {
+		count = 5
+		pop_group_add_ethic_effect = {
+			ETHOS = ethic_$ETHIC$
+			AMOUNT = 100
+			RANDOM = 0
+		}
+	}
+}
+
+# This = Colony
+# From = Ideology
+try_create_faction_for_ideology = {
+	if = {
+		limit = { does_colony_need_ideological_faction = yes }
+		$IDEOLOGY$ = {
+			try_create_ideological_faction = prev.owner
+		}
+	}
+}
+
+# This = Colony carrier being converted by a Cultural Envoy
+# ENVOY_COUNTRY = the envoy fleet's owner
+# MODIFIER_PREFIX = being_converted_by for a visible envoy, being_converted_by_cloaked for a cloaked one
+apply_cultural_envoy_conversion_modifier = {
+	if = {
+		limit = { $ENVOY_COUNTRY$.ideology = { is_materialist = yes } }
+		add_modifier = { modifier = $MODIFIER_PREFIX$_materialist_envoy }
+	}
+	else_if = {
+		limit = { $ENVOY_COUNTRY$.ideology = { is_spiritualist = yes } }
+		add_modifier = { modifier = $MODIFIER_PREFIX$_spiritualist_envoy }
+	}
+	else_if = {
+		limit = { $ENVOY_COUNTRY$.ideology = { is_authoritarian = yes } }
+		add_modifier = { modifier = $MODIFIER_PREFIX$_authoritarian_envoy }
+	}
+	else_if = {
+		limit = { $ENVOY_COUNTRY$.ideology = { is_egalitarian = yes } }
+		add_modifier = { modifier = $MODIFIER_PREFIX$_egalitarian_envoy }
+	}
+	else_if = {
+		limit = { $ENVOY_COUNTRY$.ideology = { is_militarist = yes } }
+		add_modifier = { modifier = $MODIFIER_PREFIX$_militarist_envoy }
+	}
+	else_if = {
+		limit = { $ENVOY_COUNTRY$.ideology = { is_pacifist = yes } }
+		add_modifier = { modifier = $MODIFIER_PREFIX$_pacifist_envoy }
+	}
+	else_if = {
+		limit = { $ENVOY_COUNTRY$.ideology = { is_xenophile = yes } }
+		add_modifier = { modifier = $MODIFIER_PREFIX$_xenophile_envoy }
+	}
+}
+
+# This = Colony carrier being converted by a Cultural Envoy
+remove_cultural_envoy_conversion_modifiers = {
+	remove_modifier = being_converted_by_materialist_envoy
+	remove_modifier = being_converted_by_spiritualist_envoy
+	remove_modifier = being_converted_by_authoritarian_envoy
+	remove_modifier = being_converted_by_egalitarian_envoy
+	remove_modifier = being_converted_by_militarist_envoy
+	remove_modifier = being_converted_by_pacifist_envoy
+	remove_modifier = being_converted_by_xenophile_envoy
+	remove_modifier = being_converted_by_cloaked_materialist_envoy
+	remove_modifier = being_converted_by_cloaked_spiritualist_envoy
+	remove_modifier = being_converted_by_cloaked_authoritarian_envoy
+	remove_modifier = being_converted_by_cloaked_egalitarian_envoy
+	remove_modifier = being_converted_by_cloaked_militarist_envoy
+	remove_modifier = being_converted_by_cloaked_pacifist_envoy
+	remove_modifier = being_converted_by_cloaked_xenophile_envoy
+}
+
+# This = Colony carrier being converted by a cloaked Cultural Envoy
+# ENVOY_COUNTRY = the envoy fleet's owner
+# Notifies the target empire that an unidentified vessel is converting its pops, once per empire.
+notify_cloaked_cultural_envoy_conversion = {
+	owner? = {
+		if = {
+			limit = {
+				NOR = {
+					is_same_value = $ENVOY_COUNTRY$
+					has_country_flag = seen_cloaked_cultural_envoy
+				}
+			}
+			set_country_flag = seen_cloaked_cultural_envoy
+			country_event = {
+				id = forceofwill.7021
+				scopes = { from = prev }
+			}
+		}
+	}
+}
+
+# This = Colony being converted by a Cultural Envoy
+# ETHIC = the regular ethic of the envoy country's ideology
+cultural_envoy_convert_pop_groups = {
+	every_owned_pop_group = {
+		limit = {
+			pop_group_convertible_by_cultural_envoy = yes
+		}
+		pop_change_ethic = {
+			ethic = $ETHIC$
+			amount = prev.pop_conversion_amount
+		}
+		convert_to_ideology = {
+			ideology = event_target:envoy_country.ideology
+			amount = prev.pop_conversion_amount
+		}
+	}
+}
+
+willpower_leader_hire_event = {
+	if = {
+		limit = {
+			NOR = {
+				has_global_flag = $LEADER_ID$
+				has_country_flag = dismissed_$LEADER_ID$
+			}
+		}
+		set_global_flag = $LEADER_ID$
+		country_event = {
+			id = $EVENT_ID$
+		}
+	}
+}
+
+add_trait_with_concept_tt = {
+	hidden_effect = { add_trait = { trait = $TRAIT$ } }
+	custom_tooltip_with_params = {
+		description = leader_trait_gain_concept_tt
+		description_parameters = {
+			TRAIT = $TRAIT$
+		}
+	}
+}
+
+add_trait_with_custom_concept_tt = {
+	hidden_effect = { add_trait = { trait = $TRAIT$ } }
+	custom_tooltip_with_params = {
+		description = leader_trait_gain_custom_concept_tt
+		description_parameters = {
+			TRAIT = $TRAIT$
+		}
+	}
+}
+
+add_trait_chance_with_concept_tt = {
+	hidden_effect = {
+		random = {
+			chance = $CHANCE$
+			add_trait = { trait = $TRAIT$ }
+		}
+	}
+	custom_tooltip_with_params = {
+		description = leader_trait_chance_concept_tt
+		description_parameters = {
+			CHANCE = $CHANCE$
+			TRAIT = $TRAIT$
+		}
+	}
+}
+
+add_trait_chance_with_custom_concept_tt = {
+	hidden_effect = {
+		random = {
+			chance = $CHANCE$
+			add_trait = { trait = $TRAIT$ }
+		}
+	}
+	custom_tooltip_with_params = {
+		description = leader_trait_chance_custom_concept_tt
+		description_parameters = {
+			CHANCE = $CHANCE$
+			TRAIT = $TRAIT$
+		}
+	}
+}
+
+try_change_disruption_effect_multiplier = {
+	if = {
+		limit = {
+			NOT = { is_variable_set = disruption_effect_multiplier }
+		}
+		set_variable = {
+			which = disruption_effect_multiplier
+			value = 0
+		}
+	}
+
+	if = {
+		limit = {
+			check_variable = {
+				which = disruption_effect_multiplier
+				value != $VALUE$
+			}
+		}
+		remove_modifier = ideological_disruption
+		remove_modifier = moderate_ideological_disruption
+		remove_modifier = severe_ideological_disruption
+		every_owned_planet = {
+			remove_modifier = ideological_momentum_low_stability
+			remove_modifier = ideological_momentum_moderately_low_stability
+			remove_modifier = ideological_momentum_dangerously_low_stability
+			remove_modifier = ideological_momentum_low_gestalt
+			remove_modifier = ideological_momentum_moderately_low_gestalt
+			remove_modifier = ideological_momentum_dangerously_low_gestalt
+		}
+
+		set_variable = {
+			which = disruption_effect_multiplier
+			value = $VALUE$
+		}
+	}
+}
+
+willpower_leader_on_ethos_shifted = {
+	if = {
+		limit = {
+			owner = { is_$OPPOSED_ETHIC$ = yes }
+		}
+		set_leader_flag = set_to_leave_empire
+		leader_event = {
+			id = forceofwill.8095
+			days = 1
+		}
+	}
+	else_if = {
+		limit = {
+			owner = { NOT = { has_ethic = ethic_absolute_$ETHIC$ } }
+		}
+		if = {
+			limit = {
+				NOT = { has_trait = leader_trait_disillusioned }
+			}
+			add_trait = { trait = leader_trait_disillusioned }
+		}
+	}
+	else_if = {
+		limit = { has_trait = leader_trait_disillusioned }
+		remove_trait = leader_trait_disillusioned
+	}
+}
+
+no_faction_management = {
+	if = {
+		limit = {
+			has_force_of_will_dlc = yes
+		}
+		if = {
+			limit = {
+				is_gestalt = no
+			}
+			set_timed_country_flag = {
+				flag = political_reorientation
+				years = $YEARS|@political_reorientation_time$
+			}
+		}
+		every_subject = {
+			limit = {
+				is_gestalt = no
+			}
+			set_timed_country_flag = {
+				flag = political_reorientation
+				years = $YEARS|@political_reorientation_time$
+			}
+		}
+	}
+}
+
+no_faction_management_tooltip = {
+	if = {
+		limit = {
+			has_force_of_will_dlc = yes
+			OR = {
+				is_gestalt = no
+				any_subject = {
+					is_gestalt = no
+				}
+			}
+		}
+		custom_tooltip = political_reorientation_tt
+	}
+}
+
+interrupt_suppress_ideology = {
+	if = {
+		limit = {
+			has_modifier = suppress_foreign_ideology
+		}
+		remove_modifier = suppress_foreign_ideology
+		if = { # TODO AUG-55014 - Colony message targets are not implemented
+			limit = { is_planet_class = pc_ark }
+			fleet = { save_event_target_as = ideology_suppression_message_target }
+		}
+		else = {
+			planet = { save_event_target_as = ideology_suppression_message_target }
+		}
+		create_message = {
+			type = IDEOLOGY_SUPPRESSION_INTERRUPTED
+			localization = MESSAGE_IDEOLOGY_SUPPRESSION_INTERRUPTED_DESC
+			days = @toast_message_days
+			target = event_target:ideology_suppression_message_target
+			variable = {
+				type = name
+				localization = COLONY
+				scope = this
+			}
+		}
+	}
+}
+
+check_colony_ethic_shift_message = {
+	if = {
+		limit = { owner = { is_$ETHIC$ = no } }
+		if = { # TODO AUG-55014 - Colony message targets are not implemented
+			limit = { is_planet_class = pc_ark }
+			fleet = { save_event_target_as = ethic_shift_message_target }
+		}
+		else = {
+			planet = { save_event_target_as = ethic_shift_message_target }
+		}
+		if = {
+			limit = {
+				NOT = { has_carrier_flag = very_high_ethic_$ETHIC$_notification_sent@owner }
+				colony = {
+					pop_ethic_percentage = {
+						percentage >= 0.75
+						ethic = ethic_$ETHIC$
+					}
+				}
+			}
+			owner = {
+				create_message = {
+					type = MESSAGE_ETHIC_RISE_$ETHIC$
+					localization =  MESSAGE_ETHIC_RISE_HIGHER_$ETHIC$_DESC
+					target = event_target:ethic_shift_message_target
+					days = 30
+					variable = {
+						type = name
+						localization = PLANET
+						scope = prev
+					}
+				}
+			}
+			set_timed_carrier_flag = {
+				flag = very_high_ethic_$ETHIC$_notification_sent@owner
+				years = 10 # you'll get a reminder after 10years if colony is still at the same state
+			}
+		}
+		else_if = {
+			limit = {
+				NOR = {
+					has_carrier_flag = high_ethic_$ETHIC$_notification_sent@owner
+					has_carrier_flag = very_high_ethic_$ETHIC$_notification_sent@owner
+				}
+				colony = {
+					pop_ethic_percentage = {
+						percentage >= 0.1
+						ethic = ethic_$ETHIC$
+					}
+				}
+			}
+			owner = {
+				create_message = {
+					type = MESSAGE_ETHIC_RISE_$ETHIC$
+					localization =  MESSAGE_ETHIC_RISE_$ETHIC$_DESC
+					target = event_target:ethic_shift_message_target
+					days = 30
+					variable = {
+						type = name
+						localization = PLANET
+						scope = prev
+					}
+				}
+			}
+			set_timed_carrier_flag = {
+				flag = high_ethic_$ETHIC$_notification_sent@owner
+				years = 10 # you'll get a reminder after 10years if colony is still at the same state
+			}
+		}
+	}
+}
+
+switch_to_ideological_agenda = {
+	if = {
+		limit = {
+			has_agenda_selected = $AGENDA$
+			ideology? = {
+				is_$ETHIC$ = yes
+			}
+		}
+		switch_council_agenda = $AGENDA$_forceofwill
+	}
+}
+
+switch_from_ideological_agenda = {
+	if = {
+		limit = {
+			has_agenda_selected = $AGENDA$_forceofwill
+		}
+		switch_council_agenda = $AGENDA$
+	}
+}

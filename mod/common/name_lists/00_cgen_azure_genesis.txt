@@ -1,4 +1,4 @@
-﻿# Azure Genesis naming pack. Additive list; no base definitions replaced.
+# Azure Genesis naming pack. Additive list; no base definitions replaced.
 CGEN_AZURE_GENESIS = {
 	category = "Humanoid"
 	selectable = { always = yes }

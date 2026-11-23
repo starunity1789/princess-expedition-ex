@@ -1,6 +1,6 @@
-# 皇女的远征军：覆盖原版 common/governments/authorities/00_authorities.txt（4.5.2）。
-# 与原版的区别只在 auth_dictatorial：新增体制「远征军体制」auth_atb_expedition，
-# 并让独裁流型、教导独裁制在远征军体制生效时让位。游戏更新后，请用新版原版文件重新做同样的修改。
+# 皇女的远征军：覆盖原版 common/governments/authorities/00_authorities.txt。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版的区别只在 auth_dictatorial：新增体制「远征军体制」
+# auth_atb_expedition，并让独裁流型（物理 / 虚拟）在远征军体制生效时让位。群星更新后用新版原版重新生成。
 
 # These may be overwitten in an "extendable" manner, meaning (for example) you can create a second "auth_democratic" with extra swaps in it.
 # WARNING: The extend functionality breaks if you make changes in runtime and will require a restart to work correctly.
@@ -68,10 +68,12 @@ auth_democratic = {
 			}
 		}
 		ethics = {
+			NOT = { value = ethic_gestalt_consciousness }
 			NOR = {
-				value = ethic_gestalt_consciousness
+				text = civic_tooltip_not_authoritarian
 				value = ethic_authoritarian
 				value = ethic_fanatic_authoritarian
+				value = ethic_absolute_authoritarian
 			}
 		}
 	}
@@ -333,10 +335,16 @@ auth_oligarchic = {
 			}
 		}
 		ethics = {
+			NOT = { value = ethic_gestalt_consciousness }
 			NOR = {
-				value = ethic_gestalt_consciousness
+				text = civic_tooltip_not_fan_egalitarian
 				value = ethic_fanatic_egalitarian
+				value = ethic_absolute_egalitarian
+			}
+			NOR = {
+				text = civic_tooltip_not_fan_authoritarian
 				value = ethic_fanatic_authoritarian
+				value = ethic_absolute_authoritarian
 			}
 		}
 	}
@@ -593,10 +601,12 @@ auth_dictatorial = {
 			}
 		}
 		ethics = {
+			NOT = { value = ethic_gestalt_consciousness }
 			NOR = {
-				value = ethic_gestalt_consciousness
+				text = civic_tooltip_not_egalitarian
 				value = ethic_egalitarian
 				value = ethic_fanatic_egalitarian
+				value = ethic_absolute_egalitarian
 			}
 		}
 	}
@@ -953,10 +963,12 @@ auth_imperial = {
 			}
 		}
 		ethics = {
+			NOT = { value = ethic_gestalt_consciousness }
 			NOR = {
-				value = ethic_gestalt_consciousness
+				text = civic_tooltip_not_egalitarian
 				value = ethic_egalitarian
 				value = ethic_fanatic_egalitarian
+				value = ethic_absolute_egalitarian
 			}
 		}
 	}
@@ -1691,7 +1703,7 @@ auth_corporate = {
 	}
 
 	playable = {
-		has_megacorp = yes
+		has_megacorp_dlc = yes
 	}
 	possible = {
 		origin = {
@@ -1702,10 +1714,11 @@ auth_corporate = {
 			}
 		}
 		ethics = {
+			NOT = { value = ethic_gestalt_consciousness }
 			NOR = {
-				value = ethic_gestalt_consciousness
-				value = ethic_fanatic_egalitarian
-				value = ethic_fanatic_authoritarian
+				show_at_empire_creation = no
+				value = ethic_absolute_egalitarian
+				value = ethic_absolute_authoritarian
 			}
 		}
 	}
