@@ -453,6 +453,9 @@ checks += [
      and not any((MOD / "common/pop_jobs" / f).exists() for f in ("01_ruler_jobs.txt", "02_specialist_jobs.txt", "04_gestalt_jobs.txt"))
      and not (MOD / "common/zones").exists()
      and not (MOD / "common/economic_plans").exists()),
+    ("3.17：更长的太空战（照 ASB 默认档：射速 -50%，舰体、护盾、装甲 +200%，所有国家）",
+     (lambda g: all(x in g for x in ("ship_fire_rate_mult = -0.5", "ship_hull_mult = 2\n", "ship_shield_mult = 2\n", "ship_armor_mult = 2\n")))(
+         read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt").split("atb_ex_galaxy_rules = {", 1)[1].split("\n}", 1)[0] + "\n")),
     ("3.4：AI 宣战基础概率（3.16 起 ×3，之前 ×4）、殖民宜居度门槛回原版", (lambda d: "AI_AGGRESSIVENESS_BASE = 75" in d
      and "AI_MIN_HABITABILITY_TO_COLONIZE" not in d and "UNDERDEVELOPED_PLANET_LIMIT = 999" in d)(
         read(MOD / "common/defines/atb_ex_defines.txt"))),
