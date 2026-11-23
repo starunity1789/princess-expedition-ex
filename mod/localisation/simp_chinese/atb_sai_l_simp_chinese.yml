@@ -1,0 +1,5 @@
+﻿l_simp_chinese:
+ # 皇女的远征军 3.16：Stellar AI「实力决定态度」的好感修正。由 tools/gen_sai.py 生成
+ triggered_opinion_stellarai_we_can_win:0 "我们打得过"
+ triggered_opinion_stellarai_we_can_win_peaceful:0 "我们打得过"
+ triggered_opinion_stellarai_not_to_be_provoked:0 "不可招惹"

@@ -1,0 +1,33 @@
+# 皇女的远征军 3.16：整合 Stellar AI 0.14.4 的 AI 性格与行为部分。由 tools/gen_sai.py 生成，请勿手改。
+stellarai_conquest_identity = {
+ OR = {
+  has_ai_personality_behaviour = conqueror
+  has_ai_personality_behaviour = subjugator
+  has_ai_personality_behaviour = purger
+ }
+}
+
+stellarai_fair_protection_preference = {
+ is_ai = yes
+ is_nomadic = no
+ is_at_war = no
+ is_subject = no
+ OR = { recently_lost_war = yes highest_threat > 20 }
+ # Some weight evaluations have no diplomatic counterpart. Missing or non-country
+ # targets mean no custom bonus; never substitute an arbitrary neighboring empire.
+ if = {
+  limit = { exists = $OTHER$ }
+  if = {
+   limit = { $OTHER$ = { is_scope_type = country } }
+   opinion = { who = $OTHER$ value >= 50 }
+   trust = { who = $OTHER$ value >= 50 }
+   has_communications = $OTHER$
+   has_intel = { who = $OTHER$ intel = relative_fleet }
+   relative_power = { who = $OTHER$ category = fleet value <= inferior }
+   NOT = { has_rival = $OTHER$ }
+   $OTHER$ = { is_neighbor_of = prev }
+  }
+  else = { always = no }
+ }
+ else = { always = no }
+}

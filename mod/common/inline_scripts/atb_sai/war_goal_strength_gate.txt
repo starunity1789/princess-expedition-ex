@@ -1,0 +1,55 @@
+# 皇女的远征军 3.16：整合 Stellar AI 0.14.4 的 AI 性格与行为部分。由 tools/gen_sai.py 生成，请勿手改。
+# Decision-time strength gate. THIS = attacker, FROM = target. Never a stronger fleet; isolated targets preferred. Without fleet intel the native weight applies.
+modifier = {
+	factor = 0
+	is_at_war = no
+	has_intel = { who = from intel = relative_fleet }
+	relative_power = { who = from category = fleet value <= inferior }
+}
+# Not a clearly bigger empire (fleet, economy and technology together) without a clear fleet lead.
+# Attacks on economies 1.5x ours or more lost planets in 24% of wars, against 3-12% otherwise.
+modifier = {
+	factor = 0
+	is_at_war = no
+	has_intel = { who = from intel = relative_fleet }
+	has_intel_level = { who = from category = economy level = 1 }
+	relative_power = { who = from category = fleet value < superior }
+	relative_power = { who = from category = all value <= inferior }
+}
+modifier = {
+	factor = 0.5
+	is_at_war = no
+	has_intel = { who = from intel = relative_fleet }
+	from = {
+		OR = {
+			has_federation = yes
+			num_defensive_pacts > 0
+			is_overlord = yes
+		}
+	}
+	relative_power = { who = from category = fleet value < superior }
+}
+modifier = {
+	factor = 0.5
+	is_at_war = no
+	has_intel_level = { who = from category = economy level = 1 }
+	relative_power = { who = from category = economy value <= inferior }
+}
+modifier = {
+	factor = 2
+	is_at_war = no
+	has_intel = { who = from intel = relative_fleet }
+	OR = {
+		relative_power = { who = from category = fleet value >= overwhelming }
+		AND = {
+			relative_power = { who = from category = fleet value >= superior }
+			from = {
+				NOR = {
+					has_federation = yes
+					num_defensive_pacts > 0
+					is_overlord = yes
+				}
+			}
+		}
+	}
+}

@@ -13,7 +13,7 @@ NGameplay = {
 # 宜居度 20% 的星球也算殖民目标，AI 一直有地方殖民，「无法和平扩张」（×4，SAI ×6）与
 # 「没有殖民目标」（×2，SAI ×3）两个宣战倍率就一直触发不了。
 NAI = {
-	AI_AGGRESSIVENESS_BASE = 100				# 原版 25：宣战基础概率（再乘性格侵略性与上面两个倍率）
+	AI_AGGRESSIVENESS_BASE = 75				# 原版 25：宣战基础概率（再乘性格侵略性与上面两个倍率）。3.4～3.15 为 100（×4），3.16 整合 Stellar AI 的性格后降到 ×3
 	UNDERDEVELOPED_PLANET_LIMIT = 999			# 原版 3：AI 不想同时有太多「未开发」殖民地——自动星球没有区划，会被当成未开发
 	AI_FEW_PLANETS_COLONIZATION_THRESHOLD = 40	# 原版 5：星球数低于此值时殖民权重加成
 	AI_FEW_PLANETS_COLONIZATION_BOOST = 0.5		# 原版 0.25：每少一颗星球的殖民权重加成

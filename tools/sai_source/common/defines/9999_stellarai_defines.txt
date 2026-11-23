@@ -1,0 +1,40 @@
+	NPop = {
+		RESETTLE_UNEMPLOYED_BASE_RATE		= 20	# Base pop amount that can auto-migrate from a planet per month
+	}
+
+
+	NAI = {
+		# A modest expansion increase. Native habitability, costs and eligibility remain.
+		UNDERDEVELOPED_PLANET_LIMIT = 4 # Vanilla: 3
+		AI_FEW_PLANETS_COLONIZATION_BOOST = 0.35 # Vanilla: 0.25
+
+		# Native war AI: turn to conquest once peaceful expansion ends; personalities carry base aggression.
+		AI_AGGRESSIVENESS_BOXED_IN_MULT = 6 # Vanilla: 4
+		AI_AGGRESSIVENESS_NO_COLONY_TARGET_MULT = 3 # Vanilla: 2
+		# Fight hard: go offensive a little sooner in an offensive war.
+		ENEMY_FLEET_POWER_MULT = 1.1 # Vanilla: 1.2
+		# Relative navy strength weighs more in peace acceptance: press on when ahead, settle when clearly behind.
+		PEACE_RELATIVE_NAVY_STRENGTH_FACTOR = 100 # Vanilla: 50
+		# Cooperation against a common threat, focused on empires viewed favourably.
+		DEFENSIVE_PACT_ACCEPTANCE_SHARED_THREAT = 0.5 # Vanilla: 0.25
+		FEDERATION_ACCEPTANCE_SHARED_THREAT = 0.5 # Vanilla: 0.25
+		DEFENSIVE_PACT_ACCEPTANCE_OPINION_FACTOR = 0.3 # Vanilla: 0.2
+		FEDERATION_ACCEPTANCE_OPINION_FACTOR = 0.2 # Vanilla: 0.1
+
+		# Fight hard: flee on a damaged hull only when the battle is going badly. The power check
+		# (FLEET_DANGEROUS_SYSTEM_POWER_MULT, flee at 2x hostile power) still gets fleets out of bad situations.
+		FLEET_DANGEROUS_HULL_THRESHOLD = 0.5 # Vanilla: 0.75 ("regardless of power")
+		# Most of the navy goes on the offensive (share = this x personality aggressiveness). Stellar AI
+		# aggressiveness runs 0.5 (spiritual seekers, peaceful traders, ...) to 4.5. At vanilla 1.0 the 0.5
+		# personalities kept half their navy idle at home; at 1.6 they commit 80% and keep a small home guard,
+		# and every personality from 0.63 up commits everything. Fleet-splitting (FLEET_SUPERIORITY_FACTOR)
+		# stays vanilla: one stack in an even war, a second fleet for raiders once 3x stronger.
+		OFFENSE_VS_DEFENSE_STRATEGY_ALLOTMENT = 1.6 # Vanilla: 1.0
+		# Home first, then the push: enemies taking our systems with planets pull fleets back before the
+		# offensive continues. Border harassment (WAR_DEFENSE_OWN_PRIO) stays vanilla, so a raider merely
+		# passing through does not draw the main fleet home.
+		WAR_DEFENSE_OWN_PLANET_ENEMY_CONTROL_PRIO = 10 # Vanilla: 5 (own planets in an enemy-controlled system)
+		# A ready AI strikes sooner.
+		AI_WAR_PREPARATION_MIN_MONTHS = 8 # Vanilla: 12
+		AI_WAR_PREPARATION_MAX_MONTHS = 24 # Vanilla: 30
+	}

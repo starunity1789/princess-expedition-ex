@@ -326,7 +326,8 @@ checks += [
     ("3.5：GPM 遗珍内置（28 个，不带遗珍战争目标）", sum(len(re.findall(r"(?m)^gpm_r_\w+ = \{", read(p))) for p in (MOD / "common/relics").glob("atb_gpm_*.txt")) >= 28
      and exists("common/armies/atb_gpm_relic_armies.txt") and exists("common/traits/atb_gpm_relic_traits.txt")
      and exists("interface/atb_gpm_relics.gfx") and exists("localisation/simp_chinese/atb_gpm_relics_l_simp_chinese.yml")
-     and not exists("common/war_goals") and not exists("common/casus_belli")),
+     and not any("gpm" in f.name.lower() or "relic" in f.name.lower() for f in (MOD / "common/war_goals").glob("*"))
+     and not exists("common/casus_belli")),
     ("自动星球 6 座建筑都定义了", all(f"{b} = {{" in auto_bld for b in (
         "building_atb_ai_core", "building_atb_ai_foundry", "building_atb_ai_power",
         "building_atb_ai_admin", "building_atb_ai_industry", "building_atb_ai_supply"))
@@ -439,7 +440,20 @@ checks += [
      and "modifier = atb_ex_sublight_rs" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
      and "id = atb_ex.5" in read(MOD / "events/atb_ex_events.txt")),
     ("AI 外交权重 ×3", "diplo_weight_mult = 2" in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")),
-    ("3.4：AI 宣战基础概率 ×4、殖民宜居度门槛回原版", (lambda d: "AI_AGGRESSIVENESS_BASE = 100" in d
+    ("3.16：整合 Stellar AI 的性格与行为（性格以原版为底、26 个扩张期性格、实力门槛、好感、附庸偏好、间谍、行为参数），不取岗位与经济",
+     (lambda p: p.count("\nexpansionists_") == 26 and "adopt_ideology_acceptance" in p and "utopian_missionaries = {" in p
+      and "# Stellar AI，原版" in p)(read(MOD / "common/personalities/00_personalities.txt"))
+     and read(MOD / "common/war_goals/~atb_sai_war_goals.txt").count('inline_script = "atb_sai/war_goal_strength_gate"') >= 7
+     and (MOD / "common/inline_scripts/atb_sai/war_goal_strength_gate.txt").exists()
+     and "triggered_opinion_stellarai_we_can_win = {" in read(MOD / "common/opinion_modifiers/atb_sai_odds_opinion.txt")
+     and "stellarai_conquest_identity = {" in read(MOD / "common/scripted_triggers/atb_sai_triggers.txt")
+     and "Keep native operations" in read(MOD / "common/ai_espionage/spynetworks/00_base_strategies.txt")
+     and "OFFENSE_VS_DEFENSE_STRATEGY_ALLOTMENT = 1.6" in read(MOD / "common/defines/atb_sai_defines.txt")
+     and "\tUNDERDEVELOPED_PLANET_LIMIT" not in read(MOD / "common/defines/atb_sai_defines.txt")
+     and not any((MOD / "common/pop_jobs" / f).exists() for f in ("01_ruler_jobs.txt", "02_specialist_jobs.txt", "04_gestalt_jobs.txt"))
+     and not (MOD / "common/zones").exists()
+     and not (MOD / "common/economic_plans").exists()),
+    ("3.4：AI 宣战基础概率（3.16 起 ×3，之前 ×4）、殖民宜居度门槛回原版", (lambda d: "AI_AGGRESSIVENESS_BASE = 75" in d
      and "AI_MIN_HABITABILITY_TO_COLONIZE" not in d and "UNDERDEVELOPED_PLANET_LIMIT = 999" in d)(
         read(MOD / "common/defines/atb_ex_defines.txt"))),
     ("3.4：自动星球每年自检（缺中枢重建、特殊区划集放回普通星球）", "atb_ai_auto_release = {" in auto_eff

@@ -1,0 +1,187 @@
+# Live country checks. Science-readiness rules deliberately remain untouched.
+stellarai_alloy_navy = {
+ country_uses_bio_ships = no
+ uses_fauna_ship_sizes = no
+ NOT = { AND = { has_ascension_perk = ap_become_the_crisis has_crisis_level = crisis_level_2 } }
+}
+stellarai_food_navy = {
+ OR = { country_uses_bio_ships = yes uses_fauna_ship_sizes = yes }
+}
+stellarai_mineral_navy = {
+ OR = {
+  uses_fauna_ship_sizes = yes
+  AND = { has_ascension_perk = ap_become_the_crisis has_crisis_level = crisis_level_2 }
+ }
+}
+# Strong net incomes plus an energy reserve for upkeep; spent minerals and goods are not weakness.
+stellarai_military_foundation_strong = {
+ stellarai_foundation_ready = yes
+ OR = {
+  resource_income_compare = { resource = energy value > 25 }
+  resource_stockpile_compare = { resource = energy value > 10000 }
+ }
+ resource_income_compare = { resource = minerals value > 20 }
+ resource_stockpile_compare = { resource = energy value > 1500 }
+ OR = { country_uses_food = no resource_income_compare = { resource = food value > 10 } }
+ OR = { country_uses_consumer_goods = no resource_income_compare = { resource = consumer_goods value > 10 } }
+}
+# The economy can carry a full peacetime fleet: strong incomes and net alloy income for ships.
+stellarai_fleet_affordable = {
+ stellarai_military_foundation_strong = yes
+ OR = {
+  stellarai_alloy_navy = no
+  resource_income_compare = { resource = alloys value > @stellarai_affordable_fleet_alloy_income }
+ }
+}
+stellarai_opening_colonization_push = {
+ stellarai_colonization_push = yes
+ num_owned_colonies < 3
+ NOT = { stellarai_military_emergency = yes }
+}
+stellarai_safe_refit_fleet = {
+ any_owned_fleet = {
+  controller = { is_same_value = prevprev }
+  is_civilian = no
+  is_in_combat = no
+  can_be_upgraded = yes
+ }
+}
+stellarai_long_war_refit = {
+ is_ai = yes
+ is_nomadic = no
+ is_at_war = yes
+ is_variable_set = stellarai_war_months
+ check_variable = { which = stellarai_war_months value >= @stellarai_refit_war_months }
+ used_naval_capacity_percent >= @stellarai_refit_min_capacity
+ stellarai_war_economy_sustainable = yes
+ stellarai_safe_refit_fleet = yes
+}
+stellarai_alloy_refit_affordable = {
+ resource_stockpile_compare = { resource = alloys value > @stellarai_refit_stock }
+ resource_income_compare = { resource = alloys value > @stellarai_refit_income }
+}
+stellarai_food_refit_affordable = {
+ resource_stockpile_compare = { resource = food value > 2400 }
+ resource_income_compare = { resource = food value > 50 }
+}
+stellarai_mineral_refit_affordable = {
+ resource_stockpile_compare = { resource = minerals value > 2400 }
+ resource_income_compare = { resource = minerals value > 50 }
+}
+# Target scope; OBSERVER is explicitly supplied.
+stellarai_relevant_opponent = {
+ is_country_type = default
+ NOT = { is_same_value = $OBSERVER$ }
+ NOR = {
+  is_in_federation_with = $OBSERVER$
+  has_defensive_pact = $OBSERVER$
+  is_overlord_to = $OBSERVER$
+ }
+ $OBSERVER$ = {
+  has_communications = prev
+  NOR = {
+   has_subject = prev
+   has_truce = prev
+   has_non_aggression_pact = prev
+   is_friendly_to = prev
+   is_protective_to = prev
+  }
+ }
+}
+stellarai_conquest_identity = {
+ OR = {
+  has_ai_personality_behaviour = conqueror
+  has_ai_personality_behaviour = subjugator
+  has_ai_personality_behaviour = purger
+ }
+}
+# Purifiers and Swarms arm through the expansion phase like Exterminators, and so does whoever borders one of the three.
+stellarai_militant_pressure = {
+ OR = {
+  has_valid_civic = civic_fanatic_purifiers
+  has_valid_civic = civic_hive_devouring_swarm
+  has_country_flag = stellarai_militant_neighbor
+ }
+}
+# Target scope. The observer's own native war plan: hostile or vassal-target attitude, or a recent claim.
+stellarai_war_target_candidate = {
+ $OBSERVER$ = {
+  OR = {
+   is_hostile_to = prev
+   is_domineering_to = prev
+   has_relation_flag = { who = prev flag = stellarai_claim_target }
+  }
+ }
+ stellarai_relevant_opponent = { OBSERVER = $OBSERVER$ }
+ $OBSERVER$ = {
+  has_intel = { who = prev intel = relative_fleet }
+  relative_power = { who = prev category = fleet value >= equivalent }
+ }
+}
+# Preparation follows the monthly war-target fact; native AI still decides the war.
+stellarai_opportunity_ready = {
+ has_country_flag = stellarai_war_target
+ is_ai = yes
+ is_nomadic = no
+ is_at_war = no
+ stellarai_conquest_identity = yes
+ used_naval_capacity_percent < @stellarai_opportunity_fleet_target
+ stellarai_foundation_ready = yes
+}
+# Armies are funded at war, while preparing for war, or when threatened.
+stellarai_army_objective = {
+ OR = {
+  is_at_war = yes
+  has_country_flag = stellarai_army_need
+ }
+ is_ai = yes
+ is_nomadic = no
+ NOT = { stellarai_economic_crisis = yes }
+ resource_income_compare = { resource = minerals value > 0 }
+ resource_stockpile_compare = { resource = minerals value > 300 }
+ OR = {
+  country_uses_bio_ships = no
+  AND = {
+   resource_income_compare = { resource = food value > 0 }
+   resource_stockpile_compare = { resource = food value > 300 }
+  }
+ }
+}
+# Country scope. A relevant neighbour hostile to us with at least our fleet strength.
+stellarai_hostile_neighbor_threat = {
+ any_neighbor_country = {
+  OR = {
+   is_hostile_to = prev
+   is_domineering_to = prev
+  }
+  is_country_type = default
+  prev = {
+   has_intel = { who = prev intel = relative_fleet }
+   relative_power = { who = prev category = fleet value <= equivalent }
+  }
+ }
+}
+stellarai_fair_protection_preference = {
+ is_ai = yes
+ is_nomadic = no
+ is_at_war = no
+ is_subject = no
+ OR = { recently_lost_war = yes highest_threat > 20 }
+ # Some weight evaluations have no diplomatic counterpart. Missing or non-country
+ # targets mean no custom bonus; never substitute an arbitrary neighboring empire.
+ if = {
+  limit = { exists = $OTHER$ }
+  if = {
+   limit = { $OTHER$ = { is_scope_type = country } }
+   opinion = { who = $OTHER$ value >= 50 }
+   trust = { who = $OTHER$ value >= 50 }
+   has_communications = $OTHER$
+   has_intel = { who = $OTHER$ intel = relative_fleet }
+   relative_power = { who = $OTHER$ category = fleet value <= inferior }
+   NOT = { has_rival = $OTHER$ }
+   $OTHER$ = { is_neighbor_of = prev }
+  }
+  else = { always = no }
+ }
+ else = { always = no }
+}

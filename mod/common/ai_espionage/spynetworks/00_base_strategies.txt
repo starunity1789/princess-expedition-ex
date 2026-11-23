@@ -1,0 +1,184 @@
+# 皇女的远征军 3.16：整合 Stellar AI 0.14.4 的 AI 性格与行为部分。由 tools/gen_sai.py 生成，请勿手改。
+# 覆盖原版 common/ai_espionage/spynetworks/00_base_strategies.txt：原版 + Stellar AI 的目标选择（不刺探联邦成员，优先战争对象、宿敌、缺少军事/科技情报的国家）。
+
+default_empire = {
+	strategy_weight = {
+		modifier = {
+			is_country_type = default
+			weight = 1
+		}
+	}
+
+	network_weight = {
+		modifier = {
+			target = {
+				has_crisis_level = crisis_level_2 # Using second level here just to get some delay for getting targeted.
+			}
+			weight = 9
+		}
+
+		modifier = {
+			# Rivals are considered more of a threat than crisis empires, however it is likely that crisis empires will eventually become rivals anyway.
+			owner = {
+				has_rival = root.target
+			}
+			weight = 10
+		}
+
+		modifier = {
+			# Proximity is the key - double the score if the target is a neighbor.
+			owner = {
+				is_neighbor_of = root.target
+			}
+			factor = 2
+		}
+
+		# Keep native operations. Only selection changes: no federation spying,
+		# then war/rival/neighbour targets and missing military/technology intel.
+		modifier = {
+			owner = { is_at_war_with = root.target }
+			weight = 8
+		}
+		modifier = {
+			owner = {
+				NOT = { has_intel_level = { who = root.target category = military level = 1 } }
+			}
+			weight = 5
+		}
+		modifier = {
+			owner = {
+				NOT = { has_intel_level = { who = root.target category = technology level = 1 } }
+			}
+			weight = 5
+		}
+		# Apply the exclusion LAST, after all additive target weights.
+		modifier = {
+			owner = { is_in_federation_with = root.target }
+			factor = 0
+		}
+	}
+
+	operation_selector = weighted_random_available
+
+	operations = {
+		operation_acquire_asset = {
+			operation_policy = until_max_network_cap_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_steal_technology = {
+			operation_policy = fix_chance_10
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_gather_information = {
+			operation_policy = fix_chance_10
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_kaleidoscope = {
+			operation_policy = kaleidoscope_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_extort_favors = {
+			operation_policy = extort_favors_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_smuggle_pops = {
+			operation_policy = smuggle_pops_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_bodysnatcher_prepare_invasion = {
+			operation_policy = prepare_invasion_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_spark_rebellion = {
+			operation_policy = operation_spark_rebellion_policy
+			target_value = {
+				min = 1
+			}
+		}
+	}
+}
+
+pre_ftl_empire = {
+	strategy_weight = {
+		modifier = {
+			is_country_type = primitive
+			weight = 1
+		}
+	}
+
+	network_weight = {
+		modifier = { # Slightly more incentive if the target is not yet Aware
+			target = {
+				current_awareness_level < full
+			}
+			weight = 2
+		}
+	}
+
+	operation_selector = weighted_random_available
+
+	operations = {
+		operation_increase_awareness = {
+			operation_policy = pre_ftl_uplifting_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_spread_disinformation = {
+			operation_policy = pre_ftl_subtlety_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_plant_advanced_knowledge = {
+			operation_policy = pre_ftl_uplifting_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_indoctrinate_society = {
+			operation_policy = pre_ftl_subtlety_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_infiltrate_government = {
+			operation_policy = pre_ftl_infiltrating_policy
+			target_value = {
+				min = 1
+			}
+		}
+
+		operation_infiltrate_hive = {
+			operation_policy = pre_ftl_infiltrating_policy
+			target_value = {
+				min = 1
+			}
+		}
+	}
+}
