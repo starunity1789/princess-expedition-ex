@@ -1,0 +1,8 @@
+# 皇女的远征军EX 3.13：玩家科研分享（同名 on_action 会与原版合并）
+# 每年一次（全局年脉冲）
+
+on_yearly_pulse = {
+	events = {
+		atb_ai.20
+	}
+}
