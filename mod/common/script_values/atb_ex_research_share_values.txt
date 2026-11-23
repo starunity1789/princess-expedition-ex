@@ -1,0 +1,13 @@
+# 皇女的远征军EX 3.13：玩家科研分享
+# 国家作用域：某类资源的月总收入（不扣支出），写法同原版 nomad_economy_calc_minerals_income
+# 用法：value:atb_ex_resource_revenue|RESOURCE|physics_research|
+atb_ex_resource_revenue = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = resource_revenue_compare
+		parameters = {
+			resource = $RESOURCE$
+		}
+		mode = add
+	}
+}
