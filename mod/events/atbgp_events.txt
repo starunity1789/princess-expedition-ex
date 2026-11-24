@@ -607,14 +607,17 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		atbgp_spawn_start_fleets = yes
 		if = {
 			limit = { has_country_flag = atbgp_power_1 }
 			atbgp_install_ruler_rongxin = yes
+			atbgp_spawn_start_fleets_basic = yes	# 3.19：不是列强
+			give_technology = { tech = tech_psionic_theory message = no }
+			add_ascension_perk = ap_mind_over_matter
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_2 }
 			atbgp_install_ruler_taiaria = yes
+			atbgp_spawn_start_fleets_basic = yes	# 3.19：不是列强
 			give_technology = { tech = tech_psionic_theory message = no }
 			add_ascension_perk = ap_mind_over_matter
 			add_tradition = tr_psionics_adopt
@@ -624,15 +627,18 @@ country_event = {
 		else_if = {
 			limit = { has_country_flag = atbgp_power_3 }
 			atbgp_install_random_ruler_3 = yes
+			atbgp_spawn_start_fleets = yes
 			atbgp_start_purity_ascension = yes
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_4 }
 			atbgp_install_random_ruler_4 = yes
+			atbgp_spawn_start_fleets = yes
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_5 }
 			atbgp_install_random_ruler_5 = yes
+			atbgp_spawn_start_fleets = yes
 		}
 	}
 }
@@ -670,11 +676,11 @@ country_event = {
 		}
 		if = {
 			limit = { has_country_flag = atbgp_power_1 }
-			atbgp_maintain_income = { N = 1 }
+
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_2 }
-			atbgp_maintain_income = { N = 2 }
+
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_3 }
@@ -736,6 +742,48 @@ event = {
 			limit = { atbgp_has_income_deposit = yes }
 			atbgp_clear_foreign_income = yes
 		}
+		# 3.19：专属元首不在位就补一次（平时由 on_ruler_set 的 atbgp.14 处理，这里只是兜底，一年一次）
+		every_country = {
+			limit = {
+				OR = {
+					has_country_flag = atbgp_power_1
+					has_country_flag = atbgp_power_2
+				}
+				exists = ruler
+				ruler = { NOT = { has_leader_flag = atbgp_named_ruler } }
+			}
+			country_event = { id = atbgp.14 }
+		}
+		# 3.19：白鹿、远星不再是列强——旧存档里去掉列强标记与列强修正
+		every_country = {
+			limit = {
+				has_country_flag = atbgp_great_power
+				OR = {
+					has_country_flag = atbgp_power_1
+					has_country_flag = atbgp_power_2
+				}
+			}
+			remove_country_flag = atbgp_great_power
+			remove_modifier = atbgp_power_base
+			remove_modifier = atbgp_starbase_bonus
+			remove_modifier = atbgp_growth_boost
+		}
+		# 3.19：燃烧白鹿固定灵能飞升——旧存档里还没走任何飞升路线就补上（开局已在 atbgp.2 里给）
+		every_country = {
+			limit = {
+				has_country_flag = atbgp_power_1
+				NOR = {
+					has_ascension_perk = ap_mind_over_matter
+					has_ascension_perk = ap_engineered_evolution
+					has_ascension_perk = ap_the_flesh_is_weak
+					has_ascension_perk = ap_organo_machine_interfacing
+					has_ascension_perk = ap_organo_machine_interfacing_assimilator
+					has_ascension_perk = ap_synthetic_evolution
+					has_ascension_perk = ap_synthetic_age
+				}
+			}
+			add_ascension_perk = ap_mind_over_matter
+		}
 	}
 }
 
@@ -752,21 +800,33 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_country_flag = atbgp_great_power
-		any_owned_leader = {
-			has_leader_flag = atbgp_named_ruler
-			is_ruler = no
+		OR = {
+			has_country_flag = atbgp_power_1
+			has_country_flag = atbgp_power_2
 		}
+		exists = ruler
+		ruler = { NOT = { has_leader_flag = atbgp_named_ruler } }
 	}
 
 	immediate = {
-		random_owned_leader = {
+		if = {
 			limit = {
-				has_leader_flag = atbgp_named_ruler
-				is_ruler = no
+				any_owned_leader = { has_leader_flag = atbgp_named_ruler }
 			}
-			save_event_target_as = atbgp_ruler_restore
+			random_owned_leader = {
+				limit = { has_leader_flag = atbgp_named_ruler }
+				save_event_target_as = atbgp_ruler_restore
+			}
+			set_leader = event_target:atbgp_ruler_restore
 		}
-		set_leader = event_target:atbgp_ruler_restore
+		# 3.19：专属元首已经不在了（选举换下后被移除等），重新生成一位
+		if = {
+			limit = { NOT = { any_owned_leader = { has_leader_flag = atbgp_named_ruler } } has_country_flag = atbgp_power_1 }
+			atbgp_install_ruler_rongxin = yes
+		}
+		else_if = {
+			limit = { NOT = { any_owned_leader = { has_leader_flag = atbgp_named_ruler } } has_country_flag = atbgp_power_2 }
+			atbgp_install_ruler_taiaria = yes
+		}
 	}
 }

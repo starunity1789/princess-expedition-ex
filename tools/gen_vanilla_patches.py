@@ -423,34 +423,25 @@ PATCHES = [
              "\t\tname = forceofwill.5810.a\n", 1),
         ],
     ),
-    # 无畏舰 atb_dreadnought、可编入舰队的主宰 atb_juggernaut 加进舰船组件 / 定位触发器；原版主宰停建
+    # 可编入舰队的主宰 atb_juggernaut 加进舰船组件 / 定位触发器；原版主宰停建（3.19 起删除了无畏舰 atb_dreadnought）
     dict(
         path="common/scripted_triggers/07_scripted_triggers_ships.txt",
         header=[
             "皇女的远征军：覆盖原版 common/scripted_triggers/07_scripted_triggers_ships.txt。",
             "由 tools/gen_vanilla_patches.py 生成，请勿手改。与原版的区别：",
-            "无畏舰 atb_dreadnought 加进 ship_uses_battleship_components / ship_uses_titan_components / ship_uses_artillery_role /",
-            "ship_uses_carrier_role / ship_uses_line_role / ship_uses_titan_reactors / ship_uses_battleship_thrusters / ship_uses_battleship_cloaks",
-            "（战列舰推进器、隐形装置、战斗电脑，泰坦反应堆，T 槽武器）；",
             "3.10：可编入舰队的主宰 atb_juggernaut 加进 ship_uses_titan_components / ship_uses_juggernaut_components /",
             "ship_uses_artillery_role / ship_uses_carrier_role / ship_uses_juggernaut_reactors / ship_uses_colossus_thrusters；",
             "原版主宰的 juggernaut_potential_construction 改为 always = no，原内容改名 atb_juggernaut_potential_construction。",
         ],
         replace=[(f"{trig} = {{\n\tOR = {{\n",
                   f"{trig} = {{\n\tOR = {{\n" + "".join(
-                      {"d": "\t\t# 皇女的远征军：无畏舰\n\t\tis_ship_size = atb_dreadnought\n",
-                       "j": "\t\t# 皇女的远征军：可编入舰队的主宰（3.10）\n\t\tis_ship_size = atb_juggernaut\n"}[c] for c in who), 1)
+                      {"j": "\t\t# 皇女的远征军：可编入舰队的主宰（3.10）\n\t\tis_ship_size = atb_juggernaut\n"}[c] for c in who), 1)
                  for trig, who in (
-                     ("ship_uses_battleship_components", "d"),
-                     ("ship_uses_titan_components", "dj"),
-                     ("ship_uses_artillery_role", "dj"),
-                     ("ship_uses_carrier_role", "dj"),
-                     ("ship_uses_line_role", "d"),
-                     ("ship_uses_titan_reactors", "d"),
+                     ("ship_uses_titan_components", "j"),
+                     ("ship_uses_artillery_role", "j"),
+                     ("ship_uses_carrier_role", "j"),
                      ("ship_uses_juggernaut_reactors", "j"),
-                     ("ship_uses_battleship_thrusters", "d"),
                      ("ship_uses_colossus_thrusters", "j"),
-                     ("ship_uses_battleship_cloaks", "d"),
                  )] + [
             ("ship_uses_juggernaut_components = {\n\tis_ship_size = juggernaut\n}\n",
              "ship_uses_juggernaut_components = {\n"
@@ -649,3 +640,68 @@ for outrel, parts in pc_out.items():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(head + "\n".join(parts), encoding="utf-8", newline="\n")
     print("generated", outrel)
+
+
+# ---- 3.19：开局科技「行星团结机构」，换皮原版「文化中心」（Ministry of Culture，building_artist_patron） ----
+# 原版文化中心只有和艺术团做交易（国家标记 artist_building_patron）才能建。这里照抄建筑、只改键名，
+# 改由开局科技 tech_atb_planetary_unity 解锁（全帝国限 1 座，效果完全相同）；
+# 原版触发器 has_ethics_output（文化工作者按思潮产出）里写死了 building_artist_patron，照抄一份把新建筑加进去
+UNITY_TECH = """tech_atb_planetary_unity = {
+	icon = "tech_planetary_unification"
+	start_tech = yes	# 皇女的远征军EX 3.19：开局科技
+	cost = @tier1cost1
+	area = society
+	tier = 1
+	category = { statecraft }
+	weight = 0
+	is_rare = yes
+}
+"""
+ab = None
+for f in sorted((GAME / "common/buildings").glob("*.txt")):
+    for k, block in lc_blocks(f.read_text(encoding="utf-8-sig").replace("\r\n", "\n")):
+        if k == "building_artist_patron":
+            ab = (f.name, block)
+if not ab:
+    sys.exit("原版里找不到 building_artist_patron")
+fname, block = ab
+POT_OLD = ("\tpotential = {\n"
+           "\t\tcustom_tooltip = {\n"
+           "\t\t\ttext = EMPIRE_UNIQUE_BUILDING\n"
+           "\t\t\towner = {\n"
+           "\t\t\t\thas_country_flag = artist_building_patron\n"
+           "\t\t\t}\n"
+           "\t\t}\n")
+if block.count(POT_OLD) != 1:
+    sys.exit("building_artist_patron 的 potential 写法变了，请手动核对")
+block = block.replace(POT_OLD, "\tpotential = {\n", 1)
+block = block.replace("building_artist_patron_gestalt_desc", "building_atb_unity_agency_gestalt_desc")
+block = block.replace("building_artist_patron_desc", "building_atb_unity_agency_desc")
+block = "building_atb_unity_agency" + block[len("building_artist_patron"):]
+first, rest = block.split("\n", 1)
+block = first + "\n\ticon = building_artist_patron\n" + rest
+block = block[:block.rindex("}")] + "\tprerequisites = { \"tech_atb_planetary_unity\" }\n}"
+(MOD / "common/technology/atb_unity_tech.txt").write_text(
+    "# 皇女的远征军EX 3.19：开局科技「行星团结机构」，解锁换皮原版文化中心的同名建筑。由 tools/gen_vanilla_patches.py 生成，请勿手改。\n\n"
+    + UNITY_TECH, encoding="utf-8", newline="\n")
+print("generated common/technology/atb_unity_tech.txt")
+(MOD / "common/buildings/atb_unity_agency_buildings.txt").write_text(
+    f"# 皇女的远征军EX 3.19：「行星团结机构」，照抄原版 common/buildings/{fname} 的 building_artist_patron（文化中心），\n"
+    "# 只改键名与解锁方式（开局科技 tech_atb_planetary_unity，不再要求艺术团交易的国家标记）。由 tools/gen_vanilla_patches.py 生成，请勿手改。\n\n"
+    + block + "\n", encoding="utf-8", newline="\n")
+print("generated common/buildings/atb_unity_agency_buildings.txt")
+st = None
+for f in sorted((GAME / "common/scripted_triggers").glob("*.txt")):
+    for k, b in lc_blocks(f.read_text(encoding="utf-8-sig").replace("\r\n", "\n")):
+        if k == "has_ethics_output":
+            st = (f.name, b)
+if not st:
+    sys.exit("原版里找不到 has_ethics_output")
+line = "\t\thas_active_building = building_artist_patron\n"
+if st[1].count(line) != 1:
+    sys.exit("has_ethics_output 的写法变了，请手动核对")
+b = st[1].replace(line, line + "\t\thas_active_building = building_atb_unity_agency\t# 皇女的远征军EX 3.19\n", 1)
+(MOD / "common/scripted_triggers/zz_atb_unity_agency_triggers.txt").write_text(
+    f"# 皇女的远征军EX 3.19：覆盖原版 common/scripted_triggers/{st[0]} 的 has_ethics_output，只多一行「行星团结机构」。\n"
+    "# 由 tools/gen_vanilla_patches.py 生成，请勿手改；群星更新后重新生成。\n\n" + b + "\n", encoding="utf-8", newline="\n")
+print("generated common/scripted_triggers/zz_atb_unity_agency_triggers.txt")

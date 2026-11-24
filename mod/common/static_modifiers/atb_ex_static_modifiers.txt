@@ -1,7 +1,7 @@
 # 皇女的远征军EX：银河规则（开局加给所有国家，之后每月给新出现的国家补上）
 # - 基础存储上限 +100K
 # - 可建造舰船（生物船除外）基础舰体翻倍：按每种舰体的原版基础值加同样多的舰体值
-#   数值取自原版 common/ship_sizes；无畏舰取自本 MOD 的 atb_ship_sizes.txt
+#   数值取自原版 common/ship_sizes
 atb_ex_galaxy_rules = {
 	country_resource_max_add = 100000
 
@@ -13,7 +13,6 @@ atb_ex_galaxy_rules = {
 	shipsize_battleship_hull_add = 4800
 	# 3.2：战列舰舰体值再翻倍（在上面的 +4800 基础上整体 ×2）
 	shipsize_battleship_hull_mult = 1.0
-	shipsize_atb_dreadnought_hull_add = 6000
 	shipsize_titan_hull_add = 20000
 	shipsize_colossus_hull_add = 30000
 	shipsize_juggernaut_hull_add = 100000
@@ -43,22 +42,36 @@ atb_ex_galaxy_rules = {
 
 	# 3.10：星堡（前哨站～城塞，以及深空城塞 1～3 级）舰体值 +300%、交战范围翻倍；建造与升级花费 -50%
 	# 3.14：舰体值改为 +1000%；建造（前哨站）与升级时间 -80%
-	shipsize_starbase_outpost_hull_mult = 10
-	shipsize_starbase_starport_hull_mult = 10
-	shipsize_starbase_starhold_hull_mult = 10
-	shipsize_starbase_starfortress_hull_mult = 10
-	shipsize_starbase_citadel_hull_mult = 10
-	shipsize_starbase_deep_space_citadel_1_hull_mult = 10
-	shipsize_starbase_deep_space_citadel_2_hull_mult = 10
-	shipsize_starbase_deep_space_citadel_3_hull_mult = 10
-	shipsize_starbase_outpost_engagement_range_mult = 1
-	shipsize_starbase_starport_engagement_range_mult = 1
-	shipsize_starbase_starhold_engagement_range_mult = 1
-	shipsize_starbase_starfortress_engagement_range_mult = 1
-	shipsize_starbase_citadel_engagement_range_mult = 1
-	shipsize_starbase_deep_space_citadel_1_engagement_range_mult = 1
-	shipsize_starbase_deep_space_citadel_2_engagement_range_mult = 1
-	shipsize_starbase_deep_space_citadel_3_engagement_range_mult = 1
+	# 3.19：伤害 ×2；受到的伤害减半（没有按舰型的百分比减伤修正，改为把舰体、装甲、护盾都翻倍：
+	#   舰体 1 + 10 + 2（长战斗）= 13 倍 → 1 + 23 + 2 = 26 倍；装甲、护盾 1 + 2 = 3 倍 → 1 + 2 + 3 = 6 倍）；
+	#   射程与交战范围 ×3
+	shipclass_starbase_damage_mult = 1
+	shipclass_starbase_armor_mult = 3
+	shipclass_starbase_shield_mult = 3
+	shipsize_starbase_outpost_hull_mult = 23
+	shipsize_starbase_starport_hull_mult = 23
+	shipsize_starbase_starhold_hull_mult = 23
+	shipsize_starbase_starfortress_hull_mult = 23
+	shipsize_starbase_citadel_hull_mult = 23
+	shipsize_starbase_deep_space_citadel_1_hull_mult = 23
+	shipsize_starbase_deep_space_citadel_2_hull_mult = 23
+	shipsize_starbase_deep_space_citadel_3_hull_mult = 23
+	shipsize_starbase_outpost_engagement_range_mult = 2
+	shipsize_starbase_outpost_weapon_range_mult = 2
+	shipsize_starbase_starport_engagement_range_mult = 2
+	shipsize_starbase_starport_weapon_range_mult = 2
+	shipsize_starbase_starhold_engagement_range_mult = 2
+	shipsize_starbase_starhold_weapon_range_mult = 2
+	shipsize_starbase_starfortress_engagement_range_mult = 2
+	shipsize_starbase_starfortress_weapon_range_mult = 2
+	shipsize_starbase_citadel_engagement_range_mult = 2
+	shipsize_starbase_citadel_weapon_range_mult = 2
+	shipsize_starbase_deep_space_citadel_1_engagement_range_mult = 2
+	shipsize_starbase_deep_space_citadel_1_weapon_range_mult = 2
+	shipsize_starbase_deep_space_citadel_2_engagement_range_mult = 2
+	shipsize_starbase_deep_space_citadel_2_weapon_range_mult = 2
+	shipsize_starbase_deep_space_citadel_3_engagement_range_mult = 2
+	shipsize_starbase_deep_space_citadel_3_weapon_range_mult = 2
 	starbase_outpost_cost_mult = -0.5
 	starbase_upgrade_cost_mult = -0.5
 	starbase_upgrade_time_mult = -0.8

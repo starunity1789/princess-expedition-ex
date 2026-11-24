@@ -192,22 +192,22 @@ checks = [
     ("多母星都走原版开局流程", init.count("generate_start_pops = yes") == 7),
     ("大君主与终端对齐协议加入星海共同体", init.count("set_country_flag = atbgp_gc_member") == 2
      and "has_country_flag = atbgp_gc_member" in rules and "can_be_part_of_galactic_community = {" in rules),
-    ("五个列强开局海军容量 +300（3.1）；恒星基地上限 +10 除大君主外（3.10）", init.count("modifier = atbgp_power_base") == 5
+    ("三个列强开局海军容量 +300（3.1；3.19 起白鹿、远星不是列强）；恒星基地上限 +10 除大君主外（3.10）", init.count("modifier = atbgp_power_base") == 3
      and "atbgp_power_base = {\n\tcountry_naval_cap_add = 300\n}" in gpmod
      and "atbgp_starbase_bonus = {\n\tcountry_starbase_capacity_add = 10\n}" in gpmod),
     ("3.0.3：AI 超容造舰预算 ×0.1、天灾邻国 ×5 只到 100%", (lambda b: "factor = 0.1\n\t\t\tused_naval_capacity_percent >= 1.0" in b
      and "used_naval_capacity_percent < 1.0\t# 皇女的远征军EX：原版 1.5" in b)(
         read(MOD / "common/ai_budget/01_alloys_budget.txt") if (MOD / "common/ai_budget/01_alloys_budget.txt").exists() else "")),
-    ("2.7：10 颗开局母星人口增长翻倍 20 年", init.count("modifier = atbgp_growth_boost") == 10
+    ("2.7：列强的 8 颗开局母星人口增长翻倍 20 年（3.19 起白鹿、远星没有）", init.count("modifier = atbgp_growth_boost") == 8
      and "days = 7200" in init and "logistic_growth_mult = 1.0" in gpmod and "planet_pop_assembly_mult = 1.0" in gpmod),
     ("2.7：开局舰队带 10 级永生舰队司令", "class = commander" in eff and "skill = 10" in eff
      and "assign_leader = event_target:atbgp_start_admiral" in eff),
     ("2.7：10 颗列强开局母星都先放开局特征（决定乡村区划上限）再建区划",
      init.count("generate_start_deposits_and_blockers = yes") == 10
      and init.count("generate_start_buildings_and_districts = yes") == 10),
-    ("2.7：6 颗标准区划集开局母星加农业/发电/采矿区划各 10 个（机械星球不加）",
-     init.count("modifier = atbgp_homeworld_districts") == 6
-     and init.count("add_district = { district_type = district_farming ignore_cap = yes }") == 6
+    ("2.7：列强 4 颗标准区划集开局母星加农业/发电/采矿区划各 10 个（机械星球不加；3.19 起白鹿、远星没有）",
+     init.count("modifier = atbgp_homeworld_districts") == 4
+     and init.count("add_district = { district_type = district_farming ignore_cap = yes }") == 4
      and "planet_max_districts_add = 30" in gpmod),
     ("2.7：舰船不再用编号命名", "CGEN_SEQ_SHIP" not in read(MOD / "common/name_lists/00_cgen_azure_genesis.txt")),
     ("列强星团不连到天选民", "has_star_flag = chosen_system" in read(MOD / "common/scripted_triggers/atbgp_triggers.txt")),
@@ -283,7 +283,12 @@ checks = [
     ("初始护卫舰 x10 = 30 艘，建造舰/科研舰各 1 艘",
      (lambda f: "count = 30" in f and "count = 10" not in f and "while" not in f.split("random_existing_design = corvette")[0].split("create_leader")[0]
       and f.count("random_existing_design = constructor") == 1 and f.count("random_existing_design = science") == 1)(
-         eff.split("atbgp_spawn_start_fleets = {")[1].split("atbgp_install_ruler_")[0])),
+         eff.split("atbgp_spawn_start_fleets = {")[1].split("atbgp_spawn_start_fleets_basic")[0])),
+    ("3.19：白鹿、远星不是列强（没有列强标记、底蕴、要塞、补给特征、30 艘护卫舰与司令），远星专属元首不在就重新生成，白鹿固定灵能飞升",
+     "atbgp_spawn_start_fleets_basic = {" in eff and init.count("set_country_flag = atbgp_great_power") == 3
+     and init.count("add_deposit = atbgp_d_income_") == 2
+     and "atbgp_install_ruler_taiaria = yes" in read(MOD / "events/atbgp_events.txt").split("id = atbgp.14", 1)[1]
+     and "add_ascension_perk = ap_mind_over_matter" in read(MOD / "events/atbgp_events.txt").split("id = atbgp.13", 1)[1]),
     ("白鹿与远星母星系各一座 L 星门", init.count("type = lgate_base") == 2
      and init.count("lgate_enabled = yes") == 2),
 ]
@@ -350,7 +355,7 @@ checks += [
      and "factor = 1.1982" in read(MOD / "common/script_values/atb_ai_auto_values.txt")
      and "factor = 1.1081" in read(MOD / "common/script_values/atb_ai_auto_values.txt")),
     ("3.10：大君主同盟领地没有恒星基地上限 +10", "country_starbase_capacity_add" not in read(MOD / "common/static_modifiers/atbgp_static_modifiers.txt").split("atbgp_power_base = {", 1)[1].split("}", 1)[0]
-     and read(MOD / "common/solar_system_initializers/atbgp_initializers.txt").count("modifier = atbgp_starbase_bonus") == 4),
+     and read(MOD / "common/solar_system_initializers/atbgp_initializers.txt").count("modifier = atbgp_starbase_bonus") == 2),
     ("3.6：无形链接↔逆鳞、极限边缘↔神话两个虫洞，白鹿与远星互相 +200 好感", "id = atb_ex.6" in read(MOD / "events/atb_ex_events.txt")
      and re.sub(r"#.*", "", read(MOD / "events/atb_ex_events.txt")).count("link_wormholes = prev") == 2
      and "base = 200" in read(MOD / "common/opinion_modifiers/atb_ex_opinion_modifiers.txt")),
@@ -405,11 +410,35 @@ checks += [
      and read(MOD / "common/starbase_buildings/atb_precursor_copy_starbase_buildings.txt").count("has_technology = tech_atb_industrial_hub") == 2
      and all(f" {k}:0" in read(MOD / f"localisation/{lang}/atb_ex_l_{lang}.yml") for lang in ("simp_chinese", "english")
              for k in ("tech_atb_agri_aggregate", "building_atb_agri_aggregate", "tech_atb_industrial_hub", "sm_atb_industrial_hub", "sm_atb_arkship_industrial_hub"))),
+    ("3.19：美铃、萃香、雏、米斯蒂娅改为行政官（招募归行政官，旧存档每年转换）",
+     all(f"create_{c}_leader = {{" in read(MOD / "common/scripted_effects/atb_th_leader_effects.txt") for c in ("meiling", "suika", "hina", "mystia"))
+     and read(MOD / "common/scripted_effects/atb_th_leader_effects.txt").count("CLASS = official\t# 3.19：原为指挥官") == 4
+     and all(f"atb_th_got_{c}" in read(MOD / "common/scripted_effects/atb_th_recruit_effects.txt").split("atb_th_recruit_official = {", 1)[1] for c in ("meiling", "suika", "hina", "mystia"))
+     and "change_leader_class = official" in read(MOD / "common/scripted_effects/atb_ex_effects.txt")
+     and "atb_th_convert_officials = yes" in read(MOD / "events/atb_ex_events.txt")),
+    ("3.19：删除无畏舰", not exists("common/technology/atb_technology.txt") and not exists("common/section_templates/atb_dreadnought.txt")
+     and "atb_dreadnought" not in read(MOD / "common/ship_sizes/atb_ship_sizes.txt")
+     and "atb_dreadnought" not in read(MOD / "common/scripted_triggers/07_scripted_triggers_ships.txt")
+     and "atb_dreadnought" not in read(MOD / "common/static_modifiers/atb_ex_static_modifiers.txt")),
+    ("3.19：自动星球产出曲线 A×(0.85+0.0015A)，海军容量 0.12",
+     "mult = 0.0015\n\tadd = 0.85\n\tmult = atb_ai_auto_jobs" in read(MOD / "common/script_values/atb_ai_auto_values.txt")
+     and "@atb_ai_auto_naval_cap = 0.12" in read(MOD / "common/scripted_variables/atb_ai_auto_variables.txt")),
+    ("3.13/3.19：玩家产出分享——科研无条件，其余 13 种资源在 AI 有自动星球产能封顶后分享",
+     (lambda e: e.count("mult = prev.atb_ex_rs_") == 16 and "check_variable = { which = atb_ai_auto_jobs value >= @atb_ai_auto_cap }" in e
+      and "value:atb_ex_resource_revenue|RESOURCE|alloys|" in e and "atb_ai.20" in read(MOD / "common/on_actions/atb_ex_research_share_on_actions.txt"))(
+         read(MOD / "events/atb_ex_research_share_events.txt"))),
+    ("3.19：远征军开局虫洞稳定 10%", "tech = tech_wormhole_stabilization" in read(MOD / "common/scripted_effects/atb_effects.txt")),
+    ("3.19：开局科技行星团结机构（换皮文化中心，has_ethics_output 加进新建筑）",
+     "start_tech = yes" in read(MOD / "common/technology/atb_unity_tech.txt")
+     and "prerequisites = { \"tech_atb_planetary_unity\" }" in read(MOD / "common/buildings/atb_unity_agency_buildings.txt")
+     and "has_active_building = building_atb_unity_agency" in read(MOD / "common/scripted_triggers/zz_atb_unity_agency_triggers.txt")),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
-    ("3.14：星堡舰体 +1000%、交战范围翻倍、花费减半、建造与升级时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
-     (lambda m: m.count("_hull_mult = 10\n") == 9 and "starbase_upgrade_time_mult = -0.8" in m
-      and "shipclass_starbase_build_speed_mult = 4" in m and m.count("_engagement_range_mult = 1") == 8
+    ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
+     (lambda m: m.count("_hull_mult = 23\n") == 8 and "shipclass_military_station_hull_mult = 10\n" in m
+      and "shipclass_starbase_damage_mult = 1\n" in m and "shipclass_starbase_armor_mult = 3\n" in m and "shipclass_starbase_shield_mult = 3\n" in m
+      and m.count("_weapon_range_mult = 2\n") == 8 and "starbase_upgrade_time_mult = -0.8" in m
+      and "shipclass_starbase_build_speed_mult = 4" in m and m.count("_engagement_range_mult = 2\n") == 8
       and "starbase_upgrade_cost_mult = -0.5" in m and "starbase_outpost_cost_mult = -0.5" in m
       and "starbase_defense_platform_capacity_add = 24" in m and "shipclass_military_station_build_cost_mult = -0.5" in m
       and "shipclass_military_station_build_speed_mult = 4" in m and "ship_ion_cannon_upkeep_mult = -0.5" in m

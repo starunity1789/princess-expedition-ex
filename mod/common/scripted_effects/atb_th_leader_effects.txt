@@ -75,7 +75,7 @@ create_suika_leader = {
 	thl_leader_creator_core = {
 		SPECIES_CLASS = random_non_machine
 		LEADER_PORTRAIT = x98
-		CLASS = commander
+		CLASS = official	# 3.19：原为指挥官
 		NAME = NAME_Suika
 		LEVEL = 6
 		GENDER = female
@@ -160,7 +160,7 @@ create_meiling_leader = {
 	thl_leader_creator_core = {
 		SPECIES_CLASS = random_non_machine
 		LEADER_PORTRAIT = x89
-		CLASS = commander
+		CLASS = official	# 3.19：原为指挥官
 		NAME = NAME_Meiling
 		LEVEL = 3
 		GENDER = female
@@ -839,7 +839,7 @@ create_hina_leader = {
 	thl_leader_creator_core = {
 		SPECIES_CLASS = random_non_machine
 		LEADER_PORTRAIT = x107
-		CLASS = commander
+		CLASS = official	# 3.19：原为指挥官
 		NAME = NAME_Hina
 		LEVEL = 2
 		GENDER = female
@@ -860,7 +860,7 @@ create_mystia_leader = {
 	thl_leader_creator_core = {
 		SPECIES_CLASS = random_non_machine
 		LEADER_PORTRAIT = x3
-		CLASS = commander
+		CLASS = official	# 3.19：原为指挥官
 		NAME = NAME_Mystia
 		LEVEL = 2
 		GENDER = female
@@ -979,15 +979,15 @@ add_tenshi_traits = {
 }
 
 add_suika_traits = {
-	add_trait = { trait = subclass_commander_lord show_message = no }
-	add_trait = { trait = subclass_commander_councilor show_message = no }
-	add_trait = { trait = subclass_commander_general show_message = no }
+	# 3.19：改为行政官，指挥官专用的原版特质换成主题相近的行政官特质
+	add_trait = { trait = subclass_official_governor show_message = no }
+	add_trait = { trait = subclass_official_economy_councilor show_message = no }
 	add_trait = { trait = thl_leader_trait_oni_power show_message = no }
-	add_trait = { trait = leader_trait_trickster show_message = no }
 	add_trait = { trait = leader_trait_thl_cultural_focus_2 show_message = no }
-	add_trait = { trait = leader_trait_dreaded show_message = no }
+	add_trait = { trait = leader_trait_galvanizer show_message = no }
 	add_trait = { trait = leader_trait_venerated show_message = no }
 	add_trait = { trait = leader_trait_profligate show_message = no }
+	add_trait = { trait = leader_trait_stubborn show_message = no }
 	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
 	add_trait = { trait = thl_leader_trait_density show_message = no }
 	set_leader_flag = touhou_leader
@@ -1030,16 +1030,13 @@ add_cirno_traits = {
 }
 
 add_meiling_traits = {
-	add_trait = { trait = subclass_commander_general show_message = no }
-	add_trait = { trait = leader_trait_survivalist show_message = no }
-	add_trait = { trait = leader_trait_home_guard show_message = no }
-	add_trait = { trait = leader_trait_warden show_message = no }
-	add_trait = { trait = leader_trait_reinforcer show_message = no }
-	add_trait = { trait = leader_trait_guardian show_message = no }
-	add_trait = { trait = leader_trait_lethargic_2 show_message = no }
-	add_trait = { trait = leader_trait_disorganized show_message = no }
-	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
+	# 3.19：改为行政官，指挥官专用的原版特质换成主题相近的行政官特质
+	add_trait = { trait = subclass_official_governor show_message = no }
 	add_trait = { trait = thl_leader_trait_kongfu show_message = no }
+	add_trait = { trait = leader_trait_architectural_interest show_message = no }
+	add_trait = { trait = leader_trait_army_veteran show_message = no }
+	add_trait = { trait = leader_trait_procrastinator show_message = no }
+	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
 	set_leader_flag = touhou_leader
 	set_leader_flag = legendary_leader
 	set_leader_flag = meiling_leader
@@ -1418,22 +1415,24 @@ add_minoriko_traits = {
 }
 
 add_hina_traits = {
-	add_trait = { trait = subclass_commander_governor show_message = no }
+	# 3.19：改为行政官，指挥官专用的原版特质换成主题相近的行政官特质
+	add_trait = { trait = subclass_official_governor show_message = no }
 	add_trait = { trait = thl_leader_trait_jinx show_message = no }
 	add_trait = { trait = leader_trait_mediator show_message = no }
-	add_trait = { trait = leader_trait_restrained show_message = no }
-	add_trait = { trait = leader_trait_dreaded show_message = no }
-	add_trait = { trait = leader_trait_uninspiring show_message = no }
+	add_trait = { trait = leader_trait_pop_focused show_message = no }
+	add_trait = { trait = leader_trait_intolerant show_message = no }
+	add_trait = { trait = leader_trait_stubborn show_message = no }
 	add_trait = { trait = thl_leader_trait_regeneration_2 show_message = no }
 }
 
 add_mystia_traits = {
-	add_trait = { trait = subclass_commander_governor show_message = no }
+	# 3.19：改为行政官，指挥官专用的原版特质换成主题相近的行政官特质
+	add_trait = { trait = subclass_official_governor show_message = no }
 	add_trait = { trait = thl_leader_trait_song show_message = no }
-	add_trait = { trait = leader_trait_bellicose show_message = no }
+	add_trait = { trait = leader_trait_entrepreneur show_message = no }
 	add_trait = { trait = thl_leader_trait_izakaya show_message = no }
 	add_trait = { trait = thl_leader_trait_youkai_punk show_message = no }
-	add_trait = { trait = leader_trait_micromanager show_message = no }
+	add_trait = { trait = leader_trait_homesteader show_message = no }
 	add_trait = { trait = thl_leader_trait_regeneration show_message = no }
 }
 

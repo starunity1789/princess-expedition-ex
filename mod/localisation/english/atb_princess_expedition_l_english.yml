@@ -92,27 +92,9 @@
  d_atb_elemental_seal_institute:0 "High Elemental Sealing Institute"
  d_atb_elemental_seal_institute_desc:0 "Deep inside the fortress, behind seals that only the princesses can open, the Empire's scholars keep the elemental arts they carried from the homeworld. Its vaults hold more than any storehouse in the expedition, and every year they turn up another relic of the old world."
 
- # Dreadnought
- atb_dreadnought:0 "Dreadnought"
- atb_dreadnought_plural:0 "Dreadnoughts"
- atb_dreadnought_cap:0 "$atb_dreadnought$"
  atb_juggernaut:0 "Juggernaut"
  atb_juggernaut_plural:0 "Juggernaut"
  atb_juggernaut_cap:0 "$atb_juggernaut$"
- tech_atb_dreadnought:0 "Dreadnoughts"
- tech_atb_dreadnought_desc:0 "Fit a titan's main gun into a battleship hull. A tighter keel and a titan-class reactor let a single battleship carry a titanic weapon capable of tearing open an entire fleet formation."
- TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_TITLE:0 "§H$UNLOCKS_SHIP_TYPE$: §!Dreadnought"
- TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_DESC:0 "§HDreadnought§!\nA battleship-class hull whose bow can mount one §YTitanic (T)§! weapon, powered by a titan reactor."
- ATB_DREADNOUGHT_BOW_L1M1S2:0 "$BATTLESHIP_BOW_L1M1S2$"
- ATB_DREADNOUGHT_BOW_L2:0 "$BATTLESHIP_BOW_L2$"
- ATB_DREADNOUGHT_BOW_M1S2SHB:0 "$BATTLESHIP_BOW_M1S2SHB$"
- ATB_DREADNOUGHT_BOW_T1:0 "Verdict Bow"
- ATB_DREADNOUGHT_MID_L2M2:0 "$BATTLESHIP_MID_L2M2$"
- ATB_DREADNOUGHT_MID_L3:0 "$BATTLESHIP_MID_L3$"
- ATB_DREADNOUGHT_MID_M4SHB:0 "$BATTLESHIP_MID_M4SHB$"
- ATB_DREADNOUGHT_MID_S4LHB:0 "$BATTLESHIP_MID_S4LHB$"
- ATB_DREADNOUGHT_STERN_L1:0 "$BATTLESHIP_STERN_L1$"
- ATB_DREADNOUGHT_STERN_M2:0 "$BATTLESHIP_STERN_M2$"
 
  # Expedition authority
  auth_atb_expedition:0 "Expeditionary Order"

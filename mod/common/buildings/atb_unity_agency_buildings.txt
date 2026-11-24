@@ -1,0 +1,54 @@
+# 皇女的远征军EX 3.19：「行星团结机构」，照抄原版 common/buildings/12_event_buildings.txt 的 building_artist_patron（文化中心），
+# 只改键名与解锁方式（开局科技 tech_atb_planetary_unity，不再要求艺术团交易的国家标记）。由 tools/gen_vanilla_patches.py 生成，请勿手改。
+
+building_atb_unity_agency = {
+	icon = building_artist_patron
+	base_buildtime = @b2_time
+	can_demolish = yes
+	empire_limit = 1
+
+	category = unity
+
+	building_sets = {
+		government
+		urban
+		unity
+	}
+
+	potential = {
+		NOT = { has_modifier = slave_colony }
+	}
+
+	planet_modifier = {
+		planet_jobs_unity_produces_mult = 0.05
+	}
+
+	inline_script = {
+		script = jobs/culture_workers_add
+		COUNT = @building_static_jobs_medium
+	}
+
+	resources = {
+		category = planet_buildings
+		upkeep = {
+			energy = 2
+		}
+	}
+
+	desc = {
+		trigger = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		text = building_atb_unity_agency_desc
+	}
+
+	desc = {
+		trigger = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		text = building_atb_unity_agency_gestalt_desc
+	}
+	prerequisites = { "tech_atb_planetary_unity" }
+}

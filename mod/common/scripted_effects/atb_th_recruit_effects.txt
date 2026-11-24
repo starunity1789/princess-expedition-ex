@@ -50,11 +50,6 @@ atb_th_recruit_commander = {
 			set_country_flag = atb_th_got_cirno
 		}
 		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_hina }
-			create_hina_leader = yes
-			set_country_flag = atb_th_got_hina
-		}
-		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_kanako }
 			create_kanako_leader = yes
 			set_country_flag = atb_th_got_kanako
@@ -68,16 +63,6 @@ atb_th_recruit_commander = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_marisa }
 			create_marisa_leader = yes
 			set_country_flag = atb_th_got_marisa
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_meiling }
-			create_meiling_leader = yes
-			set_country_flag = atb_th_got_meiling
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_mystia }
-			create_mystia_leader = yes
-			set_country_flag = atb_th_got_mystia
 		}
 		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_onoduka }
@@ -108,11 +93,6 @@ atb_th_recruit_commander = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_sanae }
 			create_sanae_leader = yes
 			set_country_flag = atb_th_got_sanae
-		}
-		10 = {
-			modifier = { factor = 0 has_country_flag = atb_th_got_suika }
-			create_suika_leader = yes
-			set_country_flag = atb_th_got_suika
 		}
 		10 = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_tenshi }
@@ -184,6 +164,26 @@ atb_th_recruit_official = {
 			modifier = { factor = 0 has_country_flag = atb_th_got_yuyuko }
 			create_yuyuko_leader = yes
 			set_country_flag = atb_th_got_yuyuko
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_meiling }
+			create_meiling_leader = yes
+			set_country_flag = atb_th_got_meiling
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_suika }
+			create_suika_leader = yes
+			set_country_flag = atb_th_got_suika
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_hina }
+			create_hina_leader = yes
+			set_country_flag = atb_th_got_hina
+		}
+		10 = {
+			modifier = { factor = 0 has_country_flag = atb_th_got_mystia }
+			create_mystia_leader = yes
+			set_country_flag = atb_th_got_mystia
 		}
 	}
 }

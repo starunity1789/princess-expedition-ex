@@ -1,0 +1,34 @@
+# 皇女的远征军EX 3.19：覆盖原版 common/scripted_triggers/01_scripted_triggers_jobs.txt 的 has_ethics_output，只多一行「行星团结机构」。
+# 由 tools/gen_vanilla_patches.py 生成，请勿手改；群星更新后重新生成。
+
+has_ethics_output = {
+	OR = {
+		has_active_building = building_autochthon_monument
+		has_active_building = building_heritage_site
+		has_active_building = building_hypercomms_forum
+		has_active_building = building_galactic_memorial_1
+		has_active_building = building_galactic_memorial_2
+		has_active_building = building_galactic_memorial_3
+		has_active_building = building_corporate_monument
+		has_active_building = building_corporate_site
+		has_active_building = building_corporate_forum
+		has_active_building = building_artist_patron
+		has_active_building = building_atb_unity_agency	# 皇女的远征军EX 3.19
+		has_active_building = building_lifecrypt_1
+		has_active_building = building_lifecrypt_2
+		has_active_building = building_lifecrypt_3
+		has_active_building = building_lifecrypt_corporate_1
+		has_active_building = building_lifecrypt_corporate_2
+		has_active_building = building_lifecrypt_corporate_3
+		num_zones = {
+			type = zone_broken_shackles_memorial
+			value >= 1
+		}
+		AND = {
+			exists = owner.federation
+			owner.federation = {
+				has_federation_perk = culture_workers_1
+			}
+		}
+	}
+}

@@ -92,27 +92,9 @@
  d_atb_elemental_seal_institute:0 "高位元素秘封研究院"
  d_atb_elemental_seal_institute_desc:0 "要塞最深处，有一道只有皇女才能开启的封印。门后是帝国的学者从母星带来的元素秘术——它的库房比远征军任何一座仓库都大，每一年，研究员们都会从里面再整理出一件旧世界的遗物。"
 
- # 无畏舰
- atb_dreadnought:0 "无畏舰"
- atb_dreadnought_plural:0 "无畏舰"
- atb_dreadnought_cap:0 "$atb_dreadnought$"
  atb_juggernaut:0 "主宰"
  atb_juggernaut_plural:0 "主宰"
  atb_juggernaut_cap:0 "$atb_juggernaut$"
- tech_atb_dreadnought:0 "无畏舰"
- tech_atb_dreadnought_desc:0 "把泰坦的主炮装进战列舰的船体。更紧凑的龙骨结构与泰坦级反应堆，让一艘战列舰也能扛起一门足以撕开整支舰队阵型的泰坦级武器。"
- TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_TITLE:0 "§H$UNLOCKS_SHIP_TYPE$：§!无畏舰"
- TECH_UNLOCK_ATB_DREADNOUGHT_CONSTRUCTION_DESC:0 "§H无畏舰§!\n战列舰级别的船体，舰艏可以搭载一门§Y泰坦级（T）§!武器，使用泰坦反应堆。"
- ATB_DREADNOUGHT_BOW_L1M1S2:0 "$BATTLESHIP_BOW_L1M1S2$"
- ATB_DREADNOUGHT_BOW_L2:0 "$BATTLESHIP_BOW_L2$"
- ATB_DREADNOUGHT_BOW_M1S2SHB:0 "$BATTLESHIP_BOW_M1S2SHB$"
- ATB_DREADNOUGHT_BOW_T1:0 "裁决舰艏"
- ATB_DREADNOUGHT_MID_L2M2:0 "$BATTLESHIP_MID_L2M2$"
- ATB_DREADNOUGHT_MID_L3:0 "$BATTLESHIP_MID_L3$"
- ATB_DREADNOUGHT_MID_M4SHB:0 "$BATTLESHIP_MID_M4SHB$"
- ATB_DREADNOUGHT_MID_S4LHB:0 "$BATTLESHIP_MID_S4LHB$"
- ATB_DREADNOUGHT_STERN_L1:0 "$BATTLESHIP_STERN_L1$"
- ATB_DREADNOUGHT_STERN_M2:0 "$BATTLESHIP_STERN_M2$"
 
  # 远征军体制
  auth_atb_expedition:0 "远征军体制"

@@ -191,6 +191,51 @@ atbgp_spawn_start_fleets = {
 	event_target:atbgp_start_warfleet = { assign_leader = event_target:atbgp_start_admiral }
 }
 
+# 3.19：非列强（白鹿、远星）的开局舰船：工程船、科研船（带科学家）与 3 艘护卫舰，没有 10 级司令
+atbgp_spawn_start_fleets_basic = {
+	create_fleet = {
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = random
+				random_existing_design = constructor
+			}
+			set_location = root.capital_star
+		}
+	}
+	create_fleet = {
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = random
+				random_existing_design = science
+			}
+			set_location = root.capital_star
+			save_event_target_as = atbgp_science_ship
+		}
+	}
+	create_leader = {
+		name = random
+		species = root.species
+		class = scientist
+		skill = 1
+	}
+	event_target:atbgp_science_ship = { assign_leader = last_created_leader }
+	create_fleet = {
+		effect = {
+			set_owner = root
+			while = {
+				count = 3
+				create_ship = {
+					name = random
+					random_existing_design = corvette
+				}
+			}
+			set_location = root.capital_star
+		}
+	}
+}
+
 # 国家作用域：用专属立绘的元首替换 燃烧白鹿军团 的开局元首（10 级）
 # 元首是单独的物种，原版改造/飞升换肖像不会作用到她身上
 atbgp_install_ruler_rongxin = {
@@ -426,11 +471,7 @@ atbgp_clear_foreign_income = {
 				has_deposit = atbgp_d_income_1
 				has_deposit = atbgp_d_income_crisis_1
 			}
-			NAND = {
-				exists = owner
-				owner = { has_country_flag = atbgp_power_1 }
-				is_capital = yes
-			}
+			# 3.19：不再是列强，补给特征一律清掉
 		}
 		remove_deposit = atbgp_d_income_1
 		remove_deposit = atbgp_d_income_crisis_1
@@ -441,11 +482,7 @@ atbgp_clear_foreign_income = {
 				has_deposit = atbgp_d_income_2
 				has_deposit = atbgp_d_income_crisis_2
 			}
-			NAND = {
-				exists = owner
-				owner = { has_country_flag = atbgp_power_2 }
-				is_capital = yes
-			}
+			# 3.19：不再是列强，补给特征一律清掉
 		}
 		remove_deposit = atbgp_d_income_2
 		remove_deposit = atbgp_d_income_crisis_2

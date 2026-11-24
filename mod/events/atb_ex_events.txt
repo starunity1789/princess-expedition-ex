@@ -59,6 +59,8 @@ event = {
 			limit = { any_country = { has_country_flag = atb_distant_promise } }
 			atb_ex_lcluster_terraformable = yes
 		}
+		# 3.19：旧存档里还是指挥官的美铃、萃香、雏、米斯蒂娅转成行政官
+		atb_th_convert_officials = yes
 	}
 }
 

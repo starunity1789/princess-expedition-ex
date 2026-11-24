@@ -967,7 +967,7 @@ thl_leader_trait_density = {
 		planet_jobs_unity_produces_mult = 0.125
 		planet_resettlement_unemployed_destination_mult = 0.25
 	}
-	leader_class = { commander }
+	leader_class = { commander official }	# 3.19：美铃、萃香、雏、米斯蒂娅改为行政官
 	selectable_weight = {
 		weight = 0
 	}
@@ -2036,7 +2036,7 @@ thl_leader_trait_izakaya = {
 	sector_modifier = {
 	}
 	leader_trait_type = basic
-	leader_class = { commander }
+	leader_class = { commander official }	# 3.19：美铃、萃香、雏、米斯蒂娅改为行政官
 	leader_potential_add = {
 		has_trait = thl_leader_trait_song
 	}
@@ -2065,7 +2065,7 @@ thl_leader_trait_jinx = {
 	}
 	on_gained_effect = {
 	}
-	leader_class = { commander }
+	leader_class = { commander official }	# 3.19：美铃、萃香、雏、米斯蒂娅改为行政官
 	selectable_weight = 0
 	immortal_leaders = yes
 	background_icon = GFX_leader_background_destiny_1
@@ -2166,7 +2166,18 @@ thl_leader_trait_kongfu = {
 	}
 	on_gained_effect = {
 	}
-	leader_class = { commander }
+	leader_class = { commander official }	# 3.19：美铃、萃香、雏、米斯蒂娅改为行政官
+	# 3.19：改为行政官后，把原来「典狱官」「增援者」的星球防御搬到这里
+	planet_modifier = {
+		planet_defense_armies_add = 4
+		army_defense_damage_mult = 0.4
+		planet_orbital_bombardment_damage = -0.25
+	}
+	sector_modifier = {
+		planet_defense_armies_add = 2
+		army_defense_damage_mult = 0.2
+		planet_orbital_bombardment_damage = -0.125
+	}
 	immortal_leaders = yes
 	selectable_weight = 0
 	background_icon = GFX_leader_background_destiny_1
@@ -2869,7 +2880,16 @@ thl_leader_trait_oni_power = {
 		army_morale = 0.66
 		army_collateral_damage_mult = -0.33
 	}
-	leader_class = { commander }
+	leader_class = { commander official }	# 3.19：美铃、萃香、雏、米斯蒂娅改为行政官
+	# 3.19：改为行政官后的总督效果（鬼的怪力）
+	planet_modifier = {
+		planet_jobs_worker_produces_mult = 0.1
+		planet_jobs_minerals_produces_mult = 0.15
+	}
+	sector_modifier = {
+		planet_jobs_worker_produces_mult = 0.05
+		planet_jobs_minerals_produces_mult = 0.075
+	}
 	selectable_weight = {
 		weight = 0
 	}
@@ -3402,7 +3422,16 @@ thl_leader_trait_song = {
 	on_gained_effect = {
 		change_background_job = entertainer
 	}
-	leader_class = { commander }
+	leader_class = { commander official }	# 3.19：美铃、萃香、雏、米斯蒂娅改为行政官
+	# 3.19：改为行政官后的总督效果（夜雀之歌）
+	planet_modifier = {
+		pop_happiness = 0.1
+		planet_amenities_mult = 0.1
+	}
+	sector_modifier = {
+		pop_happiness = 0.05
+		planet_amenities_mult = 0.05
+	}
 	selectable_weight = 0
 	immortal_leaders = yes
 	background_icon = GFX_leader_background_destiny_1
@@ -4026,7 +4055,7 @@ thl_leader_trait_youkai_punk = {
 		planet_entertainers_society_research_produces_add = 1
 	}
 	leader_trait_type = veteran
-	leader_class = { commander }
+	leader_class = { commander official }	# 3.19：美铃、萃香、雏、米斯蒂娅改为行政官
 	leader_potential_add = {
 		has_trait = thl_leader_trait_song
 	}

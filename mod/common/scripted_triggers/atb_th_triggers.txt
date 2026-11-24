@@ -13,30 +13,26 @@ atb_th_has_unrecruited_scientist = {
 	}
 }
 
-# 国家作用域：还有没招募到的东方指挥官（17 位：cirno hina kanako koishi marisa meiling mystia onoduka reimu reisen remilia sakuya sanae suika tenshi utsuho youmu）
+# 国家作用域：还有没招募到的东方指挥官（13 位：cirno kanako koishi marisa onoduka reimu reisen remilia sakuya sanae tenshi utsuho youmu；3.19 起美铃、萃香、雏、米斯蒂娅改为行政官）
 atb_th_has_unrecruited_commander = {
 	NAND = {
 		has_country_flag = atb_th_got_cirno
-		has_country_flag = atb_th_got_hina
 		has_country_flag = atb_th_got_kanako
 		has_country_flag = atb_th_got_koishi
 		has_country_flag = atb_th_got_marisa
-		has_country_flag = atb_th_got_meiling
-		has_country_flag = atb_th_got_mystia
 		has_country_flag = atb_th_got_onoduka
 		has_country_flag = atb_th_got_reimu
 		has_country_flag = atb_th_got_reisen
 		has_country_flag = atb_th_got_remilia
 		has_country_flag = atb_th_got_sakuya
 		has_country_flag = atb_th_got_sanae
-		has_country_flag = atb_th_got_suika
 		has_country_flag = atb_th_got_tenshi
 		has_country_flag = atb_th_got_utsuho
 		has_country_flag = atb_th_got_youmu
 	}
 }
 
-# 国家作用域：还有没招募到的东方行政官（10 位：alice aya minoriko rin satori shikieiki suwako tewi yuka yuyuko）
+# 国家作用域：还有没招募到的东方行政官（14 位：alice aya minoriko rin satori shikieiki suwako tewi yuka yuyuko meiling suika hina mystia）
 atb_th_has_unrecruited_official = {
 	NAND = {
 		has_country_flag = atb_th_got_alice
@@ -49,5 +45,9 @@ atb_th_has_unrecruited_official = {
 		has_country_flag = atb_th_got_tewi
 		has_country_flag = atb_th_got_yuka
 		has_country_flag = atb_th_got_yuyuko
+		has_country_flag = atb_th_got_meiling
+		has_country_flag = atb_th_got_suika
+		has_country_flag = atb_th_got_hina
+		has_country_flag = atb_th_got_mystia
 	}
 }

@@ -1,11 +1,14 @@
 namespace = atb_ai
 
-# 皇女的远征军EX 3.13：玩家科研分享
+# 皇女的远征军EX 3.13：玩家科研分享；3.19：封顶后分享全部产出
 # 每年一次（on_yearly_pulse）：
-#   1. 把所有玩家（is_ai = no）当时的物理、社会、工程科研月收入分别合计（总收入，不扣支出；多人游戏时是所有玩家之和）；
+#   1. 把所有玩家（is_ai = no）当时的各项资源月收入分别合计（总收入，不扣支出；多人游戏时是所有玩家之和）；
 #   2. 各乘 @atb_ex_research_share（0.2）与 @atb_ex_research_share_months（12），即一次发一整年的量；
-#   3. 无条件加给每个常规 AI 帝国（is_ai = yes 且 is_country_type = default，含保底列强；堕落帝国、天灾、事件国家不算）。
-# 加的是研究点数本身（add_resource），直接进入 AI 当前的研究，不再吃 AI 自己的科研加成。
+#   3. 发给每个常规 AI 帝国（is_ai = yes 且 is_country_type = default，含保底列强；堕落帝国、天灾、事件国家不算）：
+#      - 三种科研：无条件（3.13 起）；
+#      - 3.19：其余产出（能量、矿物、食物、合金、消费品、凝聚力与 7 种战略资源）：这个 AI 至少有一颗自动星球
+#        的产能 A 已经到上限（@atb_ai_auto_cap = 300）才给——产能不再增长之后，改为跟着玩家的经济一起成长。
+# 加的是资源本身（add_resource），不再吃 AI 自己的加成。影响力不分享。
 # 合计值先存在一个玩家国家（holder）的变量上，再由 holder 逐个发给 AI。
 
 event = {
@@ -25,32 +28,97 @@ event = {
 
 		# 1. 清零合计
 		event_target:atb_ex_rs_holder = {
-			set_variable = { which = atb_ex_rs_physics value = 0 }
-			set_variable = { which = atb_ex_rs_society value = 0 }
-			set_variable = { which = atb_ex_rs_engineering value = 0 }
+			set_variable = { which = atb_ex_rs_physics_research value = 0 }
+			set_variable = { which = atb_ex_rs_society_research value = 0 }
+			set_variable = { which = atb_ex_rs_engineering_research value = 0 }
+			set_variable = { which = atb_ex_rs_energy value = 0 }
+			set_variable = { which = atb_ex_rs_minerals value = 0 }
+			set_variable = { which = atb_ex_rs_food value = 0 }
+			set_variable = { which = atb_ex_rs_alloys value = 0 }
+			set_variable = { which = atb_ex_rs_consumer_goods value = 0 }
+			set_variable = { which = atb_ex_rs_unity value = 0 }
+			set_variable = { which = atb_ex_rs_volatile_motes value = 0 }
+			set_variable = { which = atb_ex_rs_exotic_gases value = 0 }
+			set_variable = { which = atb_ex_rs_rare_crystals value = 0 }
+			set_variable = { which = atb_ex_rs_sr_dark_matter value = 0 }
+			set_variable = { which = atb_ex_rs_sr_living_metal value = 0 }
+			set_variable = { which = atb_ex_rs_sr_zro value = 0 }
+			set_variable = { which = atb_ex_rs_nanites value = 0 }
 		}
 
 		# 2. 逐个玩家读出月收入，累加到 holder
 		every_playable_country = {
 			limit = { is_ai = no }
-			set_variable = { which = atb_ex_rs_own_physics value = value:atb_ex_resource_revenue|RESOURCE|physics_research| }
-			set_variable = { which = atb_ex_rs_own_society value = value:atb_ex_resource_revenue|RESOURCE|society_research| }
-			set_variable = { which = atb_ex_rs_own_engineering value = value:atb_ex_resource_revenue|RESOURCE|engineering_research| }
+			set_variable = { which = atb_ex_rs_own_physics_research value = value:atb_ex_resource_revenue|RESOURCE|physics_research| }
+			set_variable = { which = atb_ex_rs_own_society_research value = value:atb_ex_resource_revenue|RESOURCE|society_research| }
+			set_variable = { which = atb_ex_rs_own_engineering_research value = value:atb_ex_resource_revenue|RESOURCE|engineering_research| }
+			set_variable = { which = atb_ex_rs_own_energy value = value:atb_ex_resource_revenue|RESOURCE|energy| }
+			set_variable = { which = atb_ex_rs_own_minerals value = value:atb_ex_resource_revenue|RESOURCE|minerals| }
+			set_variable = { which = atb_ex_rs_own_food value = value:atb_ex_resource_revenue|RESOURCE|food| }
+			set_variable = { which = atb_ex_rs_own_alloys value = value:atb_ex_resource_revenue|RESOURCE|alloys| }
+			set_variable = { which = atb_ex_rs_own_consumer_goods value = value:atb_ex_resource_revenue|RESOURCE|consumer_goods| }
+			set_variable = { which = atb_ex_rs_own_unity value = value:atb_ex_resource_revenue|RESOURCE|unity| }
+			set_variable = { which = atb_ex_rs_own_volatile_motes value = value:atb_ex_resource_revenue|RESOURCE|volatile_motes| }
+			set_variable = { which = atb_ex_rs_own_exotic_gases value = value:atb_ex_resource_revenue|RESOURCE|exotic_gases| }
+			set_variable = { which = atb_ex_rs_own_rare_crystals value = value:atb_ex_resource_revenue|RESOURCE|rare_crystals| }
+			set_variable = { which = atb_ex_rs_own_sr_dark_matter value = value:atb_ex_resource_revenue|RESOURCE|sr_dark_matter| }
+			set_variable = { which = atb_ex_rs_own_sr_living_metal value = value:atb_ex_resource_revenue|RESOURCE|sr_living_metal| }
+			set_variable = { which = atb_ex_rs_own_sr_zro value = value:atb_ex_resource_revenue|RESOURCE|sr_zro| }
+			set_variable = { which = atb_ex_rs_own_nanites value = value:atb_ex_resource_revenue|RESOURCE|nanites| }
 			event_target:atb_ex_rs_holder = {
-				change_variable = { which = atb_ex_rs_physics value = prev.atb_ex_rs_own_physics }
-				change_variable = { which = atb_ex_rs_society value = prev.atb_ex_rs_own_society }
-				change_variable = { which = atb_ex_rs_engineering value = prev.atb_ex_rs_own_engineering }
+				change_variable = { which = atb_ex_rs_physics_research value = prev.atb_ex_rs_own_physics_research }
+				change_variable = { which = atb_ex_rs_society_research value = prev.atb_ex_rs_own_society_research }
+				change_variable = { which = atb_ex_rs_engineering_research value = prev.atb_ex_rs_own_engineering_research }
+				change_variable = { which = atb_ex_rs_energy value = prev.atb_ex_rs_own_energy }
+				change_variable = { which = atb_ex_rs_minerals value = prev.atb_ex_rs_own_minerals }
+				change_variable = { which = atb_ex_rs_food value = prev.atb_ex_rs_own_food }
+				change_variable = { which = atb_ex_rs_alloys value = prev.atb_ex_rs_own_alloys }
+				change_variable = { which = atb_ex_rs_consumer_goods value = prev.atb_ex_rs_own_consumer_goods }
+				change_variable = { which = atb_ex_rs_unity value = prev.atb_ex_rs_own_unity }
+				change_variable = { which = atb_ex_rs_volatile_motes value = prev.atb_ex_rs_own_volatile_motes }
+				change_variable = { which = atb_ex_rs_exotic_gases value = prev.atb_ex_rs_own_exotic_gases }
+				change_variable = { which = atb_ex_rs_rare_crystals value = prev.atb_ex_rs_own_rare_crystals }
+				change_variable = { which = atb_ex_rs_sr_dark_matter value = prev.atb_ex_rs_own_sr_dark_matter }
+				change_variable = { which = atb_ex_rs_sr_living_metal value = prev.atb_ex_rs_own_sr_living_metal }
+				change_variable = { which = atb_ex_rs_sr_zro value = prev.atb_ex_rs_own_sr_zro }
+				change_variable = { which = atb_ex_rs_nanites value = prev.atb_ex_rs_own_nanites }
 			}
 		}
 
-		# 3. 乘比例，发给所有常规 AI
+		# 3. 乘比例与月数，发给常规 AI
 		event_target:atb_ex_rs_holder = {
-			multiply_variable = { which = atb_ex_rs_physics value = @atb_ex_research_share }
-			multiply_variable = { which = atb_ex_rs_society value = @atb_ex_research_share }
-			multiply_variable = { which = atb_ex_rs_engineering value = @atb_ex_research_share }
-			multiply_variable = { which = atb_ex_rs_physics value = @atb_ex_research_share_months }
-			multiply_variable = { which = atb_ex_rs_society value = @atb_ex_research_share_months }
-			multiply_variable = { which = atb_ex_rs_engineering value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_physics_research value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_physics_research value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_society_research value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_society_research value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_engineering_research value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_engineering_research value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_energy value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_energy value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_minerals value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_minerals value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_food value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_food value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_alloys value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_alloys value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_consumer_goods value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_consumer_goods value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_unity value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_unity value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_volatile_motes value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_volatile_motes value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_exotic_gases value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_exotic_gases value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_rare_crystals value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_rare_crystals value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_sr_dark_matter value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_sr_dark_matter value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_sr_living_metal value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_sr_living_metal value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_sr_zro value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_sr_zro value = @atb_ex_research_share_months }
+			multiply_variable = { which = atb_ex_rs_nanites value = @atb_ex_research_share }
+			multiply_variable = { which = atb_ex_rs_nanites value = @atb_ex_research_share_months }
 
 			every_playable_country = {
 				limit = {
@@ -59,15 +127,76 @@ event = {
 				}
 				add_resource = {
 					physics_research = 1
-					mult = prev.atb_ex_rs_physics
+					mult = prev.atb_ex_rs_physics_research
 				}
 				add_resource = {
 					society_research = 1
-					mult = prev.atb_ex_rs_society
+					mult = prev.atb_ex_rs_society_research
 				}
 				add_resource = {
 					engineering_research = 1
-					mult = prev.atb_ex_rs_engineering
+					mult = prev.atb_ex_rs_engineering_research
+				}
+				# 3.19：自动星球封顶后，其余产出也分享
+				if = {
+					limit = {
+						any_owned_planet = {
+							has_carrier_flag = atb_ai_auto
+							check_variable = { which = atb_ai_auto_jobs value >= @atb_ai_auto_cap }
+						}
+					}
+					add_resource = {
+						energy = 1
+						mult = prev.atb_ex_rs_energy
+					}
+					add_resource = {
+						minerals = 1
+						mult = prev.atb_ex_rs_minerals
+					}
+					add_resource = {
+						food = 1
+						mult = prev.atb_ex_rs_food
+					}
+					add_resource = {
+						alloys = 1
+						mult = prev.atb_ex_rs_alloys
+					}
+					add_resource = {
+						consumer_goods = 1
+						mult = prev.atb_ex_rs_consumer_goods
+					}
+					add_resource = {
+						unity = 1
+						mult = prev.atb_ex_rs_unity
+					}
+					add_resource = {
+						volatile_motes = 1
+						mult = prev.atb_ex_rs_volatile_motes
+					}
+					add_resource = {
+						exotic_gases = 1
+						mult = prev.atb_ex_rs_exotic_gases
+					}
+					add_resource = {
+						rare_crystals = 1
+						mult = prev.atb_ex_rs_rare_crystals
+					}
+					add_resource = {
+						sr_dark_matter = 1
+						mult = prev.atb_ex_rs_sr_dark_matter
+					}
+					add_resource = {
+						sr_living_metal = 1
+						mult = prev.atb_ex_rs_sr_living_metal
+					}
+					add_resource = {
+						sr_zro = 1
+						mult = prev.atb_ex_rs_sr_zro
+					}
+					add_resource = {
+						nanites = 1
+						mult = prev.atb_ex_rs_nanites
+					}
 				}
 			}
 		}

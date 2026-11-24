@@ -1,8 +1,5 @@
 # 皇女的远征军：覆盖原版 common/scripted_triggers/07_scripted_triggers_ships.txt。
 # 由 tools/gen_vanilla_patches.py 生成，请勿手改。与原版的区别：
-# 无畏舰 atb_dreadnought 加进 ship_uses_battleship_components / ship_uses_titan_components / ship_uses_artillery_role /
-# ship_uses_carrier_role / ship_uses_line_role / ship_uses_titan_reactors / ship_uses_battleship_thrusters / ship_uses_battleship_cloaks
-# （战列舰推进器、隐形装置、战斗电脑，泰坦反应堆，T 槽武器）；
 # 3.10：可编入舰队的主宰 atb_juggernaut 加进 ship_uses_titan_components / ship_uses_juggernaut_components /
 # ship_uses_artillery_role / ship_uses_carrier_role / ship_uses_juggernaut_reactors / ship_uses_colossus_thrusters；
 # 原版主宰的 juggernaut_potential_construction 改为 always = no，原内容改名 atb_juggernaut_potential_construction。
@@ -274,8 +271,6 @@ ship_uses_cruiser_components = {
 
 ship_uses_battleship_components = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# Regular Ships
 		is_ship_size = battleship
 		# Offspring Ships
@@ -299,8 +294,6 @@ ship_uses_battleship_components = {
 
 ship_uses_titan_components = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# 皇女的远征军：可编入舰队的主宰（3.10）
 		is_ship_size = atb_juggernaut
 		is_ship_size = titan
@@ -362,8 +355,6 @@ ship_uses_offspring_components = {
 
 ship_uses_artillery_role = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# 皇女的远征军：可编入舰队的主宰（3.10）
 		is_ship_size = atb_juggernaut
 		# Regular Ships
@@ -417,8 +408,6 @@ ship_uses_artillery_role = {
 
 ship_uses_carrier_role = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# 皇女的远征军：可编入舰队的主宰（3.10）
 		is_ship_size = atb_juggernaut
 		# Regular Ships
@@ -455,8 +444,6 @@ ship_uses_carrier_role = {
 
 ship_uses_line_role = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# Regular Ships
 		is_ship_size = destroyer
 		is_ship_size = cruiser
@@ -756,8 +743,6 @@ ship_uses_battleship_reactors = {
 
 ship_uses_titan_reactors = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# Regular Ships
 		is_ship_size = titan
 		# First Contact Ships
@@ -800,8 +785,6 @@ ship_uses_platform_reactors = {
 
 ship_uses_battleship_thrusters = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# Regular Ships
 		is_ship_size = battleship
 		# Offspring Ships
@@ -981,8 +964,6 @@ ship_uses_cruiser_cloaks = {
 
 ship_uses_battleship_cloaks = {
 	OR = {
-		# 皇女的远征军：无畏舰
-		is_ship_size = atb_dreadnought
 		# Regular Ships
 		is_ship_size = battleship
 		is_ship_size = titan

@@ -212,6 +212,31 @@ atb_ex_place_gray_anomaly = {
 # 3.11：遥远之约定的 L 星群纳米星球可环境改造。
 # 原版只在灰蛊风暴被消灭时（graygoo 事件）给所有纳米星球加 terraforming_candidate，
 # 这个起源没有风暴，所以要自己加；改造仍需原版科技「气候修复」（tech_climate_restoration）
+atb_th_convert_officials = {
+	# 3.19：美铃、萃香、雏、米斯蒂娅从指挥官改为行政官。旧存档里已有的这几位每年在这里转换：
+	# 换职业、清掉旧特质、按新的特质组重新加（等级与传奇 / 英杰身份保留）。转过就不再是指挥官，不会重复
+	every_country = {
+		limit = { is_country_type = default }
+		every_owned_leader = {
+			limit = {
+				leader_class = commander
+				OR = {
+					has_leader_flag = atb_th_rc_meiling
+					has_leader_flag = atb_th_rc_suika
+					has_leader_flag = atb_th_rc_hina
+					has_leader_flag = atb_th_rc_mystia
+				}
+			}
+			change_leader_class = official
+			remove_all_traits = yes
+			if = { limit = { has_leader_flag = atb_th_rc_meiling } add_meiling_traits = yes }
+			else_if = { limit = { has_leader_flag = atb_th_rc_suika } add_suika_traits = yes }
+			else_if = { limit = { has_leader_flag = atb_th_rc_hina } add_hina_traits = yes }
+			else_if = { limit = { has_leader_flag = atb_th_rc_mystia } add_mystia_traits = yes }
+		}
+	}
+}
+
 atb_ex_lcluster_terraformable = {
 	every_system = {
 		limit = { has_star_flag = lcluster }

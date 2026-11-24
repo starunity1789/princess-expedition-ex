@@ -15,7 +15,6 @@
  mod_shipsize_ember_battleship_hull_add:0 "$ember_battleship$舰体值"
  mod_shipsize_paladin_ship_hull_add:0 "$paladin_ship$舰体值"
  mod_shipsize_nomads_constructor_hull_add:0 "$nomads_constructor$舰体值"
- mod_shipsize_atb_dreadnought_hull_add:0 "$atb_dreadnought$舰体值"
  mod_shipsize_science_hull_add:0 "$science$舰体值"
  mod_shipsize_transport_hull_add:0 "$transport$舰体值"
  mod_shipsize_colossus_hull_add:0 "$colossus$舰体值"
@@ -68,3 +67,10 @@
  sm_atb_industrial_hub_desc:0 "$tech_atb_industrial_hub_desc$"
  sm_atb_arkship_industrial_hub:0 "$tech_atb_industrial_hub$"
  sm_atb_arkship_industrial_hub_desc:0 "$tech_atb_industrial_hub_desc$"
+
+ # 3.19：开局科技「行星团结机构」（换皮原版文化中心）
+ tech_atb_planetary_unity:0 "行星团结机构"
+ tech_atb_planetary_unity_desc:0 "一个专门统筹文化宣传与社会凝聚的机构，把散落在各处的艺术、节庆与集会编织成共同的认同。"
+ building_atb_unity_agency:0 "$tech_atb_planetary_unity$"
+ building_atb_unity_agency_desc:0 "$tech_atb_planetary_unity_desc$"
+ building_atb_unity_agency_gestalt_desc:0 "统筹整个网络的协同信号，让每一个节点都朝着同一个目标运转。"

@@ -48,9 +48,16 @@ CRISIS_RESEARCH_EXTRA = 550
 # genetic_purity：开局固定走基因飞升，且只能选纯净传统
 # ai_full_rights：人工智能政策一出现就固定为公民权
 # gc_member：灭绝政体也会加入星海共同体（覆盖原版规则见 atb_rules.txt）
+# great_power = False（3.19）：保留身份（名字、旗帜、物种、星团、虫洞、好感、固定元首与开局内容），
+#   但不挂列强标记 atbgp_great_power、列强的底蕴（海军容量 +300）与要塞（恒星基地 +10），
+#   没有补给特征、母星人口增长翻倍与额外区划，开局舰队只有基础的工程船、科研船与 3 艘护卫舰（没有 10 级司令）
 EMPIRES = [
     dict(
         n=1, clock=10.5, research=45, pops=52,
+        great_power=False,	# 3.19：不再是列强，按普通 AI 对待（没有列强的底蕴、要塞、补给、开局舰队与人口加成）
+        # 3.19：固定灵能飞升（机械格式塔走灵能需要迷雾之影 DLC，原版照样允许）
+        start_techs=["tech_psionic_theory"],
+        ascension_perks=["ap_mind_over_matter"],
         name="燃烧白鹿军团", adj="白鹿", en="Burning White Stag Legion", en_adj="White Stag",
         species=("白鹿机兵", "白鹿机兵", "白鹿"), species_en=("Stag Unit", "Stag Units", "Stag"),
         species_class="MACHINE", species_traits="random",
@@ -82,6 +89,7 @@ EMPIRES = [
     ),
     dict(
         n=2, clock=5, research=42, pops=48,
+        great_power=False,	# 3.19：不再是列强，按普通 AI 对待
         name="远星同盟组织", adj="远星", en="Far Star Alliance", en_adj="Far Star",
         species=("远星人", "远星人", "远星"), species_en=("Farstarian", "Farstarians", "Farstarian"),
         species_class="HUM",
@@ -247,8 +255,17 @@ def clock_name(clock: float) -> str:
     return f"{int(clock)} 点半" if clock % 1 else f"{int(clock)} 点"
 
 
+def is_gp(e: dict) -> bool:
+    return e.get("great_power", True)
+
+
 def has_income(e: dict) -> bool:
+    # 补给特征只给列强；非列强仍生成特征的定义（旧存档里还挂着），由每年的 atbgp.13 清掉
     return bool(e.get("income"))
+
+
+def gives_income(e: dict) -> bool:
+    return has_income(e) and is_gp(e)
 
 
 def has_crisis_income(e: dict) -> bool:
@@ -412,6 +429,17 @@ def create_country_block(e):
 						days = -1
 					}}""" if e.get("bonus") else ""
     gc = "\n\t\t\t\t\tset_country_flag = atbgp_gc_member" if e.get("gc_member") else ""
+    if not is_gp(e):
+        starbase = ""
+        gp_lines = "\n\t\t\t\t\t# 3.19：不再是列强（没有 atbgp_great_power、列强的底蕴与要塞）"
+    else:
+        gp_lines = """
+					set_country_flag = atbgp_great_power"""
+    base = """
+					add_modifier = {
+						modifier = atbgp_power_base
+						days = -1
+					}""" if is_gp(e) else ""
     return f"""			create_country = {{
 				name = "atbgp_country_{n}"
 				adjective = "atbgp_country_{n}_adj"
@@ -423,14 +451,9 @@ def create_country_block(e):
 {flag_block(e)}
 				ignore_initial_colony_error = yes
 				effect = {{
-					save_global_event_target_as = atbgp_country_{n}
-					set_country_flag = atbgp_great_power
+					save_global_event_target_as = atbgp_country_{n}{gp_lines}
 					set_country_flag = atbgp_power_{n}{gc}
-					advanced_empire_base_init_effect = yes{bonus}
-					add_modifier = {{
-						modifier = atbgp_power_base
-						days = -1
-					}}{starbase}
+					advanced_empire_base_init_effect = yes{bonus}{base}{starbase}
 				}}
 			}}"""
 
@@ -510,7 +533,7 @@ def multi_home_initializer(e):
 			prevent_anomaly = yes
 			set_owner = {country}
 			set_controller = {country}"""
-        income = f"\n\t\t\tadd_deposit = atbgp_d_income_{n}" if first and has_income(e) else ""
+        income = f"\n\t\t\tadd_deposit = atbgp_d_income_{n}" if first and gives_income(e) else ""
         planets.append(f"""
 	planet = {{
 		name = "atbgp_planet_{n}_home_{i}"
@@ -529,7 +552,7 @@ def multi_home_initializer(e):
 				generate_start_deposits_and_blockers = yes
 				generate_start_buildings_and_districts = yes
 			}}
-			generate_start_pops = yes{income}{home_bonus(h['pc'])}
+			generate_start_pops = yes{income}{home_bonus(h['pc']) if is_gp(e) else ''}
 		}}
 	}}
 """)
@@ -638,7 +661,7 @@ atbgp_home_{n} = {{
 				count = {e['pops']}
 				create_pop_group = {{ species = event_target:atbgp_species_{n} }}
 			}}
-			add_deposit = atbgp_d_income_{n}{extra_deposits}{home_bonus(h['pc'])}
+			{('add_deposit = atbgp_d_income_' + str(n)) if gives_income(e) else '# 3.19：不是列强，没有补给特征'}{extra_deposits}{home_bonus(h['pc']) if is_gp(e) else ''}
 		}}
 	}}
 
@@ -895,6 +918,7 @@ def setup_block(e, first):
     n = e["n"]
     lines = [f"\t\t\tatbgp_install_ruler_{e['ruler']['id']} = yes" if e["ruler"]
              else f"\t\t\tatbgp_install_random_ruler_{n} = yes"]
+    lines.append("\t\t\tatbgp_spawn_start_fleets = yes" if is_gp(e) else "\t\t\tatbgp_spawn_start_fleets_basic = yes\t# 3.19：不是列强")
     for t in e.get("start_techs", []):
         lines.append(f"\t\t\tgive_technology = {{ tech = {t} message = no }}")
     for p in e.get("ascension_perks", []):
@@ -929,7 +953,7 @@ def perk_lines(e, tabs):
 def monthly_block(e, first):
     n = e["n"]
     lines = []
-    if has_income(e):
+    if gives_income(e):
         effect = "atbgp_maintain_income" if has_crisis_income(e) else "atbgp_maintain_income_basic"
         lines.append(f"\t\t\t{effect} = {{ N = {n} }}")
     lines += perk_lines(e, 3)
@@ -967,7 +991,6 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		atbgp_spawn_start_fleets = yes
 """ + "\n".join(setup_block(e, i == 0) for i, e in enumerate(EMPIRES)) + """
 	}
 }
@@ -1033,6 +1056,46 @@ event = {
 			limit = { atbgp_has_income_deposit = yes }
 			atbgp_clear_foreign_income = yes
 		}
+		# 3.19：专属元首不在位就补一次（平时由 on_ruler_set 的 atbgp.14 处理，这里只是兜底，一年一次）
+		every_country = {
+			limit = {
+				OR = {
+""" + "\n".join(f"\t\t\t\t\thas_country_flag = atbgp_power_{e['n']}" for e in EMPIRES if e["ruler"]) + """
+				}
+				exists = ruler
+				ruler = { NOT = { has_leader_flag = atbgp_named_ruler } }
+			}
+			country_event = { id = atbgp.14 }
+		}
+		# 3.19：白鹿、远星不再是列强——旧存档里去掉列强标记与列强修正
+		every_country = {
+			limit = {
+				has_country_flag = atbgp_great_power
+				OR = {
+""" + "\n".join(f"\t\t\t\t\thas_country_flag = atbgp_power_{e['n']}" for e in EMPIRES if not is_gp(e)) + """
+				}
+			}
+			remove_country_flag = atbgp_great_power
+			remove_modifier = atbgp_power_base
+			remove_modifier = atbgp_starbase_bonus
+			remove_modifier = atbgp_growth_boost
+		}
+		# 3.19：燃烧白鹿固定灵能飞升——旧存档里还没走任何飞升路线就补上（开局已在 atbgp.2 里给）
+		every_country = {
+			limit = {
+				has_country_flag = atbgp_power_1
+				NOR = {
+					has_ascension_perk = ap_mind_over_matter
+					has_ascension_perk = ap_engineered_evolution
+					has_ascension_perk = ap_the_flesh_is_weak
+					has_ascension_perk = ap_organo_machine_interfacing
+					has_ascension_perk = ap_organo_machine_interfacing_assimilator
+					has_ascension_perk = ap_synthetic_evolution
+					has_ascension_perk = ap_synthetic_age
+				}
+			}
+			add_ascension_perk = ap_mind_over_matter
+		}
 	}
 }
 
@@ -1049,22 +1112,26 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_country_flag = atbgp_great_power
-		any_owned_leader = {
-			has_leader_flag = atbgp_named_ruler
-			is_ruler = no
+		OR = {
+""" + "\n".join(f"\t\t\thas_country_flag = atbgp_power_{e['n']}" for e in EMPIRES if e["ruler"]) + """
 		}
+		exists = ruler
+		ruler = { NOT = { has_leader_flag = atbgp_named_ruler } }
 	}
 
 	immediate = {
-		random_owned_leader = {
+		if = {
 			limit = {
-				has_leader_flag = atbgp_named_ruler
-				is_ruler = no
+				any_owned_leader = { has_leader_flag = atbgp_named_ruler }
 			}
-			save_event_target_as = atbgp_ruler_restore
+			random_owned_leader = {
+				limit = { has_leader_flag = atbgp_named_ruler }
+				save_event_target_as = atbgp_ruler_restore
+			}
+			set_leader = event_target:atbgp_ruler_restore
 		}
-		set_leader = event_target:atbgp_ruler_restore
+		# 3.19：专属元首已经不在了（选举换下后被移除等），重新生成一位
+""" + "\n".join(f"\t\t{'if' if i == 0 else 'else_if'} = {{\n\t\t\tlimit = {{ NOT = {{ any_owned_leader = {{ has_leader_flag = atbgp_named_ruler }} }} has_country_flag = atbgp_power_{e['n']} }}\n\t\t\tatbgp_install_ruler_{e['ruler']['id']} = yes\n\t\t}}" for i, e in enumerate([x for x in EMPIRES if x["ruler"]])) + """
 	}
 }
 """)
@@ -1081,16 +1148,17 @@ for e in EMPIRES:
     has_parts.append("\n".join(f"\t\thas_deposit = {k}" for k in keys))
     cond = "\n".join(f"\t\t\t\thas_deposit = {k}" for k in keys)
     removes = "\n".join(f"\t\tremove_deposit = {k}" for k in keys)
-    clear_parts.append(f"""	if = {{
-		limit = {{
-			OR = {{
-{cond}
-			}}
+    keep = f"""
 			NAND = {{
 				exists = owner
 				owner = {{ has_country_flag = atbgp_power_{n} }}
 				is_capital = yes
-			}}
+			}}""" if is_gp(e) else "\n\t\t\t# 3.19：不再是列强，补给特征一律清掉"
+    clear_parts.append(f"""	if = {{
+		limit = {{
+			OR = {{
+{cond}
+			}}{keep}
 		}}
 {removes}
 	}}""")
@@ -1303,6 +1371,51 @@ atbgp_spawn_start_fleets = {{
 		}}
 	}}
 	event_target:atbgp_start_warfleet = {{ assign_leader = event_target:atbgp_start_admiral }}
+}}
+
+# 3.19：非列强（白鹿、远星）的开局舰船：工程船、科研船（带科学家）与 3 艘护卫舰，没有 10 级司令
+atbgp_spawn_start_fleets_basic = {{
+	create_fleet = {{
+		effect = {{
+			set_owner = root
+			create_ship = {{
+				name = random
+				random_existing_design = constructor
+			}}
+			set_location = root.capital_star
+		}}
+	}}
+	create_fleet = {{
+		effect = {{
+			set_owner = root
+			create_ship = {{
+				name = random
+				random_existing_design = science
+			}}
+			set_location = root.capital_star
+			save_event_target_as = atbgp_science_ship
+		}}
+	}}
+	create_leader = {{
+		name = random
+		species = root.species
+		class = scientist
+		skill = 1
+	}}
+	event_target:atbgp_science_ship = {{ assign_leader = last_created_leader }}
+	create_fleet = {{
+		effect = {{
+			set_owner = root
+			while = {{
+				count = 3
+				create_ship = {{
+					name = random
+					random_existing_design = corvette
+				}}
+			}}
+			set_location = root.capital_star
+		}}
+	}}
 }}
 
 {named_ruler_effects}

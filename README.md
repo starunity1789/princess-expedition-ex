@@ -36,7 +36,7 @@ The characters - their personalities, looks and every detail - were designed by 
 - Since 3.15 also merges the academy and leader training of **Golden Generation** (Willpower DLC, ideologies enabled in setup): a Golden Academy on the homeworld, a generation of leaders trained through the Golden Generation event chain, and after graduation the academy can become an Elite Academy or a Golden Museum; the Golden Generation ideology part (tenets, codifying the ideology) is not included
 - Includes every mechanic of vanilla Synthetic Fertility; Synthetic Ascension only
 - Capital: the Origin Fortress, a size-25 giant mobile habitat; the four princesses serve as Ruler and Councilors
-- Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors", the Dreadnoughts tech, and the relic "Seal of the Princess Guard"
+- Decisions "Establish the Expeditionary Order" and "Explore the Secrets of the Precursors" (the Dreadnoughts tech was removed in 3.19), and the relic "Seal of the Princess Guard"
 - **Name list "苍神缘起帝国" (AllLife Chance-Born)**: 24 clans with three-part names "clan=name=epithet" (2,304 in all), dedicated ship and class names for every vanilla hull, fleets and armies numbered as "帝国第N舰队/军团"; selectable by any empire, shown in Chinese in all ten UI languages
 - **Preset empire "Empire of AllLife Chance-Born"**: this origin with the name list above, Fanatic Authoritarian and Materialist, Philosopher King and Technocracy - pick it directly on the empire selection screen
 
@@ -106,13 +106,13 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - 一皇女菲莉若雅的命定特质「超然生命」：人口帝国规模 −33%，领袖维护费（主要是凝聚力）−33%（3.9）
 - 三皇女幽妃丽娜的命定特质额外给全国科研船异常现象发现几率 +50%（3.6）；起源要塞的「要塞核心」特殊地形工程学 +30（共 60，3.6）
 - 首都是规模 25 的超大型移动居住站「起源要塞」，四位皇女担任统治者和议会要职
-- 决议「确立远征军体制」「探索先驱者文明的秘密」，科技「无畏舰」，遗珍「皇女亲卫队印章」
+- 决议「确立远征军体制」「探索先驱者文明的秘密」（科技「无畏舰」3.19 起删除），遗珍「皇女亲卫队印章」
 - **名称集「苍神缘起帝国」**：24 个部落姓，人名为「部落姓=个人名=长名」（共 2304 个）；原版每种舰体都有专属舰名与舰级，舰队、陆军编号为「帝国第N舰队/军团」。任何帝国都能选用，10 种界面语言都显示中文
 - **预设帝国「苍神缘起帝国」**：皇女的远征军起源 + 上面的名称集，狂热威权 + 唯物，哲人王 + 技术官僚，开局界面直接可选
 
 **EX 新增**
 - **边缘星团**：开局远征军整体搬到银河 12 点方向外的 7 个星系（起源之地、星海萤火 L 星门、无形链接土著、极限边缘黑洞、辉煌耀世中子星、窒息瑶光脉冲星、大传承者遗落星球），只有大传承者一条航道通往银河。3.6 起另有两个天然虫洞：无形链接 ↔ 远星同盟的「逆鳞」、极限边缘 ↔ 燃烧白鹿的「神话」（原版规则：要先研究「虫洞稳定」才能通行）。无形链接的土著固定为「龙族」，特质 Nivlac + 强健 + 灵能 + 观星者（3.6）。起源之地本身还有第二座 L 星门和一座毁坏的巨型船坞，首都多一处特殊地形「高位元素秘封研究院」（储存上限 +1000000、每月文物 +2）
-- **五个保底列强**，各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +300、恒星基地上限 +10（3.10 起大君主同盟领地没有这 +10），初始 30 艘护卫舰一支舰队、带一位 10 级永生舰队司令，母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
+- **五个保底势力**（3.19 起燃烧白鹿军团、远星同盟组织不再是列强，按普通 AI 对待：没有下面的列强待遇与补给，自动星球产出与普通 AI 相同；远星的元首泰阿瑞亚-星之心被换下或不在了会自动恢复；白鹿固定灵能飞升），各在银河边缘外，有固定的帝国标识和固定补给；开局都有海军容量 +300、恒星基地上限 +10（3.10 起大君主同盟领地没有这 +10），初始 30 艘护卫舰一支舰队、带一位 10 级永生舰队司令，母星 20 年内人口增长翻倍；非机械星球的开局母星再加农业、发电、采矿区划各 10 个：
   - 燃烧白鹿军团（10 点半）：升格假设、快速复制者、空中下载升级；母星系一座 L 星门
   - 燃烧白鹿军团与远星同盟组织互相 +200 好感（3.6，旧谊）
   - 远星同盟组织（5 点）：巨型企业，极端军国 + 唯心；群众福音、巧手公司、舰队承包商；灵能飞升；开局获得遗珍「灵能档案」；母星系一座 L 星门
@@ -128,7 +128,7 @@ EX 最早的三个列强也与帝国有关：燃烧白鹿军团是帝国盟友�
 - 每颗自动星球自带行星护盾、FTL 抑制器、10 支防御陆军，每点 A 给海军容量 +0.1（3.0 为 +0.25）
 - 玩家拿到自动星球（打下来、整合附庸、割让、联邦统一）时还原成新殖民地：建筑全拆、区划只留一级、人口删到 100。AI 之间易手时产能保留
 - 每年自检：自治中枢被别的首府建筑顶掉时重建；星球变成宇宙创生世界等放不下自动建筑的特殊星球时，放回普通 AI 星球（3.4）
-- **玩家科研分享（3.13）**：每年一次，把所有玩家当时的物理、社会、工程科研月收入（总收入，不扣支出）各自合计，×20% 再 ×12（一次补足一整年）后无条件加给每个常规 AI 帝国（含保底列强，不含堕落帝国、天灾）；直接加研究点数，不吃 AI 自己的科研加成。比例与月数在 `atb_ai_auto_variables.txt` 的 `@atb_ex_research_share`、`@atb_ex_research_share_months`，事件 `atb_ai.20`（`events/atb_ex_research_share_events.txt`）
+- **玩家科研分享（3.13）**：每年一次，把所有玩家当时的物理、社会、工程科研月收入（总收入，不扣支出）各自合计，×20% 再 ×12（一次补足一整年）后无条件加给每个常规 AI 帝国（含保底列强，不含堕落帝国、天灾）；直接加研究点数，不吃 AI 自己的科研加成。3.19 起，AI 只要有一颗自动星球产能到了上限（300），每年还会按同样比例拿到你能量、矿物、食物、合金、消费品、凝聚力与 7 种战略资源的月收入（影响力不分享）。比例与月数在 `atb_ai_auto_variables.txt` 的 `@atb_ex_research_share`、`@atb_ex_research_share_months`，事件 `atb_ai.20`（`events/atb_ex_research_share_events.txt`）
 - AI 外交权重 ×3；AI 更愿意殖民（宜居度门槛 3.0～3.3 曾降到 1%，3.4 退回原版 35%）
 - AI 宣战基础概率 ×3（3.16 起；3.4～3.15 为 ×4；3.0～3.3 的 AI 一个世纪几乎不打仗）
 - **整合 Stellar AI 的性格与行为（3.16）**：取自 Stellar AI 0.14.4（创意工坊 3610149307），只取 AI 性格与行为，不取岗位、区划、建筑、经济计划、预算、市场等经济部分（普通 AI 用自动星球，用不上）。性格以原版为底、数值换成 Stellar AI 的（侵略性、勇气、军费、外交接受度），另有前 40 年使用的 26 个扩张期性格；战争目标的实力门槛（不对舰队更强的国家开战，偏好孤立目标）；「实力决定态度」的好感修正；附庸协议偏好；间谍目标选择；战争、舰队、外交行为参数（殖民与人口迁移几项不取）。由 `tools/gen_sai.py` 从 `tools/sai_source/` 与原版生成。**请取消订阅原版 Stellar AI**，否则内容重复

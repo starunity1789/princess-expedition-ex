@@ -103,17 +103,9 @@ atbgp_home_1 = {
 				ignore_initial_colony_error = yes
 				effect = {
 					save_global_event_target_as = atbgp_country_1
-					set_country_flag = atbgp_great_power
+					# 3.19：不再是列强（没有 atbgp_great_power、列强的底蕴与要塞）
 					set_country_flag = atbgp_power_1
 					advanced_empire_base_init_effect = yes
-					add_modifier = {
-						modifier = atbgp_power_base
-						days = -1
-					}
-					add_modifier = {
-						modifier = atbgp_starbase_bonus
-						days = -1
-					}
 				}
 			}
 			set_owner = event_target:atbgp_country_1
@@ -130,21 +122,7 @@ atbgp_home_1 = {
 				count = 52
 				create_pop_group = { species = event_target:atbgp_species_1 }
 			}
-			add_deposit = atbgp_d_income_1
-			add_modifier = {
-				modifier = atbgp_growth_boost
-				days = 7200
-			}
-			add_modifier = {
-				modifier = atbgp_homeworld_districts
-				days = -1
-			}
-			while = {
-				count = 10
-				add_district = { district_type = district_farming ignore_cap = yes }
-				add_district = { district_type = district_generator ignore_cap = yes }
-				add_district = { district_type = district_mining ignore_cap = yes }
-			}
+			# 3.19：不是列强，没有补给特征
 		}
 	}
 
@@ -624,17 +602,9 @@ atbgp_home_2 = {
 				ignore_initial_colony_error = yes
 				effect = {
 					save_global_event_target_as = atbgp_country_2
-					set_country_flag = atbgp_great_power
+					# 3.19：不再是列强（没有 atbgp_great_power、列强的底蕴与要塞）
 					set_country_flag = atbgp_power_2
 					advanced_empire_base_init_effect = yes
-					add_modifier = {
-						modifier = atbgp_power_base
-						days = -1
-					}
-					add_modifier = {
-						modifier = atbgp_starbase_bonus
-						days = -1
-					}
 				}
 			}
 			set_owner = event_target:atbgp_country_2
@@ -651,22 +621,8 @@ atbgp_home_2 = {
 				count = 48
 				create_pop_group = { species = event_target:atbgp_species_2 }
 			}
-			add_deposit = atbgp_d_income_2
+			# 3.19：不是列强，没有补给特征
 			add_deposit = atbgp_d_zro_3
-			add_modifier = {
-				modifier = atbgp_growth_boost
-				days = 7200
-			}
-			add_modifier = {
-				modifier = atbgp_homeworld_districts
-				days = -1
-			}
-			while = {
-				count = 10
-				add_district = { district_type = district_farming ignore_cap = yes }
-				add_district = { district_type = district_generator ignore_cap = yes }
-				add_district = { district_type = district_mining ignore_cap = yes }
-			}
 		}
 	}
 

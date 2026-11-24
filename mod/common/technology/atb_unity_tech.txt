@@ -1,0 +1,12 @@
+# 皇女的远征军EX 3.19：开局科技「行星团结机构」，解锁换皮原版文化中心的同名建筑。由 tools/gen_vanilla_patches.py 生成，请勿手改。
+
+tech_atb_planetary_unity = {
+	icon = "tech_planetary_unification"
+	start_tech = yes	# 皇女的远征军EX 3.19：开局科技
+	cost = @tier1cost1
+	area = society
+	tier = 1
+	category = { statecraft }
+	weight = 0
+	is_rare = yes
+}
