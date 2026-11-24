@@ -3848,3 +3848,118 @@ expansionists_scorching_infernals = {
 	}
 }
 
+# ======== 皇女的远征军 3.20：恐惧之潮存活期间的终端对齐协议（侵略性减半） ========
+atb_terminal_restrained = {
+	aggressiveness = 2.25	# 3.20：exterminators 的 4.5 减半
+	trade_willingness = 1.0	# But only with fellow machines
+	bravery = 0.9	# Stellar AI，原版 1.0
+	combat_bravery = 1.5
+
+	military_spending = 3	# Stellar AI，原版 1.2
+	colony_spending = 1.2
+
+	advanced_start_chance = 100
+
+	loyalty_acceptance = 0.25
+
+	weapon_preferences = weapon_type_explosive
+	armor_ratio = 0.4
+	shields_ratio = 0.5
+	hull_ratio = 0.1
+
+	threat_modifier = 0
+	threat_others_modifier = 0
+	friction_modifier = 0
+	claims_modifier = 0
+
+	behaviour = {
+		conqueror = yes
+		subjugator = no
+		liberator = no
+		opportunist = yes
+		slaver = no
+		uplifter = no
+		purger = yes
+		displacer = no
+		dominator = yes
+		infiltrator = no
+		robot_exploiter = no
+		robot_liberator = yes
+		propagator = no
+		multispecies = no
+		crisis_fighter = no
+		attack_neutrals = yes
+	}
+
+	allow = {
+		is_country_type = default
+		has_valid_civic = "civic_machine_terminator"
+		has_country_flag = atbgp_power_5
+		NOT = { has_global_flag = atbgp_tide_fallen }
+		OR = { years_passed > 40 is_at_war = yes }
+	}
+
+	weight_modifier = {
+		weight = 100000
+	}
+}
+
+atb_terminal_restrained_exp = {
+
+	aggressiveness = 1.5	# 3.20：expansionists_exterminators 的 3 减半
+	trade_willingness = 1.0	# But only with fellow machines
+	bravery = 0.9
+	combat_bravery = 1.5
+
+	military_spending = 2
+	colony_spending = 1
+
+	advanced_start_chance = 50
+
+	loyalty_acceptance = 0.25
+
+	weapon_preferences = weapon_type_explosive
+	armor_ratio = 0.4
+	shields_ratio = 0.5
+	hull_ratio = 0.1
+
+	threat_modifier = 0
+	threat_others_modifier = 0
+	friction_modifier = 0
+	claims_modifier = 0
+
+	behaviour = {
+		conqueror = yes
+		subjugator = no
+		liberator = no
+		opportunist = yes
+		slaver = no
+		uplifter = no
+		purger = yes
+		displacer = no
+		dominator = yes
+		infiltrator = no
+		robot_exploiter = no
+		robot_liberator = yes
+		propagator = no
+		multispecies = no
+		crisis_fighter = no
+		attack_neutrals = yes
+	}
+
+	allow = {
+		is_country_type = default
+		years_passed < 41
+		is_at_war = no
+		# 以下取原版 exterminators 的条件（含 4.6 的纯粹思潮）
+		is_country_type = default
+		has_valid_civic = "civic_machine_terminator"
+		has_country_flag = atbgp_power_5
+		NOT = { has_global_flag = atbgp_tide_fallen }
+	}
+
+	weight_modifier = {
+		weight = 100000
+	}
+}
+

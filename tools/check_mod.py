@@ -432,6 +432,30 @@ checks += [
      "start_tech = yes" in read(MOD / "common/technology/atb_unity_tech.txt")
      and "prerequisites = { \"tech_atb_planetary_unity\" }" in read(MOD / "common/buildings/atb_unity_agency_buildings.txt")
      and "has_active_building = building_atb_unity_agency" in read(MOD / "common/scripted_triggers/zz_atb_unity_agency_triggers.txt")),
+    ("3.20：恐惧之潮存活时终端对齐协议不灾飞（强制灾飞看全局旗标，飞升按钮也锁住）、性格是侵略性减半的蛰伏灭绝者",
+     "limit = { has_global_flag = atbgp_tide_fallen }\n\t\t\t\tatbgp_force_crisis_perk = { PERK = ap_become_the_crisis }" in read(MOD / "events/atbgp_events.txt")
+     and "fail_text = \"atbgp_tide_still_alive\"" in read(MOD / "common/ascension_perks/zz_atb_ex_ai_limits.txt")
+     and "set_ai_personality = atb_terminal_restrained_exp" in read(MOD / "events/atbgp_events.txt")
+     and "aggressiveness = 2.25\t# 3.20" in read(MOD / "common/personalities/00_personalities.txt")
+     and "aggressiveness = 1.5\t# 3.20" in read(MOD / "common/personalities/00_personalities.txt")),
+    ("3.20：恐惧之潮灭亡 → 终端对齐协议灾飞 + 灵飞 + 圆环之终末契约 + 海军容量 +2000 + 建造速度 +100%",
+     "atbgp.15" in read(MOD / "common/on_actions/atbgp_on_actions.txt").split("on_country_destroyed", 1)[1]
+     and "country_event = { id = atbgp.17 }" in eff.split("atbgp_tide_fallen = {", 1)[1].split("\n}\n", 1)[0]
+     and all(x in read(MOD / "events/atbgp_events.txt").split("id = atbgp.17", 1)[1].split("\n}\n", 1)[0] for x in (
+         "add_ascension_perk = ap_become_the_crisis", "add_ascension_perk = ap_mind_over_matter",
+         "accept_end_of_the_cycle = yes", "modifier = atbgp_terminal_unbound"))
+     and "country_naval_cap_add = 2000\n\tshipclass_military_build_speed_mult = 1.0" in read(MOD / "common/static_modifiers/atbgp_static_modifiers.txt")),
+    ("3.20：终端对齐协议的黑洞环世界星系「白花恋诗」",
+     "atbgp_sys_5_1 = {" in init and 'class = "sc_black_hole"\n\tflags = { atbgp_cluster atbgp_cluster_5 ring_world_built }' in init
+     and init.split("atbgp_sys_5_1 = {", 1)[1].count('class = "pc_ringworld_habitable"') == 4
+     and 'atbgp_sys_5_1:0 "白花恋诗"' in read(MOD / "localisation/simp_chinese/atbgp_l_simp_chinese.yml")),
+    ("3.20：大君主同盟、天选民退出天灾战争（开战时 + 中途加入时）",
+     "atbgp.16" in read(MOD / "common/on_actions/atbgp_on_actions.txt").split("on_war_beginning", 1)[1]
+     and "type = wg_declared_crisis" in eff.split("atbgp_leave_crisis_wars = {", 1)[1]
+     and "atbgp.16" in read(MOD / "common/on_actions/atbgp_on_actions.txt").split("on_war_entered", 1)[1]),
+    ("3.20：大君主同盟自动星球不设上限，100 年后每年 +1",
+     "limit = { owner = { has_country_flag = atbgp_power_3 } }\n\t\tif = {\n\t\t\tlimit = { years_passed > 100 }" in read(MOD / "common/scripted_effects/atb_ai_auto_effects.txt")
+     and "@atb_ai_auto_growth_overlord_late = 1" in read(MOD / "common/scripted_variables/atb_ai_auto_variables.txt")),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
@@ -567,6 +591,12 @@ vanilla = [
     ("r_zro_crystal", r"^r_zro_crystal\s*=\s*\{", "common/relics/*.txt"),
     ("ap_cosmogenesis", r"^ap_cosmogenesis\s*=\s*\{", "common/ascension_perks/*.txt"),
     ("ap_become_the_crisis", r"^ap_become_the_crisis\s*=\s*\{", "common/ascension_perks/*.txt"),
+    # 3.20：终端对齐协议与圆环之终末立约；大君主、天选民退出天灾战争
+    ("accept_end_of_the_cycle", r"^accept_end_of_the_cycle\s*=\s*\{", "common/scripted_effects/*.txt"),
+    ("has_covenant_with_end_of_the_cycle", r"^has_covenant_with_end_of_the_cycle\s*=\s*\{", "common/scripted_triggers/*.txt"),
+    ("is_chosen_empire", r"^is_chosen_empire\s*=\s*\{", "common/scripted_triggers/*.txt"),
+    ("wg_declared_crisis", r"^wg_declared_crisis\s*=\s*\{", "common/war_goals/*.txt"),
+    ("exterminators 性格", r"^exterminators\s*=\s*\{", "common/personalities/*.txt"),
     ("ap_engineered_evolution", r"^ap_engineered_evolution\s*=\s*\{", "common/ascension_perks/*.txt"),
     ("give_purity_unlocks_effect", r"^give_purity_unlocks_effect\s*=\s*\{", "common/scripted_effects/*.txt"),
     ("can_set_ai_policy", r"^can_set_ai_policy\s*=\s*\{", "common/scripted_triggers/*.txt"),

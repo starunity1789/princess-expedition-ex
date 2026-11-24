@@ -184,6 +184,28 @@ for k, sb in sai_blocks.items():
     exp_out.append(sb + "\n\n")
     n_exp += 1
 pers = pers.rstrip("\n") + "".join(exp_out)
+
+# 3.20：恐惧之潮存活期间，终端对齐协议（atbgp_power_5）的性格 = 灭绝者（含扩张期）侵略性减半。
+# 恐惧之潮灭亡后（全局旗标 atbgp_tide_fallen）出现条件不再满足，原版重新评估时回到正常的灭绝者。
+restrained = ["\n# ======== 皇女的远征军 3.20：恐惧之潮存活期间的终端对齐协议（侵略性减半） ========\n"]
+for base, new_key in (("exterminators", "atb_terminal_restrained"),
+                      ("expansionists_exterminators", "atb_terminal_restrained_exp")):
+    src_blk = next(pers[s:e] for k, s, e in blocks(pers) if k == base)
+    blk = src_blk.replace(base + " = {", new_key + " = {", 1)
+    m = re.search(r"(?m)^\taggressiveness = ([0-9.]+)[^\n]*$", blk)
+    if not m:
+        sys.exit(f"{base}：找不到 aggressiveness")
+    half = float(m.group(1)) / 2
+    blk = blk.replace(m.group(0), f"\taggressiveness = {half:g}\t# 3.20：{base} 的 {m.group(1)} 减半", 1)
+    a, _ = field_value(blk, "allow")
+    # 两份权重相同，正常期那份要避开扩张期（前 40 年且未在战争中）
+    phase = "" if base.startswith("expansionists_") else "\t\tOR = { years_passed > 40 is_at_war = yes }\n"
+    blk = blk.replace(a, a[:a.rindex("}")].rstrip() + "\n\t\thas_country_flag = atbgp_power_5\n"
+                      "\t\tNOT = { has_global_flag = atbgp_tide_fallen }\n" + phase + "\t}", 1)
+    w, _ = field_value(blk, "weight_modifier")
+    blk = blk.replace(w, "weight_modifier = {\n\t\tweight = 100000\n\t}", 1)
+    restrained.append(blk + "\n\n")
+pers = pers.rstrip("\n") + "\n" + "".join(restrained)
 write("common/personalities/00_personalities.txt",
       HEAD + "# 覆盖原版 common/personalities/00_personalities.txt：以原版为底，数值换成 Stellar AI 的，另加扩张期性格。\n\n" + pers)
 print(f"  性格：改了 {changed} 处数值，加了 {n_exp} 个扩张期性格")
@@ -268,10 +290,18 @@ write("common/defines/atb_sai_defines.txt",
 LOC = {
     "english": [("triggered_opinion_stellarai_we_can_win", "We Can Win"),
                 ("triggered_opinion_stellarai_we_can_win_peaceful", "We Can Win"),
-                ("triggered_opinion_stellarai_not_to_be_provoked", "Not to Be Provoked")],
+                ("triggered_opinion_stellarai_not_to_be_provoked", "Not to Be Provoked"),
+                ("personality_atb_terminal_restrained", "Dormant Exterminators"),
+                ("personality_atb_terminal_restrained_desc", "While the Tide of Dread still lives, the Protocol holds its blade and waits."),
+                ("personality_atb_terminal_restrained_exp", "Dormant Exterminators"),
+                ("personality_atb_terminal_restrained_exp_desc", "While the Tide of Dread still lives, the Protocol holds its blade and waits.")],
     "simp_chinese": [("triggered_opinion_stellarai_we_can_win", "我们打得过"),
                      ("triggered_opinion_stellarai_we_can_win_peaceful", "我们打得过"),
-                     ("triggered_opinion_stellarai_not_to_be_provoked", "不可招惹")],
+                     ("triggered_opinion_stellarai_not_to_be_provoked", "不可招惹"),
+                     ("personality_atb_terminal_restrained", "蛰伏灭绝者"),
+                     ("personality_atb_terminal_restrained_desc", "恐惧之潮尚在，协议按住了刀锋，静候时机。"),
+                     ("personality_atb_terminal_restrained_exp", "蛰伏灭绝者"),
+                     ("personality_atb_terminal_restrained_exp_desc", "恐惧之潮尚在，协议按住了刀锋，静候时机。")],
 }
 for lang, items in LOC.items():
     body = f"l_{lang}:\n # 皇女的远征军 3.16：Stellar AI「实力决定态度」的好感修正。由 tools/gen_sai.py 生成\n" + "".join(

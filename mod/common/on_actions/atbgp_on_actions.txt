@@ -28,3 +28,21 @@ on_ruler_set = {
 		atbgp.14
 	}
 }
+
+on_country_destroyed = {
+	events = {
+		atbgp.15
+	}
+}
+
+on_war_beginning = {
+	events = {
+		atbgp.16
+	}
+}
+
+on_war_entered = {
+	events = {
+		atbgp.16
+	}
+}

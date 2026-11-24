@@ -544,6 +544,35 @@ atbgp_crisis_perk_bonus = {
 	}
 }
 
+# 3.20 无作用域：恐惧之潮灭亡，终端对齐协议立刻觉醒（只执行一次）。
+# 灾飞、灵飞直接加（不看飞升数量），与圆环之终末立约（原版 accept_end_of_the_cycle：契约、局势、灵能光环科技），
+# 海军容量 +2000、军用舰船建造速度 +100%。性格先换回灭绝者；灾飞的 on_enabled 会照原版再换成 became_the_crisis。
+# 具体内容在 atbgp.17（原版 accept_end_of_the_cycle 自己嵌套很深，放在脚本效果里会超过引擎的预初始化层数）。
+atbgp_tide_fallen = {
+	if = {
+		limit = { NOT = { has_global_flag = atbgp_tide_fallen } }
+		set_global_flag = atbgp_tide_fallen
+		every_country = {
+			limit = { has_country_flag = atbgp_power_5 }
+			country_event = { id = atbgp.17 }
+		}
+	}
+}
+
+# 3.20 国家作用域（大君主同盟、天选民）：退出所有自己在进攻方的天灾战争（星海共同体对天灾的全面战争）
+atbgp_leave_crisis_wars = {
+	every_war = {
+		limit = {
+			using_war_goal = {
+				type = wg_declared_crisis
+				owner = attacker
+			}
+			any_attacker = { is_same_value = root }
+		}
+		remove_war_participant = root
+	}
+}
+
 # 国家作用域：开局固定走基因飞升，并先拿到纯净路线的第一级解锁
 # 基因重塑的 on_enabled 会照原版开启基因飞升局势；局势结束时（bio.20）只有拿到解锁的传统才能选
 atbgp_start_purity_ascension = {

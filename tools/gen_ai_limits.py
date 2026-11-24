@@ -162,8 +162,21 @@ write("common/megastructures/zz_atb_ex_ai_limits.txt", mega)
 text = (GAME / "common/ascension_perks/00_ascension_perks.txt").read_text(encoding="utf-8-sig")
 blk = top_block(text, "ap_xeno_compatibility")
 blk = insert_before_close(blk, "potential", ["# 皇女的远征军EX：AI 不选（大量杂交亚种拖慢后期，效果也弱）", "is_ai = no"])
+# 3.20：恐惧之潮还活着时，终端对齐协议不能化身天灾（恐惧之潮灭亡时由 atbgp.15 直接补上）
+btc = top_block(text, "ap_become_the_crisis")
+btc = insert_before_close(btc, "possible", [
+    "# 皇女的远征军EX 3.20：恐惧之潮存活期间，终端对齐协议不能选",
+    "custom_tooltip = {",
+    "\tfail_text = \"atbgp_tide_still_alive\"",
+    "\tOR = {",
+    "\t\tNOT = { has_country_flag = atbgp_power_5 }",
+    "\t\thas_global_flag = atbgp_tide_fallen",
+    "\t}",
+    "}",
+])
 write("common/ascension_perks/zz_atb_ex_ai_limits.txt",
-      HEADER + "# 来源：原版 00_ascension_perks.txt\n" + "".join(v + "\n" for v in file_vars(text, blk)) + "\n" + blk + "\n")
+      HEADER + "# 来源：原版 00_ascension_perks.txt\n"
+      + "".join(v + "\n" for v in file_vars(text, blk + "\n" + btc)) + "\n" + blk + "\n\n" + btc + "\n")
 
 # ---------------------------------------------------------------- 物种改造：AI 冷却
 text = (GAME / "common/game_rules/00_rules.txt").read_text(encoding="utf-8-sig")

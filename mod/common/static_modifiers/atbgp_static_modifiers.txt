@@ -6,6 +6,12 @@ atbgp_btc_bonus = {
 	shipclass_military_build_speed_mult = 1.0
 }
 
+# 3.20：恐惧之潮灭亡后的终端对齐协议
+atbgp_terminal_unbound = {
+	country_naval_cap_add = 2000
+	shipclass_military_build_speed_mult = 1.0
+}
+
 # 2.7：所有列强开局就有的国家修正。AI 造舰被海军容量卡住，光给资源只会囤在仓库里
 # 3.0.3：海军容量 +1000 → +500；3.1：+500 → +300（自动星球让 AI 富起来后舰船太多，拖慢游戏）
 atbgp_power_base = {

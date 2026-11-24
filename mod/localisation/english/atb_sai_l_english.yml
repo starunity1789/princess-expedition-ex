@@ -3,3 +3,7 @@
  triggered_opinion_stellarai_we_can_win:0 "We Can Win"
  triggered_opinion_stellarai_we_can_win_peaceful:0 "We Can Win"
  triggered_opinion_stellarai_not_to_be_provoked:0 "Not to Be Provoked"
+ personality_atb_terminal_restrained:0 "Dormant Exterminators"
+ personality_atb_terminal_restrained_desc:0 "While the Tide of Dread still lives, the Protocol holds its blade and waits."
+ personality_atb_terminal_restrained_exp:0 "Dormant Exterminators"
+ personality_atb_terminal_restrained_exp_desc:0 "While the Tide of Dread still lives, the Protocol holds its blade and waits."

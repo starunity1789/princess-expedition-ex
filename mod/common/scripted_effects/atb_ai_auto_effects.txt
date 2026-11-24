@@ -230,8 +230,19 @@ atb_ai_auto_revert = {
 }
 
 # 星球作用域：每年增长，封顶
+# 3.20：大君主同盟领地不设上限；开局 100 年内与其他 AI 一样 +3/年，之后每年只 +1
 atb_ai_auto_grow = {
 	if = {
+		limit = { owner = { has_country_flag = atbgp_power_3 } }
+		if = {
+			limit = { years_passed > 100 }
+			change_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_growth_overlord_late }
+		}
+		else = {
+			change_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_growth_gp }
+		}
+	}
+	else_if = {
 		limit = { owner = { atb_ai_auto_great_power = yes } }
 		change_variable = { which = atb_ai_auto_jobs value = @atb_ai_auto_growth_gp }
 		if = {

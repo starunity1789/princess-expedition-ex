@@ -237,11 +237,16 @@ EMPIRES = [
         home=dict(sys="灭绝收敛矩阵", en="Extinction Convergence Matrix", star="sc_g", pc="pc_machine", size=22),
         capitals=[("绝对律典", "Absolute Codex"), ("零号基准", "Baseline Zero"),
                   ("全视中枢", "All-Seeing Nexus"), ("无界熵源", "Boundless Entropy Source")],
-        systems=[],
+        # 3.20：母星旁的黑洞星系，一座完整、未殖民的环世界
+        systems=[dict(sys="白花恋诗", en="Love Poem of White Flowers", kind="blackhole_ring")],
         base_income=False,
         income=None,
         crisis=None,
+        # 3.20：恐惧之潮灭亡（全局旗标 atbgp_tide_fallen）之前不灾飞，性格是侵略性减半的蛰伏灭绝者；
+        # 灭亡时 atbgp.15 → atbgp_tide_fallen 立刻补上灾飞、灵飞，与圆环之终末立约
         forced_perk="ap_become_the_crisis",
+        perk_gate="atbgp_tide_fallen",
+        start_personality="atb_terminal_restrained_exp",
         gc_member=True,
     ),
 ]
@@ -685,10 +690,11 @@ def system_initializer(e, k, s):
     n = e["n"]
     country = f"event_target:atbgp_country_{n}"
     kind = s["kind"]
-    star_class = {"blackhole": "sc_black_hole", "neutron": "sc_neutron_star"}.get(kind, "rl_standard_stars")
+    star_class = {"blackhole": "sc_black_hole", "blackhole_ring": "sc_black_hole",
+                  "neutron": "sc_neutron_star"}.get(kind, "rl_standard_stars")
     if kind == "ring":
         star_class = "sc_g"
-    flags = f"atbgp_cluster atbgp_cluster_{n}" + (" ring_world_built" if kind == "ring" else "")
+    flags = f"atbgp_cluster atbgp_cluster_{n}" + (" ring_world_built" if kind in ("ring", "blackhole_ring") else "")
     stations = ""
     if kind in ("blackhole", "neutron", "shattered"):
         stations = f"""
@@ -790,6 +796,20 @@ def system_initializer(e, k, s):
 """ + FILLER
     elif kind == "ring":
         body = star_block() + ring_bodies()
+    elif kind == "blackhole_ring":
+        # 3.20：黑洞 + 一座完整的环世界（4 段，可居住段未殖民）
+        body = """
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+		}
+	}
+""" + ring_bodies()
     return f"""
 # {e['name']}：{s['sys']}
 atbgp_sys_{n}_{k} = {{
@@ -931,6 +951,8 @@ def setup_block(e, first):
         lines.append("\t\t\tatbgp_start_purity_ascension = yes")
     if e.get("kin_with_expedition"):
         lines.append("\t\t\tatbgp_kin_with_expedition = yes")
+    if e.get("start_personality"):
+        lines.append(f"\t\t\tset_ai_personality = {e['start_personality']}\t# 3.20")
     kw = "if" if first else "else_if"
     return f"""\t\t{kw} = {{
 			limit = {{ has_country_flag = atbgp_power_{n} }}
@@ -947,6 +969,11 @@ def perk_lines(e, tabs):
     lines = [f"{pad}atbgp_force_crisis_perk = {{ PERK = {p} }}"]
     if e.get("perk_bonus"):
         lines.append(f"{pad}atbgp_crisis_perk_bonus = {{ PERK = {p} }}")
+    gate = e.get("perk_gate")
+    if gate:
+        # 3.20：全局旗标成立之前不强制（终端对齐协议要等恐惧之潮灭亡）
+        lines = ([f"{pad}if = {{", f"{pad}\tlimit = {{ has_global_flag = {gate} }}"]
+                 + ["\t" + l for l in lines] + [f"{pad}}}"])
     return lines
 
 
@@ -1067,6 +1094,14 @@ event = {
 			}
 			country_event = { id = atbgp.14 }
 		}
+		# 3.20：恐惧之潮已经不在（灭亡事件没赶上、或开局没生成）时补上终端对齐协议的觉醒
+		if = {
+			limit = {
+				NOT = { has_global_flag = atbgp_tide_fallen }
+				NOT = { any_country = { has_country_flag = atbgp_power_4 } }
+			}
+			atbgp_tide_fallen = yes
+		}
 		# 3.19：白鹿、远星不再是列强——旧存档里去掉列强标记与列强修正
 		every_country = {
 			limit = {
@@ -1132,6 +1167,78 @@ country_event = {
 		}
 		# 3.19：专属元首已经不在了（选举换下后被移除等），重新生成一位
 """ + "\n".join(f"\t\t{'if' if i == 0 else 'else_if'} = {{\n\t\t\tlimit = {{ NOT = {{ any_owned_leader = {{ has_leader_flag = atbgp_named_ruler }} }} has_country_flag = atbgp_power_{e['n']} }}\n\t\t\tatbgp_install_ruler_{e['ruler']['id']} = yes\n\t\t}}" for i, e in enumerate([x for x in EMPIRES if x["ruler"]])) + """
+	}
+}
+
+# 3.20：恐惧之潮灭亡时终端对齐协议立刻觉醒（on_country_destroyed，This = 被消灭的国家）
+country_event = {
+	id = atbgp.15
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atbgp_power_4
+	}
+
+	immediate = {
+		atbgp_tide_fallen = yes
+	}
+}
+
+# 3.20：终端对齐协议觉醒（由 atbgp_tide_fallen 触发，只一次）
+country_event = {
+	id = atbgp.17
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atbgp_power_5
+	}
+
+	immediate = {
+		set_ai_personality = exterminators
+		add_modifier = {
+			modifier = atbgp_terminal_unbound
+			days = -1
+		}
+		if = {
+			limit = {
+				NOT = { has_ascension_perk = ap_become_the_crisis }
+				is_player_crisis = no
+			}
+			add_ascension_perk = ap_become_the_crisis
+		}
+		if = {
+			limit = { NOT = { has_ascension_perk = ap_mind_over_matter } }
+			give_technology = { tech = tech_psionic_theory message = no }
+			add_ascension_perk = ap_mind_over_matter
+		}
+		if = {
+			limit = {
+				has_covenant_with_end_of_the_cycle = no
+				NOT = { has_global_flag = end_of_the_cycle }
+			}
+			accept_end_of_the_cycle = yes
+		}
+	}
+}
+
+# 3.20：大君主同盟、天选民退出天灾战争（on_war_beginning 开战时、on_war_entered 中途加入时）
+country_event = {
+	id = atbgp.16
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_at_war = yes
+		OR = {
+			has_country_flag = atbgp_power_3
+			is_chosen_empire = yes
+		}
+	}
+
+	immediate = {
+		atbgp_leave_crisis_wars = yes
 	}
 }
 """)
@@ -1497,6 +1604,35 @@ atbgp_crisis_perk_bonus = {{
 	}}
 }}
 
+# 3.20 无作用域：恐惧之潮灭亡，终端对齐协议立刻觉醒（只执行一次）。
+# 灾飞、灵飞直接加（不看飞升数量），与圆环之终末立约（原版 accept_end_of_the_cycle：契约、局势、灵能光环科技），
+# 海军容量 +2000、军用舰船建造速度 +100%。性格先换回灭绝者；灾飞的 on_enabled 会照原版再换成 became_the_crisis。
+# 具体内容在 atbgp.17（原版 accept_end_of_the_cycle 自己嵌套很深，放在脚本效果里会超过引擎的预初始化层数）。
+atbgp_tide_fallen = {{
+	if = {{
+		limit = {{ NOT = {{ has_global_flag = atbgp_tide_fallen }} }}
+		set_global_flag = atbgp_tide_fallen
+		every_country = {{
+			limit = {{ has_country_flag = atbgp_power_5 }}
+			country_event = {{ id = atbgp.17 }}
+		}}
+	}}
+}}
+
+# 3.20 国家作用域（大君主同盟、天选民）：退出所有自己在进攻方的天灾战争（星海共同体对天灾的全面战争）
+atbgp_leave_crisis_wars = {{
+	every_war = {{
+		limit = {{
+			using_war_goal = {{
+				type = wg_declared_crisis
+				owner = attacker
+			}}
+			any_attacker = {{ is_same_value = root }}
+		}}
+		remove_war_participant = root
+	}}
+}}
+
 # 国家作用域：开局固定走基因飞升，并先拿到纯净路线的第一级解锁
 # 基因重塑的 on_enabled 会照原版开启基因飞升局势；局势结束时（bio.20）只有拿到解锁的传统才能选
 atbgp_start_purity_ascension = {{
@@ -1742,6 +1878,12 @@ atbgp_btc_bonus = {
 	shipclass_military_build_speed_mult = 1.0
 }
 
+# 3.20：恐惧之潮灭亡后的终端对齐协议
+atbgp_terminal_unbound = {
+	country_naval_cap_add = 2000
+	shipclass_military_build_speed_mult = 1.0
+}
+
 # 2.7：所有列强开局就有的国家修正。AI 造舰被海军容量卡住，光给资源只会囤在仓库里
 # 3.0.3：海军容量 +1000 → +500；3.1：+500 → +300（自动星球让 AI 富起来后舰船太多，拖慢游戏）
 atbgp_power_base = {
@@ -1785,6 +1927,10 @@ out["common/static_modifiers/atbgp_static_modifiers.txt"] = "".join(static_mods)
 loc("atbgp_btc_bonus", "宗主舰队编制", "Suzerain Fleet Charter")
 loc("atbgp_btc_bonus_desc", "宗主终于允许这块乡村领地扩编舰队。对银河其他文明来说，这意味着灾难。",
     "The suzerain has finally allowed this rural fief to expand its fleet.")
+loc("atbgp_terminal_unbound", "协议解封", "Protocol Unsealed")
+loc("atbgp_terminal_unbound_desc", "恐惧之潮消亡了。协议不再需要等待，所有生产线一齐转向舰队。",
+    "The Tide of Dread is gone. The Protocol no longer needs to wait, and every production line turns to the fleet.")
+loc("atbgp_tide_still_alive", "恐惧之潮仍然存活", "The Tide of Dread still lives")
 loc("atbgp_power_base", "列强的底蕴", "Great Power's Foundation")
 loc("atbgp_power_base_desc", "这个文明背后站着远比银河诸国强大的力量，它的舰队与要塞规模不受寻常国力的限制。",
     "Something far mightier than the galaxy's nations stands behind this civilization; its fleets and fortresses are not bound by ordinary limits.")
@@ -1826,6 +1972,24 @@ on_ascension_perk_picked = {
 on_ruler_set = {
 	events = {
 		atbgp.14
+	}
+}
+
+on_country_destroyed = {
+	events = {
+		atbgp.15
+	}
+}
+
+on_war_beginning = {
+	events = {
+		atbgp.16
+	}
+}
+
+on_war_entered = {
+	events = {
+		atbgp.16
 	}
 }
 """

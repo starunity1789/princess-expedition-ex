@@ -546,6 +546,16 @@ event = {
 				}
 			}
 		}
+		event_target:atbgp_sys_5_0 = {
+			spawn_system = {
+				min_distance >= 32
+				max_distance <= 38
+				min_orientation_angle = 171
+				max_orientation_angle = 179
+				initializer = atbgp_sys_5_1
+				hyperlane = no
+			}
+		}
 		set_spawn_system_batch = end
 
 		# 燃烧白鹿军团：星团内部航道
@@ -589,6 +599,8 @@ event = {
 		# 恐惧之潮：母星接入银河
 		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_4_0 }
 		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_4_0 }
+		# 终端对齐协议：星团内部航道
+		event_target:atbgp_sys_5_0 = { add_hyperlane = { from = this to = event_target:atbgp_sys_5_1 } }
 		# 终端对齐协议：母星接入银河
 		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_5_0 }
 		atbgp_link_to_galaxy = { SYSTEM = atbgp_sys_5_0 }
@@ -639,6 +651,7 @@ country_event = {
 			limit = { has_country_flag = atbgp_power_5 }
 			atbgp_install_random_ruler_5 = yes
 			atbgp_spawn_start_fleets = yes
+			set_ai_personality = atb_terminal_restrained_exp	# 3.20
 		}
 	}
 }
@@ -698,7 +711,10 @@ country_event = {
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_5 }
-			atbgp_force_crisis_perk = { PERK = ap_become_the_crisis }
+			if = {
+				limit = { has_global_flag = atbgp_tide_fallen }
+				atbgp_force_crisis_perk = { PERK = ap_become_the_crisis }
+			}
 			atbgp_join_galactic_community = yes
 		}
 	}
@@ -726,7 +742,10 @@ country_event = {
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_5 }
-			atbgp_force_crisis_perk = { PERK = ap_become_the_crisis }
+			if = {
+				limit = { has_global_flag = atbgp_tide_fallen }
+				atbgp_force_crisis_perk = { PERK = ap_become_the_crisis }
+			}
 		}
 	}
 }
@@ -753,6 +772,14 @@ event = {
 				ruler = { NOT = { has_leader_flag = atbgp_named_ruler } }
 			}
 			country_event = { id = atbgp.14 }
+		}
+		# 3.20：恐惧之潮已经不在（灭亡事件没赶上、或开局没生成）时补上终端对齐协议的觉醒
+		if = {
+			limit = {
+				NOT = { has_global_flag = atbgp_tide_fallen }
+				NOT = { any_country = { has_country_flag = atbgp_power_4 } }
+			}
+			atbgp_tide_fallen = yes
 		}
 		# 3.19：白鹿、远星不再是列强——旧存档里去掉列强标记与列强修正
 		every_country = {
@@ -828,5 +855,77 @@ country_event = {
 			limit = { NOT = { any_owned_leader = { has_leader_flag = atbgp_named_ruler } } has_country_flag = atbgp_power_2 }
 			atbgp_install_ruler_taiaria = yes
 		}
+	}
+}
+
+# 3.20：恐惧之潮灭亡时终端对齐协议立刻觉醒（on_country_destroyed，This = 被消灭的国家）
+country_event = {
+	id = atbgp.15
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atbgp_power_4
+	}
+
+	immediate = {
+		atbgp_tide_fallen = yes
+	}
+}
+
+# 3.20：终端对齐协议觉醒（由 atbgp_tide_fallen 触发，只一次）
+country_event = {
+	id = atbgp.17
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = atbgp_power_5
+	}
+
+	immediate = {
+		set_ai_personality = exterminators
+		add_modifier = {
+			modifier = atbgp_terminal_unbound
+			days = -1
+		}
+		if = {
+			limit = {
+				NOT = { has_ascension_perk = ap_become_the_crisis }
+				is_player_crisis = no
+			}
+			add_ascension_perk = ap_become_the_crisis
+		}
+		if = {
+			limit = { NOT = { has_ascension_perk = ap_mind_over_matter } }
+			give_technology = { tech = tech_psionic_theory message = no }
+			add_ascension_perk = ap_mind_over_matter
+		}
+		if = {
+			limit = {
+				has_covenant_with_end_of_the_cycle = no
+				NOT = { has_global_flag = end_of_the_cycle }
+			}
+			accept_end_of_the_cycle = yes
+		}
+	}
+}
+
+# 3.20：大君主同盟、天选民退出天灾战争（on_war_beginning 开战时、on_war_entered 中途加入时）
+country_event = {
+	id = atbgp.16
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_at_war = yes
+		OR = {
+			has_country_flag = atbgp_power_3
+			is_chosen_empire = yes
+		}
+	}
+
+	immediate = {
+		atbgp_leave_crisis_wars = yes
 	}
 }

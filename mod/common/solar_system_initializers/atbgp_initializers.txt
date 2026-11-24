@@ -1858,3 +1858,111 @@ atbgp_home_5 = {
 		orbit_angle = { min = 90 max = 270 }
 	}
 }
+
+# 终端对齐协议：白花恋诗
+atbgp_sys_5_1 = {
+	name = "atbgp_sys_5_1"
+	class = "sc_black_hole"
+	flags = { atbgp_cluster atbgp_cluster_5 ring_world_built }
+
+	init_effect = {
+		save_global_event_target_as = atbgp_sys_5_1
+		create_starbase = {
+			owner = event_target:atbgp_country_5
+			size = "starbase_outpost"
+		}
+	}
+
+	planet = {
+		class = "pc_black_hole"
+		orbit_distance = 0
+		orbit_angle = 0
+		size = 5
+		has_ring = no
+		init_effect = {
+			prevent_anomaly = yes
+		}
+	}
+
+	change_orbit = 45
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = -30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+
+	planet = {
+		class = "pc_ringworld_tech"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_seam"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+	}
+}

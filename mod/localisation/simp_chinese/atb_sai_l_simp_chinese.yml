@@ -3,3 +3,7 @@
  triggered_opinion_stellarai_we_can_win:0 "我们打得过"
  triggered_opinion_stellarai_we_can_win_peaceful:0 "我们打得过"
  triggered_opinion_stellarai_not_to_be_provoked:0 "不可招惹"
+ personality_atb_terminal_restrained:0 "蛰伏灭绝者"
+ personality_atb_terminal_restrained_desc:0 "恐惧之潮尚在，协议按住了刀锋，静候时机。"
+ personality_atb_terminal_restrained_exp:0 "蛰伏灭绝者"
+ personality_atb_terminal_restrained_exp_desc:0 "恐惧之潮尚在，协议按住了刀锋，静候时机。"
