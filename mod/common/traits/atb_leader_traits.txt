@@ -56,13 +56,20 @@ leader_trait_atb_elemental_sovereign = {
 		TIER = none
 	}
 
+	# 3.18：在议会时对全国生效
 	councilor_modifier = {
-		country_naval_cap_add = 500	# 3.14：原 +1000
-		command_limit_add = 1000	# 3.14：舰队指挥上限 +1000
+		country_naval_cap_add = 1000	# 3.14～3.17 为 +500，更早 +1000
+		ship_armor_hardening_add = 0.33
+		ship_shield_hardening_add = 0.33
+		ship_weapon_damage = 0.33
+	}
+	# 3.18：个人特质，只作用于她亲自率领的舰队（3.17 前这些都在议员特质里，对全国生效）
+	fleet_modifier = {
 		ship_weapon_damage = 1.0
 		ship_weapon_range_mult = 1.0
 		ship_armor_hardening_add = 1.0
 		ship_shield_hardening_add = 1.0
+		command_limit_add = 1000
 	}
 
 	leader_class = { commander scientist official }

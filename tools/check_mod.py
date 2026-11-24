@@ -391,9 +391,14 @@ checks += [
       and e.count("atb_ex_lc_link = { A = ") == 12 and "atb_ex_lc_strip_galaxy_copies = yes" in e
       and "atb_ex_lcluster_extra_systems = yes" in e and "hyperlane = no" in e)(
          read(MOD / "common/scripted_effects/atb_ex_effects.txt"))),
-    ("3.14：二皇女海军容量 +500、舰队指挥上限 +1000",
-     "country_naval_cap_add = 500\t# 3.14" in read(MOD / "common/traits/atb_leader_traits.txt")
-     and "command_limit_add = 1000\t# 3.14" in read(MOD / "common/traits/atb_leader_traits.txt")),
+    ("3.18：二皇女议员特质（海军容量 +1000，伤害与两种硬化 +33%）+ 个人舰队特质（伤害、射程、两种硬化 +100%，舰队指挥上限 +1000）",
+     (lambda t: (lambda c, f: "country_naval_cap_add = 1000" in c and "ship_weapon_damage = 0.33" in c
+                 and "ship_armor_hardening_add = 0.33" in c and "ship_shield_hardening_add = 0.33" in c
+                 and "command_limit_add" not in c and "ship_weapon_range_mult" not in c
+                 and all(x in f for x in ("ship_weapon_damage = 1.0", "ship_weapon_range_mult = 1.0", "ship_armor_hardening_add = 1.0",
+                                          "ship_shield_hardening_add = 1.0", "command_limit_add = 1000")))(
+         t.split("councilor_modifier = {", 1)[1].split("}", 1)[0], t.split("fleet_modifier = {", 1)[1].split("}", 1)[0]))(
+         read(MOD / "common/traits/atb_leader_traits.txt").split("leader_trait_atb_elemental_sovereign = {", 1)[1])),
     ("3.14：开局科技农业生产聚合体、集中工业产线枢纽（照抄巴奥有机工厂、伊拉斯人海军船坞）",
      read(MOD / "common/technology/atb_precursor_copy_tech.txt").count("start_tech = yes") == 2
      and "prerequisites = {\n\t\t\"tech_atb_agri_aggregate\"" in read(MOD / "common/buildings/atb_precursor_copy_buildings.txt")
