@@ -458,6 +458,8 @@ checks += [
      and "@atb_ai_auto_growth_overlord_late = 1" in read(MOD / "common/scripted_variables/atb_ai_auto_variables.txt")),
     ("3.21：东方国策没有任何前置条件（13 个都没有 possible）",
      "possible" not in read(MOD / "common/governments/civics/atb_th_civics.txt")),
+    ("3.22：两个远征军起源不再禁止唯心主义",
+     "civic_tooltip_not_spiritualist" not in read(MOD / "common/governments/civics/atb_origins.txt")),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
