@@ -47,3 +47,7 @@
 # 乘以比例与月数（0.2 × 12，即一次补足一整年、平均每月仍是玩家月科研的 20%），加给每个常规 AI 帝国
 @atb_ex_research_share = 0.2
 @atb_ex_research_share_months = 12
+
+# 3.24：圆环之终末光环胜利（炸掉全银河）所需的星系数，固定值。
+# 原版用引擎触发器 count_end_cycle_systems，它只在「只有一个国家是天灾」时有效，否则是 0，签约当天就判定获胜
+@atb_eotc_needed_systems = 1000

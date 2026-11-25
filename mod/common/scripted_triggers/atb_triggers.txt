@@ -51,3 +51,15 @@ atb_has_golden_generation = {
 		has_country_flag = atb_golden_generation
 	}
 }
+
+# 3.24：普通 AI（含燃烧白鹿军团、远星同盟组织）一律走「开辟己道」，不与任何迷雾赞助者立约。
+# 大君主同盟、恐惧之潮、终端对齐协议除外（终端对齐协议在恐惧之潮灭亡后由 atbgp.17 直接与圆环之终末立约）
+atb_ai_forges_own_path = {
+	is_ai = yes
+	is_country_type = default
+	NOR = {
+		has_country_flag = atbgp_power_3
+		has_country_flag = atbgp_power_4
+		has_country_flag = atbgp_power_5
+	}
+}

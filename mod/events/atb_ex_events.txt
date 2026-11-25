@@ -220,3 +220,35 @@ fleet_event = {
 		event_target:chosen_empire = { atb_ex_chosen_ally_overlord = yes }
 	}
 }
+
+# 3.24：普通 AI（含燃烧白鹿军团、远星同盟组织）一律「开辟己道」，不与任何迷雾赞助者立约（每年，on_yearly_pulse_country）
+# 提议 / 确认契约两个事件另见 common/inline_scripts/shroud/（AI 只选开辟己道）
+country_event = {
+	id = atb_ex.9
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		atb_ai_forges_own_path = yes
+	}
+
+	immediate = {
+		# 原版 shroud.11000 只给没有这个标记的国家抽大赞助者（95% 其他大赞助者，5% 圆环之终末，普通 AI 抽到必签）
+		if = {
+			limit = { NOT = { has_country_flag = greater_patron_chosen } }
+			set_country_flag = greater_patron_chosen
+		}
+		# 突破迷雾后主动开辟己道：拒绝五位主要赞助者的契约（已立约的也解除），开启迷雾塑形特殊项目（完成后才算开辟己道）
+		if = {
+			limit = {
+				has_shroud_dlc = yes
+				has_country_flag = breached_shroud
+				NOT = { has_country_flag = forging_our_own_path }
+				NOT = { has_country_flag = atb_ex_forge_started }
+				NOT = { is_chosen_empire = yes }
+			}
+			set_country_flag = atb_ex_forge_started
+			shroud_forge_your_own_path = yes
+		}
+	}
+}

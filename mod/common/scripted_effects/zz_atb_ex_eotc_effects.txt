@@ -1,0 +1,22 @@
+# 皇女的远征军EX 3.24：覆盖原版 check_end_aura_win_condition（来源：原版 common/scripted_effects/psionic_auras_scripted_effects.txt，4.6.0）
+# 原版「所需星系数」是引擎触发器 count_end_cycle_systems，只在银河里只有一个天灾国家时有效；
+# 恐惧之潮灾飞时另一个国家签圆环之终末，它变成 0，签约当天就炸掉全银河。改成固定 @atb_eotc_needed_systems（1000）
+
+check_end_aura_win_condition = {
+	export_trigger_value_to_variable = {
+		trigger = count_systems_with_aura
+		variable = nb_conquered_systems
+	}
+	if = {
+		limit = {
+			check_variable = { which = nb_conquered_systems value >= @atb_eotc_needed_systems }
+		}
+		if = {
+			limit = { has_origin = origin_endbringers }
+			country_event = { id = shroud.8600 }
+		}
+		else = {
+			country_event = { id = shroud.4970 }
+		}
+	}
+}

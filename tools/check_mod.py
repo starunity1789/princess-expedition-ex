@@ -465,6 +465,19 @@ checks += [
       and p.startswith("#") and p.count("artificial_intelligence_policy = {") == 1)(read(MOD / "common/policies/zz_atb_ex_ai_policy.txt"))
      and "atb_synth_rights_fix = yes" in read(MOD / "events/atb_events.txt").split("id = atb.20", 1)[1].split("country_event", 1)[0]
      and "type = citizenship_full" in read(MOD / "common/scripted_effects/atb_effects.txt").split("atb_synth_rights_fix = {", 1)[1]),
+    ("3.24：圆环之终末光环胜利所需星系数固定 1000（胜利判定与两个覆盖率都覆盖）",
+     "@atb_eotc_needed_systems = 1000" in read(MOD / "common/scripted_variables/atb_ai_auto_variables.txt")
+     and (lambda e: e.count("check_end_aura_win_condition = {") == 1 and "value >= @atb_eotc_needed_systems" in e
+          and "count_end_cycle_systems" not in e.split("check_end_aura_win_condition = {", 1)[1])(read(MOD / "common/scripted_effects/zz_atb_ex_eotc_effects.txt"))
+     and (lambda v: "divide = @atb_eotc_needed_systems" in v and "base = @atb_eotc_needed_systems" in v
+          and "trigger:count_end_cycle_systems" not in v)(read(MOD / "common/script_values/zz_atb_ex_eotc_values.txt"))),
+    ("3.24：普通 AI 只选开辟己道（两个内联脚本各 2 处 ai_chance；每年设 greater_patron_chosen 并主动开辟己道）",
+     all(read(MOD / f"common/inline_scripts/shroud/{f}.txt").count("atb_ai_forges_own_path = yes") == 2
+         for f in ("patron_covenant_proposition_event", "patron_covenant_confirmation_event"))
+     and "atb_ai_forges_own_path = {" in read(MOD / "common/scripted_triggers/atb_triggers.txt")
+     and (lambda e: "set_country_flag = greater_patron_chosen" in e and "shroud_forge_your_own_path = yes" in e)(
+         read(MOD / "events/atb_ex_events.txt").split("id = atb_ex.9", 1)[1])
+     and "atb_ex.9" in read(MOD / "common/on_actions/atb_ex_on_actions.txt").split("on_yearly_pulse_country", 1)[1]),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
@@ -606,6 +619,12 @@ vanilla = [
     ("is_chosen_empire", r"^is_chosen_empire\s*=\s*\{", "common/scripted_triggers/*.txt"),
     ("wg_declared_crisis", r"^wg_declared_crisis\s*=\s*\{", "common/war_goals/*.txt"),
     ("exterminators 性格", r"^exterminators\s*=\s*\{", "common/personalities/*.txt"),
+    # 3.24：圆环之终末与开辟己道
+    ("check_end_aura_win_condition", r"^check_end_aura_win_condition\s*=\s*\{", "common/scripted_effects/*.txt"),
+    *[(x, rf"^{x}\s*=\s*\{{", "common/script_values/*.txt") for x in ("num_end_cycle_galaxy_systems_percent", "num_end_cycle_galaxy_systems_left")],
+    ("shroud_forge_your_own_path", r"^shroud_forge_your_own_path\s*=\s*\{", "common/scripted_effects/*.txt"),
+    ("greater_patron_chosen（shroud.11000）", r"NOT = \{ has_country_flag = greater_patron_chosen \}", "events/shroud_events.txt"),
+    *[(f"shroud/{x}", r"^country_event", f"common/inline_scripts/shroud/{x}.txt") for x in ("patron_covenant_proposition_event", "patron_covenant_confirmation_event")],
     # 3.23：合成繁衍的机器人权利
     ("artificial_intelligence_policy", r"^artificial_intelligence_policy\s*=\s*\{", "common/policies/*.txt"),
     *[(x, rf"^{x}\s*=\s*\{{", "common/species_rights/citizenship_types/*.txt") for x in ("citizenship_full", "citizenship_assimilation")],

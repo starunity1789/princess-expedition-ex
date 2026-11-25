@@ -1,0 +1,14 @@
+# 皇女的远征军EX 3.24：覆盖原版两个圆环之终末光环覆盖率（来源：原版 common/script_values/07_script_values_shroud.txt，4.6.0）
+# 分母从引擎的 count_end_cycle_systems 改成固定 @atb_eotc_needed_systems（1000），与 check_end_aura_win_condition 一致。
+# 50% / 75% 的警告事件、可以对签约国宣布全面战争都看这个比例
+
+num_end_cycle_galaxy_systems_percent = {
+	base = 0
+	add = trigger:count_systems_with_aura
+	divide = @atb_eotc_needed_systems
+}
+
+num_end_cycle_galaxy_systems_left = {
+	base = @atb_eotc_needed_systems
+	subtract = trigger:count_systems_with_aura
+}
