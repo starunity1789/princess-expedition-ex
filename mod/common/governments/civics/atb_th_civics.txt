@@ -1,5 +1,5 @@
 # 由 tools/gen_touhou.py 从「东方project领袖」（创意工坊 2983419228）抽取改写，请勿手改
-# 13 个东方国策（AI 权重为 0，只有玩家会选）
+# 13 个东方国策（AI 权重为 0，只有玩家会选）。3.21 起没有任何前置条件（只按 potential 区分普通 / 巨企版本，格式塔不可选）
 
 civic_hakurei_shinto = {
 	description = "civic_hakurei_shinto_effects"
@@ -18,36 +18,7 @@ civic_hakurei_shinto = {
 		ethics = { NOT = { value = ethic_gestalt_consciousness } }
 		authority = { NOT = { value = auth_corporate } }
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_egalitarian
-				value = ethic_fanatic_egalitarian
-				value = ethic_spiritualist
-				value = ethic_fanatic_spiritualist
-			}
-		}
-		civics = {
-			NOR = {
-				value = civic_imperial_cult
-				value = civic_gospel_of_the_masses
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -92,36 +63,7 @@ civic_hakurei_shinto_corp = {
 			}
 		}
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_egalitarian
-				value = ethic_fanatic_egalitarian
-				value = ethic_spiritualist
-				value = ethic_fanatic_spiritualist
-			}
-		}
-		civics = {
-			NOR = {
-				value = civic_imperial_cult
-				value = civic_gospel_of_the_masses
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -159,36 +101,7 @@ civic_moriya_shinto = {
 		ethics = { NOT = { value = ethic_gestalt_consciousness } }
 		authority = { NOT = { value = auth_corporate } }
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_materialist
-				value = ethic_fanatic_materialist
-				value = ethic_spiritualist
-				value = ethic_fanatic_spiritualist
-			}
-		}
-		civics = {
-			NOR = {
-				value = civic_imperial_cult
-				value = civic_gospel_of_the_masses
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -233,36 +146,7 @@ civic_moriya_shinto_corp = {
 			}
 		}
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_materialist
-				value = ethic_fanatic_materialist
-				value = ethic_spiritualist
-				value = ethic_fanatic_spiritualist
-			}
-		}
-		civics = {
-			NOR = {
-				value = civic_imperial_cult
-				value = civic_gospel_of_the_masses
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -300,30 +184,7 @@ civic_kirisame_magic = {
 		ethics = { NOT = { value = ethic_gestalt_consciousness } }
 		authority = { NOT = { value = auth_corporate } }
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_xenophile
-				value = ethic_fanatic_xenophile
-				value = ethic_materialist
-				value = ethic_fanatic_materialist
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -360,30 +221,7 @@ civic_kirisame_magic_corp = {
 			}
 		}
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_xenophile
-				value = ethic_fanatic_xenophile
-				value = ethic_materialist
-				value = ethic_fanatic_materialist
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -413,42 +251,7 @@ civic_scarlet_allience = {
 		ethics = { NOT = { value = ethic_gestalt_consciousness } }
 		authority = { NOT = { value = auth_corporate } }
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_authoritarian
-				value = ethic_fanatic_authoritarian
-				value = ethic_militarist
-				value = ethic_fanatic_militarist
-			}
-		}
-		origin = {
-			NOR = {
-				value = origin_imperial_vassal
-				value = origin_scion
-				value = origin_common_ground
-			}
-		}
-		species_archetype = {
-			NOT = {
-				value = LITHOID
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -485,43 +288,7 @@ civic_scarlet_allience_corp = {
 			}
 		}
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_authoritarian
-				value = ethic_fanatic_authoritarian
-				value = ethic_militarist
-				value = ethic_fanatic_militarist
-			}
-		}
-		origin = {
-			NOR = {
-				value = origin_imperial_vassal
-				value = origin_scion
-				value = origin_common_ground
-				value = origin_legendary_leader
-			}
-		}
-		species_archetype = {
-			NOT = {
-				value = LITHOID
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -551,38 +318,7 @@ civic_nether_world = {
 		ethics = { NOT = { value = ethic_gestalt_consciousness } }
 		authority = { NOT = { value = auth_corporate } }
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_xenophile
-				value = ethic_fanatic_xenophile
-				value = ethic_pacifist
-				value = ethic_fanatic_pacifist
-			}
-		}
-		civics = {
-			NOR = {
-				value = civic_memorialist
-				value = civic_reanimated_armies
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -618,37 +354,7 @@ civic_nether_world_corp = {
 			}
 		}
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_xenophile
-				value = ethic_fanatic_xenophile
-				value = ethic_pacifist
-				value = ethic_fanatic_pacifist
-			}
-		}
-		civics = {
-			NOT = {
-				value = civic_permanent_employment
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -676,37 +382,7 @@ civic_penglai_medcine = {
 		ethics = { NOT = { value = ethic_gestalt_consciousness } }
 		authority = { NOT = { value = auth_corporate } }
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_xenophobe
-				value = ethic_fanatic_xenophobe
-				value = ethic_pacifist
-				value = ethic_fanatic_pacifist
-			}
-		}
-		civics = {
-			NOT = {
-				value = civic_private_healthcare_corporate
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_nether_world
-				value = civic_nether_world_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -742,37 +418,7 @@ civic_penglai_medcine_corp = {
 			}
 		}
 	}
-	possible = {
-		ethics = {
-			OR = {
-				value = ethic_xenophobe
-				value = ethic_fanatic_xenophobe
-				value = ethic_pacifist
-				value = ethic_fanatic_pacifist
-			}
-		}
-		civics = {
-			NOT = {
-				value = civic_private_healthcare_corporate
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_nether_world
-				value = civic_nether_world_corp
-				value = civic_hifuu
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 	random_weight = { base = 0 }
 	ai_weight = {
 		base = 0
@@ -805,45 +451,7 @@ civic_hifuu = {
 		}
 	}
 
-	possible = {
-		origin = {
-			NOR = {
-
-				value = origin_payback
-				value = origin_broken_shackles
-				value = origin_fear_of_the_dark
-			}
-		}
-		ethics = {
-			NOR = {
-				value = ethic_xenophobe
-				value = ethic_fanatic_xenophobe
-				value = ethic_fanatic_spiritualist
-			}
-		}
-		civics = {
-			NOT = {
-				value = civic_inwards_perfection
-			}
-		}
-		civics = {
-			NOR = {
-				text = can_only_choose_one
-				value = civic_hakurei_shinto
-				value = civic_hakurei_shinto_corp
-				value = civic_moriya_shinto
-				value = civic_moriya_shinto_corp
-				value = civic_kirisame_magic
-				value = civic_kirisame_magic_corp
-				value = civic_scarlet_allience
-				value = civic_scarlet_allience_corp
-				value = civic_nether_world
-				value = civic_nether_world_corp
-				value = civic_penglai_medcine
-				value = civic_penglai_medcine_corp
-			}
-		}
-	}
+	# 3.21：去掉全部前置条件（思潮、起源、物种、互斥国策），任何非格式塔帝国都能选，也可以同时选多个东方国策
 
 	modifier = {
 		ship_speed_mult = 0.15

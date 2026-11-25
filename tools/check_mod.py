@@ -456,6 +456,8 @@ checks += [
     ("3.20：大君主同盟自动星球不设上限，100 年后每年 +1",
      "limit = { owner = { has_country_flag = atbgp_power_3 } }\n\t\tif = {\n\t\t\tlimit = { years_passed > 100 }" in read(MOD / "common/scripted_effects/atb_ai_auto_effects.txt")
      and "@atb_ai_auto_growth_overlord_late = 1" in read(MOD / "common/scripted_variables/atb_ai_auto_variables.txt")),
+    ("3.21：东方国策没有任何前置条件（13 个都没有 possible）",
+     "possible" not in read(MOD / "common/governments/civics/atb_th_civics.txt")),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
