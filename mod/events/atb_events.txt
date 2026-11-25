@@ -452,6 +452,9 @@ country_event = {
 			add_deposit = d_atb_elemental_seal_institute
 		}
 		atb_start_luminary = yes
+		# 3.23：唯心的远征军（合成繁衍底层）补上「人工智能完全权利」，
+		# 并把合成化出的新物种从「同化」改回完全公民权（原版合成同化会把它变回原物种，进度条就永远停在 0）
+		atb_synth_rights_fix = yes
 		# 合成黎明（原版合成繁衍事件链的终章 machine_age.3315）之后，解锁远征军体制
 		if = {
 			limit = {

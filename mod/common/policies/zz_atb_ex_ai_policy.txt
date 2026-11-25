@@ -1,0 +1,186 @@
+# 皇女的远征军EX 3.23：覆盖原版 artificial_intelligence_policy（来源：原版 common/policies/00_policies.txt，4.6.0）
+# 3.22 起远征军起源允许唯心主义，但它底层是合成繁衍：原版合成繁衍禁用「禁止」和「奴役」，
+# 「完全权利」又要求不唯心，唯心的远征军三项全无效 → 机器人拿不到合法公民权，合成化卡住。
+# 改动只有两处（都标了 3.23）：合成繁衍起源也能选「完全权利」；AI 唯心时对它的权重归零不适用于合成繁衍。
+
+artificial_intelligence_policy = {
+	category = society
+	potential = {
+		NOT = { has_ethic = ethic_gestalt_consciousness }
+		OR = {
+			has_origin = origin_synthetic_fertility
+			can_set_ai_policy = yes
+			has_country_flag = synthetic_empire
+			is_individual_machine = yes
+		}
+	}
+
+	option = {
+		name = "ai_outlawed"
+
+		potential = {
+			is_individual_machine = no
+		}
+		valid = {
+			NOR = {
+				is_materialist = yes
+				has_origin = origin_synthetic_fertility
+				custom_tooltip = {
+					success_text = is_a_synthetic_empire
+					has_country_flag = synthetic_empire
+				}
+				is_individual_machine = yes
+				is_open_stars_sovereignty_empire = yes
+			}
+		}
+
+		policy_flags = {
+			ai_outlawed
+		}
+
+		in_breach_of = {
+			{
+				key = resolution_galacticstudies_advanced_xenostudies
+			}
+			{
+				key = resolution_galacticstudies_ethical_guideline_refactoring
+			}
+			{
+				key = resolution_galacticstudies_extradimensional_experimentation
+			}
+		}
+
+		ai_weight = {
+			modifier = {
+				factor = 0
+				is_materialist = yes
+			}
+			modifier = {
+				factor = 5
+				is_spiritualist = yes
+				NOT = { has_origin = origin_cybernetic_creed }
+			}
+			modifier = {
+				factor = 0.1
+				has_valid_ai_personality = yes
+				is_ai = yes
+				is_galactic_community_member = yes
+				OR = {
+					is_active_resolution = "resolution_galacticstudies_advanced_xenostudies"
+					is_active_resolution = "resolution_galacticstudies_ethical_guideline_refactoring"
+					is_active_resolution = "resolution_galacticstudies_extradimensional_experimentation"
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "ai_servitude"
+
+		potential = {
+			is_individual_machine = no
+		}
+
+		valid = {
+			NOT = {	has_origin = origin_synthetic_fertility }
+			custom_tooltip = {
+				fail_text = is_a_synthetic_empire_fail
+				NOT = { has_country_flag = synthetic_empire }
+			}
+			is_individual_machine = no
+			is_open_stars_sovereignty_empire = no
+		}
+
+		policy_flags = {
+			ai_servitude
+		}
+
+		ai_weight = {
+			modifier = {
+				factor = 5
+				has_valid_ai_personality = yes
+				has_ai_personality_behaviour = robot_exploiter
+			}
+			modifier = {
+				factor = 2
+				has_valid_ai_personality = yes
+				has_ai_personality_behaviour = robot_liberator
+			}
+			modifier = {
+				factor = 0
+				is_spiritualist = yes
+				NOT = { has_origin = origin_cybernetic_creed }
+				NOT = {
+					has_valid_ai_personality = yes
+					is_ai = yes
+					is_galactic_community_member = yes
+					OR = {
+						is_active_resolution = "resolution_galacticstudies_advanced_xenostudies"
+						is_active_resolution = "resolution_galacticstudies_ethical_guideline_refactoring"
+						is_active_resolution = "resolution_galacticstudies_extradimensional_experimentation"
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "ai_full_rights"
+
+		valid = {
+			OR = {
+				custom_tooltip = {
+					fail_text = is_a_synthetic_empire
+					has_country_flag = synthetic_empire
+				}
+				if = {
+					limit = {
+						NOT = { has_origin = origin_cybernetic_creed }
+					}
+					is_spiritualist = no
+				}
+				is_individual_machine = yes
+				is_open_stars_sovereignty_empire = yes
+				has_origin = origin_synthetic_fertility	# 3.23：合成繁衍（含远征军）唯心也能选
+			}
+			if = {
+				limit = { is_open_stars_sovereignty_empire = no }
+				NOT = { has_policy_flag = robots_outlawed }
+			}
+		}
+
+		policy_flags = {
+			ai_full_rights
+		}
+
+		in_breach_of = {
+			{
+				key = resolution_divinity_a_defined_purpose
+			}
+		}
+
+		modifier = {}
+
+		ai_weight = {
+			modifier = {
+				factor = 0.5
+				is_materialist = no
+				NOR = {
+					is_synthetic_empire = yes
+					has_technology = tech_synthetic_workers
+				}
+			}
+			modifier = {
+				factor = 5
+				has_valid_ai_personality = yes
+				has_ai_personality_behaviour = robot_liberator
+			}
+			modifier = {
+				factor = 0
+				is_spiritualist = yes
+				NOT = { has_origin = origin_cybernetic_creed }
+				NOT = { has_origin = origin_synthetic_fertility }	# 3.23：合成繁衍只有这一项可选
+			}
+		}
+	}
+}

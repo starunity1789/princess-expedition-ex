@@ -460,6 +460,11 @@ checks += [
      "possible" not in read(MOD / "common/governments/civics/atb_th_civics.txt")),
     ("3.22：两个远征军起源不再禁止唯心主义",
      "civic_tooltip_not_spiritualist" not in read(MOD / "common/governments/civics/atb_origins.txt")),
+    ("3.23：合成繁衍唯心也能选人工智能完全权利；atb.20 每月补政策、把合成新物种从同化改回完全公民权",
+     (lambda p: "has_origin = origin_synthetic_fertility	# 3.23" in p and "NOT = { has_origin = origin_synthetic_fertility }	# 3.23" in p
+      and p.startswith("#") and p.count("artificial_intelligence_policy = {") == 1)(read(MOD / "common/policies/zz_atb_ex_ai_policy.txt"))
+     and "atb_synth_rights_fix = yes" in read(MOD / "events/atb_events.txt").split("id = atb.20", 1)[1].split("country_event", 1)[0]
+     and "type = citizenship_full" in read(MOD / "common/scripted_effects/atb_effects.txt").split("atb_synth_rights_fix = {", 1)[1]),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
@@ -601,6 +606,10 @@ vanilla = [
     ("is_chosen_empire", r"^is_chosen_empire\s*=\s*\{", "common/scripted_triggers/*.txt"),
     ("wg_declared_crisis", r"^wg_declared_crisis\s*=\s*\{", "common/war_goals/*.txt"),
     ("exterminators 性格", r"^exterminators\s*=\s*\{", "common/personalities/*.txt"),
+    # 3.23：合成繁衍的机器人权利
+    ("artificial_intelligence_policy", r"^artificial_intelligence_policy\s*=\s*\{", "common/policies/*.txt"),
+    *[(x, rf"^{x}\s*=\s*\{{", "common/species_rights/citizenship_types/*.txt") for x in ("citizenship_full", "citizenship_assimilation")],
+    ("living_standard_normal", r"^living_standard_normal\s*=\s*\{", "common/species_rights/living_standards/*.txt"),
     ("ap_engineered_evolution", r"^ap_engineered_evolution\s*=\s*\{", "common/ascension_perks/*.txt"),
     ("give_purity_unlocks_effect", r"^give_purity_unlocks_effect\s*=\s*\{", "common/scripted_effects/*.txt"),
     ("can_set_ai_policy", r"^can_set_ai_policy\s*=\s*\{", "common/scripted_triggers/*.txt"),

@@ -335,3 +335,39 @@ atb_grant_precursor_secret = {
 		}
 	}
 }
+# 3.23：合成繁衍下的机器人权利（国家作用域，atb.20 每月调用）
+# 原版合成繁衍禁止唯心，只剩「人工智能完全权利」一项；3.22 放开唯心后三项全无效，机器人拿不到完全公民权。
+# 合成化的新物种若落在「同化」，原版合成同化（assimilation.400）会把它变回原物种，与每月的合成化互相抵消
+atb_synth_rights_fix = {
+	if = {
+		limit = {
+			has_origin = origin_synthetic_fertility
+			NOT = { has_policy_flag = ai_full_rights }
+		}
+		set_policy = {
+			policy = artificial_intelligence_policy
+			option = ai_full_rights
+			cooldown = no
+		}
+	}
+	if = {
+		limit = {
+			has_origin = origin_synthetic_fertility
+			exists = event_target:synthspecies@root
+			event_target:synthspecies@root = {
+				has_citizenship_type = { country = root type = citizenship_assimilation }
+			}
+		}
+		event_target:synthspecies@root = {
+			set_citizenship_type = {
+				country = root
+				type = citizenship_full
+				cooldown = no
+			}
+			set_living_standard = {
+				country = root
+				type = living_standard_normal
+			}
+		}
+	}
+}
