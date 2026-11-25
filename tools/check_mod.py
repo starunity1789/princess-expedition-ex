@@ -185,7 +185,7 @@ checks = [
     ("恐惧之潮三颗开局母星", init.count("atbgp_planet_4_home_") == 3 and "atbgp_planet_4_home_4" not in init),
     ("恐惧之潮母星系有损坏的以太相引擎", 'type = "crisis_sphere_ruined"' in init),
     ("恐惧之潮固定星海天罚", "atbgp_force_crisis_perk = { PERK = ap_become_the_crisis }" in ev.split("limit = { has_country_flag = atbgp_power_4 }")[2]),
-    ("终端对齐协议方位 = 255°（6 点半）", "6 点半方位（角度 255）" in ev),
+    ("终端对齐协议方位 = 210°（8 点；3.25 起，原 6 点半）", "8 点方位（角度 210）" in ev),
     ("终端对齐协议国民 = 铁心灭绝者 + 战争机器 + 经验缓存器",
      "civic = civic_machine_terminator civic = civic_machine_warbots civic = civic_memory_vault_machine" in init),
     ("终端对齐协议四颗机械星球母星", init.count("atbgp_planet_5_home_") == 4 and init.count('class = "pc_machine"') >= 4),
@@ -347,11 +347,11 @@ checks += [
      and all(f"on_{h} = {{" in auto_oa for h in ("game_start", "colonized", "colony_transfer", "yearly_pulse_country"))),
     ("3.6：自动星球数值列强与普通相同（+3/年、起点 10、上限 300）", "@atb_ai_auto_growth = 3" in auto_var and "@atb_ai_auto_growth_gp = 3" in auto_var
      and "@atb_ai_auto_start_gp = 10" in auto_var and "@atb_ai_auto_cap_gp = 300" in auto_var),
-    ("3.14：自动星球产出为 3.10 的 ×1.6（3.13 的 ×2.1 下调），海军容量仍 0.1", "@atb_ai_auto_out_consumer_goods = 2.0779" in auto_var
-     and "@atb_ai_auto_out_energy = 3.1170" in auto_var
+    ("3.25：自动星球产出为 3.10 的 ×2.0（3.14 起是 ×1.6），海军容量仍 0.1", "@atb_ai_auto_out_consumer_goods = 2.5974" in auto_var
+     and "@atb_ai_auto_out_energy = 3.8962" in auto_var
      and "@atb_ai_auto_naval_cap = 0.1" in auto_var and auto_bld.count("@atb_ai_auto_out_") >= 17),
-    ("3.14：自动星球合金 0.7363、科研 1.5534；列强倍率（大君主 ×1.1982，恐惧之潮/终端 ×1.1081）",
-     "@atb_ai_auto_out_alloys = 0.7363" in auto_var and "@atb_ai_auto_out_research = 1.5534" in auto_var
+    ("3.25：自动星球合金 0.9204、科研 1.9418；列强倍率（大君主 ×1.1982，恐惧之潮/终端 ×1.1081）",
+     "@atb_ai_auto_out_alloys = 0.9204" in auto_var and "@atb_ai_auto_out_research = 1.9418" in auto_var
      and "factor = 1.1982" in read(MOD / "common/script_values/atb_ai_auto_values.txt")
      and "factor = 1.1081" in read(MOD / "common/script_values/atb_ai_auto_values.txt")),
     ("3.10：大君主同盟领地没有恒星基地上限 +10", "country_starbase_capacity_add" not in read(MOD / "common/static_modifiers/atbgp_static_modifiers.txt").split("atbgp_power_base = {", 1)[1].split("}", 1)[0]
@@ -478,6 +478,12 @@ checks += [
      and (lambda e: "set_country_flag = greater_patron_chosen" in e and "shroud_forge_your_own_path = yes" in e)(
          read(MOD / "events/atb_ex_events.txt").split("id = atb_ex.9", 1)[1])
      and "atb_ex.9" in read(MOD / "common/on_actions/atb_ex_on_actions.txt").split("on_yearly_pulse_country", 1)[1]),
+    ("3.25：白鹿开局灵飞（心灵超越 + 整棵灵能传统树，次日 atbgp.18 主种族变成灵能者）",
+     "atbgp_start_psionic_ascension = yes" in ev.split("limit = { has_country_flag = atbgp_power_1 }")[1].split("else_if")[0]
+     and (lambda e: all(f"add_tradition = tr_psionics_shroud_{t}" in e for t in
+                        ("adopt", "psi_corps", "great_awakening", "telekinesis", "clairvoyance", "psychometry", "finish"))
+          and "id = atbgp.18 days = 1" in e)(eff.split("atbgp_start_psionic_ascension = {", 1)[1].split("\n}", 1)[0])
+     and "turn_main_species_to_psionic = yes" in ev.split("id = atbgp.18", 1)[1]),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
@@ -619,6 +625,15 @@ vanilla = [
     ("is_chosen_empire", r"^is_chosen_empire\s*=\s*\{", "common/scripted_triggers/*.txt"),
     ("wg_declared_crisis", r"^wg_declared_crisis\s*=\s*\{", "common/war_goals/*.txt"),
     ("exterminators 性格", r"^exterminators\s*=\s*\{", "common/personalities/*.txt"),
+    # 3.25：白鹿开局灵飞
+    *[(f"tr_psionics_shroud_{t}", rf"^tr_psionics_shroud_{t}\s*=\s*\{{", "common/traditions/*.txt")
+      for t in ("adopt", "psi_corps", "great_awakening", "telekinesis", "clairvoyance", "psychometry", "finish")],
+    *[(f"tr_psionics_{t}", rf"^tr_psionics_{t}\s*=\s*\{{", "common/traditions/*.txt")
+      for t in ("mind_readers", "psi_corps", "psionic_assimilation", "breach_shroud", "shrouded_encryption", "finish")],
+    *[(x, rf"^{x}\s*=\s*\{{", "common/scripted_effects/*.txt") for x in ("turn_main_species_to_psionic", "mind_over_matter_immediate",
+      "update_node_portraits_if_gestalt_effect", "update_every_leader_from_psionic_countries")],
+    ("is_latent_psionic_species", r"^is_latent_psionic_species\s*=\s*\{", "common/scripted_triggers/*.txt"),
+    ("shroud.2750", r"id = shroud\.2750\b", "events/shroud_situation_events.txt"),
     # 3.24：圆环之终末与开辟己道
     ("check_end_aura_win_condition", r"^check_end_aura_win_condition\s*=\s*\{", "common/scripted_effects/*.txt"),
     *[(x, rf"^{x}\s*=\s*\{{", "common/script_values/*.txt") for x in ("num_end_cycle_galaxy_systems_percent", "num_end_cycle_galaxy_systems_left")],

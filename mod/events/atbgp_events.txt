@@ -468,15 +468,15 @@ event = {
 				}
 			}
 		}
-		# 终端对齐协议：6 点半方位（角度 255）
+		# 终端对齐协议：8 点方位（角度 210）
 		if = {
 			limit = { galaxy_size = tiny }
 			no_scope = {
 				spawn_system = {
 					min_distance >= 240
 					max_distance <= 248
-					min_orientation_angle = 253
-					max_orientation_angle = 257
+					min_orientation_angle = 208
+					max_orientation_angle = 212
 					initializer = atbgp_home_5
 					hyperlane = no
 				}
@@ -488,8 +488,8 @@ event = {
 				spawn_system = {
 					min_distance >= 340
 					max_distance <= 348
-					min_orientation_angle = 253
-					max_orientation_angle = 257
+					min_orientation_angle = 208
+					max_orientation_angle = 212
 					initializer = atbgp_home_5
 					hyperlane = no
 				}
@@ -501,8 +501,8 @@ event = {
 				spawn_system = {
 					min_distance >= 440
 					max_distance <= 448
-					min_orientation_angle = 253
-					max_orientation_angle = 257
+					min_orientation_angle = 208
+					max_orientation_angle = 212
 					initializer = atbgp_home_5
 					hyperlane = no
 				}
@@ -514,8 +514,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 253
-					max_orientation_angle = 257
+					min_orientation_angle = 208
+					max_orientation_angle = 212
 					initializer = atbgp_home_5
 					hyperlane = no
 				}
@@ -527,8 +527,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 253
-					max_orientation_angle = 257
+					min_orientation_angle = 208
+					max_orientation_angle = 212
 					initializer = atbgp_home_5
 					hyperlane = no
 				}
@@ -539,8 +539,8 @@ event = {
 				spawn_system = {
 					min_distance >= 490
 					max_distance <= 498
-					min_orientation_angle = 253
-					max_orientation_angle = 257
+					min_orientation_angle = 208
+					max_orientation_angle = 212
 					initializer = atbgp_home_5
 					hyperlane = no
 				}
@@ -550,8 +550,8 @@ event = {
 			spawn_system = {
 				min_distance >= 32
 				max_distance <= 38
-				min_orientation_angle = 171
-				max_orientation_angle = 179
+				min_orientation_angle = 126
+				max_orientation_angle = 134
 				initializer = atbgp_sys_5_1
 				hyperlane = no
 			}
@@ -625,6 +625,7 @@ country_event = {
 			atbgp_spawn_start_fleets_basic = yes	# 3.19：不是列强
 			give_technology = { tech = tech_psionic_theory message = no }
 			add_ascension_perk = ap_mind_over_matter
+			atbgp_start_psionic_ascension = yes	# 3.25
 		}
 		else_if = {
 			limit = { has_country_flag = atbgp_power_2 }
@@ -927,5 +928,30 @@ country_event = {
 
 	immediate = {
 		atbgp_leave_crisis_wars = yes
+	}
+}
+
+# 3.25：开局灵飞的第二步（atbgp_start_psionic_ascension 一天后）。
+# 灵能传统的开局项照原版触发 shroud.2750，先给主种族潜在灵能，这里再升成灵能者
+country_event = {
+	id = atbgp.18
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		# shroud.2750 还没给潜在灵能时照原版补上（mind_over_matter_immediate）
+		if = {
+			limit = {
+				owner_main_species = {
+					has_psionic_species_trait = no
+					is_latent_psionic_species = no
+				}
+			}
+			mind_over_matter_immediate = yes
+		}
+		turn_main_species_to_psionic = yes
+		update_node_portraits_if_gestalt_effect = yes
+		update_every_leader_from_psionic_countries = yes
+		refresh_portraits = character
 	}
 }

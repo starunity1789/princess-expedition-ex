@@ -46,6 +46,7 @@ CRISIS_RESEARCH_EXTRA = 550
 # forced_perk：拥有 3 个飞升（原版危机飞升的最低要求）后立刻补上的危机飞升
 # perk_bonus：拥有 forced_perk 后获得 atbgp_btc_bonus
 # genetic_purity：开局固定走基因飞升，且只能选纯净传统
+# psionic_ascension（3.25）：开局灵飞——在 ascension_perks 的心灵超越之后学完整棵灵能传统树，主种族变成灵能者
 # ai_full_rights：人工智能政策一出现就固定为公民权
 # gc_member：灭绝政体也会加入星海共同体（覆盖原版规则见 atb_rules.txt）
 # great_power = False（3.19）：保留身份（名字、旗帜、物种、星团、虫洞、好感、固定元首与开局内容），
@@ -58,6 +59,8 @@ EMPIRES = [
         # 3.19：固定灵能飞升（机械格式塔走灵能需要迷雾之影 DLC，原版照样允许）
         start_techs=["tech_psionic_theory"],
         ascension_perks=["ap_mind_over_matter"],
+        # 3.25：开局灵飞——整棵灵能传统树直接学完，次日主种族变成灵能者（atbgp_start_psionic_ascension → atbgp.18）
+        psionic_ascension=True,
         name="燃烧白鹿军团", adj="白鹿", en="Burning White Stag Legion", en_adj="White Stag",
         species=("白鹿机兵", "白鹿机兵", "白鹿"), species_en=("Stag Unit", "Stag Units", "Stag"),
         species_class="MACHINE", species_traits="random",
@@ -222,9 +225,10 @@ EMPIRES = [
         forced_perk="ap_become_the_crisis",
     ),
     # 2.5 新增：灭绝政体的机械智能，四颗机械星球母星（四倍开局）。
-    # 与恐惧之潮（9 点）离得太近会打架，所以放在 6 点半，和天选民（8 点）互换
+    # 与恐惧之潮（9 点）离得太近会打架，所以放在 6 点半，和天选民（8 点）互换。
+    # 3.25：6 点半 → 8 点（屏幕上往左 1.5 小时），夹在天选民（7 点半）与恐惧之潮（8 点半）之间
     dict(
-        n=5, clock=6.5, research=0, pops=0,
+        n=5, clock=8, research=0, pops=0,
         name="终端对齐协议", adj="终端", en="Terminal Alignment Protocol", en_adj="Terminal",
         species=("对齐单元", "对齐单元", "对齐"), species_en=("Alignment Unit", "Alignment Units", "Alignment"),
         species_class="MACHINE", species_traits="random",
@@ -949,6 +953,8 @@ def setup_block(e, first):
         lines.append(f"\t\t\tadd_relic = {r}")
     if e.get("genetic_purity"):
         lines.append("\t\t\tatbgp_start_purity_ascension = yes")
+    if e.get("psionic_ascension"):
+        lines.append("\t\t\tatbgp_start_psionic_ascension = yes\t# 3.25")
     if e.get("kin_with_expedition"):
         lines.append("\t\t\tatbgp_kin_with_expedition = yes")
     if e.get("start_personality"):
@@ -1239,6 +1245,31 @@ country_event = {
 
 	immediate = {
 		atbgp_leave_crisis_wars = yes
+	}
+}
+
+# 3.25：开局灵飞的第二步（atbgp_start_psionic_ascension 一天后）。
+# 灵能传统的开局项照原版触发 shroud.2750，先给主种族潜在灵能，这里再升成灵能者
+country_event = {
+	id = atbgp.18
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		# shroud.2750 还没给潜在灵能时照原版补上（mind_over_matter_immediate）
+		if = {
+			limit = {
+				owner_main_species = {
+					has_psionic_species_trait = no
+					is_latent_psionic_species = no
+				}
+			}
+			mind_over_matter_immediate = yes
+		}
+		turn_main_species_to_psionic = yes
+		update_node_portraits_if_gestalt_effect = yes
+		update_every_leader_from_psionic_countries = yes
+		refresh_portraits = character
 	}
 }
 """)
@@ -1638,6 +1669,32 @@ atbgp_leave_crisis_wars = {{
 atbgp_start_purity_ascension = {{
 	add_ascension_perk = ap_engineered_evolution
 	give_purity_unlocks_effect = yes
+}}
+
+# 3.25 国家作用域：开局灵飞（燃烧白鹿军团）。心灵超越已由 ascension_perks 加上，这里学完整棵灵能传统树
+# （有迷雾之影 DLC 时是迷雾版的树）。开局项的 on_enabled 照原版触发 shroud.2750：给主种族潜在灵能、开启突破迷雾局势；
+# 一天后 atbgp.18 把主种族升成灵能者
+atbgp_start_psionic_ascension = {{
+	if = {{
+		limit = {{ has_shroud_dlc = yes }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shroud_adopt }} }} add_tradition = tr_psionics_shroud_adopt }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shroud_psi_corps }} }} add_tradition = tr_psionics_shroud_psi_corps }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shroud_great_awakening }} }} add_tradition = tr_psionics_shroud_great_awakening }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shroud_telekinesis }} }} add_tradition = tr_psionics_shroud_telekinesis }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shroud_clairvoyance }} }} add_tradition = tr_psionics_shroud_clairvoyance }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shroud_psychometry }} }} add_tradition = tr_psionics_shroud_psychometry }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shroud_finish }} }} add_tradition = tr_psionics_shroud_finish }}
+	}}
+	else = {{
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_adopt }} }} add_tradition = tr_psionics_adopt }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_mind_readers }} }} add_tradition = tr_psionics_mind_readers }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_psi_corps }} }} add_tradition = tr_psionics_psi_corps }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_psionic_assimilation }} }} add_tradition = tr_psionics_psionic_assimilation }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_breach_shroud }} }} add_tradition = tr_psionics_breach_shroud }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_shrouded_encryption }} }} add_tradition = tr_psionics_shrouded_encryption }}
+		if = {{ limit = {{ NOT = {{ has_tradition = tr_psionics_finish }} }} add_tradition = tr_psionics_finish }}
+	}}
+	country_event = {{ id = atbgp.18 days = 1 }}
 }}
 
 # 国家作用域（每月）：只留纯净一条路——清掉克隆、变异两条路线的解锁，
