@@ -1,4 +1,4 @@
-version="3.26"
+version="3.27"
 tags={
 	"Gameplay"
 	"Leaders"

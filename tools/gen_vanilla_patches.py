@@ -461,6 +461,19 @@ PATCHES = [
              "atb_juggernaut_potential_construction = {\n", 1),
         ],
     ),
+    # ---- 3.27：战斗音效太小（用户反馈，装了 Stellaris Enhanced Sound Project 也一样）----
+    # 原版「Weapon」音效类别（所有武器开火 / 命中、舰船爆炸、护盾受击）的压缩器 postgain 是 -10.5 dB，
+    # 游戏设置里的音效音量已经是 100，所以从类别上整体提高；ESP 只往 Effects 类别加音效，不覆盖这个文件
+    dict(
+        path="sound/category.asset",
+        header=[
+            "皇女的远征军EX：覆盖原版 sound/category.asset。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：Weapon 类别（武器、爆炸、护盾受击）",
+            "的压缩器 postgain -10.5 → +10，即战斗音效 +20.5 dB（3.27；先试过 -0.5，用户要求改成 +10）。群星更新后用新版原版重新生成。",
+        ],
+        replace=[(" pregain = 8.0\n postgain = -10.5\n",
+                  " pregain = 8.0\n postgain = 10.0\t# 皇女的远征军EX 3.27：原版 -10.5，战斗音效 +20.5 dB\n", 1)],
+    ),
     # ---- 3.26：逆熵行星护盾（common/buildings/atb_entropy_shield_buildings.txt）由原版行星护盾发生器升级而来 ----
     dict(
         path="common/buildings/09_army_buildings.txt",
