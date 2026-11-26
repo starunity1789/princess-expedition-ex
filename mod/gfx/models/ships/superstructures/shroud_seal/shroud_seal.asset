@@ -1,0 +1,96 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版的 gfx/models/ships/superstructures/shroud_seal/shroud_seal.asset。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；人造巨构：1 个带网格的实体 ×0.1667。
+
+entity = {
+	name = "shroud_seal_entity"
+	pdxmesh = "shroud_seal_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" looping = yes animation_speed = 1.0
+		start_event = { sound = { soundeffect = mw_ship_shroud_seal_idle } }
+	}
+
+	game_data = {
+		uv_animation_speed = 1.0
+		uv_animation_direction = { 1.0 -1.7 }
+		bloom_factor = 0.4
+	}
+
+	locator = { name = "main" rotation = { 90 0 0 } }
+	attach = { main = "shroud_seal_clouds_entity" }
+	attach = { main = "shroud_seal_dust_1_entity" }
+	attach = { main = "shroud_seal_dust_2_entity" }
+	attach = { main = "shroud_seal_dust_3_entity" }
+	attach = { main = "shroud_seal_thunder_entity" }
+	scale = 0.1667	# 原版没写（1.0），×0.1667
+}
+
+animation = {
+	name = "mindwarden_01_shroud_seal_idle_animation"
+	file = "mindwarden_01_shroud_seal_idle.anim"
+}
+
+entity = {
+	name = "shroud_seal_clouds_entity"
+	pdxmesh = "shroud_seal_clouds_mesh"
+
+	scale = 1.0
+
+	game_data = {
+		uv_animation_speed = 0.1
+		uv_animation_direction = { 0.1 -0.15 }
+		bloom_factor = 0.4
+	}
+}
+
+entity = {
+	name = "shroud_seal_dust_1_entity"
+	pdxmesh = "shroud_seal_dust_1_mesh"
+
+	scale = 1.0
+
+	game_data = {
+		uv_animation_speed = 0.18
+		uv_animation_direction = { 0.5 -1.0 }
+		bloom_factor = 1.0
+	}
+}
+
+entity = {
+	name = "shroud_seal_dust_2_entity"
+	pdxmesh = "shroud_seal_dust_2_mesh"
+
+	scale = 1.0
+
+	game_data = {
+		uv_animation_speed = 0.05
+		uv_animation_direction = { 0.0 -0.5 }
+		bloom_factor = 0.4
+	}
+}
+
+entity = {
+	name = "shroud_seal_dust_3_entity"
+	pdxmesh = "shroud_seal_dust_3_mesh"
+
+	scale = 1.0
+
+	game_data = {
+		uv_animation_speed = 0.5
+		uv_animation_direction = { 0.35 -1.0 }
+		bloom_factor = 1.0
+	}
+}
+
+entity = {
+	name = "shroud_seal_thunder_entity"
+	pdxmesh = "shroud_seal_thunder_mesh"
+
+	scale = 1.0
+
+	game_data = {
+		uv_animation_speed = 2.0
+		uv_animation_direction = { 0.0 -1.0 }
+		bloom_factor = 1.0
+	}
+}

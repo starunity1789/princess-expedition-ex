@@ -1,0 +1,618 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版的 gfx/models/ships/megastructures/grand_archive/_grand_archive_entities.asset。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；人造巨构：22 个带网格的实体 ×0.1667。
+
+##########################
+# Grand Archive Entities #
+##########################
+
+entity = {
+	name = "test_grand_archive_megastructure_entity"
+
+		locator = { name = "aquatic_01"				position = {	0	0	0 		}	}
+		locator = { name = "arthropoid_01"			position = {	120	0	0 		}	}
+		locator = { name = "avian_01"				position = {	240	0	0 		}	}
+		locator = { name = "cybernetics_01"			position = {	360	0	0 		}	}
+		locator = { name = "fungoid_01"				position = {	480	0	0 		}	}
+		locator = { name = "humanoid_01"			position = {	0	0	120 	}	}
+		locator = { name = "nemesis_01"				position = {	120	0	120 	}	}
+		locator = { name = "lithoid_01"				position = {	240	0	120 	}	}
+		locator = { name = "mammalian_01"			position = {	360	0	120 	}	}
+		locator = { name = "molluscoid_01"			position = {	480	0	120 	}	}
+		locator = { name = "necroid_01"				position = {	0	0	240 	}	}
+		locator = { name = "plantoid_01"			position = {	120	0	240 	}	}
+		locator = { name = "reptilian_01"			position = {	240	0	240 	}	}
+		locator = { name = "synthetics_01"			position = {	360	0	240 	}	}
+		locator = { name = "toxoid_01"				position = {	480	0	240 	}	}
+		locator = { name = "mindwarden_01"			position = {	0	0	360 	}	}
+		locator = { name = "psionic_01"				position = {	120	0	360 	}	}
+		locator = { name = "infernal_01"			position = {	0	0	0 		}	}
+
+		attach = { aquatic_01			=	"aquatic_01_grand_archive_entity"		}
+		attach = { arthropoid_01		=	"arthropoid_01_grand_archive_entity"	}
+		attach = { avian_01				=	"avian_01_grand_archive_entity"			}
+		attach = { cybernetics_01		=	"cybernetics_01_grand_archive_entity"	}
+		attach = { fungoid_01			=	"fungoid_01_grand_archive_entity"		}
+		attach = { humanoid_01			=	"humanoid_01_grand_archive_entity"		}
+		attach = { nemesis_01			=	"nemesis_01_grand_archive_entity"		}
+		attach = { lithoid_01			=	"lithoid_01_grand_archive_entity"		}
+		attach = { mammalian_01			=	"mammalian_01_grand_archive_entity"		}
+		attach = { molluscoid_01		=	"molluscoid_01_grand_archive_entity"	}
+		attach = { necroid_01			=	"necroid_01_grand_archive_entity"		}
+		attach = { plantoid_01			=	"plantoid_01_grand_archive_entity"		}
+		attach = { reptilian_01			=	"reptilian_01_grand_archive_entity"		}
+		attach = { synthetics_01		=	"synthetics_01_grand_archive_entity"	}
+		attach = { toxoid_01			=	"toxoid_01_grand_archive_entity"		}
+		attach = { mindwarden_01		=	"mindwarden_01_grand_archive_entity"	}
+		attach = { psionic_01			=	"psionic_01_grand_archive_entity"		}
+		attach = { infernal_01			=	"infernal_01_grand_archive_entity"		}
+
+	cull_radius = 1000
+	scale = 1.0
+}
+
+animation = {
+	name = "grand_archive_idle"
+	file = "grand_archive_idle.anim"
+}
+
+entity = {
+	name = "grand_archive_entity"
+	pdxmesh = "grand_archive_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5 }
+
+	scale = 0.1667	# 原 1，×0.1667
+
+	game_data = {
+		emissive_recolor_crunch = 4.0
+	}
+}
+
+entity = {
+	name = "aquatic_01_grand_archive_entity"
+	pdxmesh = "grand_archive_aquatic_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "aquatic_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "aquatic_01_grand_archive_dome_entity"
+	pdxmesh = "aquatic_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "arthropoid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_arthropoid_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "arthropoid_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "arthropoid_01_grand_archive_dome_entity"
+	pdxmesh = "arthropoid_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "avian_01_grand_archive_entity"
+	pdxmesh = "grand_archive_avian_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "avian_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "avian_01_grand_archive_dome_entity"
+	pdxmesh = "avian_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "cybernetics_01_grand_archive_entity"
+	pdxmesh = "grand_archive_cybernetic_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "cybernetic_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "cybernetic_01_grand_archive_dome_entity"
+	pdxmesh = "cybernetic_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "fungoid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_fungoid_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "fungoid_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "fungoid_01_grand_archive_dome_entity"
+	pdxmesh = "fungoid_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "humanoid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "humanoid_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+
+	game_data = {
+		emissive_recolor_crunch = 4.0
+	}
+}
+
+entity = {
+	name = "humanoid_01_grand_archive_dome_entity"
+	pdxmesh = "humanoid_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "nemesis_01_grand_archive_entity"
+	pdxmesh = "grand_archive_imperial_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "imperial_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "imperial_01_grand_archive_dome_entity"
+	pdxmesh = "imperial_01_grand_archive_dome_mesh"
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "imperial_01_grand_archive_cage_entity" }
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "imperial_01_grand_archive_cage_entity"
+	pdxmesh = "imperial_01_grand_archive_cage_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "lithoid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_lithoid_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	scale = 0.1667	# 原 1，×0.1667
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "lithoid_01_grand_archive_dome_entity" }
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "lithoid_01_grand_archive_dome_entity"
+	pdxmesh = "lithoid_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "mammalian_01_grand_archive_entity"
+	pdxmesh = "grand_archive_mammalian_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "mammalian_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "mammalian_01_grand_archive_dome_entity"
+	pdxmesh = "mammalian_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "molluscoid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_molluscoid_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "molluscoid_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "molluscoid_01_grand_archive_dome_entity"
+	pdxmesh = "molluscoid_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "necroid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_necroid_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "necroid_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "necroid_01_grand_archive_dome_entity"
+	pdxmesh = "necroid_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "plantoid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_plantoid_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "plantoid_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "plantoid_01_grand_archive_dome_entity"
+	pdxmesh = "plantoid_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "reptilian_01_grand_archive_entity"
+	pdxmesh = "grand_archive_reptilian_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "reptilian_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "reptilian_01_grand_archive_dome_entity"
+	pdxmesh = "reptilian_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "synthetics_01_grand_archive_entity"
+	pdxmesh = "grand_archive_synthetics_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "synthetics_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "synthetics_01_grand_archive_dome_entity"
+	pdxmesh = "synthetics_01_grand_archive_dome_mesh"
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "synthetics_01_grand_archive_cage_entity" }
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "synthetics_01_grand_archive_cage_entity"
+	pdxmesh = "synthetics_01_grand_archive_cage_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "toxoid_01_grand_archive_entity"
+	pdxmesh = "grand_archive_toxoid_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "toxoid_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "toxoid_01_grand_archive_dome_entity"
+	pdxmesh = "toxoid_01_grand_archive_dome_mesh"
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "toxoid_01_grand_archive_cage_entity" }
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "toxoid_01_grand_archive_cage_entity"
+	pdxmesh = "toxoid_01_grand_archive_cage_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "mindwarden_01_grand_archive_entity"
+	pdxmesh = "grand_archive_mindwarden_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "mindwarden_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "mindwarden_01_grand_archive_dome_entity"
+	pdxmesh = "mindwarden_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "psionic_01_grand_archive_entity"
+	pdxmesh = "grand_archive_psionic_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "psionic_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "psionic_01_grand_archive_dome_entity"
+	pdxmesh = "psionic_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "infernal_01_grand_archive_entity"
+	pdxmesh = "grand_archive_infernal_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "infernal_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "infernal_01_grand_archive_dome_entity"
+	pdxmesh = "infernal_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "biogenesis_01_grand_archive_entity"
+	pdxmesh = "grand_archive_biogenesis_01_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "biogenesis_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "biogenesis_01_grand_archive_dome_entity"
+	pdxmesh = "mammalian_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "biogenesis_02_grand_archive_entity"
+	pdxmesh = "grand_archive_biogenesis_02_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "biogenesis_02_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "biogenesis_02_grand_archive_dome_entity"
+	pdxmesh = "mammalian_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}
+
+entity = {
+	name = "crusader_01_grand_archive_entity"
+	pdxmesh = "grand_archive_crusader_mesh"
+
+	default_state = idle
+	state = { name = "idle"	animation = "idle"	animation_speed = 0.5
+		event = { trigger_once = yes sound = { soundeffect = "ga_grand_archive_idle" } }
+	}
+
+	locator = { name = "root" position = { 0 0 0 } }
+	attach = { root = "crusader_01_grand_archive_dome_entity" }
+
+	scale = 0.1667	# 原 1，×0.1667
+}
+
+entity = {
+	name = "crusader_01_grand_archive_dome_entity"
+	pdxmesh = "crusader_01_grand_archive_dome_mesh"
+
+	game_data = {
+		emissive_recolor_crunch = 3.0
+	}
+}

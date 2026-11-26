@@ -1,4 +1,4 @@
-version="3.25"
+version="3.26"
 tags={
 	"Gameplay"
 	"Leaders"
@@ -10,4 +10,7 @@ tags={
 }
 name="The Princesses' Expedition EX · 皇女的远征军EX"
 picture="thumbnail.png"
+dependencies={
+	"Real Space 4.0"
+}
 supported_version="v4.6.*"

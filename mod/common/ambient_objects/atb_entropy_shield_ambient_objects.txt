@@ -1,0 +1,561 @@
+# 皇女的远征军EX 3.26：逆熵行星护盾的外观。由 tools/gen_entropy_shield.py 生成，请勿手改。
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_01"
+	entity = "atb_entropy_shield_planet_01_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_02"
+	entity = "atb_entropy_shield_planet_02_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_03"
+	entity = "atb_entropy_shield_planet_03_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_04"
+	entity = "atb_entropy_shield_planet_04_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_05"
+	entity = "atb_entropy_shield_planet_05_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_06"
+	entity = "atb_entropy_shield_planet_06_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_07"
+	entity = "atb_entropy_shield_planet_07_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_08"
+	entity = "atb_entropy_shield_planet_08_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_09"
+	entity = "atb_entropy_shield_planet_09_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_10"
+	entity = "atb_entropy_shield_planet_10_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_11"
+	entity = "atb_entropy_shield_planet_11_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_12"
+	entity = "atb_entropy_shield_planet_12_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_13"
+	entity = "atb_entropy_shield_planet_13_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_14"
+	entity = "atb_entropy_shield_planet_14_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_15"
+	entity = "atb_entropy_shield_planet_15_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_16"
+	entity = "atb_entropy_shield_planet_16_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_17"
+	entity = "atb_entropy_shield_planet_17_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_18"
+	entity = "atb_entropy_shield_planet_18_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_19"
+	entity = "atb_entropy_shield_planet_19_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_20"
+	entity = "atb_entropy_shield_planet_20_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_21"
+	entity = "atb_entropy_shield_planet_21_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_22"
+	entity = "atb_entropy_shield_planet_22_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_23"
+	entity = "atb_entropy_shield_planet_23_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_24"
+	entity = "atb_entropy_shield_planet_24_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_25"
+	entity = "atb_entropy_shield_planet_25_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_26"
+	entity = "atb_entropy_shield_planet_26_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_27"
+	entity = "atb_entropy_shield_planet_27_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_28"
+	entity = "atb_entropy_shield_planet_28_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_29"
+	entity = "atb_entropy_shield_planet_29_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_30"
+	entity = "atb_entropy_shield_planet_30_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_31"
+	entity = "atb_entropy_shield_planet_31_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_32"
+	entity = "atb_entropy_shield_planet_32_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_33"
+	entity = "atb_entropy_shield_planet_33_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_34"
+	entity = "atb_entropy_shield_planet_34_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_35"
+	entity = "atb_entropy_shield_planet_35_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_36"
+	entity = "atb_entropy_shield_planet_36_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_37"
+	entity = "atb_entropy_shield_planet_37_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_38"
+	entity = "atb_entropy_shield_planet_38_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_39"
+	entity = "atb_entropy_shield_planet_39_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_planet_40"
+	entity = "atb_entropy_shield_planet_40_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_01"
+	entity = "atb_entropy_shield_moon_01_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_02"
+	entity = "atb_entropy_shield_moon_02_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_03"
+	entity = "atb_entropy_shield_moon_03_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_04"
+	entity = "atb_entropy_shield_moon_04_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_05"
+	entity = "atb_entropy_shield_moon_05_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_06"
+	entity = "atb_entropy_shield_moon_06_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_07"
+	entity = "atb_entropy_shield_moon_07_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_08"
+	entity = "atb_entropy_shield_moon_08_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_09"
+	entity = "atb_entropy_shield_moon_09_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_10"
+	entity = "atb_entropy_shield_moon_10_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_11"
+	entity = "atb_entropy_shield_moon_11_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_12"
+	entity = "atb_entropy_shield_moon_12_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_13"
+	entity = "atb_entropy_shield_moon_13_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_14"
+	entity = "atb_entropy_shield_moon_14_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_15"
+	entity = "atb_entropy_shield_moon_15_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_16"
+	entity = "atb_entropy_shield_moon_16_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_17"
+	entity = "atb_entropy_shield_moon_17_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_18"
+	entity = "atb_entropy_shield_moon_18_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_19"
+	entity = "atb_entropy_shield_moon_19_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_20"
+	entity = "atb_entropy_shield_moon_20_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_21"
+	entity = "atb_entropy_shield_moon_21_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_22"
+	entity = "atb_entropy_shield_moon_22_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_23"
+	entity = "atb_entropy_shield_moon_23_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_24"
+	entity = "atb_entropy_shield_moon_24_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_25"
+	entity = "atb_entropy_shield_moon_25_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_26"
+	entity = "atb_entropy_shield_moon_26_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_27"
+	entity = "atb_entropy_shield_moon_27_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_28"
+	entity = "atb_entropy_shield_moon_28_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_29"
+	entity = "atb_entropy_shield_moon_29_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_30"
+	entity = "atb_entropy_shield_moon_30_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_31"
+	entity = "atb_entropy_shield_moon_31_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_32"
+	entity = "atb_entropy_shield_moon_32_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_33"
+	entity = "atb_entropy_shield_moon_33_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_34"
+	entity = "atb_entropy_shield_moon_34_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_35"
+	entity = "atb_entropy_shield_moon_35_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_36"
+	entity = "atb_entropy_shield_moon_36_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_37"
+	entity = "atb_entropy_shield_moon_37_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_38"
+	entity = "atb_entropy_shield_moon_38_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_39"
+	entity = "atb_entropy_shield_moon_39_entity"
+	selectable = no
+	show_name = no
+}
+
+ambient_object = {
+	name = "atb_entropy_shield_moon_40"
+	entity = "atb_entropy_shield_moon_40_entity"
+	selectable = no
+	show_name = no
+}

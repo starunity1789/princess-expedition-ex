@@ -1,0 +1,14 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版 defines 的几项。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；
+
+NGraphics = {
+	ASTEROID_MAX_SCALE = 0.5	# 原版 4.0：小行星带碎石的最大尺寸，×0.125
+}
+
+# 星球、恒星变小以后，舰船和空间站原版的停靠距离显得离得很远。取 Real Space - System Scale 的值：
+# 它把空间放大 6 倍、星体基本不动，看上去的比例和这里（空间不动、星体缩小）相近
+NGameplay = {
+	PLANET_SHIP_ORBIT_DISTANCE = 4.0	# 原版 10：舰队在星球旁停靠的距离
+	PLANET_STATION_ORBIT_DISTANCE = 3.5	# 原版 6：采矿站、研究站离星球的距离
+	STARBASE_ORBIT_DISTANCE = 7.0		# 原版 15：恒星基地离恒星的距离
+}

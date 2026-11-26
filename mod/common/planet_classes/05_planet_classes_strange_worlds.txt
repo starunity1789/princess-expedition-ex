@@ -1,0 +1,23 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版的 common/planet_classes/05_planet_classes_strange_worlds.txt。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；只改这些写死了数字大小的星体：pc_junk 1×0.125。
+
+pc_junk = {
+	entity = "asteroid"
+	entity_scale = 0.125	# 原 1，×0.125
+	icon = GFX_planet_type_asteroid
+	icon_large = GFX_planet_type_asteroid_big
+
+	asteroid = yes
+
+	spawn_odds = 0
+
+	extra_orbit_size = 0
+	extra_planet_count = 0
+
+	chance_of_ring = 0
+
+	planet_size = 5
+
+	colonizable = no
+	survey_time_factor = 0.5
+}

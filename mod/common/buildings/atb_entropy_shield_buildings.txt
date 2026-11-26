@@ -1,0 +1,58 @@
+# 皇女的远征军EX 3.26：逆熵行星护盾，由原版行星护盾发生器（common/buildings/09_army_buildings.txt）升级而来。
+# 原版那份由 tools/gen_vanilla_patches.py 整文件覆盖，只多了 upgrades = { building_atb_entropy_shield }。
+# 与原版的区别：轨道轰炸伤害 -50% → -90%；维护费 5 → 15 能量（原版 300%）；不能直接建造，只能升级；
+# 升级没有额外条件（不要求首都等级等，用户要求），花费 30 文物、工期 300 天。风暴防护照原版；
+# 轨道环 / 方舟的护盾模块与它互斥由那边的模块检查（00_orbital_ring_buildings.txt 等）。
+# 外观是 Guilli's Planet Modifiers and Features 的先驱者行星护盾（tools/gen_entropy_shield.py），
+# 由 events/atb_entropy_shield_events.txt 在建成、拆除、被替换时按星系刷新。
+
+building_atb_entropy_shield = {
+	base_buildtime = 300
+	planet_limit = 1
+	position_priority = 100
+	can_be_ruined = no
+	can_build = no
+	category = army
+
+	building_sets = {
+		government
+		fortress
+	}
+
+	potential = {
+		exists = owner
+		owner = {
+			is_wilderness_empire = no
+			is_nomadic = no
+		}
+	}
+	prerequisites = {
+		"tech_planetary_shield_generator"
+	}
+
+	planet_modifier = {
+		planet_orbital_bombardment_damage = -0.9
+	}
+	triggered_planet_modifier = {
+		potential = { has_cosmic_storms_dlc = yes }
+		planet_storm_devastation_mult = -0.5
+	}
+
+	inline_script = {
+		script = cosmic_storms/StormBuildingModifiers
+	}
+
+	inline_script = { # on_built & on_destroy behaviors
+		script = cosmic_storms/PlanetaryShieldOnBuiltDestroy
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minor_artifacts = 30
+		}
+		upkeep = {
+			energy = 15	# 原版行星护盾发生器 @b2_upkeep = 5 的 300%
+		}
+	}
+}

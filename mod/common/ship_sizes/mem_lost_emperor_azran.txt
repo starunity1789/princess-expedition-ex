@@ -1,0 +1,40 @@
+# 皇女的远征军EX · 星体缩小：覆盖 More Events Mod的 common/ship_sizes/mem_lost_emperor_azran.txt。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；只给 1 种恒星基地 / 空间站 / 防御平台加 hull_scale：mem_azran×0.25。
+
+
+mem_azran = {
+	hull_scale = 0.25	# 原版没写（1.0），×0.25
+	entity = ancient_mining_drone_entity
+	graphical_culture = no
+	can_be_inspected = no
+	max_speed = 0.0
+	acceleration = 0.0
+	rotation_speed = 0.0
+	modifier = {
+		ship_evasion_mult = -0.5
+		ship_weapon_damage = 1
+		ship_shield_regen_add_perc = 0.02
+		ship_shield_mult = 10.0
+		ship_accuracy_mult = 10
+		ship_armor_mult = 1
+	}
+
+	ship_modifier = {
+		ship_shield_damage_mult = 1
+		ship_tracking_add = 12
+		ships_upkeep_mult = -1
+		ship_fire_rate_mult = 1.5
+	}
+
+	max_hitpoints = 20000
+	size_multiplier = 5
+	fleet_slot_size = 1
+	map_counter_icon = ship_counter_4
+	section_slots = { "mid" = { locator = "part1" } }
+	num_target_locators = 1
+	is_space_station = yes
+	
+	class = shipclass_military_station
+	is_designable = no
+	icon = ship_size_military_station
+}

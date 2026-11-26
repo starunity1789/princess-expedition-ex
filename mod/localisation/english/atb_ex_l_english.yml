@@ -74,3 +74,5 @@
  building_atb_unity_agency:0 "$tech_atb_planetary_unity$"
  building_atb_unity_agency_desc:0 "$tech_atb_planetary_unity_desc$"
  building_atb_unity_agency_gestalt_desc:0 "Coordinates the synchronisation signals of the whole network, so every node works towards the same goal."
+ building_atb_entropy_shield:0 "Entropy-Reversal Planetary Shield"
+ building_atb_entropy_shield_desc:0 "An upgrade of the planetary shield generator. A layered field that runs local entropy backwards undoes most of the damage of an orbital bombardment as it lands. Its precursor-pattern shell is visible from orbit."

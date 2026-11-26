@@ -1,0 +1,1042 @@
+# 皇女的远征军EX 3.26：逆熵行星护盾的外观。由 tools/gen_entropy_shield.py 生成，请勿手改。
+# 护盾大小 = (0.4 × 星球大小 + 0.05) × 1/8（卫星的大小再 × 0.7；1/8 是本 MOD 的星体缩小比例）
+
+entity = {
+	name = "atb_entropy_shield_planet_01_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.0563	# 行星大小 1
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_02_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.1063	# 行星大小 2
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_03_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.1563	# 行星大小 3
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_04_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.2063	# 行星大小 4
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_05_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.2562	# 行星大小 5
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_06_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.3063	# 行星大小 6
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_07_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.3563	# 行星大小 7
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_08_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.4062	# 行星大小 8
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_09_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.4562	# 行星大小 9
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_10_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.5062	# 行星大小 10
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_11_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.5563	# 行星大小 11
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_12_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.6063	# 行星大小 12
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_13_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.6562	# 行星大小 13
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_14_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.7063	# 行星大小 14
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_15_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.7562	# 行星大小 15
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_16_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.8063	# 行星大小 16
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_17_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.8563	# 行星大小 17
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_18_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.9062	# 行星大小 18
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_19_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.9563	# 行星大小 19
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_20_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.0063	# 行星大小 20
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_21_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.0563	# 行星大小 21
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_22_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.1063	# 行星大小 22
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_23_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.1563	# 行星大小 23
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_24_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.2063	# 行星大小 24
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_25_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.2563	# 行星大小 25
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_26_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.3063	# 行星大小 26
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_27_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.3563	# 行星大小 27
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_28_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.4063	# 行星大小 28
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_29_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.4563	# 行星大小 29
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_30_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.5063	# 行星大小 30
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_31_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.5563	# 行星大小 31
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_32_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.6063	# 行星大小 32
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_33_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.6563	# 行星大小 33
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_34_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.7063	# 行星大小 34
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_35_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.7563	# 行星大小 35
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_36_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.8063	# 行星大小 36
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_37_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.8563	# 行星大小 37
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_38_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.9063	# 行星大小 38
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_39_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.9563	# 行星大小 39
+}
+
+entity = {
+	name = "atb_entropy_shield_planet_40_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 2.0063	# 行星大小 40
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_01_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.0412	# 卫星大小 1
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_02_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.0762	# 卫星大小 2
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_03_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.1112	# 卫星大小 3
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_04_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.1462	# 卫星大小 4
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_05_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.1813	# 卫星大小 5
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_06_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.2162	# 卫星大小 6
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_07_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.2512	# 卫星大小 7
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_08_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.2862	# 卫星大小 8
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_09_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.3212	# 卫星大小 9
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_10_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.3563	# 卫星大小 10
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_11_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.3912	# 卫星大小 11
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_12_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.4262	# 卫星大小 12
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_13_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.4612	# 卫星大小 13
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_14_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.4962	# 卫星大小 14
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_15_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.5312	# 卫星大小 15
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_16_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.5662	# 卫星大小 16
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_17_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.6012	# 卫星大小 17
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_18_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.6362	# 卫星大小 18
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_19_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.6713	# 卫星大小 19
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_20_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.7063	# 卫星大小 20
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_21_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.7412	# 卫星大小 21
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_22_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.7762	# 卫星大小 22
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_23_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.8112	# 卫星大小 23
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_24_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.8462	# 卫星大小 24
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_25_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.8812	# 卫星大小 25
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_26_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.9163	# 卫星大小 26
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_27_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.9512	# 卫星大小 27
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_28_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 0.9862	# 卫星大小 28
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_29_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.0212	# 卫星大小 29
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_30_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.0563	# 卫星大小 30
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_31_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.0913	# 卫星大小 31
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_32_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.1262	# 卫星大小 32
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_33_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.1613	# 卫星大小 33
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_34_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.1963	# 卫星大小 34
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_35_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.2313	# 卫星大小 35
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_36_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.2663	# 卫星大小 36
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_37_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.3013	# 卫星大小 37
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_38_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.3363	# 卫星大小 38
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_39_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.3713	# 卫星大小 39
+}
+
+entity = {
+	name = "atb_entropy_shield_moon_40_scaling_entity"
+	pdxmesh = "atb_entropy_shield_mesh"
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" time_offset = { 0 100 } animation_speed = 0.65 }
+	game_data = {
+		bloom_factor = 1
+		uv_animation_speed = 0.65
+		uv_animation_direction = { 0.0 0.25 }
+	}
+	scale = 1.4063	# 卫星大小 40
+}

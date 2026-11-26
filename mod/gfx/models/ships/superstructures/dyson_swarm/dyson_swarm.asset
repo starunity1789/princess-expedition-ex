@@ -1,0 +1,86 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版的 gfx/models/ships/superstructures/dyson_swarm/dyson_swarm.asset。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；包住恒星的巨构，跟恒星一起缩小：3 个带网格的实体 ×0.125。
+
+entity = {
+	name = "dyson_swarm_satellite_entity"	
+	pdxmesh = "dyson_swarm_satellite_mesh"	
+}
+
+entity = {
+	name = "dyson_swarm_phase_1_entity"
+	pdxmesh = "dyson_swarm_phase_1_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" looping = yes animation_speed = 0.2
+				start_event = { sound = { soundeffect = cyb_arc_furnace_phase_01_idle } }
+	}
+
+	scale = 0.125	# 原 1，×0.125
+}
+
+entity = {
+	name = "dyson_swarm_phase_2_entity"
+	pdxmesh = "dyson_swarm_phase_2_mesh"
+	locator = { name = "lightning_locator" rotation = { 90 0 0  }  parent_joint = "Dumbbell2_joint" }
+	locator = { name = "lightning_locator_2" rotation = { 0 -90 -17.8  }  parent_joint = "Dumbbell3_joint" }
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" looping = yes animation_speed = 0.2
+	start_event = { sound = { soundeffect = cyb_arc_furnace_phase_02_idle } }
+	}
+
+	attach = { "Dumbbell1_joint" = "dyson_swarm_lightning_entity" }
+	attach = { "lightning_locator" = "dyson_swarm_lightning_entity" }
+	attach = { "lightning_locator_2" = "dyson_swarm_lightning_entity" }
+
+	scale = 0.125	# 原 1，×0.125
+}
+
+entity = {
+	name = "dyson_swarm_phase_3_entity"
+	pdxmesh = "dyson_swarm_phase_3_mesh"
+
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" looping = yes animation_speed = 0.2
+	start_event =  {sound = { soundeffect = cyb_arc_furnace_phase_03_idle } }
+	}
+	attach = { "root" = "dyson_swarm_lightning_3_entity" }
+
+	scale = 0.125	# 原 1，×0.125
+}
+
+entity = {
+	name = "dyson_swarm_lightning_entity"
+	pdxmesh = "dyson_swarm_effect_mesh"
+	scale = 1
+		game_data = {
+		bloom_factor			= 1
+		uv_animation_speed 		= 2
+		uv_animation_direction 	= { 0 1.0 }
+		}
+}
+
+entity = {
+	name = "dyson_swarm_lightning_3_entity"
+	pdxmesh = "dyson_swarm_effect_stage_3_mesh"
+	scale = 1
+		game_data = {
+		bloom_factor			= 1
+		uv_animation_speed 		= 2
+		uv_animation_direction 	= { 0 1.0 }
+		}
+}
+
+animation = {
+	name = "dyson_swarm_phase_1_idle_animation"
+	file = "dyson_swarm_phase_1_idle.anim"
+}
+
+animation = {
+	name = "dyson_swarm_phase_2_idle_animation"
+	file = "dyson_swarm_phase_2_idle.anim"
+}
+
+animation = {
+	name = "dyson_swarm_phase_3_idle_animation"
+	file = "dyson_swarm_phase_3_idle.anim"
+}

@@ -1,0 +1,9 @@
+# 皇女的远征军EX 3.26：逆熵行星护盾的外观随建筑变化刷新（events/atb_entropy_shield_events.txt）。This = 星球
+
+on_building_complete = { events = { atb_es.1 } }
+on_building_upgraded = { events = { atb_es.1 } }
+on_building_demolished = { events = { atb_es.1 } }
+on_building_replaced = { events = { atb_es.1 } }
+on_building_downgraded = { events = { atb_es.1 } }
+on_building_ruined = { events = { atb_es.1 } }
+on_planet_class_changed = { events = { atb_es.1 } }

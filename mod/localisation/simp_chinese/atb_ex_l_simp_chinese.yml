@@ -74,3 +74,5 @@
  building_atb_unity_agency:0 "$tech_atb_planetary_unity$"
  building_atb_unity_agency_desc:0 "$tech_atb_planetary_unity_desc$"
  building_atb_unity_agency_gestalt_desc:0 "统筹整个网络的协同信号，让每一个节点都朝着同一个目标运转。"
+ building_atb_entropy_shield:0 "逆熵行星护盾"
+ building_atb_entropy_shield_desc:0 "行星护盾发生器的升级。多层力场让局部的熵逆向流动，轨道轰炸落下的同时，大部分破坏就被抹去了。从轨道上能看见它先驱者式样的外壳。"

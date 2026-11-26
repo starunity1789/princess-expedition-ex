@@ -1,0 +1,25 @@
+# 皇女的远征军EX 3.26：逆熵行星护盾（building_atb_entropy_shield）由原版行星护盾发生器升级而来，
+# 下面两个原版触发器要把它也算作行星护盾，否则升级后风暴防护、游牧迁徙判断会把它当成没有护盾。
+# 照抄原版，各只多一行；文件名 zz_ 开头，覆盖原版同名触发器（同 zz_atb_unity_agency_triggers.txt）。群星更新后核对原版写法。
+
+# 原版 common/scripted_triggers/00_scripted_triggers.txt
+system_has_negating_storm_building = {
+	solar_system? = {
+		any_system_planet = {
+			OR = {
+				has_building = building_planetary_shield_generator
+				has_building = building_atb_entropy_shield	# 皇女的远征军EX 3.26
+			}
+		}
+	}
+}
+
+# 原版 common/scripted_triggers/09_scripted_triggers_nomads.txt
+# Scope: planet. True if the planet has a planetary shield generator (or its wilderness variant).
+has_planetary_shield_building = {
+	OR = {
+		has_building = building_planetary_shield_generator
+		has_building = building_ozone_thickener
+		has_building = building_atb_entropy_shield	# 皇女的远征军EX 3.26
+	}
+}

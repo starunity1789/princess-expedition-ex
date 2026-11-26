@@ -1,0 +1,293 @@
+# 皇女的远征军EX · 星体缩小：覆盖 More Events Mod的 gfx/models/planets/mem_malthus_planet_shield_alt_ambient_scaling.asset。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；护盾随星球一起缩小：29 个带网格的实体 ×0.125。
+
+entity = {
+	name = "mem_planet_shield_alt_scaling_35_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.8125	# 原 6.5，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_34_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.7875	# 原 6.3，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_33_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.7625	# 原 6.1，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_32_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.7375	# 原 5.9，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_31_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.7125	# 原 5.7，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_30_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.6875	# 原 5.5，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_29_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.6625	# 原 5.3，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_28_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.6375	# 原 5.1，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_27_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.6125	# 原 4.9，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_26_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.5875	# 原 4.7，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_25_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.5625	# 原 4.5，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_24_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.5375	# 原 4.3，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_23_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.5125	# 原 4.1，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_22_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.4875	# 原 3.9，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_21_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.4688	# 原 3.75，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_20_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.4437	# 原 3.55，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_19_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.425	# 原 3.4，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_18_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.4062	# 原 3.25，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_17_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.3875	# 原 3.1，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_16_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.3625	# 原 2.9，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_15_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.3375	# 原 2.7，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_14_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.3187	# 原 2.55，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_13_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.3	# 原 2.4，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_12_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.2812	# 原 2.25，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_11_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.2625	# 原 2.1，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_10_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.2375	# 原 1.9，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_09_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.2188	# 原 1.75，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_08_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.1875	# 原 1.5，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}
+entity = {
+	name = "mem_planet_shield_alt_scaling_07_ambient_entity"
+	pdxmesh = "mem_malthus_planet_shield_alt_ambient_mesh"
+	scale = 0.1688	# 原 1.35，×0.125
+	game_data = {
+		uv_animation_speed         = 1.50
+		uv_animation_direction     = { 0.0 0.25 }
+		bloom_factor = 1.0
+	}
+}

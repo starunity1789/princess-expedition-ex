@@ -1,0 +1,43 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版的 common/planet_classes/00_planet_classes_astral_planes_dlc.txt。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；只改这些写死了数字大小的星体：pc_rift_star 6.0×0.125、pc_astral_scar 1×0.125。
+
+pc_rift_star = {
+	entity = "crystal_rift_entity"
+	entity_scale = 0.75	# 原 6.0，×0.125
+	picture = "pc_rift_star"
+	icon = GFX_planet_type_rift_star
+	icon_large = GFX_planet_type_rift_star_big
+
+	climate = "luminosity_3"
+	star = yes
+	star_gfx = no
+	astral_rift_gfx = yes
+
+	spawn_odds = 0
+	chance_of_ring = 0
+	
+	colonizable = no
+}
+
+pc_astral_scar = {
+	entity = "astral_scar_entity"
+	entity_scale = 0.125	# 原 1，×0.125
+	picture = "pc_astral_scar"
+	icon = GFX_planet_type_astral_scar
+	icon_large = GFX_planet_type_astral_scar_big
+
+	astral_scar = yes
+
+	min_distance_from_sun = 0
+	max_distance_from_sun = 0
+	spawn_odds = 0
+
+	extra_orbit_size = 0
+	extra_planet_count = 0
+
+	chance_of_ring = 0
+
+	planet_size = { min = 20 max = 35 }
+
+	colonizable = no
+}

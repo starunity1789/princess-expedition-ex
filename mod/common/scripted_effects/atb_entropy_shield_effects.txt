@@ -1,0 +1,111 @@
+# 皇女的远征军EX 3.26：逆熵行星护盾的外观。由 tools/gen_entropy_shield.py 生成，请勿手改。
+
+# 星系范围：清掉本星系所有逆熵护盾外观，再给每个有该建筑的非人造星球重新挂上
+# （环境物体只能按星系找，按星系整体刷新最稳妥）。scope = 星系。人造星球（栖息地、环形世界等）不挂
+atb_entropy_shield_refresh_system = {
+	every_system_ambient_object = {
+		limit = { has_ambient_object_flag = atb_entropy_shield_flag }
+		destroy_ambient_object = this
+	}
+	every_system_planet = {
+		limit = {
+			has_building = building_atb_entropy_shield
+			is_artificial = no
+		}
+		atb_entropy_shield_add_visual = yes
+	}
+}
+
+# scope = 星球：按星球大小挂一个护盾环境物体
+atb_entropy_shield_add_visual = {
+	save_event_target_as = atb_entropy_shield_planet
+	if = {
+		limit = { is_moon = yes }
+		if = { limit = { planet_size >= 40 } create_ambient_object = { type = "atb_entropy_shield_moon_40" location = this } }
+		else_if = { limit = { planet_size = 39 } create_ambient_object = { type = "atb_entropy_shield_moon_39" location = this } }
+		else_if = { limit = { planet_size = 38 } create_ambient_object = { type = "atb_entropy_shield_moon_38" location = this } }
+		else_if = { limit = { planet_size = 37 } create_ambient_object = { type = "atb_entropy_shield_moon_37" location = this } }
+		else_if = { limit = { planet_size = 36 } create_ambient_object = { type = "atb_entropy_shield_moon_36" location = this } }
+		else_if = { limit = { planet_size = 35 } create_ambient_object = { type = "atb_entropy_shield_moon_35" location = this } }
+		else_if = { limit = { planet_size = 34 } create_ambient_object = { type = "atb_entropy_shield_moon_34" location = this } }
+		else_if = { limit = { planet_size = 33 } create_ambient_object = { type = "atb_entropy_shield_moon_33" location = this } }
+		else_if = { limit = { planet_size = 32 } create_ambient_object = { type = "atb_entropy_shield_moon_32" location = this } }
+		else_if = { limit = { planet_size = 31 } create_ambient_object = { type = "atb_entropy_shield_moon_31" location = this } }
+		else_if = { limit = { planet_size = 30 } create_ambient_object = { type = "atb_entropy_shield_moon_30" location = this } }
+		else_if = { limit = { planet_size = 29 } create_ambient_object = { type = "atb_entropy_shield_moon_29" location = this } }
+		else_if = { limit = { planet_size = 28 } create_ambient_object = { type = "atb_entropy_shield_moon_28" location = this } }
+		else_if = { limit = { planet_size = 27 } create_ambient_object = { type = "atb_entropy_shield_moon_27" location = this } }
+		else_if = { limit = { planet_size = 26 } create_ambient_object = { type = "atb_entropy_shield_moon_26" location = this } }
+		else_if = { limit = { planet_size = 25 } create_ambient_object = { type = "atb_entropy_shield_moon_25" location = this } }
+		else_if = { limit = { planet_size = 24 } create_ambient_object = { type = "atb_entropy_shield_moon_24" location = this } }
+		else_if = { limit = { planet_size = 23 } create_ambient_object = { type = "atb_entropy_shield_moon_23" location = this } }
+		else_if = { limit = { planet_size = 22 } create_ambient_object = { type = "atb_entropy_shield_moon_22" location = this } }
+		else_if = { limit = { planet_size = 21 } create_ambient_object = { type = "atb_entropy_shield_moon_21" location = this } }
+		else_if = { limit = { planet_size = 20 } create_ambient_object = { type = "atb_entropy_shield_moon_20" location = this } }
+		else_if = { limit = { planet_size = 19 } create_ambient_object = { type = "atb_entropy_shield_moon_19" location = this } }
+		else_if = { limit = { planet_size = 18 } create_ambient_object = { type = "atb_entropy_shield_moon_18" location = this } }
+		else_if = { limit = { planet_size = 17 } create_ambient_object = { type = "atb_entropy_shield_moon_17" location = this } }
+		else_if = { limit = { planet_size = 16 } create_ambient_object = { type = "atb_entropy_shield_moon_16" location = this } }
+		else_if = { limit = { planet_size = 15 } create_ambient_object = { type = "atb_entropy_shield_moon_15" location = this } }
+		else_if = { limit = { planet_size = 14 } create_ambient_object = { type = "atb_entropy_shield_moon_14" location = this } }
+		else_if = { limit = { planet_size = 13 } create_ambient_object = { type = "atb_entropy_shield_moon_13" location = this } }
+		else_if = { limit = { planet_size = 12 } create_ambient_object = { type = "atb_entropy_shield_moon_12" location = this } }
+		else_if = { limit = { planet_size = 11 } create_ambient_object = { type = "atb_entropy_shield_moon_11" location = this } }
+		else_if = { limit = { planet_size = 10 } create_ambient_object = { type = "atb_entropy_shield_moon_10" location = this } }
+		else_if = { limit = { planet_size = 9 } create_ambient_object = { type = "atb_entropy_shield_moon_09" location = this } }
+		else_if = { limit = { planet_size = 8 } create_ambient_object = { type = "atb_entropy_shield_moon_08" location = this } }
+		else_if = { limit = { planet_size = 7 } create_ambient_object = { type = "atb_entropy_shield_moon_07" location = this } }
+		else_if = { limit = { planet_size = 6 } create_ambient_object = { type = "atb_entropy_shield_moon_06" location = this } }
+		else_if = { limit = { planet_size = 5 } create_ambient_object = { type = "atb_entropy_shield_moon_05" location = this } }
+		else_if = { limit = { planet_size = 4 } create_ambient_object = { type = "atb_entropy_shield_moon_04" location = this } }
+		else_if = { limit = { planet_size = 3 } create_ambient_object = { type = "atb_entropy_shield_moon_03" location = this } }
+		else_if = { limit = { planet_size = 2 } create_ambient_object = { type = "atb_entropy_shield_moon_02" location = this } }
+		else_if = { limit = { planet_size <= 1 } create_ambient_object = { type = "atb_entropy_shield_moon_01" location = this } }
+	}
+	else = {
+		if = { limit = { planet_size >= 40 } create_ambient_object = { type = "atb_entropy_shield_planet_40" location = this } }
+		else_if = { limit = { planet_size = 39 } create_ambient_object = { type = "atb_entropy_shield_planet_39" location = this } }
+		else_if = { limit = { planet_size = 38 } create_ambient_object = { type = "atb_entropy_shield_planet_38" location = this } }
+		else_if = { limit = { planet_size = 37 } create_ambient_object = { type = "atb_entropy_shield_planet_37" location = this } }
+		else_if = { limit = { planet_size = 36 } create_ambient_object = { type = "atb_entropy_shield_planet_36" location = this } }
+		else_if = { limit = { planet_size = 35 } create_ambient_object = { type = "atb_entropy_shield_planet_35" location = this } }
+		else_if = { limit = { planet_size = 34 } create_ambient_object = { type = "atb_entropy_shield_planet_34" location = this } }
+		else_if = { limit = { planet_size = 33 } create_ambient_object = { type = "atb_entropy_shield_planet_33" location = this } }
+		else_if = { limit = { planet_size = 32 } create_ambient_object = { type = "atb_entropy_shield_planet_32" location = this } }
+		else_if = { limit = { planet_size = 31 } create_ambient_object = { type = "atb_entropy_shield_planet_31" location = this } }
+		else_if = { limit = { planet_size = 30 } create_ambient_object = { type = "atb_entropy_shield_planet_30" location = this } }
+		else_if = { limit = { planet_size = 29 } create_ambient_object = { type = "atb_entropy_shield_planet_29" location = this } }
+		else_if = { limit = { planet_size = 28 } create_ambient_object = { type = "atb_entropy_shield_planet_28" location = this } }
+		else_if = { limit = { planet_size = 27 } create_ambient_object = { type = "atb_entropy_shield_planet_27" location = this } }
+		else_if = { limit = { planet_size = 26 } create_ambient_object = { type = "atb_entropy_shield_planet_26" location = this } }
+		else_if = { limit = { planet_size = 25 } create_ambient_object = { type = "atb_entropy_shield_planet_25" location = this } }
+		else_if = { limit = { planet_size = 24 } create_ambient_object = { type = "atb_entropy_shield_planet_24" location = this } }
+		else_if = { limit = { planet_size = 23 } create_ambient_object = { type = "atb_entropy_shield_planet_23" location = this } }
+		else_if = { limit = { planet_size = 22 } create_ambient_object = { type = "atb_entropy_shield_planet_22" location = this } }
+		else_if = { limit = { planet_size = 21 } create_ambient_object = { type = "atb_entropy_shield_planet_21" location = this } }
+		else_if = { limit = { planet_size = 20 } create_ambient_object = { type = "atb_entropy_shield_planet_20" location = this } }
+		else_if = { limit = { planet_size = 19 } create_ambient_object = { type = "atb_entropy_shield_planet_19" location = this } }
+		else_if = { limit = { planet_size = 18 } create_ambient_object = { type = "atb_entropy_shield_planet_18" location = this } }
+		else_if = { limit = { planet_size = 17 } create_ambient_object = { type = "atb_entropy_shield_planet_17" location = this } }
+		else_if = { limit = { planet_size = 16 } create_ambient_object = { type = "atb_entropy_shield_planet_16" location = this } }
+		else_if = { limit = { planet_size = 15 } create_ambient_object = { type = "atb_entropy_shield_planet_15" location = this } }
+		else_if = { limit = { planet_size = 14 } create_ambient_object = { type = "atb_entropy_shield_planet_14" location = this } }
+		else_if = { limit = { planet_size = 13 } create_ambient_object = { type = "atb_entropy_shield_planet_13" location = this } }
+		else_if = { limit = { planet_size = 12 } create_ambient_object = { type = "atb_entropy_shield_planet_12" location = this } }
+		else_if = { limit = { planet_size = 11 } create_ambient_object = { type = "atb_entropy_shield_planet_11" location = this } }
+		else_if = { limit = { planet_size = 10 } create_ambient_object = { type = "atb_entropy_shield_planet_10" location = this } }
+		else_if = { limit = { planet_size = 9 } create_ambient_object = { type = "atb_entropy_shield_planet_09" location = this } }
+		else_if = { limit = { planet_size = 8 } create_ambient_object = { type = "atb_entropy_shield_planet_08" location = this } }
+		else_if = { limit = { planet_size = 7 } create_ambient_object = { type = "atb_entropy_shield_planet_07" location = this } }
+		else_if = { limit = { planet_size = 6 } create_ambient_object = { type = "atb_entropy_shield_planet_06" location = this } }
+		else_if = { limit = { planet_size = 5 } create_ambient_object = { type = "atb_entropy_shield_planet_05" location = this } }
+		else_if = { limit = { planet_size = 4 } create_ambient_object = { type = "atb_entropy_shield_planet_04" location = this } }
+		else_if = { limit = { planet_size = 3 } create_ambient_object = { type = "atb_entropy_shield_planet_03" location = this } }
+		else_if = { limit = { planet_size = 2 } create_ambient_object = { type = "atb_entropy_shield_planet_02" location = this } }
+		else_if = { limit = { planet_size <= 1 } create_ambient_object = { type = "atb_entropy_shield_planet_01" location = this } }
+	}
+	last_created_ambient_object = {
+		set_location = { target = event_target:atb_entropy_shield_planet }
+		set_ambient_object_flag = atb_entropy_shield_flag
+	}
+}

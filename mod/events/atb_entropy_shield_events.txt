@@ -1,0 +1,23 @@
+namespace = atb_es
+
+# 皇女的远征军EX 3.26：逆熵行星护盾的外观。建筑建成 / 升级 / 拆除 / 被替换 / 被降级 / 被毁时，
+# 把整个星系的护盾环境物体刷新一遍（见 common/scripted_effects/atb_entropy_shield_effects.txt）。
+# This = 星球
+planet_event = {
+	id = atb_es.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_building = building_atb_entropy_shield
+			solar_system = {
+				any_system_ambient_object = { has_ambient_object_flag = atb_entropy_shield_flag }
+			}
+		}
+	}
+
+	immediate = {
+		solar_system = { atb_entropy_shield_refresh_system = yes }
+	}
+}

@@ -1,0 +1,311 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版的 common/ship_sizes/00_waystations.txt。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；只给 3 种恒星基地 / 空间站 / 防御平台加 hull_scale：starbase_waystation_1×0.25、starbase_waystation_2×0.25、starbase_waystation_3×0.25。
+
+@build_block_radius_starbase = 20
+@starbase_formation_priority = 1
+
+starbase_waystation_1 = {
+	entity = "starbase_starport_entity"
+	hull_scale = 0.1875	# 原 0.75，×0.25
+	max_speed = 0.0
+	acceleration = 0.0
+	rotation_speed = 0.0
+	modifier = {
+		ship_evasion_mult = @waystation_evasion_negative_1
+		ship_armor_add = @waystation_armor_2000
+		starbase_module_capacity_add = @waystation_modules_2
+		ship_sensor_range_add = 1
+		starbase_stockpile_capacity_add = @waystation_stockpile_500
+		starbase_collected_system_resources_mult = @waystation_modifier_negative_mult_25_percent
+	}
+	max_hitpoints = @waystation_hp_5000
+	base_buildtime = @waystation_build_time_180
+	resources = {
+		category = starbase_waystations
+		upkeep = {
+			trade = @waystation_upkeep_trade_2
+		}
+		upkeep = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = no
+				}
+			}
+			energy = @waystation_upkeep_energy_1
+		}
+		upkeep = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = yes
+				}
+			}
+			food = @waystation_upkeep_energy_1
+		}
+	}
+
+	potential_construction = {
+		# This is built through a megastructure
+		always = no
+	}
+	possible_construction = {
+		always = no
+	}
+
+	combat_size_multiplier = 5
+	size_multiplier = 4
+	fleet_slot_size = 2
+	section_slots = {
+		"core" = { locator = "part1" }
+		"1" = { locator = "part2" }
+		"2" = { locator = "part3" }
+	}
+	is_designable = no
+	num_target_locators = 0
+	is_space_station = yes
+	can_have_federation_design = no
+	is_civilian = no
+	components_add_to_cost = no
+	is_listed = no
+	can_disable = yes
+	stay_disabled = yes			# Disabled waystations stay disabled until re-enabled from script (nomads.94 on war end).
+	available_to_everyone = yes
+
+	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
+	prerequisites = { "tech_waystation_1" }
+	class = shipclass_starbase
+
+	required_component_set = "power_core"
+	required_component_set = "sensor_components"
+	required_component_set = "combat_computers"
+
+	build_block_radius = @build_block_radius_starbase
+	formation_priority = @starbase_formation_priority
+	icon_frame = 13
+	icon = ship_size_military_station
+	ship_class_icon_frame = 65
+}
+
+starbase_waystation_2 = {
+	entity = "starbase_starhold_entity"
+	hull_scale = 0.1875	# 原 0.75，×0.25
+	max_speed = 0.0
+	acceleration = 0.0
+	rotation_speed = 0.0
+	modifier = {
+		ship_evasion_mult = @waystation_evasion_negative_1
+		ship_armor_add = @waystation_armor_5000
+		starbase_module_capacity_add = @waystation_modules_4
+		ship_sensor_range_add = 1
+		starbase_stockpile_capacity_add = @waystation_stockpile_1000
+	}
+	max_hitpoints = @waystation_hp_10000
+	base_buildtime = @waystation_build_time_360
+	resources = {
+		category = starbase_waystations
+		cost = {
+			influence = @waystation_cost_influence_50
+		}
+		cost = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = no
+				}
+			}
+			alloys = @waystation_cost_alloys_250
+		}
+		cost = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = yes
+				}
+			}
+			alloys = @waystation_cost_alloys_250
+			mult = 0.5
+		}
+		cost = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = yes
+				}
+			}
+			food = @waystation_cost_alloys_250
+			mult = @halved_alloy_to_food_cost_ratio
+		}
+		upkeep = {
+			trade = @waystation_upkeep_trade_4
+		}
+		upkeep = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = no
+				}
+			}
+			energy = @waystation_upkeep_energy_2
+		}
+		upkeep = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = yes
+				}
+			}
+			food = @waystation_upkeep_energy_2
+		}
+	}
+
+	potential_construction = {
+		# This is built through a megastructure
+		always = no
+	}
+	possible_construction = {
+		always = no
+	}
+
+	combat_size_multiplier = 10
+	size_multiplier = 4
+	fleet_slot_size = 2
+	section_slots = {
+		"core" = { locator = "part1" }
+		"1" = { locator = "part2" }
+		"2" = { locator = "part3" }
+		"3" = { locator = "part4" }
+		"4" = { locator = "part5" }
+	}
+	is_designable = no
+	num_target_locators = 0
+	is_space_station = yes
+	can_have_federation_design = no
+	is_civilian = no
+	components_add_to_cost = no
+	is_listed = no
+	can_disable = yes
+	stay_disabled = yes			# Disabled waystations stay disabled until re-enabled from script (nomads.94 on war end).
+	available_to_everyone = yes
+
+	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
+	prerequisites = { "tech_waystation_2" }
+	class = shipclass_starbase
+
+	required_component_set = "power_core"
+	required_component_set = "sensor_components"
+	required_component_set = "combat_computers"
+
+	build_block_radius = @build_block_radius_starbase
+	formation_priority = @starbase_formation_priority
+	icon_frame = 14
+	icon = ship_size_military_station
+	ship_class_icon_frame = 66
+}
+
+starbase_waystation_3 = {
+	entity = "starbase_starfortress_entity"
+	hull_scale = 0.1875	# 原 0.75，×0.25
+	max_speed = 0.0
+	acceleration = 0.0
+	rotation_speed = 0.0
+	modifier = {
+		ship_evasion_mult = @waystation_evasion_negative_1
+		ship_armor_add = @waystation_armor_10000
+		starbase_module_capacity_add = @waystation_modules_6
+		ship_sensor_range_add = 1
+		starbase_stockpile_capacity_add = @waystation_stockpile_2500
+		starbase_collected_system_resources_mult = @waystation_modifier_mult_25_percent
+	}
+	max_hitpoints = @waystation_hp_20000
+	base_buildtime = @waystation_build_time_360
+	resources = {
+		category = starbase_waystations
+		cost = {
+			influence = @waystation_cost_influence_50
+		}
+		cost = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = no
+				}
+			}
+			alloys = @waystation_cost_alloys_250
+		}
+		cost = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = yes
+				}
+			}
+			alloys = @waystation_cost_alloys_250
+			mult = 0.5
+		}
+		cost = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = yes
+				}
+			}
+			food = @waystation_cost_alloys_250
+			mult = @halved_alloy_to_food_cost_ratio
+		}
+		upkeep = {
+			trade = @waystation_upkeep_trade_8
+		}
+		upkeep = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = no
+				}
+			}
+			energy = @waystation_upkeep_energy_4
+		}
+		upkeep = {
+			trigger = {
+				from = {
+					country_uses_bio_ships = yes
+				}
+			}
+			food = @waystation_upkeep_energy_4
+		}
+	}
+
+	potential_construction = {
+		# This is built through a megastructure
+		always = no
+	}
+	possible_construction = {
+		always = no
+	}
+
+	combat_size_multiplier = 20
+	size_multiplier = 4
+	fleet_slot_size = 2
+	section_slots = {
+		"core" = { locator = "part1" }
+		"1" = { locator = "part2" }
+		"2" = { locator = "part3" }
+		"3" = { locator = "part4" }
+		"4" = { locator = "part5" }
+		"5" = { locator = "part6" }
+		"6" = { locator = "part7" }
+	}
+	is_designable = no
+	num_target_locators = 0
+	is_space_station = yes
+	can_have_federation_design = no
+	is_civilian = no
+	components_add_to_cost = no
+	is_listed = no
+	can_disable = yes
+	stay_disabled = yes			# Disabled waystations stay disabled until re-enabled from script (nomads.94 on war end).
+	available_to_everyone = yes
+
+	enable_default_design = yes	#if yes, countries will have an auto-generated design at start
+	prerequisites = { "tech_waystation_3" }
+	class = shipclass_starbase
+
+	required_component_set = "power_core"
+	required_component_set = "sensor_components"
+	required_component_set = "combat_computers"
+
+	build_block_radius = @build_block_radius_starbase
+	formation_priority = @starbase_formation_priority
+	icon_frame = 15
+	icon = ship_size_military_station
+	ship_class_icon_frame = 67
+}

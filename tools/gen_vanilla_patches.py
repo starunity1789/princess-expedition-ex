@@ -461,6 +461,35 @@ PATCHES = [
              "atb_juggernaut_potential_construction = {\n", 1),
         ],
     ),
+    # ---- 3.26：逆熵行星护盾（common/buildings/atb_entropy_shield_buildings.txt）由原版行星护盾发生器升级而来 ----
+    dict(
+        path="common/buildings/09_army_buildings.txt",
+        header=[
+            "皇女的远征军EX：覆盖原版 common/buildings/09_army_buildings.txt。",
+            "由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：行星护盾发生器可以升级成",
+            "逆熵行星护盾（building_atb_entropy_shield，3.26）。群星更新后用新版原版重新生成。",
+        ],
+        replace=[("\tprerequisites = {\n\t\t\"tech_planetary_shield_generator\"\n\t}\n",
+                  "\tprerequisites = {\n\t\t\"tech_planetary_shield_generator\"\n\t}\n"
+                  "\tupgrades = { building_atb_entropy_shield }\t# 皇女的远征军EX 3.26\n", 1)],
+    ),
+    *[dict(
+        path=p,
+        header=[
+            f"皇女的远征军EX：覆盖原版 {p}。",
+            f"由 tools/gen_vanilla_patches.py 生成，请勿手改；与原版唯一的区别：{what}的护盾模块与",
+            "逆熵行星护盾（building_atb_entropy_shield，3.26）同样互斥。群星更新后用新版原版重新生成。",
+        ],
+        replace=[(f"{ind}has_building_construction = building_planetary_shield_generator\n"
+                  f"{ind}has_building = building_planetary_shield_generator\n",
+                  f"{ind}has_building_construction = building_planetary_shield_generator\n"
+                  f"{ind}has_building = building_planetary_shield_generator\n"
+                  f"{ind}has_building_construction = building_atb_entropy_shield\t# 皇女的远征军EX 3.26\n"
+                  f"{ind}has_building = building_atb_entropy_shield\n", 1)],
+    ) for p, what, ind in (
+        ("common/starbase_buildings/00_orbital_ring_buildings.txt", "轨道环", "\t\t\t\t"),
+        ("common/starbase_buildings/00_arkship_colony_buildings.txt", "方舟", "\t\t\t\t"),
+    )],
 ]
 
 for patch in PATCHES:

@@ -1,0 +1,39 @@
+# 皇女的远征军EX 3.26：逆熵行星护盾的外观。由 tools/gen_entropy_shield.py 生成，请勿手改。
+# 照搬 GPM 的 gpm_planet_shield_PREC_ambient_mesh（先驱者行星护盾），只改了名字
+
+objectTypes = {
+	pdxmesh = {
+		name = "atb_entropy_shield_mesh"
+		file = "gfx/models/planets/atb_entropy_shield.mesh"
+		animation = { id = "idle"	type = "shielded_planet_idle" }
+		scale = 1.0
+
+		meshsettings = {
+			name = "planet_geosphereShape"
+			texture_diffuse = "atb_entropy_shield_lower_diffuse.dds"
+			texture_normal = "nonormal.dds"
+			texture_specular = "nospec.dds"
+			shader = "PdxMeshExtraDimensionalShip"
+		}
+		meshsettings = {
+			name = "polesShape"
+			texture_diffuse = "atb_entropy_shield_diffuse.dds"
+			texture_normal = "nonormal.dds"
+			texture_specular = "nospec.dds"
+			shader = "PdxMeshExtraDimensionalShip"
+		}
+		meshsettings = {
+			name = "clouds_geosphereShape"
+			texture_diffuse = "atb_entropy_shield_clouds.dds"
+			texture_normal = "nonormal.dds"
+			texture_specular = "nospec.dds"
+		}
+		meshsettings = {
+			name = "clouds_shadow_geosphereShape"
+			texture_diffuse = "atb_entropy_shield_clouds.dds"
+			texture_normal = "nonormal.dds"
+			texture_specular = "nospec.dds"
+			shader = "Collision"	# 用这个着色器把云影藏起来（GPM 原样）
+		}
+	}
+}

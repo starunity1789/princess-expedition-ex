@@ -1,0 +1,22 @@
+# 皇女的远征军EX · 星体缩小：覆盖 原版的 gfx/models/ships/megastructures/gateway/gateway_portal.asset。
+# 由 tools/gen_celestial_scale.py 生成，请勿手改；人造巨构：1 个带网格的实体 ×0.1667。
+
+entity = {
+	name = "gateway_portal_entity"
+	pdxmesh = "gateway_portal_mesh"
+	
+	get_state_from_parent = no
+	
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 
+		event = { time = 0 node = "center" particle = "gateway_portal_effect" keep_particle = yes trigger_once = yes sound = { soundeffect = "megastructure_gate_way_portal_hum" } }
+	}
+	
+	game_data = {
+		uv_animation_speed 		= -0.05
+		uv_animation_direction 	= { 0.5 1.0 }
+		bloom_factor = 0.8
+	}
+	
+	scale = 0.0833	# 原 0.5，×0.1667
+}

@@ -325,7 +325,8 @@ quest = read(MOD / "common/scripted_effects/atb_relic_quest_effects.txt") if exi
 checks += [
     # 3.5：GPM 的遗珍整合回来了（脚本文件都叫 atb_gpm_*，图标沿用 GPM 原名 gpm_*.dds），其余 GPM 内容仍不要
     ("PD / GPM / Stellar AI 已移出（GPM 只留遗珍）", not any(p for p in MOD.rglob("gpm_*") if p.suffix != ".dds")
-     and not any(MOD.rglob("pd_*")) and not any(MOD.rglob("*stellarai*"))
+     and not any(p for p in MOD.rglob("pd_*") if "gen_celestial_scale.py" not in read(p)[:300])	# 3.26 星体缩小覆盖了 PD 的一个星球类别文件
+     and not any(MOD.rglob("*stellarai*"))
      and not (MOD.parent / "tools/upstream_manifest.json").exists()
      and not any(MOD.rglob("*wargoal*")) and not any(MOD.rglob("*casus_belli*"))),
     ("3.5：GPM 遗珍内置（28 个，不带遗珍战争目标）", sum(len(re.findall(r"(?m)^gpm_r_\w+ = \{", read(p))) for p in (MOD / "common/relics").glob("atb_gpm_*.txt")) >= 28
@@ -484,6 +485,31 @@ checks += [
                         ("adopt", "psi_corps", "great_awakening", "telekinesis", "clairvoyance", "psychometry", "finish"))
           and "id = atbgp.18 days = 1" in e)(eff.split("atbgp_start_psionic_ascension = {", 1)[1].split("\n}", 1)[0])
      and "turn_main_species_to_psionic = yes" in ev.split("id = atbgp.18", 1)[1]),
+    ("3.26：逆熵行星护盾——原版行星护盾发生器可升级（无额外条件）；30 文物、300 天；轰炸伤害 -90%；维护 15 能量（原版 300%）；不能直接建造",
+     (lambda b: "planet_orbital_bombardment_damage = -0.9" in b and "energy = 15" in b and "can_build = no" in b
+      and "tech_planetary_shield_generator" in b and "minor_artifacts = 30" in b and "base_buildtime = 300" in b and "allow" not in b)(read(MOD / "common/buildings/atb_entropy_shield_buildings.txt"))
+     and "upgrades = { building_atb_entropy_shield }" in read(MOD / "common/buildings/09_army_buildings.txt")
+     and all("has_building = building_atb_entropy_shield" in read(MOD / f"common/starbase_buildings/{f}")
+             for f in ("00_orbital_ring_buildings.txt", "00_arkship_colony_buildings.txt"))
+     and read(MOD / "common/scripted_triggers/zz_atb_entropy_shield_triggers.txt").count("has_building = building_atb_entropy_shield") == 2),
+    ("3.26：逆熵护盾外观——GPM 先驱者护盾模型、行星/卫星各 40 档、建筑变化时按星系刷新、图标",
+     read(MOD / "gfx/models/planets/atb_entropy_shield_scaling.asset").count('pdxmesh = "atb_entropy_shield_mesh"') == 80
+     and read(MOD / "common/ambient_objects/atb_entropy_shield_ambient_objects.txt").count("ambient_object = {") == 80
+     and all(exists(f"gfx/models/planets/{f}") for f in ("atb_entropy_shield.mesh", "atb_entropy_shield_diffuse.dds",
+             "atb_entropy_shield_lower_diffuse.dds", "atb_entropy_shield_clouds.dds"))
+     and exists("gfx/interface/icons/buildings/building_atb_entropy_shield.dds")
+     and read(MOD / "common/on_actions/atb_entropy_shield_on_actions.txt").count("atb_es.1") == 7
+     and "atb_entropy_shield_refresh_system = yes" in read(MOD / "events/atb_entropy_shield_events.txt")),
+    ("3.26：星体缩小——Real Space 星体变量 ×1/8、戴森球只缩零件不缩容器、恒星基地 hull_scale ×1/4、栖息地 ×1/6、逆熵护盾 ×1/8、依赖 Real Space",
+     "@planet_standard_scale = 1.375" in read(MOD / "common/scripted_variables/00_realspace_scripted_variables.txt")
+     and "@star_standard_scale = 2.5" in read(MOD / "common/scripted_variables/00_realspace_scripted_variables.txt")
+     and (lambda d: d.count("×0.125") >= 100 and "scale = @dyson_scale" not in d
+          and "scale = 1.0" in d.split('name = "molluscoid_01_dyson_sphere_phase_01_entity"', 1)[1][:160])(
+         read(MOD / "gfx/models/ships/megastructures/dyson_sphere/_dyson_sphere_entities.asset"))
+     and "hull_scale = 0.25" in read(MOD / "common/ship_sizes/00_starbases.txt").split("starbase_starport = {", 1)[1][:60]
+     and "×0.1667" in read(MOD / "gfx/models/ships/humanoid_01/_humanoid_01_ships_entities.asset")
+     and "scale = 0.0563" in read(MOD / "gfx/models/planets/atb_entropy_shield_scaling.asset")
+     and '"Real Space 4.0"' in read(MOD / "descriptor.mod")),
     ("3.10：去掉必定生成凯德斯坠毁点", not exists("common/solar_system_initializers/atb_ex_initializers.txt")
      and "legendary_leader" not in read(MOD / "events/atb_ex_events.txt")),
     ("3.19：星堡伤害 ×2、三防翻倍（受伤减半）、射程与交战范围 ×3；3.14 的花费减半、时间 -80%、平台上限 +24；防御平台与离子炮时间 -80%、花费/维护减半、舰体 +1000%",
@@ -625,6 +651,15 @@ vanilla = [
     ("is_chosen_empire", r"^is_chosen_empire\s*=\s*\{", "common/scripted_triggers/*.txt"),
     ("wg_declared_crisis", r"^wg_declared_crisis\s*=\s*\{", "common/war_goals/*.txt"),
     ("exterminators 性格", r"^exterminators\s*=\s*\{", "common/personalities/*.txt"),
+    # 3.26：逆熵行星护盾
+    ("building_planetary_shield_generator", r"^building_planetary_shield_generator\s*=\s*\{", "common/buildings/09_army_buildings.txt"),
+    ("tech_planetary_shield_generator", r"^tech_planetary_shield_generator\s*=\s*\{", "common/technology/*.txt"),
+    ("minor_artifacts", r"^minor_artifacts\s*=\s*\{", "common/strategic_resources/*.txt"),
+    *[(x, rf"^{x}\s*=\s*\{{", "common/scripted_triggers/*.txt") for x in ("system_has_negating_storm_building", "has_planetary_shield_building")],
+    *[(f"cosmic_storms/{x}", r".", f"common/inline_scripts/cosmic_storms/{x}.txt") for x in ("StormBuildingModifiers", "PlanetaryShieldOnBuiltDestroy")],
+    *[(x, rf"^{x}\s*=\s*\{{", "common/on_actions/*.txt") for x in ("on_building_complete", "on_building_upgraded", "on_building_demolished",
+      "on_building_replaced", "on_building_downgraded", "on_building_ruined", "on_planet_class_changed")],
+    ("shielded_planet_idle 动画", r'name = "shielded_planet_idle"', "gfx/models/planets/_planetary_animations.asset"),
     # 3.25：白鹿开局灵飞
     *[(f"tr_psionics_shroud_{t}", rf"^tr_psionics_shroud_{t}\s*=\s*\{{", "common/traditions/*.txt")
       for t in ("adopt", "psi_corps", "great_awakening", "telekinesis", "clairvoyance", "psychometry", "finish")],
